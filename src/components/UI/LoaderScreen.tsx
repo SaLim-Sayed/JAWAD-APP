@@ -1,7 +1,6 @@
+import logo from '@/assets/images/splash.png';
 import React from 'react';
-import { View, Image, ActivityIndicator } from 'react-native';
-import AppText from './AppText';
-import logo from '@/assets/images/wish-icon.png';
+import { ActivityIndicator, Image, View } from 'react-native';
 import AppWrapper from './AppWrapper';
 export default function LoaderScreen() {
     return (
@@ -9,7 +8,7 @@ export default function LoaderScreen() {
             <View className="flex-1 justify-center items-center ">
                 <Image
                     source={logo}
-                    className="w-24 h-24"
+                    className="w-40 h-64"
                 />
                 <ActivityIndicator
                     size="large"

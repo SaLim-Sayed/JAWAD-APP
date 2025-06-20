@@ -31,8 +31,8 @@ const AppWrapper: React.FC<AppWrapperProps> = ({
   return (
     <Wrapper>
       <LinearGradient
-        colors={['#293442', '#000', '#293442']}
-        start={{x: 0, y: 0}}
+        colors={['#fff', '#fff', '#fff']}
+         start={{x: 0, y: 0}}
         end={{x: 0, y: 1}}
         style={[{flex: 1, position: 'relative'}, style]}>
         {children}

@@ -1,17 +1,16 @@
-import React from 'react';
-import { Pressable, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { Icons } from '@/constants';
+import SplashScreen from '@/packages/Splash/SplashScreen';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import Profile from '@/screens/Profile/Profile';
 import { useAuthStore } from '@/store/useAuthStore';
-import SafeAreaLayout from '@/provider/SafeAreaLayout';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -146,7 +145,18 @@ function MainNavigator() {
 
 // Root App
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+ 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000); // Delay for 500ms
+
+    return () => clearTimeout(timeout); // Cleanup on unmount
+  }, []);
   const { isLoggedIn } = useAuthStore();
+
+  if (showSplash) return <SplashScreen />;
   return isLoggedIn ? <AuthNavigator /> : <MainNavigator />;
 }
 
