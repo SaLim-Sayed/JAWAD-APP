@@ -1,0 +1,35 @@
+{
+    "Global": {
+        "welcome": "Willkommen",
+        "login": "Login",
+        "signup": "Sign Up"
+    },
+ "DeviceLogin": {
+  "follow_instruction": "Folgen Sie dem folgenden Link",
+  "add_manage_playlist": "Um eine Playlist hinzuzufügen/verwalten, fügen Sie einfach hinzu",
+  "mac_address": "MAC-Adresse",
+  "device_key": "Geräteschlüssel",
+  "or_login_with": "Oder anmelden mit",
+  "m3u_url": "M3U-URL",
+  "free_trial": "Kostenlose Testversion",
+  "contact_support": "Support kontaktieren"
+},
+"Profile": {
+    "playlist": "Playlist",
+    "settings": "Einstellungen",
+    "language": "Sprache",
+    "clear_cache": "Cache leeren",
+    "application_info": "Informations über die Anwendung",
+    "logout": "Abmelden"
+  },
+  "Error": {
+    "retry": "Wiederholen",
+    "add_playlist": "Neue Playlist hinzufügen",
+    "failed_to_load": "Laden fehlgeschlagen {{type}}",
+    "failed_to_load_live": "Laden fehlgeschlagen ",
+    "failed_to_load_series": "Laden fehlgeschlagen ",
+    "failed_to_load_movies": "Laden fehlgeschlagen ",
+    "please_check_connection": "Bitte überprüfen Sie Ihre Verbindung oder versuchen Sie es später erneut."
+  }
+
+}

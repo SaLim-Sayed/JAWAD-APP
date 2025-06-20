@@ -1,0 +1,26 @@
+export type RootStackParamList = {
+  Home: undefined;
+  stable: undefined;
+  service: undefined;
+  profile: undefined;
+  preLogin: undefined;
+  liveTV: undefined;
+  series: undefined;
+  movies: undefined;
+  login: undefined;
+  liveList: undefined;
+  Details: { itemId: number };
+  liveId: { streamId: string };
+  liveDetails: { liveId: string };
+  LiveStreamPage: { liveId: string };
+  liveStream: { streamId: any, data?: any, currentIndex?: number };
+  'movies/details': { movieId: any };
+  'movies/stream': { streamId: any, extension?: string , movieData?: any, currentIndex?: number };
+  'series/details': { seriesId: any };
+  'series/stream': { streamId: any, extension?: string , data?: any, currentIndex?: number};
+  'profile/settings': undefined;
+  'profile/playlist': undefined;
+  'profile/language': undefined;
+  'profile/clearCache': undefined;
+  'profile/applicationInfo': undefined;
+};

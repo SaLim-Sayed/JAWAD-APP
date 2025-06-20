@@ -1,0 +1,34 @@
+{
+    "Global": {
+        "welcome": "Bienvenue",
+        "login": "Login",
+        "signup": "Sign Up"
+    },
+   "DeviceLogin": {
+  "follow_instruction": "Suivez le lien suivant",
+  "add_manage_playlist": "Pour ajouter/gérer la playlist, ajoutez simplement",
+  "mac_address": "Adresse MAC",
+  "device_key": "Clé de l'appareil",
+  "or_login_with": "Ou connectez-vous avec",
+  "m3u_url": "URL M3U",
+  "free_trial": "Essai gratuit",
+  "contact_support": "Contacter le support"
+},
+"Profile": {
+    "playlist": "Playlist",
+    "settings": "Paramètres",
+    "language": "Langue",
+    "clear_cache": "Effacer le cache",
+    "application_info": "Informations sur l'application",
+    "logout": "Se deconnecter"
+  },
+  "Error": {
+    "retry": "Reessayer",
+    "add_playlist": "Ajouter une nouvelle playlist",
+    "failed_to_load": "Chargement echoué {{type}}",
+    "failed_to_load_live": "Chargement echoué ",
+    "failed_to_load_series": "Chargement echoué ",
+    "failed_to_load_movies": "Chargement echoué ",
+    "please_check_connection": "Veuillez vérifier votre connexion ou essayez à nouveau plus tard."
+  }
+}

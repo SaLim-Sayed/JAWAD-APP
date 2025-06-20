@@ -1,0 +1,53 @@
+{
+  "Global": {
+    "welcome": "مرحبا",
+    "login": "تسجيل الدخول",
+    "English": "الإنجليزية",
+    "Arabic": "العربية",
+    "French": "الفرنسية",
+    "German": "الألمانية",
+    "LiveTV": "بث مباشر",
+    "Movies": "افلام",
+    "Series": "مسلسلات",
+    "Profile": "الملف الشخصي",
+    "search": "بحث",
+    "select": "اختر",
+    "signup": "الاشتراك"
+  },
+  "DeviceLogin": {
+    "follow_instruction": "يرجى اتباع الرابط التالي",
+    "add_manage_playlist": "لإضافة/إدارة قائمة التشغيل فقط أضف",
+    "mac_address": "عنوان MAC",
+    "device_key": "مفتاح الجهاز",
+    "or_login_with": "أو تسجيل الدخول باستخدام",
+    "m3u_url": "رابط M3U",
+    "free_trial": "تجربة مجانية",
+    "contact_support": "تواصل معنا للدعم"
+  },
+  "Profile": {
+    "playlist": "قائمة التشغيل",
+    "settings": "الإعدادات",
+    "language": "اللغة",
+    "manage_your_app": "إدارة بيانات التطبيق المخزنة مؤقتا",
+    "success": "نجاح",
+    "failed": "فشل",
+    "clear_cache_success": "مسح المخزن المؤقت نجاح",
+    "clear_cache_failed": "فشل مسح المخزن المؤقت",
+    "clear_cache": "مسح المخزن المؤقت",
+    "manage_your_profile": "ادارة الملف الشخصي",
+    "application_info": "معلومات التطبيق",
+    "device_id": "معرف الجهاز",
+    "device_key": "مفتاح الجهاز",
+    "app_version": "إصدار التطبيق",
+    "logout": "تسجيل الخروج"
+  },
+  "Error": {
+    "retry": "إعادة المحاولة",
+    "add_playlist": "إضافة قائمة تشغيل جديدة",
+    "failed_to_load": "فشل في تحميل {{type}}",
+    "failed_to_load_live": "فشل في تحميل بيانات البث المباشر",
+    "failed_to_load_series": "فشل في تحميل بيانات المسلسلات",
+    "failed_to_load_movies": "فشل في تحميل بيانات الأفلام",
+    "please_check_connection": "يرجى التحقق من اتصالك أو المحاولة مرة أخرى لاحقا"
+  }
+}

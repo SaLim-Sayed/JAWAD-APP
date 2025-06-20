@@ -1,0 +1,53 @@
+{
+  "Global": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "English": "English",
+    "Arabic": "Arabic",
+    "French": "French",
+    "German": "German",
+    "LiveTV": "Live TV",
+    "Movies": "Movies",
+    "Series": "Series",
+    "Profile": "Profile",
+    "search": "Search",
+    "select": "Select",
+    "signup": "Sign Up"
+  },
+  "DeviceLogin": {
+    "follow_instruction": "Please follow",
+    "add_manage_playlist": "to add/manage playlist just add",
+    "mac_address": "Mac address",
+    "device_key": "Device key",
+    "or_login_with": "Or login with",
+    "m3u_url": "M3U URL",
+    "free_trial": "Free Trial",
+    "contact_support": "Contact us for Support"
+  },
+  "Profile": {
+    "playlist": "Playlist",
+    "settings": "Settings",
+    "language": "Language",
+    "clear_cache": "Clear Cache",
+    "success": "Success",
+    "failed": "Failed",
+    "manage_your_app": "Manage Your Application Cached Data",
+    "clear_cache_success": "Clear Cache Success",
+    "clear_cache_failed": "Clear Cache Failed",
+    "manage_your_profile": "Manage Your Profile",
+    "application_info": "Application Info",
+    "device_id": "Device ID",
+    "device_key": "Device Key",
+    "app_version": "App Version",
+    "logout": "Logout"
+  },
+  "Error": {
+    "retry": "Retry",
+    "add_playlist": "Add New Playlist",
+    "failed_to_load": "Failed to load {{type}}",
+    "failed_to_load_live": "Failed to load live data",
+    "failed_to_load_series": "Failed to load series data",
+    "failed_to_load_movies": "Failed to load movies data",
+    "please_check_connection": "Please check your connection or try again later."
+  }
+}
