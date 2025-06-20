@@ -1,4 +1,4 @@
-export * from './Home';
+export * from './screens/Home';
 export * from './store';
 export * from './components';
 export * from './constants';
