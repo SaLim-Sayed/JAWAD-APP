@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {TabView} from '@/provider/TabView';
+import { TabView } from '@/provider/TabView';
 import SafeAreaLayout from '@/provider/SafeAreaLayout';
-import {isAborted} from 'zod';
+import { isAborted } from 'zod';
 import Wrapper from '@/provider/Wrapper';
 
 interface AppWrapperProps {
@@ -32,9 +32,9 @@ const AppWrapper: React.FC<AppWrapperProps> = ({
     <Wrapper>
       <LinearGradient
         colors={['#fff', '#fff', '#fff']}
-         start={{x: 0, y: 0}}
-        end={{x: 0, y: 1}}
-        style={[{flex: 1, position: 'relative'}, style]}>
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={[{ flex: 1, position: 'relative' }, style]}>
         {children}
       </LinearGradient>
     </Wrapper>

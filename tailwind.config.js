@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // NOTE: Update this to include the paths to all of your component files.
   content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
       colors: {
+        brownColor: {
+          50: "var(--brown-color-50)",
+          300: "var(--brown-color-300)",
+          400: "var(--brown-color-400)",
+        },
         mainColor: {
           100: "var(--main-color-100)",
           200: "var(--main-color-200)",
@@ -16,14 +20,9 @@ module.exports = {
         },
         successColor: "var(--success-color-100)",
         warningColor: "var(--warning-color-100)",
-
         darkColor: {
           100: "var(--dark-color-100)",
           200: "var(--dark-color-200)",
-        },
-        whiteColor: {
-          100: "var(--white-color-100)",
-          200: "var(--white-color-200)",
         },
         whiteColor: {
           100: "var(--white-color-100)",
@@ -37,5 +36,39 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.tajawal-semibold-18': {
+          'font-weight': '700',
+          'font-size': '18px',
+          'line-height': '40px',
+          'letter-spacing': '0',
+          'vertical-align': 'middle',
+        },
+        '.tajawal-semibold-16': {
+          'font-weight': '700',
+          'font-size': '16px',
+          'line-height': '40px',
+          'letter-spacing': '0',
+          'vertical-align': 'middle',
+        },
+        '.tajawal-medium-20': {
+          'font-weight': '500',
+          'font-size': '20px',
+          'line-height': '60px',
+          'letter-spacing': '0',
+          'vertical-align': 'middle',
+        },
+        '.tajawal-16': {
+          'font-weight': '500',
+          'font-size': '16px',
+          'line-height': '24px',
+          'letter-spacing': '0',
+          'vertical-align': 'middle',
+        },  
+      };
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    }
+  ],
 };

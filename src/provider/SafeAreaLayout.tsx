@@ -10,10 +10,10 @@ const SafeAreaLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SafeAreaView
       style={{ flex: 1 }}
-      edges={["left", "right", "top"]}
+      edges={["left",  "right",  ]}
      >
-            <StatusBar barStyle="light-content" hidden={false} backgroundColor="#5E3E2C" />
-        <View style={{ flex: 1 }}>{children}</View>
+            <StatusBar barStyle="light-content" hidden={true} backgroundColor="transparent" />
+        {children} 
     </SafeAreaView>
   );
 };

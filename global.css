@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 :root {
+  --brown-color-400:#493225;
+  --brown-color-300:#684735;
+  --brown-color-50:#F0EDEB;
   --main-color-100: #7384a4;
   --main-color-200: #5d6e8e;
   --main-color-300: #7a879f;
@@ -24,7 +27,24 @@
   --secondry-color-300: #f7931e;
 }
 
-body, html {
+.tajawal-semibold-18 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 40px;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
+.tajawal-semibold-16 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 40px;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
+body,
+html {
   background-color: black !important;
   color: white !important;
 }
