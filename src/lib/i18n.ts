@@ -3,8 +3,7 @@ import {initReactI18next} from 'react-i18next';
 
 import en from '../locales/en.json';
 import ar from '../locales/ar.json';
-import fr from '../locales/fr.json';
-import de from '../locales/de.json';
+ 
 
 i18n.use(initReactI18next).init({
   lng: 'en',
@@ -12,8 +11,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {translation: en},
     ar: {translation: ar},
-    fr: {translation: fr},
-    de: {translation: de},
+   
   },
   interpolation: {
     escapeValue: false,

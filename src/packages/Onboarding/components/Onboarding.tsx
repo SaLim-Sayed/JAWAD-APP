@@ -1,102 +1,70 @@
-import React, { useState, useRef } from 'react';
-import { View, FlatList, Dimensions } from 'react-native';
-import { images } from '@/assets/images';
-import { Icons } from '@/constants';
-import AppText from '@/components/UI/AppText';
-import { useAuthStore } from '@/store/useAuthStore';
-import OnboardingBox from './OnboardingBox';
-import NavButton from './NavbarButton';
-import Navbar from './Navbar';
-
-type OnboardItem = {
-  title: string;
-  description: string;
-  image: any;
-  buttons: { text: string; action: 'back' | 'next'; disabled?: boolean }[];
-};
-
-const onboardData: OnboardItem[] = [
-  {
-    title: 'Discover The Best Stables Near You',
-    description:
-      "Explore Top-Rated Stables For Horse Riding, All in One Place. Whether You're A Beginner Or An Experienced Rider, Find The Perfect Stable To Suit Your Needs.",
-    image: images.onboard1,
-    buttons: [
-      { text: 'Back', action: 'back', disabled: true },
-      { text: 'Next', action: 'next' },
-    ],
-  },
-  {
-    title: 'Find Your Perfect Riding Experience',
-    description:
-      "Explore Top-Rated Stables For Horse Riding, All in One Place. Whether You're A Beginner Or An Experienced Rider, Find The Perfect Stable To Suit Your Needs.",
-    image: images.onboard2,
-    buttons: [
-      { text: 'Back', action: 'back' },
-      { text: 'Start', action: 'next' },
-    ],
-  },
-  {
-    title: 'Find Your Perfect Riding Experience',
-    description:
-      "Explore Top-Rated Stables For Horse Riding, All in One Place. Whether You're A Beginner Or An Experienced Rider, Find The Perfect Stable To Suit Your Needs.",
-    image: images.onboard3,
-    buttons: [
-      { text: 'Back', action: 'back' },
-      { text: 'Start', action: 'next' },
-    ],
-  },
-  {
-    title: '',
-    description: '',
-    image: images.onboard3,
-    buttons: [],
-  },
-];
+import React, { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FlatList, View, ViewToken } from "react-native";
+import { OnboardItem } from "../@types/OnboardItem";
+import Navbar from "./Navbar";
+import { onboardData } from "./onboardData";
+import OnboardingBox from "./OnboardingBox";
 
 export default function Onboarding() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList<OnboardItem>>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { i18n } = useTranslation();
+  const isRTL = i18n.dir() === "rtl";
 
   const handleNext = () => {
-    if (currentIndex < onboardData.length - 1) {
-      flatListRef.current?.scrollToIndex({ index: currentIndex + 1, animated: true });
-      setCurrentIndex(currentIndex + 1);
+    const newIndex = isRTL ? currentIndex - 1 : currentIndex + 1;
+    if ((isRTL && newIndex >= 0) || (!isRTL && newIndex < onboardData.length)) {
+      flatListRef.current?.scrollToIndex({ index: newIndex, animated: true });
+      setCurrentIndex(newIndex);
     }
   };
 
   const handleBack = () => {
-    if (currentIndex > 0) {
-      flatListRef.current?.scrollToIndex({ index: currentIndex - 1, animated: true });
-      setCurrentIndex(currentIndex - 1);
+    const newIndex = isRTL ? currentIndex + 1 : currentIndex - 1;
+    if ((isRTL && newIndex < onboardData.length) || (!isRTL && newIndex >= 0)) {
+      flatListRef.current?.scrollToIndex({ index: newIndex, animated: true });
+      setCurrentIndex(newIndex);
     }
   };
 
-  const onScrollEnd = (e: any) => {
-    const { contentOffset, layoutMeasurement } = e.nativeEvent;
-    const pageNum = Math.floor(contentOffset.x / layoutMeasurement.width);
-    setCurrentIndex(pageNum);
-  };
+  const viewabilityConfig = { viewAreaCoveragePercentThreshold: 50 };
 
-  const currentButtons = onboardData[currentIndex].buttons;
+  const onViewRef = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (viewableItems.length > 0) {
+        setCurrentIndex(viewableItems[0].index ?? 0);
+      }
+    }
+  );
+
+  const currentButtons = onboardData[currentIndex]?.buttons;
 
   return (
     <View className="flex-1 bg-transparent">
-
-      {currentIndex > 0 && <Navbar handleBack={handleBack} />
-      }
+      {currentIndex > 0 && <Navbar
+        handleBack={isRTL ? handleNext : handleBack}
+      />}
+      
       <FlatList
         ref={flatListRef}
         data={onboardData}
-        renderItem={({ item }) => <OnboardingBox item={item} currentButtons={currentButtons} handleNext={handleNext} handleBack={handleBack} />}
+        renderItem={({ item }) => (
+          <OnboardingBox
+            item={item}
+            currentButtons={currentButtons}
+            handleNext={handleNext}
+            handleBack={handleBack}
+          />
+        )}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={onScrollEnd}
+        inverted={isRTL}
         keyExtractor={(_, index) => index.toString()}
+        onViewableItemsChanged={onViewRef.current}
+        viewabilityConfig={viewabilityConfig}
       />
-
- 
     </View>
   );
 }

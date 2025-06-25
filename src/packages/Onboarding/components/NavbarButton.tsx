@@ -15,7 +15,7 @@ export default function NavButton({ text, onPress, disabled, iconLeft, iconRight
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      className={`h-12 w-32 gap-4 rounded-full flex-row items-center justify-between bg-gray-100 ${disabled ? 'opacity-0' : ''}`}
+      className={`h-12 w-32 gap-4 rounded-full flex-row rtl:flex-row-reverse items-center justify-between bg-gray-100 ${disabled ? 'opacity-0' : ''}`}
       activeOpacity={0.8}
     >
       {iconLeft}

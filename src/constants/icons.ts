@@ -7,6 +7,9 @@ import arrowLeft from "@/assets/icons/arrow-left.svg"
 import arrowRight from "@/assets/icons/arrow-right.svg"
 import jawadapp from "@/assets/icons/jawad.svg"
 import backArrow from "@/assets/icons/back_arrow.svg"
+import arrowCircleDown from "@/assets/icons/arrow-circle-down.svg"
+import en from "@/assets/icons/en.svg"
+
 
 
  
@@ -23,6 +26,7 @@ export const Icons = {
     arrowLeft,
     arrowRight,
     jawadapp,
-    backArrow
-
+    backArrow,
+    arrowCircleDown,
+    en,
 }

@@ -7,13 +7,13 @@ import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { Icons } from '@/constants';
+import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
+import { I18nContext } from '@/provider/Language/I18nContext';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import Profile from '@/screens/Profile/Profile';
 import { useAuthStore } from '@/store/useAuthStore';
-import Onboarding from '@/packages/Onboarding/OnboardingScreen';
-import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
-
+ 
 // React Query client
 const queryClient = new QueryClient();
 
@@ -260,11 +260,15 @@ function App() {
 }
 
 export default function Root() {
+
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
       <NavigationContainer>
-        <App />
+        <I18nContext>
+          <App />
+        </I18nContext>
+
         <Toast visibilityTime={500} />
       </NavigationContainer>
     </QueryClientProvider>

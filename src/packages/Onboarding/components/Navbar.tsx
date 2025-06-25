@@ -12,13 +12,14 @@ const Navbar = ({ handleBack }: { handleBack: () => void }) => {
             end={{ x: 1, y: 1 }}
             style={{
                 borderRadius: 20,
+                direction: 'ltr'
             }}
-            className="absolute top-12 left-4 right-4 z-50"
-        > {/* Logo */}
+             className="absolute top-12 left-4 right-4 z-50"
+        >
             <View className="flex-row items-center rounded-2xl justify-between px-6 py-4">
 
                 <Image
-                    source={Icons.backArrow} // Make sure you have this in your assets
+                    source={Icons.backArrow}
                     className="w-10 h-10 mr-2"
                     onPress={handleBack}
                 />
@@ -28,7 +29,6 @@ const Navbar = ({ handleBack }: { handleBack: () => void }) => {
                     className="w-20 h-6"
                     style={{ width: 100 }}
                 />
-
             </View>
         </LinearGradient>
     );
