@@ -1,6 +1,6 @@
-import React, { JSX } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import AppText from '@/components/UI/AppText';
+import React, { JSX } from "react";
+import { TouchableOpacity, View } from "react-native";
+import AppText from "@/components/UI/AppText";
 
 type NavButtonProps = {
   text: string;
@@ -10,12 +10,20 @@ type NavButtonProps = {
   iconRight?: JSX.Element;
 };
 
-export default function NavButton({ text, onPress, disabled, iconLeft, iconRight }: NavButtonProps) {
+export default function NavButton({
+  text,
+  onPress,
+  disabled,
+  iconLeft,
+  iconRight,
+}: NavButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      className={`h-12 w-32 gap-4 rounded-full flex-row rtl:flex-row-reverse items-center justify-between bg-gray-100 ${disabled ? 'opacity-0' : ''}`}
+      className={`h-12 w-32 gap-4 rounded-full flex-row rtl:flex-row-reverse items-center justify-between bg-gray-100 ${
+        disabled ? "opacity-0" : ""
+      }`}
       activeOpacity={0.8}
     >
       {iconLeft}

@@ -5,7 +5,7 @@ import { View } from 'react-native';
 export default function SplashScreen() {
     return (
         <View className="flex-1 justify-center items-center bg-white ">
-            <Image source={images.splash} />
+            <Image source={images.splash} className="w-full h-full" />
         </View>
     );
 }

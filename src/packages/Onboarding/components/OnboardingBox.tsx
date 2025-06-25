@@ -13,7 +13,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { OnboardBoxProps } from "../@types/OnboardItem";
 import NavButton from "./NavbarButton";
 import { useTranslation } from "react-i18next";
- import LanguageSwitcher from "@/provider/Language/LanguageSwitcher";
+import LanguageSwitcher from "@/provider/Language/LanguageSwitcher";
 
 export default function OnboardingBox({
   item,
@@ -48,12 +48,11 @@ export default function OnboardingBox({
         backgroundColor="transparent"
         barStyle="light-content"
       />
-            <LanguageSwitcher/>
+      <LanguageSwitcher />
 
-       <View
-        className={`bg-white/60 relative rounded-3xl p-8 mx-4 mb-8 ${
-          !item.description ? "bg-transparent" : ""
-        }`}
+      <View
+        className={`bg-white/60 relative rounded-3xl p-8 mx-4 mb-8 ${!item.description ? "bg-transparent" : ""
+          }`}
       >
         {item?.title && (
           <AppText className="tajawal-medium-20 text-center mb-4 text-brownColor-300">
@@ -94,18 +93,22 @@ export default function OnboardingBox({
         {(leftButton || rightButton) && (
           <View className="absolute -bottom-4 left-10 right-10 px-8">
             <View
-              className={`flex-row   mx-auto gap-4 justify-between ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
+              className={`flex-row   mx-auto gap-4 justify-between ${isRTL ? "flex-row-reverse" : ""
+                }`}
             >
               {leftButton && (
                 <NavButton
                   text={t(leftButton.text)}
                   onPress={isRTL ? handleNext : handleBack}
                   iconLeft={
-                    <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
+                    isRTL ? <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
                       <Icons.arrowLeft className="text-white" />
-                    </View>
+                    </View> : undefined
+                  }
+                  iconRight={
+                    !isRTL ? <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
+                      <Icons.arrowLeft className="text-white" />
+                    </View> : undefined
                   }
                 />
               )}
@@ -114,10 +117,15 @@ export default function OnboardingBox({
                 <NavButton
                   text={t(rightButton.text)}
                   onPress={isRTL ? handleBack : handleNext}
+                  iconLeft={!isRTL ? <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
+                    <Icons.arrowRight className="text-white" />
+                  </View> : undefined}
                   iconRight={
-                    <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
-                      <Icons.arrowRight className="text-white" />
-                    </View>
+                    isRTL ?
+                      <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
+                        <Icons.arrowRight className="text-white" />
+                      </View>
+                      : undefined
                   }
                 />
               )}

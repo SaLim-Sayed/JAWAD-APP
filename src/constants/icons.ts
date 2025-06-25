@@ -9,6 +9,7 @@ import jawadapp from "@/assets/icons/jawad.svg"
 import backArrow from "@/assets/icons/back_arrow.svg"
 import arrowCircleDown from "@/assets/icons/arrow-circle-down.svg"
 import en from "@/assets/icons/en.svg"
+import ar from "@/assets/icons/calendar-2.svg"
 
 
 
@@ -29,4 +30,5 @@ export const Icons = {
     backArrow,
     arrowCircleDown,
     en,
+    ar,
 }

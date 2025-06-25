@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, View, useWindowDimensions, I18nManager } from 'react-native';
-import { useLanguage } from '../../store/useLanguage';
 import AppText from '@/components/UI/AppText';
-import { useTranslation } from 'react-i18next';
 import Image from '@/components/UI/Image';
 import { Icons } from '@/constants';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { I18nManager, Modal, Pressable, View, useWindowDimensions } from 'react-native';
+import { useLanguage } from '../../store/useLanguage';
+import { images } from '@/assets/images';
  
-const LanguageOption = ({ label, onPress }: { label: string; onPress: () => void }) => (
+const LanguageOption = ({ label, onPress, icon }: { label: string; onPress: () => void, icon: string }) => (
   <Pressable
     hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
     onPress={onPress}
-    className="w-full py-2 px-3 rounded-lg"
+    className="w-full py-2 px-3 flex-row gap-4 items-center justify-between rounded-lg"
   >
-    <Icons.en    className="w-6 h-6"/>
-    <AppText  className="text-sm text-brownColor-400 text-left">{label}</AppText>
+    <AppText  className="text-lg text-brownColor-400 text-left">{label}</AppText>
+    <Image source={icon} style={{width: 16, height: 16}}/>
+
   </Pressable>
 );
 
@@ -51,16 +53,15 @@ const LanguageSwitcher = React.memo(() => {
   }, [isOpen, isRTL, width, height]);
 
   return (
-    <View ref={ref} collapsable={false}>
-      <Pressable onPress={toggleModal} className="rounded-xl border border-slate-300 bg-white h-[42px] w-[83px] flex-row items-center justify-center px-2 gap-2">
+    <View className='absolute top-40 rtl:right-4 ltr:left-4 z-50' ref={ref} collapsable={false}>
+      <Pressable onPress={toggleModal} className="rounded-xl border border-slate-300 bg-white h-[42px] w-[100px] flex-row items-center justify-center px-2 gap-2">
         <AppText className="text-base text-brownColor-400 ">{language === 'ar' ? 'العربية' : 'English'}</AppText>
-        {/* <Icon name="chevron-down" size={22} color="#333" /> */}
         <Image source={Icons.arrowCircleDown}/>
       </Pressable>
       <Modal transparent visible={isOpen} animationType="none">
         <Pressable
           onPress={toggleModal}
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-4 w-full h-full"
         >
           <View
             className="absolute bg-white border border-slate-300 rounded-xl"
@@ -72,9 +73,9 @@ const LanguageSwitcher = React.memo(() => {
               padding: 0,
             }}
           >
-            <LanguageOption label="English" onPress={() => changeLng('en')} />
+            <LanguageOption label="English" onPress={() => changeLng('en')}  icon={images.en} />
             <View className="h-px bg-slate-200 w-full my-1" />
-            <LanguageOption label="العربية" onPress={() => changeLng('ar')} />
+            <LanguageOption label="العربية" onPress={() => changeLng('ar')} icon={images.ar} />
           </View>
         </Pressable>
       </Modal>
