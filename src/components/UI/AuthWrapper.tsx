@@ -39,7 +39,7 @@ const AuthWrapper: React.FC<AppWrapperProps> = ({
         <Navbar handleBack={goBack} />
 
         <View className="flex-1 bg-transparent">
-            <View className="flex-[0.9] w-[95%] flex-row justify-center items-center bg-white/80 rounded-3xl mt-[100px] mx-auto">
+            <View className="flex-[0.95] w-[95%] flex-row justify-center items-center bg-white/80 rounded-3xl mt-[100px] mx-auto">
             <ScrollView
               className="flex-1  w-full"
               contentContainerStyle={{

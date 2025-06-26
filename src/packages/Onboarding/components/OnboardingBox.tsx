@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { OnboardBoxProps } from "../@types/OnboardItem";
 import NavButton from "./NavbarButton";
+import { navigationEnums } from "@/provider/navigationEnums";
 
 export default function OnboardingBox({
   item,
@@ -39,12 +40,12 @@ export default function OnboardingBox({
 
       const navigateToLogin=()=>{
          setTimeout(() => {
-          navigate("login")
+          navigate(navigationEnums.LOGIN_SCREEN)
         }, 0);
       }
       const navigateToSignUp=()=>{
          setTimeout(() => {
-          navigate("signUp")
+          navigate(navigationEnums.SIGNUP_SCREEN)
         }, 0);
       }
   return (

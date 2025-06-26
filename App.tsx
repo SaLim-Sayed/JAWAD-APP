@@ -13,13 +13,16 @@ import { I18nContext } from '@/provider/Language/I18nContext';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import Profile from '@/screens/Profile/Profile';
 import { useAuthStore } from '@/store/useAuthStore';
-import LoginScreen from '@/packages/Sign-in/screens/LoginScreen';
-import { SignUpScreen } from '@/packages/Sign-up/screens/SignUpScreen';
-import ForgetScreen from '@/packages/Sign-in/screens/ForgetScreen';
+import LoginScreen from '@/packages/Auth/screens/LoginScreen';
+import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
+import ForgetScreen from '@/packages/Auth/screens/ForgetScreen';
 import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
-import OtpScreen from '@/packages/Sign-in/screens/OtpScreen';
-import ChangePassword from '@/packages/Sign-in/screens/ChangePassword';
-import SuccessScreen from '@/packages/Sign-in/screens/SuccessScreen';
+import OtpScreen from '@/packages/Auth/screens/OtpScreen';
+import ChangePassword from '@/packages/Auth/screens/ChangePassword';
+import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
+import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
+import { navigationEnums } from '@/provider/navigationEnums';
+import { NavigationParamsList } from '@/provider/NavigationParamsList';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -33,7 +36,7 @@ export type MainTabParamList = {
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<NavigationParamsList>();
 
 // Main Bottom Tabs
 function AdminTabs() {
@@ -204,17 +207,17 @@ function ClientTabs() {
 // Auth flow if not logged in
 function OnboardingNavigator() {
   return (
-    <Stack.Navigator initialRouteName="success" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="onboard1" component={OnboardingScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={navigationEnums.ONBOARD1} component={OnboardingScreen} />
       <Stack.Screen name="onboard2" component={OnboardingScreen} />
       <Stack.Screen name="onboard3" component={OnboardingScreen} />
-      <Stack.Screen name="preLogin" component={Profile} />
-      <Stack.Screen name="login" component={LoginScreen} />
-      <Stack.Screen name="signUp" component={SignUpScreen} />
-      <Stack.Screen name="forget-password" component={ForgetScreen} />
-      <Stack.Screen name="otp" component={OtpScreen} />
-      <Stack.Screen name="change-password" component={ChangePassword} />
-      <Stack.Screen name="success" component={SuccessScreen} />
+      <Stack.Screen name={navigationEnums.LOGIN_SCREEN} component={LoginScreen} />
+      <Stack.Screen name={navigationEnums.SIGNUP_SCREEN} component={SignUpScreen} />
+      <Stack.Screen name={navigationEnums.FORGET_PASSWORD_SCREEN} component={ForgetScreen} />
+      <Stack.Screen name={navigationEnums.OTP_SCREEN} component={OtpScreen} />
+      <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SCREEN} component={ChangePassword} />
+      <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN} component={ChangeSuccessScreen} />
+      <Stack.Screen name={navigationEnums.REGISTER_SUCCESS_SCREEN} component={RegisterSuccessScreen} />
 
     </Stack.Navigator>
   );
@@ -273,13 +276,13 @@ export default function Root() {
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
       <DismissKeyboardWrapper>
-      <NavigationContainer>
-        <I18nContext>
-          <App />
-        </I18nContext>
+        <NavigationContainer>
+          <I18nContext>
+            <App />
+          </I18nContext>
 
-        <Toast visibilityTime={500} />
-      </NavigationContainer>
+          <Toast visibilityTime={500} />
+        </NavigationContainer>
       </DismissKeyboardWrapper>
     </QueryClientProvider>
   );

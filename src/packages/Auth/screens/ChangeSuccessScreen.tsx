@@ -18,7 +18,7 @@ import Row from '@/components/UI/Row';
 import Col from '@/components/UI/Col';
 import { images } from '@/assets/images';
 
-const SuccessScreen = () => {
+const ChangeSuccessScreen = () => {
   const { navigate } = useGlobalNavigation();
   const { setActiveApp } = useAuthStore()
 
@@ -47,4 +47,4 @@ const SuccessScreen = () => {
   );
 };
 
-export default SuccessScreen;
+export default ChangeSuccessScreen;

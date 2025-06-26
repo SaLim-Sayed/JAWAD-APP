@@ -11,6 +11,7 @@ import OTPInput from '@/components/UI/OTPInput';
 import AppText from '@/components/UI/AppText';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
+import { navigationEnums } from '@/provider/navigationEnums';
 
 const loginSchema = z.object({
   otp: z.string().min(4, 'OTP is required'),
@@ -36,7 +37,7 @@ const OtpScreen = () => {
 
   const onSubmit = (data: LoginSchema) => {
     console.log('✅ Login Data:', data);
-    navigate("change-password")
+    navigate(navigationEnums.CHANGE_PASSWORD_SCREEN)
     // You can call your verify function here
   };
 

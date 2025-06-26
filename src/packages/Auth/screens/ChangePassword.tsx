@@ -16,6 +16,7 @@ import AppText from '@/components/UI/AppText';
 import Image from '@/components/UI/Image';
 import Row from '@/components/UI/Row';
 import Col from '@/components/UI/Col';
+import { navigationEnums } from '@/provider/navigationEnums';
 const Schema = z
   .object({
     password: z.string().min(6, 'Password too short'),
@@ -48,7 +49,7 @@ const ChangePassword = () => {
 
   const onSubmit = (data: Schema) => {
     console.log('✅ Login Data:', data);
-    navigate("success")
+    navigate(navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN)
   };
 
   return (
@@ -101,7 +102,7 @@ const ChangePassword = () => {
             selected={rememberMe}
             onPress={() => setRememberMe((prev) => !prev)}
           />
-          <TouchableOpacity onPress={() => navigate('forget-password')}>
+          <TouchableOpacity onPress={() => navigate(navigationEnums.CHANGE_PASSWORD_SCREEN)}>
             <AppText className="text-brownColor-300 text-sm">Forgot Password?</AppText>
 
           </TouchableOpacity>
