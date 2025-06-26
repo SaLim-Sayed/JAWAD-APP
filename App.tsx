@@ -13,7 +13,14 @@ import { I18nContext } from '@/provider/Language/I18nContext';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import Profile from '@/screens/Profile/Profile';
 import { useAuthStore } from '@/store/useAuthStore';
- 
+import LoginScreen from '@/packages/Sign-in/screens/LoginScreen';
+import { SignUpScreen } from '@/packages/Sign-up/screens/SignUpScreen';
+import ForgetScreen from '@/packages/Sign-in/screens/ForgetScreen';
+import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
+import OtpScreen from '@/packages/Sign-in/screens/OtpScreen';
+import ChangePassword from '@/packages/Sign-in/screens/ChangePassword';
+import SuccessScreen from '@/packages/Sign-in/screens/SuccessScreen';
+
 // React Query client
 const queryClient = new QueryClient();
 
@@ -197,21 +204,22 @@ function ClientTabs() {
 // Auth flow if not logged in
 function OnboardingNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="success" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="onboard1" component={OnboardingScreen} />
       <Stack.Screen name="onboard2" component={OnboardingScreen} />
       <Stack.Screen name="onboard3" component={OnboardingScreen} />
-    </Stack.Navigator>
-  );
-}
-function AuthNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="preLogin" component={Profile} />
-      <Stack.Screen name="login" component={Profile} />
+      <Stack.Screen name="login" component={LoginScreen} />
+      <Stack.Screen name="signUp" component={SignUpScreen} />
+      <Stack.Screen name="forget-password" component={ForgetScreen} />
+      <Stack.Screen name="otp" component={OtpScreen} />
+      <Stack.Screen name="change-password" component={ChangePassword} />
+      <Stack.Screen name="success" component={SuccessScreen} />
+
     </Stack.Navigator>
   );
 }
+
 
 // Main flow if logged in
 function MainNavigator() {
@@ -256,7 +264,7 @@ function App() {
   }, [isLoggedIn]);
 
   if (showSplash) return <SplashScreen />;
-  return activeApp === 'Onboarding' ? <OnboardingNavigator /> : activeApp === 'Auth' ? <AuthNavigator /> : activeApp === 'Client' ? <ClientTabs /> : activeApp === 'Admin' ? <AdminTabs /> : <MainNavigator />;
+  return activeApp === 'Onboarding' ? <OnboardingNavigator /> : activeApp === 'Client' ? <ClientTabs /> : activeApp === 'Admin' ? <AdminTabs /> : <MainNavigator />;
 }
 
 export default function Root() {
@@ -264,6 +272,7 @@ export default function Root() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
+      <DismissKeyboardWrapper>
       <NavigationContainer>
         <I18nContext>
           <App />
@@ -271,6 +280,7 @@ export default function Root() {
 
         <Toast visibilityTime={500} />
       </NavigationContainer>
+      </DismissKeyboardWrapper>
     </QueryClientProvider>
   );
 }

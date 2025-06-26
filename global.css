@@ -5,7 +5,13 @@
 :root {
   --brown-color-400:#493225;
   --brown-color-300:#684735;
+  --brown-color-100:#A7948A;
   --brown-color-50:#F0EDEB;
+
+  --yellow-color-300:#FEAF48;
+
+  --gray-color-100:##E2E2E2;
+
   --main-color-100: #7384a4;
   --main-color-200: #5d6e8e;
   --main-color-300: #7a879f;

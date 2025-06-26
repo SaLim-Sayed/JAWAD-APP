@@ -10,6 +10,12 @@ import backArrow from "@/assets/icons/back_arrow.svg"
 import arrowCircleDown from "@/assets/icons/arrow-circle-down.svg"
 import en from "@/assets/icons/en.svg"
 import ar from "@/assets/icons/calendar-2.svg"
+import google from "@/assets/icons/google.svg"
+import facebook from "@/assets/icons/Facebook.svg"
+import apple from "@/assets/icons/apple.svg"
+import eye from "@/assets/icons/eye.svg"
+import eyeOff from "@/assets/icons/eye-off.svg"
+
 
 
 
@@ -31,4 +37,9 @@ export const Icons = {
     arrowCircleDown,
     en,
     ar,
-}
+    google,
+    facebook,
+    apple,
+    eye,
+    eyeOff,
+    }

@@ -4,6 +4,7 @@ import onboard2 from "./pexels-lorena-villarreal.png";
 import onboard3 from "./pexels-pixabay.png";
 import en from "./en.png";
 import ar from "./ar.png";
+import success from "./success.png";
 
 export const images = {
     splash,
@@ -12,4 +13,5 @@ export const images = {
     onboard3,
     en,
     ar,
+    success,
 }

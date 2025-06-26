@@ -1,4 +1,9 @@
 export type RootStackParamList = {
+  signUp: undefined;
+  "forget-password": undefined;
+  "change-password": undefined;
+  success: undefined;
+  otp: undefined;
   Home: undefined;
   stable: undefined;
   service: undefined;

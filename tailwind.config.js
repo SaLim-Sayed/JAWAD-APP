@@ -9,6 +9,14 @@ module.exports = {
           50: "var(--brown-color-50)",
           300: "var(--brown-color-300)",
           400: "var(--brown-color-400)",
+          100: "var(--brown-color-100)",
+        },
+        yellowColor: {
+          300: "var(--yellow-color-300)",
+        },
+
+        grayColor: {
+          100: "var(--gray-color-100)",
         },
         mainColor: {
           100: "var(--main-color-100)",

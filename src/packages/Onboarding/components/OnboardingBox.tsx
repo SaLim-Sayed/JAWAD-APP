@@ -1,19 +1,19 @@
+import AppText from "@/components/UI/AppText";
+import { Icons } from "@/constants";
+import LanguageSwitcher from "@/provider/Language/LanguageSwitcher";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { useAuthStore } from "@/store/useAuthStore";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   Dimensions,
   ImageBackground,
   StatusBar,
   TouchableOpacity,
-  View,
-  I18nManager,
+  View
 } from "react-native";
-import AppText from "@/components/UI/AppText";
-import { Icons } from "@/constants";
-import { useAuthStore } from "@/store/useAuthStore";
 import { OnboardBoxProps } from "../@types/OnboardItem";
 import NavButton from "./NavbarButton";
-import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "@/provider/Language/LanguageSwitcher";
 
 export default function OnboardingBox({
   item,
@@ -21,9 +21,11 @@ export default function OnboardingBox({
   handleNext,
   handleBack,
 }: OnboardBoxProps) {
+  const {navigate}=useGlobalNavigation()
   const { width } = Dimensions.get("window");
   const { i18n, t } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+  const { isLoggedIn, activeApp,setActiveApp } = useAuthStore();
 
   const leftButton =
     currentButtons?.[0] && !currentButtons[0]?.disabled
@@ -35,6 +37,16 @@ export default function OnboardingBox({
       ? currentButtons[1]
       : null;
 
+      const navigateToLogin=()=>{
+         setTimeout(() => {
+          navigate("login")
+        }, 0);
+      }
+      const navigateToSignUp=()=>{
+         setTimeout(() => {
+          navigate("signUp")
+        }, 0);
+      }
   return (
     <ImageBackground
       source={item.image}
@@ -67,20 +79,20 @@ export default function OnboardingBox({
           </AppText>
         ) : (
           <View className="items-center">
-            <TouchableOpacity className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
+            <TouchableOpacity onPress={navigateToLogin} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
               <AppText className="text-brownColor-50 tajawal-semibold-16">
                 {t("Sign In")}
               </AppText>
             </TouchableOpacity>
 
-            <TouchableOpacity className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
+            <TouchableOpacity onPress={navigateToSignUp} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
               <AppText className="text-brownColor-50 tajawal-semibold-16">
                 {t("Sign up")}
               </AppText>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => useAuthStore.getState().setActiveApp("Client")}
+              onPress={() => setActiveApp("Client")}
               className="bg-brownColor-50 px-6 py-2 rounded-2xl mb-4 w-full items-center"
             >
               <AppText className="text-brownColor-400 tajawal-semibold-16">

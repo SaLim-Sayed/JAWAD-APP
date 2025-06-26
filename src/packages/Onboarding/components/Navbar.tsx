@@ -14,7 +14,7 @@ const Navbar = ({ handleBack }: { handleBack: () => void }) => {
                 borderRadius: 20,
                 direction: 'ltr'
             }}
-             className="absolute top-12 left-4 right-4 z-50"
+             className="absolute top-10 left-4 right-4 z-50"
         >
             <View className="flex-row items-center rounded-2xl justify-between px-6 py-4">
 
