@@ -15,6 +15,7 @@ import AppText from '@/components/UI/AppText';
 import { z } from 'zod';
 import { Text, View } from 'react-native';
 import Row from '@/components/UI/Row';
+import { navigationEnums } from '@/provider/navigationEnums';
 const signUpSchema = z.object({
     username: z.string().min(3, 'Username required'),
     phone: z.string().min(6, 'Phone number required'),
@@ -49,7 +50,7 @@ export const SignUpScreen = () => {
 
     const onSubmit = (data: SignUpForm) => {
         console.log('✅ Form Data:', data);
-        navigate("otp")
+        navigate(navigationEnums.OTP_SCREEN)
     };
 
     return (

@@ -10,7 +10,6 @@ import { Icons } from '@/constants';
 import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
 import { I18nContext } from '@/provider/Language/I18nContext';
-import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import Profile from '@/screens/Profile/Profile';
 import { useAuthStore } from '@/store/useAuthStore';
 import LoginScreen from '@/packages/Auth/screens/LoginScreen';
@@ -23,6 +22,7 @@ import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
 import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { NavigationParamsList } from '@/provider/NavigationParamsList';
+import HomeScreen from '@/packages/Client/home/screens/Home';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -229,7 +229,7 @@ function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
       <Stack.Screen name="Main" component={AdminTabs} />
-      <Stack.Screen name="home" component={Profile} />
+      <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="stable" component={Profile} />
       <Stack.Screen name="service" component={Profile} />
       <Stack.Screen name="series/stream" component={Profile} />
@@ -275,15 +275,13 @@ export default function Root() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
-      <DismissKeyboardWrapper>
-        <NavigationContainer>
+         <NavigationContainer>
           <I18nContext>
             <App />
           </I18nContext>
 
           <Toast visibilityTime={500} />
         </NavigationContainer>
-      </DismissKeyboardWrapper>
-    </QueryClientProvider>
+     </QueryClientProvider>
   );
 }

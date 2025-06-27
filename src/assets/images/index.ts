@@ -5,6 +5,11 @@ import onboard3 from "./pexels-pixabay.png";
 import en from "./en.png";
 import ar from "./ar.png";
 import success from "./success.png";
+import horseRider from "./rider-trains-with-horse.png";
+import horseRider2 from "./rider-trains-with-horse-2.png";
+import pyramids from "./pyramids.png";
+import villarreal from "./villarreal.png";
+import family from "./family.png";
 
 export const images = {
     splash,
@@ -14,4 +19,9 @@ export const images = {
     en,
     ar,
     success,
+    horseRider,
+    horseRider2,
+    pyramids,
+    villarreal,
+    family,
 }
