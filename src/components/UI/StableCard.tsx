@@ -54,7 +54,7 @@ const StableCard: React.FC<StableCardProps> = ({
                     }
                 />
                 <Image source={Icons.camera} style={styles.icon} />
-                <Image source={Icons.horse} style={styles.icon} />
+                {/* <Image source={Icons.horse} style={styles.icon} /> */}
             </Row>
         </Col>
     </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: "#E7E7E74D",
         borderRadius: 16,
-         width: 186,
+         maxWidth: 182,
         shadowColor: "#000",
         shadowOpacity: 0.06,
         shadowRadius: 6,

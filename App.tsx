@@ -1,29 +1,31 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
 import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import { Icons } from '@/constants';
-import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
-import SplashScreen from '@/packages/Splash/SplashScreen';
 import { I18nContext } from '@/provider/Language/I18nContext';
-import Profile from '@/screens/Profile/Profile';
+import { navigationEnums } from '@/provider/navigationEnums';
+import { NavigationParamsList } from '@/provider/NavigationParamsList';
 import { useAuthStore } from '@/store/useAuthStore';
+
+import SplashScreen from '@/packages/Splash/SplashScreen';
+import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import LoginScreen from '@/packages/Auth/screens/LoginScreen';
 import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
 import ForgetScreen from '@/packages/Auth/screens/ForgetScreen';
-import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
 import OtpScreen from '@/packages/Auth/screens/OtpScreen';
 import ChangePassword from '@/packages/Auth/screens/ChangePassword';
 import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
 import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
-import { navigationEnums } from '@/provider/navigationEnums';
-import { NavigationParamsList } from '@/provider/NavigationParamsList';
+
 import HomeScreen from '@/packages/Client/home/screens/Home';
 import Services from '@/packages/Client/Services/screens/Services';
+import Profile from '@/screens/Profile/Profile';
+import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -39,82 +41,69 @@ export type MainTabParamList = {
 const Tab = createBottomTabNavigator<MainTabParamList>();
 const Stack = createNativeStackNavigator<NavigationParamsList>();
 
-// Main Bottom Tabs
+// Helper for Tab Icon
+const TabBarIcon = ({ route, focused }: { route: { name: string }, focused: boolean }) => {
+  const iconSize = 24;
+  let IconComponent;
+
+  switch (route.name) {
+    case 'home': IconComponent = Icons.home; break;
+    case 'stable': IconComponent = Icons.stable; break;
+    case 'service': IconComponent = Icons.service; break;
+    case 'profile': IconComponent = Icons.profile; break;
+    default: return null;
+  }
+
+  if (focused) {
+    return (
+      <View
+        style={{
+          backgroundColor: '#E7E7E7',
+          borderRadius: 999,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 30,
+        }}
+      >
+        <View className='border-b-transparent border-[#E7E7E7]  border-[35px] border-t-[50px] rounded-[99999px] rounded-b-none flex items-center justify-center'>
+          <View className='bg-[#5E3E2C] mb-4 rounded-full flex items-center justify-center h-[50px] p-2 w-[50px]'>
+            <IconComponent width={iconSize} height={iconSize} stroke="#fff" color="#fff" />
+          </View>
+        </View>
+      </View>
+    );
+  }
+  return <IconComponent width={iconSize} height={iconSize} color="#fff" />;
+};
+
+const tabScreenOptions = ({ route }: any) => ({
+  headerShown: false,
+  tabBarShowLabel: true,
+  tabBarButton: (props: any) => (
+    // @ts-ignore
+    <Pressable android_ripple={{ color: 'transparent' }} {...props} />
+  ),
+  tabBarLabelStyle: { fontSize: 14 },
+  tabBarIcon: ({ focused }: { focused: boolean }) => TabBarIcon({ route, focused }),
+  tabBarActiveTintColor: '#5E3E2C',
+  tabBarPressColor: 'transparent',
+  headerPressColor: "transparent",
+  tabBarInactiveTintColor: '#999',
+  tabBarStyle: {
+    height: 100,
+    borderRadius: 16,
+    position: 'absolute',
+    paddingHorizontal: 12,
+    bottom: 20,
+    backgroundColor: '#E7E7E7',
+  },
+});
+
+// Main Bottom Tabs for Admin
 function AdminTabs() {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarShowLabel: true,
-        tabBarButton: (props) => (
-          // @ts-ignore
-          <Pressable android_ripple={{ color: 'transparent' }} {...props} />
-        ),
-        tabBarLabelStyle: {
-          fontSize: 14,
-        },
-        tabBarIcon: ({ focused }) => {
-          const iconSize = 24;
-          let IconComponent;
-
-          switch (route.name) {
-            case 'home':
-              IconComponent = Icons.home;
-              break;
-            case 'stable':
-              IconComponent = Icons.stable;
-              break;
-            case 'service':
-              IconComponent = Icons.service;
-              break;
-            case 'profile':
-              IconComponent = Icons.profile;
-              break;
-            default:
-              return null;
-          }
-
-          if (focused) {
-            return (
-              <View
-                style={{
-                  backgroundColor: '#E7E7E7',
-                  borderRadius: 999,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: 40,
-
-                }}
-              >
-                <View className=' border-b-transparent  border-[#E7E7E7]  border-[40px]  rounded-[100px]  rounded-b-none flex items-center justify-center '>
-                  <View className='bg-[#5E3E2C]  rounded-full  flex items-center justify-center h-[55px] p-4 w-[55px]'>
-                    <IconComponent width={iconSize} height={iconSize} stroke="#fff" color="#fff" />
-                  </View>
-                </View>
-              </View>
-            );
-          }
-
-          return (
-            <IconComponent width={iconSize} height={iconSize} color="#fff" />
-          );
-        },
-        tabBarActiveTintColor: '#5E3E2C',
-        tabBarPressColor: 'transparent',
-        headerPressColor: "transparent",
-        tabBarInactiveTintColor: '#999',
-        tabBarStyle: {
-          height: 100,
-          borderRadius: 16,
-          position: 'absolute',
-          paddingHorizontal: 40,
-
-          bottom: 30,
-          backgroundColor: '#E7E7E7',
-
-        },
-      })}
-    >
+    // @ts-ignore
+    <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
@@ -122,81 +111,12 @@ function AdminTabs() {
     </Tab.Navigator>
   );
 }
+
+// Main Bottom Tabs for Client (if you want to differentiate)
 function ClientTabs() {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarShowLabel: true,
-        tabBarButton: (props) => (
-          // @ts-ignore
-          <Pressable android_ripple={{ color: 'transparent' }} {...props} />
-        ),
-        tabBarLabelStyle: {
-          fontSize: 14,
-        },
-        tabBarIcon: ({ focused }) => {
-          const iconSize = 24;
-          let IconComponent;
-
-          switch (route.name) {
-            case 'home':
-              IconComponent = Icons.home;
-              break;
-            case 'stable':
-              IconComponent = Icons.stable;
-              break;
-            case 'service':
-              IconComponent = Icons.service;
-              break;
-            case 'profile':
-              IconComponent = Icons.profile;
-              break;
-            default:
-              return null;
-          }
-
-          if (focused) {
-            return (
-              <View
-                style={{
-                  backgroundColor: '#E7E7E7',
-                  borderRadius: 999,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: 40,
-
-                }}
-              >
-                <View className=' border-b-transparent  border-[#E7E7E7]  border-[40px]  rounded-[100px]  rounded-b-none flex items-center justify-center '>
-                  <View className='bg-[#5E3E2C]  rounded-full  flex items-center justify-center h-[55px] p-4 w-[55px]'>
-                    <IconComponent width={iconSize} height={iconSize} stroke="#fff" color="#fff" />
-                  </View>
-                </View>
-              </View>
-            );
-          }
-
-          return (
-            <IconComponent width={iconSize} height={iconSize} color="#fff" />
-          );
-        },
-        tabBarActiveTintColor: '#5E3E2C',
-        tabBarPressColor: 'transparent',
-        headerPressColor: "transparent",
-        tabBarInactiveTintColor: '#999',
-        tabBarStyle: {
-          height: 100,
-          borderRadius: 16,
-          position: 'absolute',
-          paddingHorizontal: 40,
-
-          bottom: 30,
-          backgroundColor: '#E7E7E7',
-
-        },
-      })}
-    >
+    // @ts-ignore
+    <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
@@ -219,11 +139,9 @@ function OnboardingNavigator() {
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SCREEN} component={ChangePassword} />
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN} component={ChangeSuccessScreen} />
       <Stack.Screen name={navigationEnums.REGISTER_SUCCESS_SCREEN} component={RegisterSuccessScreen} />
-
     </Stack.Navigator>
   );
 }
-
 
 // Main flow if logged in
 function MainNavigator() {
@@ -251,28 +169,31 @@ function MainNavigator() {
 // Root App
 function App() {
   const [showSplash, setShowSplash] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowSplash(false);
-    }, 2000); // Delay for 500ms
-
-    return () => clearTimeout(timeout); // Cleanup on unmount
-  }, []);
   const { isLoggedIn, activeApp } = useAuthStore();
 
   useEffect(() => {
+    const timeout = setTimeout(() => setShowSplash(false), 2000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
     if (!isLoggedIn) {
-      useAuthStore.setState({ activeApp: 'Onboarding' });
+      // useAuthStore.setState({ activeApp: 'Onboarding' });
     }
   }, [isLoggedIn]);
 
   if (showSplash) return <SplashScreen />;
-  return activeApp === 'Client' ? <ClientTabs /> : activeApp === 'Admin' ? <AdminTabs /> : <MainNavigator />;
+
+  // Choose navigator based on activeApp
+  switch (activeApp) {
+    case 'Onboarding': return <OnboardingNavigator />;
+    case 'Client': return <ClientTabs />;
+    case 'Admin': return <AdminTabs />;
+    default: return <MainNavigator />;
+  }
 }
 
 export default function Root() {
-
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
@@ -280,7 +201,6 @@ export default function Root() {
         <I18nContext>
           <App />
         </I18nContext>
-
         <Toast visibilityTime={500} />
       </NavigationContainer>
     </QueryClientProvider>
