@@ -22,7 +22,7 @@ const QuoteCard: React.FC = () => (
 );
 
 const styles = StyleSheet.create({
-  outer: { width: "100%", alignItems: "center", marginVertical: 15 },
+  outer: { width: "100%", alignItems: "center", marginVertical: 15,marginHorizontal:10 },
   bgImage: { width: 450, height: 230, position: "relative", direction: "ltr", borderRadius: 20 },
   quoteCard: { borderRadius: 18, overflow: "hidden", width: 382, height: 149, marginTop: 112, position: "absolute", bottom: 0, left: 24, right: 24 },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(30,22,16,0.38)" },

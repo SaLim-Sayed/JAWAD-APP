@@ -26,6 +26,8 @@ import arrowRightFill from "@/assets/icons/arrow-right-fill.svg"
 import shoppingCart from "@/assets/icons/shopping-cart.svg"
 import notification from "@/assets/icons/notification.svg"
 import horse from "@/assets/icons/horse.svg"
+import filter from "@/assets/icons/filter.svg"
+
 
 
 
@@ -69,4 +71,5 @@ export const Icons = {
     shoppingCart,
     notification,
     horse,
+    filter
 }

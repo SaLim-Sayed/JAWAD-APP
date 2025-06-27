@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView, TextInput } from "react-native";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
@@ -11,6 +11,7 @@ import { Input } from "@/components";
 import { Icons } from "@/constants";
 import { useForm } from "react-hook-form";
 import AppWrapper from "@/components/UI/AppWrapper";
+import SearchInput from "@/components/UI/SearchInput";
 
 // Dummy data for best stables/events
 const bestStables = [
@@ -44,8 +45,7 @@ const HomeScreen = () => {
   // Header user info
   const userName = "George Mikhaiel";
   const location = "Fifth Settlement";
-  const control = useForm();
-
+  const [search, setSearch] = useState("");
   return (
     <AppWrapper>
       <HomeHeader userName={userName} location={location} />
@@ -58,16 +58,8 @@ const HomeScreen = () => {
           }}
         >
           {/* Search */}
-          <View className="bg-white rounded-2xl border border-brownColor-300   flex-row items-center mx-6  px-4 h-11 shadow mb-3  justify-center">
-            <Icons.search color="#999" width={20} height={20} />
-            <TextInput
-              style={{ color: "#684735", fontSize: 16, paddingHorizontal: 8 }}
-              placeholder="Search"
-              placeholderTextColor={"#684735"}
-              className="w-full py-2"
-              onChangeText={(text) => { }}
-            />
-          </View>
+          <SearchInput value={search} onChange={setSearch} />
+
           {/* Quote Card */}
           <QuoteCard />
           {/* The Best Stable Section */}

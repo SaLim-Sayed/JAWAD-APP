@@ -23,6 +23,7 @@ import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen
 import { navigationEnums } from '@/provider/navigationEnums';
 import { NavigationParamsList } from '@/provider/NavigationParamsList';
 import HomeScreen from '@/packages/Client/home/screens/Home';
+import Services from '@/packages/Client/Services/screens/Services';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -115,8 +116,8 @@ function AdminTabs() {
       })}
     >
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
-      <Tab.Screen name="service" component={Profile} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -197,8 +198,8 @@ function ClientTabs() {
       })}
     >
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
-      <Tab.Screen name="service" component={Profile} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -231,7 +232,7 @@ function MainNavigator() {
       <Stack.Screen name="Main" component={AdminTabs} />
       <Stack.Screen name="home" component={HomeScreen} />
       <Stack.Screen name="stable" component={Profile} />
-      <Stack.Screen name="service" component={Profile} />
+      <Stack.Screen name="service" component={Services} />
       <Stack.Screen name="series/stream" component={Profile} />
       <Stack.Screen name="series/details" component={Profile} />
       <Stack.Screen name="movies" component={Profile} />
@@ -254,7 +255,7 @@ function App() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowSplash(false);
-    }, 3000); // Delay for 500ms
+    }, 2000); // Delay for 500ms
 
     return () => clearTimeout(timeout); // Cleanup on unmount
   }, []);
@@ -267,7 +268,7 @@ function App() {
   }, [isLoggedIn]);
 
   if (showSplash) return <SplashScreen />;
-  return activeApp === 'Onboarding' ? <OnboardingNavigator /> : activeApp === 'Client' ? <ClientTabs /> : activeApp === 'Admin' ? <AdminTabs /> : <MainNavigator />;
+  return activeApp === 'Client' ? <ClientTabs /> : activeApp === 'Admin' ? <AdminTabs /> : <MainNavigator />;
 }
 
 export default function Root() {
@@ -275,13 +276,13 @@ export default function Root() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
-         <NavigationContainer>
-          <I18nContext>
-            <App />
-          </I18nContext>
+      <NavigationContainer>
+        <I18nContext>
+          <App />
+        </I18nContext>
 
-          <Toast visibilityTime={500} />
-        </NavigationContainer>
-     </QueryClientProvider>
+        <Toast visibilityTime={500} />
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
