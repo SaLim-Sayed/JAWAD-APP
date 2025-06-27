@@ -47,7 +47,7 @@ const LoginScreen = () => {
 
   return (
     <AuthWrapper>
-      <Col className='mt-4' gap={8}>
+      
         <Col gap={4}>
           <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Login</AppText>
           <AppText className="text-brownColor-400 mb-4">Welcome back! Please login to continue</AppText>
@@ -136,8 +136,7 @@ const LoginScreen = () => {
           variant="outline"
           onPress={() => setActiveApp("Client")}
         />
-      </Col>
-    </AuthWrapper>
+     </AuthWrapper>
   );
 };
 
