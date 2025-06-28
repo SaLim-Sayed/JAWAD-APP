@@ -1,30 +1,41 @@
-import { images } from "@/assets/images";
+import AppButton from "@/components/UI/AppButton";
 import AppWrapper from "@/components/UI/AppWrapper";
 import SearchInput from "@/components/UI/SearchInput";
+import { Icons } from "@/constants";
+import useAppRouteParams from "@/provider/useAppRouteParams";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
-import BestStableSection from "../components/BestStableSection";
 import ServiceHeadr from "../components/HomeHeader";
-import Row from "@/components/UI/Row";
-import { Icons } from "@/constants";
-import AppButton from "@/components/UI/AppButton";
 import { bestStables } from "./maock";
 
- 
+// Dummy data for best stables/events
 
-const Services = () => {
+
+
+const StableServicesDetails = () => {
+  const { id } = useAppRouteParams("STABLE_SERVICES_DETAILS")
+  console.log(id)
   // Header user info
   const userName = "George Mikhaiel";
-   const [search, setSearch] = useState("");
+  const location = "Fifth Settlement";
+  const [search, setSearch] = useState("");
+  const title=bestStables.find((stable) => stable.id === id)?.name;
   return (
     <AppWrapper>
-      <ServiceHeadr userName={userName} />
+      <ServiceHeadr title={title} />
       <View className="bg-white pt-6  pb-60">
-       
-          {/* Search */}
-          <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 220,
+            marginHorizontal: 10,
+            flexGrow: 1,
 
-            <SearchInput  value={search} onChange={setSearch} />
+          }}
+        >
+          {/* Search */}
+          <View className="flex-row w-full mb-3 justify-between items-center gap-4">
+
+            <SearchInput value={search} onChange={setSearch} />
 
             <AppButton
               className="w-12 h-12 bg-brownColor-400 items-center justify-center"
@@ -39,11 +50,11 @@ const Services = () => {
           </View>
 
           {/* The Best Stable Section */}
-          <BestStableSection bestStables={bestStables} />
           {/* The Events Section */}
-       </View>
+        </ScrollView>
+      </View>
     </AppWrapper>
   );
 };
 
-export default Services;
+export default StableServicesDetails;

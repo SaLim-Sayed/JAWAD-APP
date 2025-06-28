@@ -26,6 +26,7 @@ import HomeScreen from '@/packages/Client/home/screens/Home';
 import Services from '@/packages/Client/Services/screens/Services';
 import Profile from '@/screens/Profile/Profile';
 import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
+import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -143,15 +144,24 @@ function OnboardingNavigator() {
   );
 }
 
+function ClientNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
+      <Stack.Screen name="Main" component={ClientTabs} />
+      <Stack.Screen name="stable" component={Profile} />
+      <Stack.Screen name="service" component={Services} />
+      <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
+    </Stack.Navigator>)
+}
+
 // Main flow if logged in
 function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
       <Stack.Screen name="Main" component={AdminTabs} />
       <Stack.Screen name="home" component={HomeScreen} />
-      <Stack.Screen name="stable" component={Profile} />
-      <Stack.Screen name="service" component={Services} />
-      <Stack.Screen name="series/stream" component={Profile} />
+
+      <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
       <Stack.Screen name="series/details" component={Profile} />
       <Stack.Screen name="movies" component={Profile} />
       <Stack.Screen name="movies/details" component={Profile} />
@@ -187,7 +197,7 @@ function App() {
   // Choose navigator based on activeApp
   switch (activeApp) {
     case 'Onboarding': return <OnboardingNavigator />;
-    case 'Client': return <ClientTabs />;
+    case 'Client': return <ClientNavigator />;
     case 'Admin': return <AdminTabs />;
     default: return <MainNavigator />;
   }

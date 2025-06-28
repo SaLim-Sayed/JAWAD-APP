@@ -58,8 +58,9 @@ const HomeScreen = () => {
           }}
         >
           {/* Search */}
-          <SearchInput value={search} onChange={setSearch} />
-
+          <View className="px-4">
+            <SearchInput value={search} onChange={setSearch} />
+          </View>
           {/* Quote Card */}
           <QuoteCard />
           {/* The Best Stable Section */}

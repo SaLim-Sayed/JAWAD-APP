@@ -3,8 +3,7 @@ import { navigationEnums } from './navigationEnums';
 export type NavigationParamsList = {
   [navigationEnums.MAIN]: undefined;
   [navigationEnums.HOME]: undefined;
-  [navigationEnums.STABLE]: undefined;
-  [navigationEnums.SERVICE]: undefined;
+  
   [navigationEnums.PROFILE]: undefined;
   [navigationEnums.SERIES_STREAM]: undefined;
   [navigationEnums.SERIES_DETAILS]: undefined;
@@ -28,4 +27,10 @@ export type NavigationParamsList = {
   [navigationEnums.CHANGE_PASSWORD_SCREEN]: undefined;
   [navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN]: undefined;
   [navigationEnums.REGISTER_SUCCESS_SCREEN]: undefined;
+
+  //SERVICE
+  [navigationEnums.STABLE]: undefined;
+  [navigationEnums.SERVICE]: undefined;
+  [navigationEnums.STABLE_SERVICES_DETAILS]: {id:any};
+
 };

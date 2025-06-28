@@ -1,24 +1,21 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
 import AppText from "@/components/UI/AppText";
-import Row from "@/components/UI/Row";
-import { Icons } from "@/constants";
-import Image from "@/components/UI/Image";
-import { images } from "@/assets/images";
-import { TouchableOpacity } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import Divider from "@/components/UI/Divider";
+import React from "react";
+import { View } from "react-native";
 
 interface ServiceHeadrProps {
-  userName: string;
-  location: string;
-}
+  title?: string;
+  userName?: string;
+ }
 
-const ServiceHeadr: React.FC<ServiceHeadrProps> = ({ userName, location }) => (
+const ServiceHeadr: React.FC<ServiceHeadrProps> = ({ title, userName }) => (
   <View className="h-28 bg-white flex-col justify-between items-center">
-    <AppText className="text-brownColor-400 mt-16" >
+  {  title && <AppText className="text-brownColor-400 mt-16" >
+      {title}
+    </AppText>}
+   { userName && <AppText className="text-brownColor-400 mt-16" >
       {userName}
-    </AppText>
+    </AppText>}
     <Divider/>
   </View>
 );

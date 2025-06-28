@@ -1,7 +1,6 @@
 export const navigationEnums = {
   HOME: "home",
-  STABLE: "stable",
-  SERVICE: "service",
+  
   PROFILE: "profile",
   MAIN: "Main",
   SERIES_STREAM: "series/stream",
@@ -15,6 +14,7 @@ export const navigationEnums = {
   PROFILE_CLEAR_CACHE: "profile/clearCache",
   PROFILE_APPLICATION_INFO: "profile/applicationInfo",
 
+
   // Auth
   ONBOARD1: "onboard1",
   ONBOARD2: "onboard2",
@@ -26,4 +26,10 @@ export const navigationEnums = {
   CHANGE_PASSWORD_SCREEN: "change-password",
   CHANGE_PASSWORD_SUCCESS_SCREEN: "change-password-success",
   REGISTER_SUCCESS_SCREEN: "register-success",
+
+
+  //SERVICE
+  STABLE_SERVICES_DETAILS: "stable/services/details/:id",
+  STABLE: "stable",
+  SERVICE: "service",
 } as const;

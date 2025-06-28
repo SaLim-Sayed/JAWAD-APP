@@ -23,7 +23,7 @@ const StableCard: React.FC<StableCardProps> = ({
     rating,
     onPressStart,
 }) => (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onPressStart} style={styles.card}>
         <Image className="rounded-t-2xl" source={image} style={styles.image} />
         <Col className="p-2" gap={4}>
             <Row items="center" gap={4}>
@@ -57,7 +57,7 @@ const StableCard: React.FC<StableCardProps> = ({
                 {/* <Image source={Icons.horse} style={styles.icon} /> */}
             </Row>
         </Col>
-    </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
