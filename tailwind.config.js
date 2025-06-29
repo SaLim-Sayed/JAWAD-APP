@@ -45,7 +45,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       const newUtilities = {
         '.tajawal-semibold-18': {
           'font-weight': '700',
@@ -68,13 +68,21 @@ module.exports = {
           'letter-spacing': '0',
           'vertical-align': 'middle',
         },
+        '.tajawal-light-16': {
+          'font-weight': '300',
+          'font-size': '16px',
+          'line-height': '30px',
+          'letter-spacing': '0',
+          'vertical-align': 'bottom',
+        },
         '.tajawal-16': {
           'font-weight': '500',
           'font-size': '16px',
           'line-height': '24px',
           'letter-spacing': '0',
           'vertical-align': 'middle',
-        },  
+        },
+
       };
       addUtilities(newUtilities, ['responsive', 'hover']);
     }

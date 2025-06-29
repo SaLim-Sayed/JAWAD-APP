@@ -28,6 +28,7 @@ import Profile from '@/screens/Profile/Profile';
 import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
 import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
 import Horses from '@/packages/Client/Services/screens/Horses';
+import HorseDetails from '@/packages/Client/Services/screens/HorseDetails';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -153,6 +154,7 @@ function ClientNavigator() {
       <Stack.Screen name="service" component={Services} />
       <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
       <Stack.Screen name={navigationEnums.HORSES} component={Horses} />
+      <Stack.Screen name={navigationEnums.HORSE_DETAILS} component={HorseDetails} />
     </Stack.Navigator>)
 }
 

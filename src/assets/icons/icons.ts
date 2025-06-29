@@ -29,6 +29,8 @@ import horse from "@/assets/icons/horse.svg"
 import filter from "@/assets/icons/filter.svg"
 import likeTag from "@/assets/icons/like-tag.svg"
 import hashtag1 from "@/assets/icons/hashtag.svg"
+import share from "@/assets/icons/share.svg"
+
 
 
 
@@ -76,5 +78,6 @@ export const Icons = {
     horse,
     filter,
     likeTag,
-    hashtag1
+    hashtag1,
+    share
 }

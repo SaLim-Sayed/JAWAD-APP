@@ -49,7 +49,7 @@ const HorseList: React.FC<HorseListProps> = ({ horses, onSeeAll }) => {
                         type={item.type}
                         price={item.price}
                         category={item.category}
-                        onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item.id }) }}
+                        onPressStart={() => { navigate(navigationEnums.HORSE_DETAILS, { id: item.id }) }}
                     />
                 )}
             />
