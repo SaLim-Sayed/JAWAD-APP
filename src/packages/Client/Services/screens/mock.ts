@@ -1,4 +1,4 @@
-import { images } from "@/assets/images";
+import { horse, images } from "@/assets/images";
 
 export const bestStables = [
     {
@@ -44,3 +44,39 @@ export const bestStables = [
     },
   ];
   
+  export const horseDate = [
+    {
+      id: 1,
+      name: "ZIZI",
+      image: horse.stable1,
+      type: "Arabian",
+      price: 1200,
+      category: "A",
+    },
+    {
+      id: 2,
+      name: "THUNDER",
+      image: horse.stable2,
+      type: "Thoroughbred",
+      price: 1500,
+      category: "B",
+    },
+    {
+      id: 3,
+      name: "NIGHTMARE",
+      image: horse.stable3,
+      type: "Quarter Horse",
+      price: 1000,
+      category: "C",
+    },
+    {
+      id: 4,
+      name: "SPIRIT",
+      image: horse.stable4,
+      type: "Mustang",
+      price: 1800,
+      category: "A",
+    },
+  ];
+  
+    

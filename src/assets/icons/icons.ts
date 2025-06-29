@@ -27,6 +27,9 @@ import shoppingCart from "@/assets/icons/shopping-cart.svg"
 import notification from "@/assets/icons/notification.svg"
 import horse from "@/assets/icons/horse.svg"
 import filter from "@/assets/icons/filter.svg"
+import likeTag from "@/assets/icons/like-tag.svg"
+import hashtag1 from "@/assets/icons/hashtag.svg"
+
 
 
 
@@ -71,5 +74,7 @@ export const Icons = {
     shoppingCart,
     notification,
     horse,
-    filter
+    filter,
+    likeTag,
+    hashtag1
 }

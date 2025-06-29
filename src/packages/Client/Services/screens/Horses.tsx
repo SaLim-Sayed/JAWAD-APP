@@ -8,11 +8,12 @@ import ServiceHeadr from "../components/HomeHeader";
 import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import AppButton from "@/components/UI/AppButton";
-import { bestStables } from "./mock";
+import { bestStables, horseDate } from "./mock";
+import HorseList from "../components/HorseList";
 
  
 
-const Services = () => {
+const Horses = () => {
   // Header user info
   const userName = "George Mikhaiel";
    const [search, setSearch] = useState("");
@@ -31,19 +32,15 @@ const Services = () => {
               onPress={() => { }}
               startIcon={<Icons.filter />}
             />
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.locationTick />}
-            />
+           x
           </View>
 
           {/* The Best Stable Section */}
-          <BestStableSection bestStables={bestStables} />
+          <HorseList horses={horseDate} />
           {/* The Events Section */}
        </View>
     </AppWrapper>
   );
 };
 
-export default Services;
+export default Horses;
