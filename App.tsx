@@ -23,12 +23,16 @@ import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
 import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
 
 import HomeScreen from '@/packages/Client/home/screens/Home';
-import Services from '@/packages/Client/Services/screens/Services';
+import Services from '@/packages/Client/Services/screens/RidesScreen';
 import Profile from '@/screens/Profile/Profile';
 import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
 import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
 import Horses from '@/packages/Client/Services/screens/Horses';
 import HorseDetails from '@/packages/Client/Services/screens/HorseDetails';
+import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
+import RidesScreen from '@/packages/Client/Services/screens/RidesScreen';
+import PhotoSessionScreen from '@/packages/Client/Services/screens/PhotoSessionScreen';
+import PhotoSessionDetails from '@/packages/Client/Services/screens/PhotoSessionDetails';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -121,7 +125,7 @@ function ClientTabs() {
     // @ts-ignore
     <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
-      <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
+      <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: 'Service' }} />
       <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
@@ -151,10 +155,13 @@ function ClientNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
       <Stack.Screen name="Main" component={ClientTabs} />
       <Stack.Screen name="stable" component={Profile} />
-      <Stack.Screen name="service" component={Services} />
       <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
       <Stack.Screen name={navigationEnums.HORSES} component={Horses} />
       <Stack.Screen name={navigationEnums.HORSE_DETAILS} component={HorseDetails} />
+      <Stack.Screen name={navigationEnums.SERVICES} component={ServicesScreen} />
+      <Stack.Screen name={navigationEnums.RIDES} component={RidesScreen} />
+      <Stack.Screen name={navigationEnums.PHOTOS} component={PhotoSessionScreen} />
+      <Stack.Screen name={navigationEnums.PHOTO_SESSION_DETAILS} component={PhotoSessionDetails} />
     </Stack.Navigator>)
 }
 

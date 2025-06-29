@@ -4,7 +4,7 @@ import SearchInput from "@/components/UI/SearchInput";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import BestStableSection from "../components/BestStableSection";
-import ServiceHeadr from "../components/HomeHeader";
+import ServiceHeader from "../components/HomeHeader";
 import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import AppButton from "@/components/UI/AppButton";
@@ -12,13 +12,13 @@ import { bestStables } from "./mock";
 
  
 
-const Services = () => {
+const RidesScreen = () => {
   // Header user info
   const userName = "George Mikhaiel";
    const [search, setSearch] = useState("");
   return (
     <AppWrapper>
-      <ServiceHeadr userName={userName} />
+      <ServiceHeader userName={userName} />
       <View className="bg-white pt-6  pb-60">
        
           {/* Search */}
@@ -46,4 +46,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default RidesScreen;

@@ -26,7 +26,7 @@ const StableServicesDetails = () => {
   const title = bestStables.find((stable) => stable.id === id)?.name;
   return (
     <AppWrapper>
-      <ServiceHeadr title={title} />
+      <ServiceHeadr title={title} showBackButton />
       <View className="bg-white  h-full ">
         <ScrollView
           contentContainerStyle={{
@@ -61,18 +61,18 @@ const StableServicesDetails = () => {
           {/* The Best Stable Section */}
           {/* The Events Section */}
 
-               <Col gap={10} className="mt-4">
-               <AppButton
+                <AppButton
                     title="Start now"
                      onPress={() =>  {}}
+                   className="my-4"
                   />
                   <AppButton
                     title="Add to cart"
                     variant="outline"
                     onPress={() =>  {}}
+                  
                   />
-                  </Col>
-        </ScrollView>
+         </ScrollView>
       </View>
     </AppWrapper>
   );

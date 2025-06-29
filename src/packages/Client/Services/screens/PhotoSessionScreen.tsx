@@ -8,12 +8,12 @@ import ServiceHeadr from "../components/HomeHeader";
 import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import AppButton from "@/components/UI/AppButton";
-import { bestStables, horseDate } from "./mock";
-import HorseList from "../components/HorseList";
+import { bestStables, photoSessionData } from "./mock";
+import PhotoSessionList from "../components/PhotoSessionList";
 
  
 
-const Horses = () => {
+const PhotoSessionScreen = () => {
   // Header user info
   const userName = "George Mikhaiel";
    const [search, setSearch] = useState("");
@@ -32,15 +32,19 @@ const Horses = () => {
               onPress={() => { }}
               startIcon={<Icons.filter />}
             />
-
+            <AppButton
+              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
+              onPress={() => { }}
+              startIcon={<Icons.locationTick />}
+            />
           </View>
 
           {/* The Best Stable Section */}
-          <HorseList horses={horseDate} />
+          <PhotoSessionList photoSessions={photoSessionData} />
           {/* The Events Section */}
        </View>
     </AppWrapper>
   );
 };
 
-export default Horses;
+export default PhotoSessionScreen;

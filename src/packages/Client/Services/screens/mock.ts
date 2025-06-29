@@ -1,4 +1,4 @@
-import { horse, images } from "@/assets/images";
+import { horse, images, photoSessions } from "@/assets/images";
 
 export const bestStables = [
     {
@@ -41,6 +41,44 @@ export const bestStables = [
       name: "Pyramids (Saqqara)",
       type: "Fantasy Stable",
       rating: 3.2,
+    },
+  ];
+  
+export const photoSessionData = [
+    {
+      id: 1,
+      image: photoSessions.photo1,
+      name: "Photo Session",
+       rating: 3.2,
+    },
+    {
+      id: 2,
+      image: photoSessions.photo2,
+      name: "New Giza",
+       rating: 3.2,
+    },
+    {
+      id: 3,
+      image: photoSessions.photo3,
+      name: "New Giza",
+       rating: 3.2,
+    },
+    {
+      id: 4,
+      image: photoSessions.photo4,
+      name: "New Giza",
+       rating: 3.2,
+    }, {
+      id: 5,
+      image: photoSessions.photo5,
+      name: "New Giza",
+       rating: 3.2,
+    },
+    {
+      id: 6,
+      image: photoSessions.photo6,
+      name: "New Giza",
+       rating: 3.2,
     },
   ];
   

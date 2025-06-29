@@ -32,6 +32,10 @@ export const navigationEnums = {
   STABLE_SERVICES_DETAILS: "stable/services/details/:id",
   STABLE: "stable",
   SERVICE: "service",
+  RIDES: "rides",
+  PHOTOS: "photos",
   HORSES: "horses", 
   HORSE_DETAILS: "horse/details/:id",
+  SERVICES: "services",
+  PHOTO_SESSION_DETAILS: "photo/session/details/:id",
 } as const;

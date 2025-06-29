@@ -3,7 +3,7 @@ import { navigationEnums } from './navigationEnums';
 export type NavigationParamsList = {
   [navigationEnums.MAIN]: undefined;
   [navigationEnums.HOME]: undefined;
-  
+
   [navigationEnums.PROFILE]: undefined;
   [navigationEnums.SERIES_STREAM]: undefined;
   [navigationEnums.SERIES_DETAILS]: undefined;
@@ -34,5 +34,8 @@ export type NavigationParamsList = {
   [navigationEnums.STABLE_SERVICES_DETAILS]: {id:any};
   [navigationEnums.HORSES]: undefined;
   [navigationEnums.HORSE_DETAILS]: {id:any};
-
+  [navigationEnums.SERVICES]: undefined;
+  [navigationEnums.RIDES]: undefined;
+  [navigationEnums.PHOTOS]: undefined;
+  [navigationEnums.PHOTO_SESSION_DETAILS]: {id:any};
 };
