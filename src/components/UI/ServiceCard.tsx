@@ -14,7 +14,7 @@ interface ServiceCardProps {
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
     return (
         <TouchableOpacity
-            className="w-[180px] bg-white rounded-xl mb-3 mx-2 shadow-sm"
+            className="w-[180px] bg-white rounded-xl mb-3  shadow-sm"
             activeOpacity={0.85}
             onPress={onPress}
         >

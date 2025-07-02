@@ -1,5 +1,6 @@
 // src/stores/authStore.ts
 import { create } from 'zustand';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ActiveApp = 'Auth' | 'Admin' | 'Onboarding' | 'Client';
 
@@ -9,12 +10,37 @@ interface AuthState {
   login: () => void;
   logout: () => void;
   setActiveApp: (app: ActiveApp) => void;
+  loadAuthState: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>(set => ({
+export const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: false,
-  activeApp: 'Client',  
-  login: () => set({ isLoggedIn: true }),
-  logout: () => set({ isLoggedIn: false }),
-  setActiveApp: (app: ActiveApp) => set({ activeApp: app }),
+  activeApp: 'Onboarding',
+
+  login: async () => {
+    await AsyncStorage.setItem('isLoggedIn', 'true');
+    set({ isLoggedIn: true });
+  },
+
+  logout: async () => {
+    await AsyncStorage.multiRemove(['isLoggedIn', 'activeApp']);
+    set({ isLoggedIn: false, activeApp: 'Onboarding' });
+  },
+
+  setActiveApp: async (app) => {
+    await AsyncStorage.setItem('activeApp', app);
+    set({ activeApp: app });
+  },
+
+  loadAuthState: async () => {
+    const [isLoggedIn, activeApp] = await Promise.all([
+      AsyncStorage.getItem('isLoggedIn'),
+      AsyncStorage.getItem('activeApp'),
+    ]);
+
+    set({
+      isLoggedIn: isLoggedIn === 'true',
+      activeApp: (activeApp as ActiveApp) || 'Onboarding',
+    });
+  },
 }));

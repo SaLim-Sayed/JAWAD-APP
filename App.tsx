@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
 import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -12,27 +12,27 @@ import { navigationEnums } from '@/provider/navigationEnums';
 import { NavigationParamsList } from '@/provider/NavigationParamsList';
 import { useAuthStore } from '@/store/useAuthStore';
 
-import SplashScreen from '@/packages/Splash/SplashScreen';
-import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
-import LoginScreen from '@/packages/Auth/screens/LoginScreen';
-import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
-import ForgetScreen from '@/packages/Auth/screens/ForgetScreen';
-import OtpScreen from '@/packages/Auth/screens/OtpScreen';
 import ChangePassword from '@/packages/Auth/screens/ChangePassword';
 import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
+import ForgetScreen from '@/packages/Auth/screens/ForgetScreen';
+import LoginScreen from '@/packages/Auth/screens/LoginScreen';
+import OtpScreen from '@/packages/Auth/screens/OtpScreen';
 import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
+import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
+import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
+import SplashScreen from '@/packages/Splash/SplashScreen';
 
 import HomeScreen from '@/packages/Client/home/screens/Home';
-import Services from '@/packages/Client/Services/screens/RidesScreen';
-import Profile from '@/screens/Profile/Profile';
-import { DismissKeyboardWrapper } from '@/components/UI/DismissKeyboardWrapper';
-import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
-import Horses from '@/packages/Client/Services/screens/Horses';
 import HorseDetails from '@/packages/Client/Services/screens/HorseDetails';
-import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
-import RidesScreen from '@/packages/Client/Services/screens/RidesScreen';
-import PhotoSessionScreen from '@/packages/Client/Services/screens/PhotoSessionScreen';
+import Horses from '@/packages/Client/Services/screens/Horses';
 import PhotoSessionDetails from '@/packages/Client/Services/screens/PhotoSessionDetails';
+import PhotoSessionScreen from '@/packages/Client/Services/screens/PhotoSessionScreen';
+import { default as RidesScreen, default as Services } from '@/packages/Client/Services/screens/RidesScreen';
+import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
+import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
+ import { useSplashStore } from '@/store/useSplashStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Profile from '@/packages/Client/Profile/screens/Profile';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -162,6 +162,7 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.RIDES} component={RidesScreen} />
       <Stack.Screen name={navigationEnums.PHOTOS} component={PhotoSessionScreen} />
       <Stack.Screen name={navigationEnums.PHOTO_SESSION_DETAILS} component={PhotoSessionDetails} />
+      <Stack.Screen name={navigationEnums.PROFILE} component={Profile} />
     </Stack.Navigator>)
 }
 
@@ -189,17 +190,22 @@ function MainNavigator() {
 
 // Root App
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const { isLoggedIn, activeApp } = useAuthStore();
+  const {showSplash, setShowSplash} = useSplashStore();
+  const { isLoggedIn, activeApp, loadAuthState } = useAuthStore();
+
 
   useEffect(() => {
-    const timeout = setTimeout(() => setShowSplash(false), 2000);
-    return () => clearTimeout(timeout);
+    const init = async () => {
+      await loadAuthState();
+      setShowSplash(false);
+    };
+
+    init();
   }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
-      // useAuthStore.setState({ activeApp: 'Onboarding' });
+      useAuthStore.setState({ activeApp: 'Onboarding' });
     }
   }, [isLoggedIn]);
 
@@ -215,10 +221,37 @@ function App() {
 }
 
 export default function Root() {
+  const [initialState, setInitialState] = useState();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedStateString = await AsyncStorage.getItem("PERSISTENCE_KEY");
+        const state = savedStateString ? JSON.parse(savedStateString) : undefined;
+        if (state) {
+          setInitialState(state);
+        }
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    restoreState();
+  }, []);
+
+  if (!isReady) {
+    return <SplashScreen />;
+  }
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
-      <NavigationContainer>
+      <NavigationContainer
+        initialState={initialState}
+        onStateChange={(state) =>
+          AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
+        }
+      >
         <I18nContext>
           <App />
         </I18nContext>

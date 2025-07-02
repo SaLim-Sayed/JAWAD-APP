@@ -31,11 +31,12 @@ export type NavigationParamsList = {
   //SERVICE
   [navigationEnums.STABLE]: undefined;
   [navigationEnums.SERVICE]: undefined;
-  [navigationEnums.STABLE_SERVICES_DETAILS]: {id:any};
+  [navigationEnums.STABLE_SERVICES_DETAILS]: { id: any };
   [navigationEnums.HORSES]: undefined;
-  [navigationEnums.HORSE_DETAILS]: {id:any};
+  [navigationEnums.HORSE_DETAILS]: { id: any };
   [navigationEnums.SERVICES]: undefined;
   [navigationEnums.RIDES]: undefined;
   [navigationEnums.PHOTOS]: undefined;
-  [navigationEnums.PHOTO_SESSION_DETAILS]: {id:any};
+  [navigationEnums.PHOTO_SESSION_DETAILS]: { id: any };
+  [navigationEnums.PROFILE]: undefined;
 };
