@@ -60,9 +60,10 @@ const HomeScreen = () => {
           {/* Search */}
           <View className="px-4">
             <SearchInput value={search} onChange={setSearch} />
-          </View>
           {/* Quote Card */}
           <QuoteCard />
+          </View>
+
           {/* The Best Stable Section */}
           <BestStableSection bestStables={bestStables} />
           {/* The Events Section */}
