@@ -3,18 +3,17 @@ import React from 'react'
 import AppWrapper from '@/components/UI/AppWrapper'
 import AppButton from '@/components/UI/AppButton'
 import { useAuthStore } from '@/store/useAuthStore';
+import ProfileMenu from '../components/ProfileMenu';
+import AppHeader from '@/components/UI/AppHeader';
 
 export default function Profile() {
         const { isLoggedIn, activeApp, loadAuthState,setActiveApp } = useAuthStore();
     
+
   return (
     <AppWrapper>
-        <AppButton
-        className='mt-20'
-            title="Logout"
-            onPress={() => setActiveApp('Onboarding')}
-        />  
-
+      <AppHeader title="Profile" />
+      <ProfileMenu onLogout={() => setActiveApp('Onboarding')} /> 
     </AppWrapper>
   )
 }

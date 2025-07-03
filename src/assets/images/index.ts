@@ -12,6 +12,7 @@ import villarreal from "./villarreal.png";
 import family from "./family.png";
  import horseRide from "./ride.png";
 import photoSession from "./photo-session.png";
+import horseImg from "./horseImg.png";
 
 export const horse = {
     stable1: require("./stable/horse/1.png"),
@@ -46,4 +47,5 @@ export const images = {
     family,
      horseRide,
     photoSession,
-    }
+    horseImg,
+        }

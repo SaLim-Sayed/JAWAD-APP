@@ -1,21 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Text, View } from 'react-native';
 import { z } from 'zod';
 
 import { Input } from '@/components';
 import AppButton from '@/components/UI/AppButton';
+import AppText from '@/components/UI/AppText';
 import AuthWrapper from '@/components/UI/AuthWrapper';
+import Col from '@/components/UI/Col';
 import Or from '@/components/UI/Or';
-import Radio from '@/components/UI/Radio';
-import { Icons } from '@/constants';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
-import AppText from '@/components/UI/AppText';
-import Image from '@/components/UI/Image';
-import Col from '@/components/UI/Col';
-import OTPInput from '@/components/UI/OTPInput';
 
 const loginSchema = z.object({
   phone: z.string().min(6, 'Phone number is required'),

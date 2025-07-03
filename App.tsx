@@ -37,6 +37,14 @@ import Events from '@/packages/Client/Events/screens/Events';
 import EventDetails from '@/packages/Client/Events/screens/EventDetails';
 import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
 import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
+import UserProfileScreen from '@/packages/Client/Profile/screens/UserProfileScreen';
+import AboutUs from '@/packages/Client/Profile/screens/AboutUs';
+import Terms from '@/packages/Client/Profile/screens/Terms';
+import ContactUsScreen from '@/packages/Client/Profile/screens/ContactUs';
+import BookingHistory from '@/packages/Client/Profile/screens/BookingHistory';
+import BookingDetails from '@/packages/Client/Profile/screens/BookingDetails';
+import ComplaintScreen from '@/packages/Client/Profile/screens/ComplaintScreen';
+import Language from '@/packages/Client/Profile/screens/Language';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -171,6 +179,15 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.EVENT_DETAILS} component={EventDetails} />
       <Stack.Screen name={navigationEnums.EVENT_BOOKING} component={BookingScreen} />
       <Stack.Screen name={navigationEnums.EVENT_BOOKING_SUCCESS} component={BookingSuccessScreen} />
+      <Stack.Screen name={navigationEnums.PROFILE_USER} component={UserProfileScreen} />
+      <Stack.Screen name={navigationEnums.ABOUT_US} component={AboutUs} />
+      <Stack.Screen name={navigationEnums.TERMS} component={Terms} />
+      <Stack.Screen name={navigationEnums.CONTACT_US} component={ContactUsScreen} />
+      <Stack.Screen name={navigationEnums.BOOKING_HISTORY} component={BookingHistory} />
+      <Stack.Screen name={navigationEnums.BOOKING_DETAILS} component={BookingDetails} />
+      <Stack.Screen name={navigationEnums.COMPLAINT} component={ComplaintScreen} />
+      <Stack.Screen name={navigationEnums.LANGUAGE} component={Language} />
+
     </Stack.Navigator>)
 }
 

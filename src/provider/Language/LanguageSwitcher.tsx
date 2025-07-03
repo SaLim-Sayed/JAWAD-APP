@@ -1,3 +1,4 @@
+import { images } from '@/assets/images';
 import AppText from '@/components/UI/AppText';
 import Image from '@/components/UI/Image';
 import { Icons } from '@/constants';
@@ -5,7 +6,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { I18nManager, Modal, Pressable, View, useWindowDimensions } from 'react-native';
 import { useLanguage } from '../../store/useLanguage';
-import { images } from '@/assets/images';
  
 const LanguageOption = ({ label, onPress, icon }: { label: string; onPress: () => void, icon: string }) => (
   <Pressable

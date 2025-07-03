@@ -1,0 +1,101 @@
+import { Icons } from '@/assets/icons/icons';
+import AppText from '@/components/UI/AppText';
+import Image from '@/components/UI/Image';
+import LogoutConfirmModal from '@/components/UI/LogoutConfirmModal';
+import { navigationEnums } from '@/provider/navigationEnums';
+import useGlobalNavigation from '@/provider/useGlobalNavigation';
+import React from 'react';
+import { FlatList, View } from 'react-native';
+import SettingsListItem from './SettingsListItem';
+
+const user = {
+  avatar: 'https://randomuser.me/api/portraits/men/31.jpg', // Replace with real avatar or local asset
+  role: 'Knight',
+  name: 'Alex Marshall',
+};
+
+const menuItems = [
+  { key: 'profile', label: 'My Profile', icon: Icons.profile, onPress: () => { } },
+  { key: 'cart', label: 'cart', icon: Icons.cartProfile, onPress: () => { } },
+  { key: 'history', label: 'History', icon: Icons.card8Profile, onPress: () => { } },
+  { key: 'contact', label: 'Contact us', icon: Icons.telephon, onPress: () => { } },
+  { key: 'about', label: 'About us', icon: Icons.building2, onPress: () => { } },
+  { key: 'terms', label: 'Tarms & user', icon: Icons.addUser, onPress: () => { } },
+  { key: 'complaint', label: 'Complaint or suggestion', icon: Icons.likeTag, onPress: () => { } },
+  { key: 'invite', label: 'Invite a friend', icon: Icons.likeTag, onPress: () => { } },
+  { key: 'language', label: 'Language Setting', icon: Icons.lang, onPress: () => { } },
+  { key: 'logout', label: 'Logout', icon: Icons.logout2, onPress: () => { } },
+];
+
+const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+  const { navigate } = useGlobalNavigation()
+  const [visible, setVisible] = React.useState(false);
+  const onCancel = () => setVisible(false);
+  const onConfirm = () => {
+    setVisible(false);
+    onLogout();
+  };
+  const menuItems = [
+    { key: 'profile', label: 'My Profile', icon: Icons.profile, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
+    { key: 'cart', label: 'cart', icon: Icons.cartProfile, onPress: () => { } },
+    { key: 'history', label: 'Booking History', icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
+    { key: 'contact', label: 'Contact us', icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
+    { key: 'about', label: 'About us', icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },
+    { key: 'terms', label: 'Tarms & user', icon: Icons.addUser, onPress: () => { navigate(navigationEnums.TERMS) } },
+    { key: 'complaint', label: 'Complaint or suggestion', icon: Icons.likeTag, onPress: () => { navigate(navigationEnums.COMPLAINT) } },
+    { key: 'invite', label: 'Invite a friend', icon: Icons.likeTag, onPress: () => { } },
+    { key: 'language', label: 'Language Setting', icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
+    { key: 'logout', label: 'Logout', icon: Icons.logout2, onPress: () => { setVisible(true) } },
+  ];
+  return (
+    <View
+      className="flex-1 bg-transparent"
+    >
+      <View className="bg-white rounded-3xl mx-2 mt-20 mb-4 pb-1">
+        {/* Profile Header */}
+        <View className="items-end -mt-20 flex-row pt-6 ">
+          <Image
+            source={user.avatar}
+            className="w-24 h-24 rounded-full"
+          />
+          <AppText className="pt-4 text-lg">
+            <AppText className="text-brownColor-400 font-bold">{user.role}</AppText>
+            <AppText className="text-black font-bold"> / {user.name}</AppText>
+          </AppText>
+        </View>
+        <View className="gap-0">
+          <FlatList
+            data={menuItems}
+            keyExtractor={(item) => item.key}
+            style={{ margin: 16 }}
+            renderItem={({ item }) => (
+              <SettingsListItem
+                key={item.key}
+                label={item.label}
+                icon={item.icon}
+                onPress={item.onPress}
+                style={{ marginBottom: 16 }}
+              />
+
+            )}
+            ListFooterComponent={<View className="h-80" />}
+          />
+          <SettingsListItem
+            label="Logout"
+            icon={Icons.logout2}
+            onPress={() => { setVisible(true) }}
+            style={{
+              marginBottom: 0,
+              marginTop: 4,
+              backgroundColor: '#FBF8F6',
+            }}
+            testID="logout"
+          />
+        </View>
+      </View>
+      <LogoutConfirmModal visible={visible} onCancel={onCancel} onConfirm={onConfirm} />
+    </View>
+  );
+}
+
+export default ProfileMenu;

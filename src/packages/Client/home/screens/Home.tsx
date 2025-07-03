@@ -1,17 +1,12 @@
-import React, { useState } from "react";
-import { View, ScrollView, TextInput } from "react-native";
-import HomeHeader from "../components/HomeHeader";
-import QuoteCard from "../components/QuoteCard";
-import BestStableSection from "../components/BestStableSection";
-import EventsSection from "../components/EventsSection";
 import { images } from "@/assets/images";
-import AppText from "@/components/UI/AppText";
-import HomeBottomNav from "../components/HomeBottomNav";
-import { Input } from "@/components";
-import { Icons } from "@/constants";
-import { useForm } from "react-hook-form";
 import AppWrapper from "@/components/UI/AppWrapper";
 import SearchInput from "@/components/UI/SearchInput";
+import React, { useState } from "react";
+import { ScrollView, View } from "react-native";
+import BestStableSection from "../components/BestStableSection";
+import EventsSection from "../components/EventsSection";
+import HomeHeader from "../components/HomeHeader";
+import QuoteCard from "../components/QuoteCard";
 
 // Dummy data for best stables/events
 const bestStables = [

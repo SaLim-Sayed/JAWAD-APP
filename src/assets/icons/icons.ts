@@ -36,6 +36,18 @@ import cardTick from "@/assets/icons/card-tick.svg"
 import clipboardTick from "@/assets/icons/clipboard-tick.svg"
 import warning2 from "@/assets/icons/warning-2.svg"
 import mastercard from "@/assets/icons/mastercard.svg"
+import userProfile from "@/assets/icons/user-profile.svg"
+import editProfile from "@/assets/icons/edit-profile.svg"
+import cartProfile from "@/assets/icons/cart-profile.svg"
+import card8Profile from "@/assets/icons/card8-profile.svg"
+import telephon from "@/assets/icons/telephon.svg"
+import building2 from "@/assets/icons/building-2.svg"
+import addUser from "@/assets/icons/add-user.svg"
+import lang from "@/assets/icons/lang.svg"
+import logout2 from "@/assets/icons/logout-2.svg"
+import logout from "@/assets/icons/logout.svg"
+import arrow from "@/assets/icons/arrow.svg"
+
 
 
 
@@ -79,5 +91,16 @@ export const Icons = {
     cardTick,
     clipboardTick,
     warning2,
-    mastercard
+    mastercard,
+    userProfile,
+    editProfile,
+    cartProfile,
+    card8Profile,
+    telephon,
+    building2,
+    addUser,
+    lang,
+    logout2,
+    logout,
+        arrow,
 }

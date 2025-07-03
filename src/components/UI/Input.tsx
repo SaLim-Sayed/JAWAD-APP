@@ -26,6 +26,7 @@ export const Input: React.FC<InputProps> = ({
   error,
   secureTextEntry,
   endIcon,
+  numberOfLines,
   onEndIconPress,
   ...rest
 }) => {
@@ -53,8 +54,9 @@ export const Input: React.FC<InputProps> = ({
                   borderColor: "#684735",
                   borderRadius: 10,
                   flex: 1,
-                  width: "100%", 
+                  width: "100%",
                 }}
+                numberOfLines={numberOfLines}
                 {...rest}
               />
               {errors[name] && (

@@ -1,8 +1,7 @@
-export const navigationEnums = {
+ export const navigationEnums = {
   HOME: "home",
   
-  PROFILE: "profile",
-  MAIN: "Main",
+   MAIN: "Main",
   SERIES_STREAM: "series/stream",
   SERIES_DETAILS: "series/details",
   MOVIES: "movies",
@@ -45,4 +44,16 @@ export const navigationEnums = {
   EVENT_DETAILS: "event/details/:id",
   EVENT_BOOKING: "event/booking/:id",
   EVENT_BOOKING_SUCCESS: "event/booking-success",
+
+
+  //Profile
+  PROFILE: "profile", 
+   PROFILE_USER: "profile/user",
+   ABOUT_US:"profile/about_us",
+   TERMS:"profile/terms",
+   CONTACT_US:"profile/contact_us",
+   BOOKING_HISTORY:"profile/booking_history",
+   BOOKING_DETAILS:"profile/booking_details/:id",
+   COMPLAINT:"profile/complaint",
+   LANGUAGE:"profile/language",
 } as const;

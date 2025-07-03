@@ -25,12 +25,12 @@ interface BestStableSectionProps {
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSeeAll }) => (
     <>
-        <Row className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
+        <View className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
             <AppText className="font-bold text-brownColor-400 text-lg">The Best Stable</AppText>
             <TouchableOpacity onPress={onSeeAll}>
                 <AppText className="text-brownColor-400  text-sm">See All</AppText>
             </TouchableOpacity>
-        </Row>
+        </View>
         <FlatList
             horizontal
             data={bestStables}

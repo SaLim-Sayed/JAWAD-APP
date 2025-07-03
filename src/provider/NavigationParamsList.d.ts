@@ -45,4 +45,16 @@ export type NavigationParamsList = {
   [navigationEnums.EVENT_DETAILS]: { id: any };
   [navigationEnums.EVENT_BOOKING]: { id: any };
   [navigationEnums.EVENT_BOOKING_SUCCESS]: undefined;
+
+  //PROFILE
+  [navigationEnums.PROFILE_USER]: undefined;
+  [navigationEnums.ABOUT_US]: undefined;
+  [navigationEnums.TERMS]: undefined;
+  [navigationEnums.CONTACT_US]: undefined;
+  [navigationEnums.BOOKING_HISTORY]: undefined;
+  [navigationEnums.BOOKING_DETAILS]: { id: any };
+  [navigationEnums.COMPLAINT]: undefined;
+  [navigationEnums.LANGUAGE]: undefined;
+
+
 };
