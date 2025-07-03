@@ -29,29 +29,38 @@ export const Input: React.FC<InputProps> = ({
   onEndIconPress,
   ...rest
 }) => {
-
   return (
-    <>
+    <View className="w-full">
       <AppText className="text-brownColor-400 mb-2">{label}</AppText>
-      <View className=" relative    w-full ">
+      <View className="relative">
         <Controller
           control={control}
           name={name}
           render={({ field: { onChange, value }, formState: { errors } }) => (
             <>
               <TextInput
-                className="flex-1 w-full"
+                className="flex-1 w-full rounded-xl border border-brownColor-400 p-3"
                 placeholder={label}
                 placeholderTextColor="#888"
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry={secureTextEntry}
-                style={{ color: "#684735" }}
+                style={{
+                  color: "#684735",
+                  fontSize: 16,
+                  fontFamily: "Poppins_400Regular",
+                  borderWidth: 1,
+                  borderColor: "#684735",
+                  borderRadius: 10,
+                  flex: 1,
+                  width: "100%", 
+                }}
                 {...rest}
               />
               {errors[name] && (
-                <Text className="text-red-500 mb-2">{errors[name].message as string}</Text>
-              )}            </>
+                <Text className="text-red-500 mt-1">{errors[name].message as string}</Text>
+              )}
+            </>
           )}
         />
         {endIcon && (
@@ -60,6 +69,6 @@ export const Input: React.FC<InputProps> = ({
           </TouchableOpacity>
         )}
       </View>
-    </>
+    </View>
   );
 };

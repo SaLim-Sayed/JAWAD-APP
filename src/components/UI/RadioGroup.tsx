@@ -23,7 +23,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
   options,
   value,
   onChange,
-  containerClassName = "flex-row items-center justify-between space-x-5 mt-2 mb-4",
+  containerClassName = "flex-row items-center justify-between w-[80%] space-x-5 mt-2 mb-4",
   optionClassName = "flex-row gap-2 items-center space-x-2",
   labelClassName = "",
   circleClassName = "w-5 h-5 rounded-full border",

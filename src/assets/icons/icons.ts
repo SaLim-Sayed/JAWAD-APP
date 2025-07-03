@@ -30,18 +30,12 @@ import filter from "@/assets/icons/filter.svg"
 import likeTag from "@/assets/icons/like-tag.svg"
 import hashtag1 from "@/assets/icons/hashtag.svg"
 import share from "@/assets/icons/share.svg"
-
-
-
-
-
-
-
-
-
-
-
-
+import discountShape from "@/assets/icons/discount-shape.svg"
+import grid8 from "@/assets/icons/grid-8.svg"
+import cardTick from "@/assets/icons/card-tick.svg"
+import clipboardTick from "@/assets/icons/clipboard-tick.svg"
+import warning2 from "@/assets/icons/warning-2.svg"
+import mastercard from "@/assets/icons/mastercard.svg"
 
 
 
@@ -79,5 +73,11 @@ export const Icons = {
     filter,
     likeTag,
     hashtag1,
-    share
+    share,
+    discountShape,
+    grid8,
+    cardTick,
+    clipboardTick,
+    warning2,
+    mastercard
 }

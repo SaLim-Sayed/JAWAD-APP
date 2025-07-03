@@ -30,7 +30,7 @@ const SelectOptionRow = ({
   icon?: any;
 }) => (
   <Pressable
-    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+    hitSlop={{ top: 0, bottom: 10, left: 10, right: 10 }}
     onPress={onPress}
     className="w-full py-2 px-3 flex-row gap-4 items-center justify-between rounded-lg"
   >
@@ -101,7 +101,7 @@ const AppSelect: React.FC<SelectProps> = ({
             className="absolute bg-white border border-slate-300 rounded-xl"
             style={{
               width: dropdownWidth,
-              top: offset.y + 8,
+              top: offset.y - 40,
               [isRTL ? 'right' : 'left']: offset.x,
               gap: 2,
               padding: 0,

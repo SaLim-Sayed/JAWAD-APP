@@ -1,6 +1,6 @@
 // AppNavigator.tsx
  
-import HomeScreen from '@/screens/HomeScreen/HomeScreen';
+import HomeScreen from '@/packages/Client/home/screens/Home';
  import { createNativeStackNavigator } from '@react-navigation/native-stack';
  
  

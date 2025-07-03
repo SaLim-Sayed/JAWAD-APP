@@ -33,6 +33,10 @@ import StableServicesDetails from '@/packages/Client/Services/screens/StableServ
  import { useSplashStore } from '@/store/useSplashStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Profile from '@/packages/Client/Profile/screens/Profile';
+import Events from '@/packages/Client/Events/screens/Events';
+import EventDetails from '@/packages/Client/Events/screens/EventDetails';
+import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
+import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -40,7 +44,7 @@ const queryClient = new QueryClient();
 // Define tab params
 export type MainTabParamList = {
   home: undefined;
-  stable: undefined;
+  event: undefined;
   service: undefined;
   profile: undefined;
 };
@@ -55,7 +59,7 @@ const TabBarIcon = ({ route, focused }: { route: { name: string }, focused: bool
 
   switch (route.name) {
     case 'home': IconComponent = Icons.home; break;
-    case 'stable': IconComponent = Icons.stable; break;
+    case 'event': IconComponent = Icons.discountShape; break;
     case 'service': IconComponent = Icons.service; break;
     case 'profile': IconComponent = Icons.profile; break;
     default: return null;
@@ -111,9 +115,9 @@ function AdminTabs() {
   return (
     // @ts-ignore
     <Tab.Navigator screenOptions={tabScreenOptions}>
-      <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
-      <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
+      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Stable' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -124,9 +128,9 @@ function ClientTabs() {
   return (
     // @ts-ignore
     <Tab.Navigator screenOptions={tabScreenOptions}>
-      <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: 'Service' }} />
-      <Tab.Screen name="stable" component={Profile} options={{ tabBarLabel: 'Stable' }} />
+      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Stable' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -153,7 +157,7 @@ function OnboardingNavigator() {
 function ClientNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
-      <Stack.Screen name="Main" component={ClientTabs} />
+      <Stack.Screen name={navigationEnums.HOME} component={ClientTabs} />
       <Stack.Screen name="stable" component={Profile} />
       <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
       <Stack.Screen name={navigationEnums.HORSES} component={Horses} />
@@ -163,6 +167,10 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.PHOTOS} component={PhotoSessionScreen} />
       <Stack.Screen name={navigationEnums.PHOTO_SESSION_DETAILS} component={PhotoSessionDetails} />
       <Stack.Screen name={navigationEnums.PROFILE} component={Profile} />
+      <Stack.Screen name={navigationEnums.EVENTS} component={Events} />
+      <Stack.Screen name={navigationEnums.EVENT_DETAILS} component={EventDetails} />
+      <Stack.Screen name={navigationEnums.EVENT_BOOKING} component={BookingScreen} />
+      <Stack.Screen name={navigationEnums.EVENT_BOOKING_SUCCESS} component={BookingSuccessScreen} />
     </Stack.Navigator>)
 }
 
@@ -170,8 +178,8 @@ function ClientNavigator() {
 function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
-      <Stack.Screen name="Main" component={AdminTabs} />
-      <Stack.Screen name="home" component={HomeScreen} />
+      <Stack.Screen name="home" component={AdminTabs} />
+      <Stack.Screen name={navigationEnums.HOME} component={HomeScreen} />
 
       <Stack.Screen name={navigationEnums.STABLE_SERVICES_DETAILS} component={StableServicesDetails} />
       <Stack.Screen name="series/details" component={Profile} />

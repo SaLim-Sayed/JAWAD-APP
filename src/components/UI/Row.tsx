@@ -31,7 +31,7 @@ export default function Row({
   });
 
   return (
-    <View className={cn('flex w-full flex-row', justifyClass, itemsClass, className)}>
+    <View style={{width: '100%' }} className={cn('flex w-full flex-row', justifyClass, itemsClass, className)}>
       {spacedChildren}
     </View>
   );
