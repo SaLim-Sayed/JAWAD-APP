@@ -4,16 +4,10 @@ import Col from "@/components/UI/Col";
 import Image from "@/components/UI/Image";
 import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
+import { Event } from "@/packages/Client/home/@types/event.type";
 import React from "react";
-
-interface Event {
-  id: number;
-  image: any;
-  name: string;
-  date: string;
-  price: string;
-  onPress?: () => void;
-}
+import moment from "moment";
+ 
 
 interface EventCardProps {
   event: Event;
@@ -22,7 +16,7 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
   <Row gap={8} className="bg-white rounded-2xl mx-6 mb-4 w-[90%] shadow items-center">
-    <Image source={event.image} className="rounded-l-2xl" style={{ width: 164, height: 147 }} />
+    <Image source={event.picUrl} className="rounded-l-2xl" style={{ width: 164, height: 147 }} />
     <Col gap={4} className="flex-1 mt-4">
       <Col gap={8}>
         <Row items="center" gap={4}>
@@ -31,7 +25,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
         </Row>
         <Row items="center" gap={4}>
           <Icons.calendar color="#5E3E2C" width={14} height={14} />
-          <AppText className="ml-1 text-brownColor-400">{event.date}</AppText>
+          <AppText className="ml-1 text-brownColor-400">{ moment(event.date).format("MMMM D, YYYY")}</AppText>
         </Row>
         <Row items="center" gap={4}>
           <Icons.coin color="#5E3E2C" width={14} height={14} />

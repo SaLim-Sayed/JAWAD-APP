@@ -1,13 +1,11 @@
-import { images } from "@/assets/images";
+import AppButton from "@/components/UI/AppButton";
+import AppHeader from "@/components/UI/AppHeader";
 import AppWrapper from "@/components/UI/AppWrapper";
 import SearchInput from "@/components/UI/SearchInput";
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import BestStableSection from "../components/BestStableSection";
-import ServiceHeader from "../components/HomeHeader";
-import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
-import AppButton from "@/components/UI/AppButton";
+import React, { useState } from "react";
+import { View } from "react-native";
+import BestStableSection from "../components/BestStableSection";
 import { bestStables } from "./mock";
 
  
@@ -18,8 +16,8 @@ const RidesScreen = () => {
    const [search, setSearch] = useState("");
   return (
     <AppWrapper>
-      <ServiceHeader userName={userName} />
-      <View className="bg-white pt-6  pb-60">
+      <AppHeader title={userName} showBackButton={true} />
+      <View className="bg-white flex-1 pt-6  pb-60">
        
           {/* Search */}
           <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">

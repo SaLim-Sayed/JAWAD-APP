@@ -1,10 +1,13 @@
 import AppText from "@/components/UI/AppText";
 import Row from "@/components/UI/Row";
 import StableCard from "@/components/UI/StableCard";
+import { useApiQuery } from "@/hooks";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
+import { apiKeys } from "@/hooks/apiKeys";
+import { GetStablesResponse } from "../../home/@types/stable.type";
 
 interface Stable {
     id: number;
@@ -20,6 +23,10 @@ interface BestStableSectionProps {
 }
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSeeAll }) => {
+    const { data } = useApiQuery<GetStablesResponse>({
+        key: ["getStable"],
+        url: apiKeys.stable.getStable+1,
+    })
     const { navigate } = useGlobalNavigation();
     return (
         <View className="">
@@ -32,20 +39,20 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
                     </TouchableOpacity>
                 </Row>}
                 numColumns={2}
-                data={bestStables}
+                data={data?.stables}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item._id.toString()}
                 columnWrapperStyle={{ gap: 6 }}
                 contentContainerStyle={{
                     alignItems: "center", gap: 20, paddingBottom: 220,
                 }}
                 renderItem={({ item }) => (
                     <StableCard
-                        image={item.image}
+                        image={item.picUrl}
                         name={item.name}
-                        type={item.type}
-                        rating={item.rating}
-                        onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item.id }) }}
+                        type={item.region}
+                        rating={item.totalRating}
+                        onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
                     />
                 )}
             />

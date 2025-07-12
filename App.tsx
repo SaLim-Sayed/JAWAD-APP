@@ -280,7 +280,7 @@ export default function Root() {
         <I18nContext>
           <App />
         </I18nContext>
-        <Toast visibilityTime={500} />
+        <Toast visibilityTime={1000} />
       </NavigationContainer>
     </QueryClientProvider>
   );

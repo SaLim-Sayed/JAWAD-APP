@@ -14,12 +14,12 @@ export function showGlobalToast({
   }: ShowGlobalToastParams) {
     Toast.show({
       type,
-      visibilityTime: 500,
+      visibilityTime: 1000,
       text1: title,
       text2: body,
-      position: 'bottom',
+      position: 'top',
       autoHide: true,
-      topOffset: 20,
+      topOffset: 50,
       
       ...rest,  
       text1Style: {

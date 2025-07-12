@@ -26,15 +26,15 @@ const StableCard: React.FC<StableCardProps> = ({
     <TouchableOpacity onPress={onPressStart} style={styles.card}>
         <Image className="rounded-t-2xl" source={image} style={styles.image} />
         <Col className="p-2" gap={4}>
-            <Row items="center" gap={4}>
+            <Row items="center" gap={12}>
                 <Image source={Icons.location} style={styles.icon} />
                 <AppText className="font-bold tajawal-semibold-20 text-brownColor-400 mt-2">{name}</AppText>
             </Row>
-            <Row items="center" gap={4}>
+            <Row items="center" gap={12}>
                 <Image source={Icons.stable} style={styles.icon} />
                 <AppText className="text-brownColor-300">{type}</AppText>
             </Row>
-            <Row gap={2} className="my-2">
+            <Row gap={12} className="my-2">
                 <StarRatingDisplay
                     rating={rating}
                     starStyle={{ width: 20, height: 14 }}
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
         alignItems: "flex-start",
+        overflow: "hidden",
     },
     image: {
         width: "100%",
@@ -78,10 +79,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 16,
     },
     icon: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-    },
+      
+     },
 });
 
 export default StableCard;

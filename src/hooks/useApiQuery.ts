@@ -1,6 +1,7 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import axios from 'axios';
-
+import { API_URL } from './api';
+import { useLanguage } from '@/store';
 type ApiQueryProps<TResponse> = {
   key: unknown[];
   url: any;
@@ -15,15 +16,19 @@ export function useApiQuery<TResponse = any>({
   enabled=true,
 }: ApiQueryProps<TResponse>) {
   const isQueryEnabled = !!url && enabled;
-
+const {language}=useLanguage()
   return useQuery<TResponse>({
     queryKey: key,
-    
     staleTime: 1000 * 60 * 2,
     enabled: isQueryEnabled,
      retry: 1, 
     queryFn: async () => {
-      const { data } = await axios.get<TResponse>(url);
+      const { data } = await axios.get<TResponse>(`${API_URL}${url}`,{
+        headers:{
+          // "Authorization": `Bearer ${get}`,
+          "accept-language": language
+        }
+      });
       return data;
     },
     ...config,

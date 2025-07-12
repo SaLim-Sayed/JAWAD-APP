@@ -16,9 +16,12 @@ import { z } from 'zod';
 import { Text, View } from 'react-native';
 import Row from '@/components/UI/Row';
 import { navigationEnums } from '@/provider/navigationEnums';
+import { useApiMutation } from '@/hooks';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
 const signUpSchema = z.object({
-    username: z.string().min(3, 'Username required'),
-    phone: z.string().min(6, 'Phone number required'),
+    name: z.string().min(3, 'Username required'),
+    // phone: z.string().min(6, 'Phone number required'),
+    email: z.string().email('Invalid email'),
     nationality: z.string().nonempty('Select nationality'),
     password: z.string().min(6, 'Password too short'),
     gender: z.enum(['male', 'female']),
@@ -30,16 +33,24 @@ export const SignUpScreen = () => {
     const { navigate } = useGlobalNavigation();
     const { setActiveApp } = useAuthStore()
 
+    const { mutate, isPending, error, data } = useApiMutation(
+        {
+            url: "/api/v1/auth/register",
+            method: "post",
+        }
+    )
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
         { value: 'American', label: 'American', icon: images.en },
-        { value: 'Arabian', label: 'Arabian', icon: images.ar },
+        { value: 'Egyptian', label: 'Egyptian', icon: images.ar },
     ];
+
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
-            username: '',
-            phone: '',
+            name: '',
+            // phone: '',
+            email: '',
             nationality: 'American',
             password: '',
             gender: 'male',
@@ -48,9 +59,24 @@ export const SignUpScreen = () => {
     const gender = watch("gender");
 
 
-    const onSubmit = (data: SignUpForm) => {
-        console.log('✅ Form Data:', data);
-        navigate(navigationEnums.OTP_SCREEN)
+    const onSubmit = (formData: SignUpForm) => {
+         mutate(formData, {
+            onSuccess: (data) => {
+                showGlobalToast({
+                    type: "success",
+                    title: "Sign Up Success",
+                    body: data.message
+                })
+                navigate("login")
+            },
+            onError: (error) => {
+                showGlobalToast({
+                    type: "error",
+                    title: "Sign Up Failed",
+                    body: error.message
+                })
+            }
+        })
     };
 
     return (
@@ -62,11 +88,11 @@ export const SignUpScreen = () => {
 
             <Controller
                 control={control}
-                name="username"
+                name="name"
                 render={({ field: { onChange, value } }) => (
                     <Input
                         label="User Name"
-                        name="username"
+                        name="name"
                         control={control}
                         className="bg-white p-3 rounded-xl border mt-1 mb-3"
                         placeholder="Enter Your User Name"
@@ -77,6 +103,22 @@ export const SignUpScreen = () => {
             />
 
             <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange, value } }) => (
+                    <Input
+                        label="Email"
+                        name="email"
+                        control={control}
+                        className="bg-white p-3 rounded-xl border mt-1 mb-3"
+                        placeholder="Enter Your Email"
+                        onChangeText={onChange}
+                        value={value}
+                    />
+                )}
+            />
+
+            {/* <Controller
                 control={control}
                 name="phone"
                 render={({ field: { onChange, value } }) => (
@@ -91,7 +133,7 @@ export const SignUpScreen = () => {
                         value={value}
                     />
                 )}
-            />
+            /> */}
 
             <Controller
                 control={control}
@@ -125,16 +167,17 @@ export const SignUpScreen = () => {
             />
 
 
-            <RadioGroup
+            {/* <RadioGroup
                 options={[
                     { label: "Male", value: "male" },
                     { label: "Female", value: "female" },
                 ]}
                 value={gender}
                 onChange={(val: any) => setValue("gender", val)}
-            />
+            /> */}
 
             <AppButton
+            loading={isPending}
                 title="Sign up"
                 onPress={handleSubmit(onSubmit)}
             />

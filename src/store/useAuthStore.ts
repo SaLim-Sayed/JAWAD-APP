@@ -7,6 +7,8 @@ type ActiveApp = 'Auth' | 'Admin' | 'Onboarding' | 'Client';
 interface AuthState {
   isLoggedIn: boolean;
   activeApp: ActiveApp;
+  token: string;
+  setToken: (token: string) => void;
   login: () => void;
   logout: () => void;
   setActiveApp: (app: ActiveApp) => void;
@@ -16,10 +18,14 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: false,
   activeApp: 'Onboarding',
-
+  token: '',
   login: async () => {
     await AsyncStorage.setItem('isLoggedIn', 'true');
     set({ isLoggedIn: true });
+  },
+  setToken: async (token) => {
+    await AsyncStorage.setItem('token', token);
+    set({ token });
   },
 
   logout: async () => {

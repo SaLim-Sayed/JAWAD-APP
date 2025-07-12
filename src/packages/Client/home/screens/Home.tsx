@@ -7,7 +7,7 @@ import BestStableSection from "../components/BestStableSection";
 import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
-
+import { useAuthStore } from "@/store/useAuthStore";
 // Dummy data for best stables/events
 const bestStables = [
   {
@@ -40,6 +40,8 @@ const HomeScreen = () => {
   // Header user info
   const userName = "George Mikhaiel";
   const location = "Fifth Settlement";
+  const {token} = useAuthStore()
+  console.log({token})
   const [search, setSearch] = useState("");
   return (
     <AppWrapper>

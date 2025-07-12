@@ -4,21 +4,32 @@ import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import EventDescription from "../components/EventDescription";
-import { events } from "./envent.data";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { navigationEnums } from "@/provider/navigationEnums";
- 
+import { GetEventDetailsResponse } from "../../home/@types/event.type";
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+
 
 
 
 const EventDetails = () => {
   const { id } = useAppRouteParams("EVENT_DETAILS")
   console.log(id)
- 
-const {navigate}=useGlobalNavigation()
-  const title =   events?.find((event) => event.id === id)?.name;
+
+  console.log(apiKeys.event.eventDetails + id)
+  const { data ,isLoading} = useApiQuery<GetEventDetailsResponse>({
+    key: ["getEventDetails",id],
+    url: apiKeys.event.eventDetails + id,
+  })
+  const { navigate } = useGlobalNavigation()
+  const title = data?.event?.name;
+
+  if(isLoading){
+    return <ActivityIndicator/>
+  }
   return (
     <AppWrapper>
       <AppHeader title={title} showBackButton />
@@ -31,18 +42,18 @@ const {navigate}=useGlobalNavigation()
 
           }}
         >
-        
-          <EventDescription event={events.find((event) => event.id === id)}/>
+
+          <EventDescription event={data?.event!} />
           <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
 
 
 
           <AppButton
             title="Get the ticket"
-            onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id })}}
+            onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id }) }}
             className="my-4"
           />
-          
+
         </ScrollView>
       </View>
     </AppWrapper>
