@@ -1,12 +1,13 @@
 import Image from "@/components/UI/Image";
 import React from "react";
 import { View } from "react-native";
-import { bestStables } from "../screens/mock";
+import { HorseDetail } from "../@types/horse.types";
+import PictureGallery from "@/components/UI/PictureGallery";
 
-const HorseDetailsHeader = () => {
+const HorseDetailsHeader = ({ horse }: { horse: HorseDetail }) => {
     return (
         <View className="mb-4" >
-            <Image source={bestStables[0].image} className="w-full h-48 rounded-xl" />
+            <PictureGallery pictures={horse.picUrls.map((url, index) => ({ id: index, url }))} />
         </View>
     );
 };

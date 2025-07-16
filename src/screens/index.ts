@@ -1,5 +1,0 @@
- export * from './Live/LiveStreamScreen'
-export * from './Movies/Movies'
-export * from './Profile/Profile'
-export * from './Live/LiveTV'
-export * from './Series/Series'

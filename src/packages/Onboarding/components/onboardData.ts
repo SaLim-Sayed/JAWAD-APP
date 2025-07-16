@@ -12,16 +12,7 @@ export const onboardData: OnboardItem[] = [
         { text: 'Next', action: 'next' },
       ],
     },
-    {
-      title: 'Find Your Perfect Riding Experience',
-      description:
-        "Explore Top-Rated Stables For Horse Riding, All in One Place. Whether You're A Beginner Or An Experienced Rider, Find The Perfect Stable To Suit Your Needs.",
-      image: images.onboard2,
-      buttons: [
-        { text: 'Back', action: 'back' },
-        { text: 'Start', action: 'next' },
-      ],
-    },
+  
     {
       title: 'Find Your Perfect Riding Experience',
       description:

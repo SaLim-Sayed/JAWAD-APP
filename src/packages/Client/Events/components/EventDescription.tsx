@@ -41,7 +41,8 @@ const EventDescription = ({ event }: { event: Event }) => {
                 city={event.city}
                 region={event.region}
                 address={event.address}
-            />        </View>
+            />
+        </View>
     );
 };
 

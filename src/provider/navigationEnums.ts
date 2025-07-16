@@ -18,7 +18,7 @@
   ONBOARD1: "onboard1",
   ONBOARD2: "onboard2",
   ONBOARD3: "onboard3",
-  LOGIN_SCREEN: "login",
+  LOGIN_SCREEN: "login/:role",
   SIGNUP_SCREEN: "signUp",
   FORGET_PASSWORD_SCREEN: "forget-password",
   OTP_SCREEN: "otp",

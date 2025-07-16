@@ -17,7 +17,7 @@ interface Event {
 }
 
 interface EventsSectionProps {
-  events: Event[];
+events?: Event[];
   onSeeAll?: () => void;
 }
 

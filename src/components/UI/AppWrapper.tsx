@@ -17,7 +17,7 @@ import Image from './Image';
 import { images } from '@/assets/images';
 
 interface AppWrapperProps {
-  isTabView?: boolean;
+  isScrollable?: boolean;
   children: React.ReactNode;
   style?: ViewStyle;
   showBackdrop?: boolean;
@@ -27,7 +27,7 @@ interface AppWrapperProps {
 const AppWrapper: React.FC<AppWrapperProps> = ({
   children,
   style,
-  isTabView = false,
+  isScrollable = true,
   showBackdrop = true,
   backdropColors = ['rgba(255,255,255,0.5)', 'rgba(255,255,255,0.5)'],
 }) => {

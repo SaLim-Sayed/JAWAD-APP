@@ -11,6 +11,7 @@ import Col from '@/components/UI/Col';
 import Or from '@/components/UI/Or';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
+import { View } from 'react-native';
 
 const loginSchema = z.object({
   phone: z.string().min(6, 'Phone number is required'),
@@ -40,7 +41,7 @@ const ForgetScreen = () => {
 
   return (
     <AuthWrapper>
-      <Col className='mt-12' gap={16}>
+      <View className='mt-12 flex-1 w-full'>
         <Col gap={4}>
           <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Don’t WORRY !</AppText>
           <AppText className="text-brownColor-400 mb-4">did you forgot your password?</AppText>
@@ -63,7 +64,7 @@ const ForgetScreen = () => {
             />
           )}
         />
-    
+
 
 
 
@@ -79,7 +80,7 @@ const ForgetScreen = () => {
           variant="outline"
           onPress={() => setActiveApp("Client")}
         />
-      </Col>
+      </View>
     </AuthWrapper>
   );
 };

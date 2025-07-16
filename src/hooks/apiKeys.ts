@@ -15,8 +15,8 @@ export const apiKeys = {
     },
     horse: {
       addHorse: "/api/v1/horse/add",
-      getHorse: "/api/v1/horse/getHorse",
-      horseDetails: "/api/v1/horse/horseDetails",
+      getHorse: "/api/v1/horse/get/685ebadc42f93b3d7279a8cf?page=1&nationality=Foreign&service=Ride",
+      horseDetails: "/api/v1/horse/details/",
       updateHorse: "/api/v1/horse/updateHorse",
       horseAvailable: "/api/v1/horse/horseAvailable",
       reservedTimes: "/api/v1/horse/reservedTimes",
@@ -33,6 +33,7 @@ export const apiKeys = {
     photographer: {
       addPhotographer: "/api/v1/photographer/addPhotographer",
       login: "/api/v1/photographer/login",
+      getPhotograoher:"/api/v1/photographer/get?page=1",
       completed: "/api/v1/photographer/completed",
     },
   };

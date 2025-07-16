@@ -1,61 +1,69 @@
 import AppButton from "@/components/UI/AppButton";
 import AppWrapper from "@/components/UI/AppWrapper";
-import SearchInput from "@/components/UI/SearchInput";
-import { Icons } from "@/constants";
-import useAppRouteParams from "@/provider/useAppRouteParams";
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import ServiceHeadr from "../components/HomeHeader";
-import { bestStables, horseDate } from "./mock";
-import StableDetailsHeader from "../components/StableDetailsHeader";
-import Divider from "@/components/UI/Divider";
-import StableDescription from "../components/StableDescription";
-import HorseSection from "../components/HorseSection";
-import Col from "@/components/UI/Col";
-import HorseDetailsHeader from "../components/HorseDetailsHeader";
-import HorseDescription from "../components/HorseDescription";
 import Row from "@/components/UI/Row";
-// Dummy data for best stables/events
-
+import { Icons } from "@/constants";
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import useAppRouteParams from "@/provider/useAppRouteParams";
+import React from "react";
+import { ActivityIndicator, ScrollView, View } from "react-native";
+import { GetHorseDetailResponse } from "../@types/horse.types";
+import ServiceHeadr from "../components/HomeHeader";
+import HorseDescription from "../components/HorseDescription";
+import HorseDetailsHeader from "../components/HorseDetailsHeader";
 
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS")
-  console.log(id)
 
-  const [search, setSearch] = useState("");
-  const title = horseDate.find((horse) => horse.id === id)?.name;
+  const { data, isLoading } = useApiQuery<GetHorseDetailResponse>({
+    key: ["getHorseDetails", id],
+    url: apiKeys.horse.horseDetails + id,
+  });
+
+
+  const title = data?.horse?.name;
   return (
     <AppWrapper>
       <ServiceHeadr title={title} showBackButton />
-      <View className="bg-white  h-full ">
+      <View className="bg-white  flex-1 h-full ">
         <ScrollView
           contentContainerStyle={{
-            paddingBottom: 180,
+            paddingBottom: 80,
             marginHorizontal: 10,
             flexGrow: 1,
 
           }}
         >
-          
-          <HorseDetailsHeader />
-          <HorseDescription />
 
-          <Row gap={4} justify="between" className="mt-4">
-            <AppButton
-              title="Select"
-              onPress={() => { }}
-              className="w-[90%]"
-            />
-            <AppButton
-              title="Share"
-              variant="outline"
-              onPress={() => { }}
-              className="w-[88%]"
-              endIcon={<Icons.share />}
-            />
-          </Row>
+          {isLoading &&
+            <View className="flex-1 justify-center items-center my-6">
+              <ActivityIndicator size="large" color="#8B4513" />
+            </View>
+
+          }
+          {(!isLoading && data) && (
+            <>
+              <HorseDetailsHeader horse={data?.horse!} />
+              <HorseDescription horse={data?.horse!} />
+            </>
+          )}
+
         </ScrollView>
+        <Row gap={4} justify="between" className="mt-4 mb-10">
+          <AppButton
+            title="Select"
+            onPress={() => { }}
+            className="w-[90%]"
+          />
+          <AppButton
+            title="Share"
+            variant="outline"
+            onPress={() => { }}
+            className="w-[80%]"
+            endIcon={<Icons.share />}
+          />
+        </Row>
       </View>
     </AppWrapper>
   );

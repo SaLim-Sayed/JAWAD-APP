@@ -31,7 +31,7 @@ export default function Col({
   });
 
   return (
-    <View className={cn('flex w-full flex-col', justifyClass, itemsClass, className)}>
+    <View className={cn('flex w-full  flex-col', justifyClass, itemsClass, className)}>
       {spacedChildren}
     </View>
   );

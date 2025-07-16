@@ -33,12 +33,10 @@ const EventDetails = () => {
   return (
     <AppWrapper>
       <AppHeader title={title} showBackButton />
-      <View className="bg-white  h-full ">
+      <View className="bg-white  flex-1 pb-10  ">
         <ScrollView
           contentContainerStyle={{
-            paddingBottom: 220,
-            marginHorizontal: 10,
-            flexGrow: 1,
+             flexGrow: 1,
 
           }}
         >
@@ -48,13 +46,13 @@ const EventDetails = () => {
 
 
 
-          <AppButton
-            title="Get the ticket"
-            onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id }) }}
-            className="my-4"
-          />
+          
 
         </ScrollView>
+        <AppButton
+            title="Get the ticket"
+            onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id }) }}
+           />
       </View>
     </AppWrapper>
   );

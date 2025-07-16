@@ -66,7 +66,7 @@ export const Input: React.FC<InputProps> = ({
           )}
         />
         {endIcon && (
-          <TouchableOpacity className="absolute right-4 top-4" onPress={onEndIconPress}>
+          <TouchableOpacity className="absolute right-6 top-4" onPress={onEndIconPress}>
             {endIcon}
           </TouchableOpacity>
         )}

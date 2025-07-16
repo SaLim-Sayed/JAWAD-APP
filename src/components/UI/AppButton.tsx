@@ -40,7 +40,7 @@ export default function AppButton({
       onPress={onPress}
       disabled={isDisabled}
       className={cn(
-        'rounded-xl py-4 h-[52px] w-full flex-row justify-center items-center',
+        'rounded-xl m-2 py-4 w-full h-[52px] flex-row justify-center items-center',
         isOutline
           ? 'bg-transparent border border-brownColor-400'
           : isDisabled

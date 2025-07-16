@@ -22,7 +22,20 @@ import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
 import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
 
+import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
+import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
+import EventDetails from '@/packages/Client/Events/screens/EventDetails';
+import Events from '@/packages/Client/Events/screens/Events';
 import HomeScreen from '@/packages/Client/home/screens/Home';
+import AboutUs from '@/packages/Client/Profile/screens/AboutUs';
+import BookingDetails from '@/packages/Client/Profile/screens/BookingDetails';
+import BookingHistory from '@/packages/Client/Profile/screens/BookingHistory';
+import ComplaintScreen from '@/packages/Client/Profile/screens/ComplaintScreen';
+import ContactUsScreen from '@/packages/Client/Profile/screens/ContactUs';
+import Language from '@/packages/Client/Profile/screens/Language';
+import Profile from '@/packages/Client/Profile/screens/Profile';
+import Terms from '@/packages/Client/Profile/screens/Terms';
+import UserProfileScreen from '@/packages/Client/Profile/screens/UserProfileScreen';
 import HorseDetails from '@/packages/Client/Services/screens/HorseDetails';
 import Horses from '@/packages/Client/Services/screens/Horses';
 import PhotoSessionDetails from '@/packages/Client/Services/screens/PhotoSessionDetails';
@@ -30,21 +43,8 @@ import PhotoSessionScreen from '@/packages/Client/Services/screens/PhotoSessionS
 import { default as RidesScreen, default as Services } from '@/packages/Client/Services/screens/RidesScreen';
 import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
 import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
- import { useSplashStore } from '@/store/useSplashStore';
+import { useSplashStore } from '@/store/useSplashStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Profile from '@/packages/Client/Profile/screens/Profile';
-import Events from '@/packages/Client/Events/screens/Events';
-import EventDetails from '@/packages/Client/Events/screens/EventDetails';
-import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
-import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
-import UserProfileScreen from '@/packages/Client/Profile/screens/UserProfileScreen';
-import AboutUs from '@/packages/Client/Profile/screens/AboutUs';
-import Terms from '@/packages/Client/Profile/screens/Terms';
-import ContactUsScreen from '@/packages/Client/Profile/screens/ContactUs';
-import BookingHistory from '@/packages/Client/Profile/screens/BookingHistory';
-import BookingDetails from '@/packages/Client/Profile/screens/BookingDetails';
-import ComplaintScreen from '@/packages/Client/Profile/screens/ComplaintScreen';
-import Language from '@/packages/Client/Profile/screens/Language';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -215,7 +215,7 @@ function MainNavigator() {
 
 // Root App
 function App() {
-  const {showSplash, setShowSplash} = useSplashStore();
+  const { showSplash, setShowSplash } = useSplashStore();
   const { isLoggedIn, activeApp, loadAuthState } = useAuthStore();
 
 

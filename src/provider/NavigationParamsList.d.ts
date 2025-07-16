@@ -1,5 +1,7 @@
+import { stable } from '@/assets/icons/stable.svg';
 import { navigationEnums } from './navigationEnums';
-
+export type Role="auth"|"stable"|"photographer"|"school"
+ 
 export type NavigationParamsList = {
   [navigationEnums.MAIN]: undefined;
   [navigationEnums.HOME]: undefined;
@@ -20,7 +22,7 @@ export type NavigationParamsList = {
   [navigationEnums.ONBOARD1]: undefined;
   [navigationEnums.ONBOARD2]: undefined;
   [navigationEnums.ONBOARD3]: undefined;
-  [navigationEnums.LOGIN_SCREEN]: undefined;
+  [navigationEnums.LOGIN_SCREEN]:   { role:Role};
   [navigationEnums.SIGNUP_SCREEN]: undefined;
   [navigationEnums.FORGET_PASSWORD_SCREEN]: undefined;
   [navigationEnums.OTP_SCREEN]: undefined;

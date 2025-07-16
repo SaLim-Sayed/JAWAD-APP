@@ -8,40 +8,26 @@ import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
 import { useAuthStore } from "@/store/useAuthStore";
-// Dummy data for best stables/events
-const bestStables = [
-  {
-    id: 1,
-    image: images.pyramids,
-    name: "Pyramids (Saqqara)",
-    type: "Fantasy Stable",
-    rating: 3.2,
-  },
-  {
-    id: 2,
-    image: images.villarreal,
-    name: "Pyramids (Saqqara)",
-    type: "Fantasy Stable",
-    rating: 3.2,
-  },
-];
+import HorseSection from "../../Services/components/HorseSection";
+import { FlatList } from "react-native";
+import { navigationEnums } from "@/provider/navigationEnums";
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
+import PhotographyCard from "@/components/UI/PhotographyCard";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
 
-const events = [
-  {
-    id: 1,
-    image: images.family,
-    name: "Pyramids (Saqqara)",
-    date: "15 JUN. 2024",
-    price: "250 $",
-  },
-];
 
 const HomeScreen = () => {
-  // Header user info
+  const { navigate}=useGlobalNavigation()
   const userName = "George Mikhaiel";
   const location = "Fifth Settlement";
-  const {token} = useAuthStore()
-  console.log({token})
+  const { token, role } = useAuthStore()
+  const {data } = useApiQuery<GetPhotographersResponse>({
+    url: apiKeys.photographer.getPhotograoher,
+    key:["getPhotograoher"]
+  })
+  console.log({ role })
   const [search, setSearch] = useState("");
   return (
     <AppWrapper>
@@ -57,14 +43,25 @@ const HomeScreen = () => {
           {/* Search */}
           <View className="px-4">
             <SearchInput value={search} onChange={setSearch} />
-          {/* Quote Card */}
-          <QuoteCard />
+            {/* Quote Card */}
+            <QuoteCard />
           </View>
 
           {/* The Best Stable Section */}
-          <BestStableSection bestStables={bestStables} />
+          {role === "auth"||role === "photographer" && <BestStableSection />}
+          {role === "stable"||role === "photographer" && <HorseSection />}
+
           {/* The Events Section */}
-          <EventsSection events={events} />
+          {role === "auth"||role === "photographer" && <EventsSection />}
+          {/* {
+            role === "photographer" && <FlatList
+              data={data?.photographers}
+              style={{ marginTop: 20 }}
+              renderItem={({ item }) => <PhotographyCard Photography={item} onStart={() => navigate(navigationEnums.PHOTO_SESSION_DETAILS, { id: item._id })} />}
+              keyExtractor={(item) => item._id.toString()}
+              ListFooterComponent={<View className="h-44" />}
+            />
+          } */}
         </ScrollView>
       </View>
     </AppWrapper>

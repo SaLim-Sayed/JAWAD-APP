@@ -18,22 +18,25 @@ import Row from '@/components/UI/Row';
 import Col from '@/components/UI/Col';
 import { useApiMutation } from '@/hooks';
 import { showGlobalToast } from '@/hooks/useGlobalToast';
+import useAppRouteParams from '@/provider/useAppRouteParams';
 const loginSchema = z.object({
   email: z.string().min(6, 'Email is required'),
-  password: z.string().min(6, 'Password too short'),
+  password: z.string().min(4, 'Password too short'),
 });
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
 const LoginScreen = () => {
+  const { role } = useAppRouteParams("LOGIN_SCREEN")
+  const url = `/api/v1/${role}/login`
   const { mutate, isPending, error, data, isSuccess } = useApiMutation(
     {
-      url: "/api/v1/auth/login",
+      url: url,
       method: "post",
     }
   )
   const { navigate } = useGlobalNavigation();
-  const { setActiveApp,setToken } = useAuthStore()
+  const { setActiveApp, setToken } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -49,7 +52,7 @@ const LoginScreen = () => {
   });
 
   const onSubmit = (formData: LoginSchema) => {
-     mutate(formData, {
+    mutate(formData, {
       onSuccess: (data) => {
         showGlobalToast({
           type: "success",
@@ -59,7 +62,7 @@ const LoginScreen = () => {
         setToken(data.token)
         setActiveApp("Client")
       },
-      onError:(error)=>{
+      onError: (error) => {
         showGlobalToast({
           type: "error",
           title: "Login Failed",
@@ -120,42 +123,42 @@ const LoginScreen = () => {
           selected={rememberMe}
           onPress={() => setRememberMe((prev) => !prev)}
         />
-        <TouchableOpacity onPress={() => navigate('forget-password')}>
+        {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')}>
           <AppText className="text-brownColor-300 text-sm">Forgot Password?</AppText>
 
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </Row>
       <AppButton loading={isPending} title="Login" onPress={handleSubmit(onSubmit)} />
-
-      <Text className="text-center text-brownColor-400 mt-4">
-        Don't have an account ?{' '}
-        <Text className="text-brownColor-300" onPress={() => navigate('signUp')}>
-          Sign up
+      {role === "auth" &&  <>
+        <Text className="text-center text-brownColor-400 mt-4">
+          Don't have an account ?{' '}
+          <Text className="text-brownColor-300" onPress={() => navigate('signUp')}>
+            Sign up
+          </Text>
         </Text>
-      </Text>
 
-      <Or />
+        <Or />
 
-      <View className="flex-row w-full mb-3 justify-between items-center gap-4">
-        <AppButton
-          className="flex-1 bg-brownColor-50"
-          textClassName="text-brownColor-400"
-          title="Google"
-          onPress={() => { }}
-          startIcon={<Icons.google />}
-        />
-        <AppButton
-          className="w-12 h-12 bg-brownColor-50 items-center justify-center"
-          onPress={() => { }}
-          startIcon={<Icons.facebook />}
-        />
-        <AppButton
-          className="w-12 h-12 bg-brownColor-50 items-center justify-center"
-          onPress={() => { }}
-          startIcon={<Icons.apple />}
-        />
-      </View>
-
+        <View className="flex-row w-full mb-3 justify-between items-center gap-4">
+          <AppButton
+            className="flex-1 bg-brownColor-50"
+            textClassName="text-brownColor-400"
+            title="Google"
+            onPress={() => { }}
+            startIcon={<Icons.google />}
+          />
+          <AppButton
+            className="w-12 h-12 bg-brownColor-50 items-center justify-center"
+            onPress={() => { }}
+            startIcon={<Icons.facebook />}
+          />
+          <AppButton
+            className="w-12 h-12 bg-brownColor-50 items-center justify-center"
+            onPress={() => { }}
+            startIcon={<Icons.apple />}
+          />
+        </View>
+      </>}
       <AppButton
         title="Continue as Guest"
         variant="outline"

@@ -24,7 +24,7 @@ interface Stable {
 }
 
 interface BestStableSectionProps {
-    bestStables: Stable[];
+    bestStables?: Stable[];
     onSeeAll?: () => void;
 }
 
