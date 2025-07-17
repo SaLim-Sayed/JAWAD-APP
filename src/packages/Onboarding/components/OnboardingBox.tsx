@@ -30,7 +30,7 @@ export default function OnboardingBox({
   const { width } = Dimensions.get("window");
   const { i18n, t } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
-  const { setActiveApp, setRole } = useAuthStore();
+  const { setActiveApp, setAuthData } = useAuthStore();
   const [showBusinessModal, setShowBusinessModal] = useState(false);
 
   const openBusinessModal = () => setShowBusinessModal(true);
@@ -49,7 +49,7 @@ export default function OnboardingBox({
   const navigateToLogin = (role: Role) => {
     setTimeout(() => {
       navigate(navigationEnums.LOGIN_SCREEN, { role })
-      setRole(role)
+      setAuthData({role:role})
     }, 0);
   }
   const navigateToSignUp = () => {

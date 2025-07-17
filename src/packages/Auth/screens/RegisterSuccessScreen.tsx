@@ -9,13 +9,13 @@ import Image from '@/components/UI/Image';
 import Row from '@/components/UI/Row';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
-
+import { navigationEnums } from '@/provider/navigationEnums';
 const RegisterSuccessScreen = () => {
   const { navigate } = useGlobalNavigation();
-  const { setActiveApp } = useAuthStore()
+  const { authData } = useAuthStore()
 
   const onSubmit = () => {
-    navigate("login")
+    navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })
   };
 
   return (

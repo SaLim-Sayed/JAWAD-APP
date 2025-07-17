@@ -4,37 +4,52 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Role } from '@/provider/NavigationParamsList';
 
 type ActiveApp = 'Auth' | 'Admin' | 'Onboarding' | 'Client';
+interface AuthData {
+  token: string;
+  role: Role;
+  id: string;
+  isCompleted: boolean;
+}
 
 interface AuthState {
   isLoggedIn: boolean;
   activeApp: ActiveApp;
-  token: string;
-  role:Role;
-  setToken: (token: string) => void;
+  authData: AuthData;
+  setAuthData: (data: Partial<AuthData>) => void;
   login: () => void;
   logout: () => void;
   setActiveApp: (app: ActiveApp) => void;
-  setRole: (role: Role) => void;
   loadAuthState: () => Promise<void>;
 }
+
 
 export const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: false,
   activeApp: 'Onboarding',
-  token: '',
-  role:"auth",
+  authData: {
+    token: '',
+    role: 'auth',
+    id: '',
+    isCompleted: false,
+  },
+
   login: async () => {
     await AsyncStorage.setItem('isLoggedIn', 'true');
     set({ isLoggedIn: true });
   },
-  setToken: async (token) => {
-    await AsyncStorage.setItem('token', token);
-    set({ token });
-  },
 
   logout: async () => {
-    await AsyncStorage.multiRemove(['isLoggedIn', 'activeApp']);
-    set({ isLoggedIn: false, activeApp: 'Onboarding' });
+    await AsyncStorage.multiRemove(['isLoggedIn', 'activeApp', 'token', 'role', 'id', 'isCompleted']);
+    set({
+      isLoggedIn: false,
+      activeApp: 'Onboarding',
+      authData: {
+        token: '',
+        role: 'auth',
+        id: '',
+        isCompleted: false,
+      },
+    });
   },
 
   setActiveApp: async (app) => {
@@ -42,22 +57,40 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ activeApp: app });
   },
 
-  setRole: async (role) => {
-    await AsyncStorage.setItem('role', role);
-    set({ role });
+  setAuthData: async (data) => {
+    // Save individual fields in AsyncStorage
+    if (data.token !== undefined) await AsyncStorage.setItem('token', data.token);
+    if (data.role !== undefined) await AsyncStorage.setItem('role', data.role);
+    if (data.id !== undefined) await AsyncStorage.setItem('id', data.id);
+    if (data.isCompleted !== undefined) await AsyncStorage.setItem('isCompleted', data.isCompleted.toString());
+
+    set((state) => ({
+      authData: {
+        ...state.authData,
+        ...data,
+      },
+    }));
   },
 
   loadAuthState: async () => {
-    const [isLoggedIn, activeApp,role] = await Promise.all([
+    const [isLoggedIn, activeApp, token, role, id, isCompleted] = await Promise.all([
       AsyncStorage.getItem('isLoggedIn'),
       AsyncStorage.getItem('activeApp'),
+      AsyncStorage.getItem('token'),
       AsyncStorage.getItem('role'),
+      AsyncStorage.getItem('id'),
+      AsyncStorage.getItem('isCompleted'),
     ]);
 
     set({
       isLoggedIn: isLoggedIn === 'true',
       activeApp: (activeApp as ActiveApp) || 'Onboarding',
-      role: (role as Role) || 'auth',
+      authData: {
+        token: token || '',
+        role: (role as Role) || 'auth',
+        id: id || '',
+        isCompleted: isCompleted === 'true',
+      },
     });
   },
 }));

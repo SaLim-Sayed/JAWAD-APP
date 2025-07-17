@@ -34,7 +34,7 @@ export type NavigationParamsList = {
   [navigationEnums.STABLE]: undefined;
   [navigationEnums.SERVICE]: undefined;
   [navigationEnums.STABLE_SERVICES_DETAILS]: { id: any };
-  [navigationEnums.HORSES]: undefined;
+  [navigationEnums.HORSES]: {id:any};
   [navigationEnums.HORSE_DETAILS]: { id: any };
   [navigationEnums.SERVICES]: undefined;
   [navigationEnums.RIDES]: undefined;

@@ -1,29 +1,19 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { z } from 'zod';
+import React from 'react';
 
-import { Input } from '@/components';
+import { images } from '@/assets/images';
 import AppButton from '@/components/UI/AppButton';
-import AuthWrapper from '@/components/UI/AuthWrapper';
-import Or from '@/components/UI/Or';
-import Radio from '@/components/UI/Radio';
-import { Icons } from '@/constants';
-import useGlobalNavigation from '@/provider/useGlobalNavigation';
-import { useAuthStore } from '@/store/useAuthStore';
 import AppText from '@/components/UI/AppText';
+import AuthWrapper from '@/components/UI/AuthWrapper';
+import Col from '@/components/UI/Col';
 import Image from '@/components/UI/Image';
 import Row from '@/components/UI/Row';
-import Col from '@/components/UI/Col';
-import { images } from '@/assets/images';
-
+import useGlobalNavigation from '@/provider/useGlobalNavigation';
+import { navigationEnums } from '@/provider/navigationEnums';
 const ChangeSuccessScreen = () => {
   const { navigate } = useGlobalNavigation();
-  const { setActiveApp } = useAuthStore()
 
   const onSubmit = () => {
-    navigate("login")
+    navigate(navigationEnums.LOGIN_SCREEN)
   };
 
   return (

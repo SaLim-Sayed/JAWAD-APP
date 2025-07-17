@@ -1,32 +1,39 @@
 import AppButton from "@/components/UI/AppButton";
 import AppWrapper from "@/components/UI/AppWrapper";
+import Divider from "@/components/UI/Divider";
 import SearchInput from "@/components/UI/SearchInput";
 import { Icons } from "@/constants";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import ServiceHeadr from "../components/HomeHeader";
-import { bestStables } from "./mock";
-import StableDetailsHeader from "../components/StableDetailsHeader";
-import Divider from "@/components/UI/Divider";
-import StableDescription from "../components/StableDescription";
 import HorseSection from "../components/HorseSection";
-import Col from "@/components/UI/Col";
+import StableDescription from "../components/StableDescription";
+import StableDetailsHeader from "../components/StableDetailsHeader";
+import { bestStables } from "./mock";
+import { apiKeys } from "@/hooks/apiKeys";
+import { useApiQuery } from "@/hooks";
+import { GetStableDetailsResponse } from "../@types/horse.types";
 // Dummy data for best stables/events
 
 
 
 const StableServicesDetails = () => {
   const { id } = useAppRouteParams("STABLE_SERVICES_DETAILS")
+  const { data, isLoading } = useApiQuery<GetStableDetailsResponse>({
+    key: ["stableDetails"],
+    url: apiKeys.stable.stableDetails,
+  })
   console.log(id)
   // Header user info
   const userName = "George Mikhaiel";
   const location = "Fifth Settlement";
   const [search, setSearch] = useState("");
-  const title = bestStables.find((stable) => stable.id === id)?.name;
+  const title = data?.stable.name.en;
+  console.log({data})
   return (
     <AppWrapper>
-      <ServiceHeadr title={title} showBackButton />
+      <ServiceHeadr title={data?.stable.name.en} showBackButton />
       <View className="bg-white  h-full ">
         <ScrollView
           contentContainerStyle={{
@@ -54,25 +61,25 @@ const StableServicesDetails = () => {
           </View>
 
           <StableDetailsHeader />
-          <Divider containerStyle={{height:2}} className="h-[3px]"/>
-          <StableDescription/>
-          <Divider containerStyle={{height:2}} className="h-[3px]"/>
-          <HorseSection/>
+          <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
+          <StableDescription />
+          <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
+          <HorseSection stableId={id} />
           {/* The Best Stable Section */}
           {/* The Events Section */}
 
-                <AppButton
-                    title="Start now"
-                     onPress={() =>  {}}
-                   className="my-4"
-                  />
-                  <AppButton
-                    title="Add to cart"
-                    variant="outline"
-                    onPress={() =>  {}}
-                  
-                  />
-         </ScrollView>
+          <AppButton
+            title="Start now"
+            onPress={() => { }}
+            className="my-4"
+          />
+          <AppButton
+            title="Add to cart"
+            variant="outline"
+            onPress={() => { }}
+
+          />
+        </ScrollView>
       </View>
     </AppWrapper>
   );

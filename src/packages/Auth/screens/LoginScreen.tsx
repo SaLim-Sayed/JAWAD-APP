@@ -36,7 +36,7 @@ const LoginScreen = () => {
     }
   )
   const { navigate } = useGlobalNavigation();
-  const { setActiveApp, setToken } = useAuthStore()
+  const { setActiveApp, setAuthData } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -50,6 +50,7 @@ const LoginScreen = () => {
       password: '',
     },
   });
+  console.log({data})
 
   const onSubmit = (formData: LoginSchema) => {
     mutate(formData, {
@@ -59,8 +60,13 @@ const LoginScreen = () => {
           title: "Login Success",
           body: data.message
         })
-        setToken(data.token)
-        setActiveApp("Client")
+        setAuthData({
+          token: data.token,
+          role: role,
+          id: data.id,
+          isCompleted: data.isCompleted,
+        })
+        // setActiveApp("Client")
       },
       onError: (error) => {
         showGlobalToast({

@@ -31,7 +31,7 @@ type SignUpForm = z.infer<typeof signUpSchema>;
 
 export const SignUpScreen = () => {
     const { navigate } = useGlobalNavigation();
-    const { setActiveApp } = useAuthStore()
+    const { setActiveApp ,authData} = useAuthStore()
 
     const { mutate, isPending, error, data } = useApiMutation(
         {
@@ -67,7 +67,7 @@ export const SignUpScreen = () => {
                     title: "Sign Up Success",
                     body: data.message
                 })
-                navigate("login")
+                navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})
             },
             onError: (error) => {
                 showGlobalToast({
@@ -186,7 +186,7 @@ export const SignUpScreen = () => {
                     Already have an account ?
 
                 </AppText>
-                <AppText className="text-brownColor-400" onPress={() => navigate('login')}>
+                <AppText className="text-brownColor-400" onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}>
                     Login
                 </AppText>
             </Row>
@@ -198,20 +198,20 @@ export const SignUpScreen = () => {
                     className='w-[50%] bg-brownColor-50'
                     textClassName='text-brownColor-400'
                     title="Google"
-                    onPress={() => navigate('login')}
+                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.google />}
                 />
                 <AppButton
                     className='w-[10%]  bg-brownColor-50'
                     textClassName='text-brownColor-400'
 
-                    onPress={() => navigate('login')}
+                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.facebook />}
                 />
                 <AppButton
                     className='w-[10%] bg-brownColor-50 text-brownColor-400'
                     textClassName='text-brownColor-400'
-                    onPress={() => navigate('login')}
+                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.apple />}
                 />
             </View>

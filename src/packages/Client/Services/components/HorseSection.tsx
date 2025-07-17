@@ -16,14 +16,14 @@ import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { GetHorsesResponse } from "../@types/horse.types";
 
-const HorseSection = () => {
+const HorseSection = ({stableId}: {stableId: string}) => {
   const { navigate } = useGlobalNavigation();
   const screenWidth = Dimensions.get("window").width;
-  const itemSize = screenWidth / 2 - 20;
+  const itemSize = screenWidth * 0.4;
 
   const { data, isLoading } = useApiQuery<GetHorsesResponse>({
     key: ["getHorse"],
-    url: apiKeys.horse.getHorse,
+    url: apiKeys.horse.getHorse(stableId),
   });
 
   if (isLoading) {
@@ -43,32 +43,31 @@ const HorseSection = () => {
   }
 
   return (
-    <View className="mb-4 mx-2">
+    <View className="mb-4">
+      <Row className="mt-2 mb-2 px-4 flex-row justify-between items-center">
+        <AppText className="font-bold text-brownColor-400 text-lg">
+          Horses
+        </AppText>
+        <TouchableOpacity onPress={() => navigate(navigationEnums.HORSES,{id:stableId})}>
+          <AppText className="text-brownColor-400 text-sm">See All</AppText>
+        </TouchableOpacity>
+      </Row>
+
       <FlatList
-        ListHeaderComponent={() => (
-          <Row className="mt-2 mb-2 p-2 flex-row w-[80%] justify-between items-center">
-            <AppText className="font-bold text-brownColor-400 text-lg">
-              Horses
-            </AppText>
-            <TouchableOpacity onPress={() => navigate(navigationEnums.HORSES)}>
-              <AppText className="text-brownColor-400 text-sm">
-                See All
-              </AppText>
-            </TouchableOpacity>
-          </Row>
-        )}
         data={data.horses}
-        numColumns={2}
         keyExtractor={(item) => item._id.toString()}
-        contentContainerStyle={{
-          paddingVertical: 16,
-        }}
-        columnWrapperStyle={{
-          justifyContent: "space-between",
-          marginBottom: 12,
-        }}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={()=>navigate(navigationEnums.HORSE_DETAILS,{id:item._id})} className="rounded-xl overflow-hidden">
+          <TouchableOpacity
+            onPress={() =>
+              navigate(navigationEnums.HORSE_DETAILS, { id: item._id })
+            }
+            style={{ width: itemSize }}
+            className="rounded-xl overflow-hidden"
+          >
             <Image
               source={item.picUrls[0]}
               style={{
@@ -79,8 +78,10 @@ const HorseSection = () => {
               resizeMode="cover"
               background
             >
-              <View className="absolute rounded-br-xl top-0 left-0 right-0 w-2/3 bg-black/50 p-2">
-                <AppText className="text-white tajawal-semibold-16">{item.name}</AppText>
+              <View className="absolute   top-0 left-0 right-0   bg-black/50 p-2">
+                <AppText className="text-white tajawal-semibold-16">
+                  {item.name}
+                </AppText>
               </View>
             </Image>
           </TouchableOpacity>

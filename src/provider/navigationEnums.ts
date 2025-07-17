@@ -33,7 +33,7 @@
   SERVICE: "service",
   RIDES: "rides",
   PHOTOS: "photos",
-  HORSES: "horses", 
+  HORSES: "horses/:id", 
   HORSE_DETAILS: "horse/details/:id",
   SERVICES: "services",
   PHOTO_SESSION_DETAILS: "photo/session/details/:id",

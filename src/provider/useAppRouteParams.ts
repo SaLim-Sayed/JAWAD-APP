@@ -12,7 +12,10 @@ function useAppRouteParams<K extends keyof typeof navigationEnums>(
 ) {
   // Get the actual route name string from the enum
   type RouteName = (typeof navigationEnums)[K];
+  // @ts-ignore
   const route = useRoute<RouteProp<NavigationParamsList, RouteName>>();
+    // @ts-ignore
+
   return route.params as NavigationParamsList[RouteName];
 }
 

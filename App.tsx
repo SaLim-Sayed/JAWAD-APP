@@ -125,7 +125,7 @@ function AdminTabs() {
     <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={Services} options={{ tabBarLabel: 'Service' }} />
-      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Stable' }} />
+      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Events' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -138,7 +138,7 @@ function ClientTabs() {
     <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
       <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: 'Service' }} />
-      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Stable' }} />
+      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Events' }} />
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
@@ -216,8 +216,13 @@ function MainNavigator() {
 // Root App
 function App() {
   const { showSplash, setShowSplash } = useSplashStore();
-  const { isLoggedIn, activeApp, loadAuthState } = useAuthStore();
+  const { isLoggedIn, activeApp, loadAuthState, authData, setActiveApp } = useAuthStore();
 
+  useEffect(() => {
+    if (authData.token) {
+      setActiveApp("Client")
+    }
+  }, [authData]);
 
   useEffect(() => {
     const init = async () => {
@@ -272,10 +277,10 @@ export default function Root() {
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
       <NavigationContainer
-        initialState={initialState}
-        onStateChange={(state) =>
-          AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
-        }
+        // initialState={initialState}
+        // onStateChange={(state) =>
+        //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
+        // }
       >
         <I18nContext>
           <App />

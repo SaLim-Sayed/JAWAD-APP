@@ -11,19 +11,14 @@ import { bestStables } from "./mock";
  
 
 const RidesScreen = () => {
-  // Header user info
-  const userName = "George Mikhaiel";
+   const userName = "All Stable";
    const [search, setSearch] = useState("");
   return (
     <AppWrapper>
       <AppHeader title={userName} showBackButton={true} />
       <View className="bg-white flex-1 pt-6  pb-60">
-       
-          {/* Search */}
           <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
-
             <SearchInput  value={search} onChange={setSearch} />
-
             <AppButton
               className="w-12 h-12 bg-brownColor-400 items-center justify-center"
               onPress={() => { }}
@@ -36,9 +31,7 @@ const RidesScreen = () => {
             />
           </View>
 
-          {/* The Best Stable Section */}
           <BestStableSection bestStables={bestStables} />
-          {/* The Events Section */}
        </View>
     </AppWrapper>
   );

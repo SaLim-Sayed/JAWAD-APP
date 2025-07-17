@@ -31,3 +31,27 @@ export interface Horse {
     totalPages: number;
     totalItems: number;
   }
+
+  export interface LocalizedField {
+    en: string;
+    ar: string;
+  }
+  
+  export interface StableDetails {
+    _id: string;
+    name: LocalizedField;
+    city: LocalizedField;
+    region: LocalizedField;
+    address: LocalizedField;
+    email: string;
+    phone: string;
+    sessionPercentage: number;
+    location: string;
+    picUrl: string;
+  }
+  
+  export interface GetStableDetailsResponse {
+    message: string;
+    stable: StableDetails;
+  }
+  
