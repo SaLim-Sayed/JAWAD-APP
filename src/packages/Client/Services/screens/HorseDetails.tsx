@@ -11,6 +11,7 @@ import { GetHorseDetailResponse } from "../@types/horse.types";
 import ServiceHeadr from "../components/HomeHeader";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
 
 
 const HorseDetails = () => {
@@ -27,6 +28,7 @@ const HorseDetails = () => {
     <AppWrapper>
       <ServiceHeadr title={title} showBackButton />
       <View className="bg-white  flex-1 h-full ">
+        <LoaderBoundary isLoading={isLoading}>
         <ScrollView
           contentContainerStyle={{
             paddingBottom: 80,
@@ -35,13 +37,7 @@ const HorseDetails = () => {
 
           }}
         >
-
-          {isLoading &&
-            <View className="flex-1 justify-center items-center my-6">
-              <ActivityIndicator size="large" color="#8B4513" />
-            </View>
-
-          }
+ 
           {(!isLoading && data) && (
             <>
               <HorseDetailsHeader horse={data?.horse!} />
@@ -50,7 +46,8 @@ const HorseDetails = () => {
           )}
 
         </ScrollView>
-        <Row gap={4} justify="between" className="mt-4 mb-10">
+        </LoaderBoundary>
+          <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
             title="Select"
             onPress={() => { }}

@@ -1,7 +1,7 @@
 import { stable } from '@/assets/icons/stable.svg';
 import { navigationEnums } from './navigationEnums';
-export type Role="auth"|"stable"|"photographer"|"school"
- 
+export type Role = "auth" | "stable" | "photographer" | "school"
+
 export type NavigationParamsList = {
   [navigationEnums.MAIN]: undefined;
   [navigationEnums.HOME]: undefined;
@@ -22,19 +22,21 @@ export type NavigationParamsList = {
   [navigationEnums.ONBOARD1]: undefined;
   [navigationEnums.ONBOARD2]: undefined;
   [navigationEnums.ONBOARD3]: undefined;
-  [navigationEnums.LOGIN_SCREEN]:   { role:Role};
+  [navigationEnums.LOGIN_SCREEN]: { role: Role };
   [navigationEnums.SIGNUP_SCREEN]: undefined;
   [navigationEnums.FORGET_PASSWORD_SCREEN]: undefined;
   [navigationEnums.OTP_SCREEN]: undefined;
   [navigationEnums.CHANGE_PASSWORD_SCREEN]: undefined;
   [navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN]: undefined;
   [navigationEnums.REGISTER_SUCCESS_SCREEN]: undefined;
+  [navigationEnums.COMPLETE_STABLE]: { id: any };
+  [navigationEnums.COMPLETE_PHOTOGRAPHER]: { id: any };
 
   //SERVICE
   [navigationEnums.STABLE]: undefined;
   [navigationEnums.SERVICE]: undefined;
   [navigationEnums.STABLE_SERVICES_DETAILS]: { id: any };
-  [navigationEnums.HORSES]: {id:any};
+  [navigationEnums.HORSES]: { id: any };
   [navigationEnums.HORSE_DETAILS]: { id: any };
   [navigationEnums.SERVICES]: undefined;
   [navigationEnums.RIDES]: undefined;

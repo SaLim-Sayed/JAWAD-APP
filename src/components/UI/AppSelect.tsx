@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, View, useWindowDimensions, I18nManager, ViewStyle } from 'react-native';
+import { Modal, Pressable, View, TextInput, useWindowDimensions, I18nManager, ViewStyle, FlatList } from 'react-native';
 import AppText from '@/components/UI/AppText';
 import Image from '@/components/UI/Image';
 
 type SelectOption = {
   label: string;
   value: string;
-  icon?: any; // You can type this to ImageSourcePropType if you want strict typing
+  icon?: any; // يمكنك استبداله بـ ImageSourcePropType
 };
 
 interface SelectProps {
-    label: string;
+  label: string;
   options: SelectOption[];
   value: string;
   onChange: (val: string) => void;
@@ -40,37 +40,42 @@ const SelectOptionRow = ({
 );
 
 const AppSelect: React.FC<SelectProps> = ({
-    label,
+  label,
   options,
   value,
   onChange,
   placeholder = 'Select...',
-  buttonClassName = "",
+  buttonClassName = '',
   dropdownWidth = 120,
-  style
+  style,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<View>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const { width, height } = useWindowDimensions();
+  const [search, setSearch] = useState('');
 
-  const selectedOption = options.find(o => o.value === value);
+  const selectedOption = options.find((o) => o.value === value);
   const isRTL = I18nManager.isRTL;
 
-  // Open/close modal
-  const toggleModal = useCallback(() => setIsOpen(prev => !prev), []);
+  const toggleModal = useCallback(() => {
+    setIsOpen((prev) => !prev);
+    setSearch('');
+  }, []);
 
-  // Handle select and close
   const handleSelect = (val: string) => {
     onChange(val);
     setIsOpen(false);
   };
 
-  // Measure button position for dropdown
+  const filteredOptions = options.filter((option) =>
+    option.label.toLowerCase().includes(search.toLowerCase())
+  );
+
   useEffect(() => {
     if (isOpen) {
       ref.current?.measureInWindow((x, y, _w, h) => {
-        setOffset(prev => {
+        setOffset((prev) => {
           if (prev.x !== x || prev.y !== y + h) {
             return { x, y: y + h };
           }
@@ -82,7 +87,7 @@ const AppSelect: React.FC<SelectProps> = ({
 
   return (
     <View ref={ref} collapsable={false} style={style}>
-        <AppText className="text-brownColor-400 mb-2">{label}</AppText> 
+      <AppText className="text-brownColor-400 mb-2">{label}</AppText>
       <Pressable
         onPress={toggleModal}
         className={`rounded-xl border border-slate-300 bg-white h-[42px] w-[${dropdownWidth}px] flex-row items-center justify-between px-2 gap-2 ${buttonClassName}`}
@@ -92,36 +97,47 @@ const AppSelect: React.FC<SelectProps> = ({
         </AppText>
         <Image source={require('@/constants').Icons.arrowCircleDown} />
       </Pressable>
+
       <Modal transparent visible={isOpen} animationType="none">
         <Pressable
           onPress={toggleModal}
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-10 left-0 w-full h-full"
         >
           <View
-            className="absolute bg-white border border-slate-300 rounded-xl"
+            className="absolute bg-white border border-slate-300 rounded-xl p-2"
             style={{
               width: dropdownWidth,
               top: offset.y - 40,
               [isRTL ? 'right' : 'left']: offset.x,
-              gap: 2,
-              padding: 0,
+              maxHeight: 300, // 👈 اجعل القائمة لا تتجاوز هذا الارتفاع
             }}
           >
-            {options.map((option, idx) => (
-              <React.Fragment key={option.value}>
+            {/* 🔍 Search Input */}
+            <TextInput
+              value={search}
+              onChangeText={setSearch}
+              placeholder="Search..."
+              className="border border-slate-300 px-3 py-1 rounded-md text-base text-brownColor-400 mb-2"
+              style={{ fontSize: 14 }}
+            />
+
+            {/* 🔽 Scrollable Option List */}
+            <FlatList
+              data={filteredOptions}
+              keyExtractor={(item) => item.value}
+              renderItem={({ item }) => (
                 <SelectOptionRow
-                  label={option.label}
-                  onPress={() => handleSelect(option.value)}
-                  icon={option.icon}
+                  label={item.label}
+                  onPress={() => handleSelect(item.value)}
+                  icon={item.icon}
                 />
-                {idx === 0 && options.length > 1 && (
-                  <View className="h-px bg-slate-200 w-full my-1" />
-                )}
-              </React.Fragment>
-            ))}
+              )}
+              keyboardShouldPersistTaps="handled"
+            />
           </View>
         </Pressable>
       </Modal>
+
     </View>
   );
 };

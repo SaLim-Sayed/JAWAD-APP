@@ -25,6 +25,9 @@
   CHANGE_PASSWORD_SCREEN: "change-password",
   CHANGE_PASSWORD_SUCCESS_SCREEN: "change-password-success",
   REGISTER_SUCCESS_SCREEN: "register-success",
+  COMPLETE_STABLE: "complete-stable/:id",
+  COMPLETE_PHOTOGRAPHER: "complete-photographer/:id",
+
 
 
   //SERVICE

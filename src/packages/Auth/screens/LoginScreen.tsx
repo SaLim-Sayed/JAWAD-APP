@@ -19,6 +19,8 @@ import Col from '@/components/UI/Col';
 import { useApiMutation } from '@/hooks';
 import { showGlobalToast } from '@/hooks/useGlobalToast';
 import useAppRouteParams from '@/provider/useAppRouteParams';
+import CompleteModal from '@/components/UI/CompleteModal';
+import { navigationEnums } from '@/provider/navigationEnums';
 const loginSchema = z.object({
   email: z.string().min(6, 'Email is required'),
   password: z.string().min(4, 'Password too short'),
@@ -35,8 +37,9 @@ const LoginScreen = () => {
       method: "post",
     }
   )
+  console.log({ error })
   const { navigate } = useGlobalNavigation();
-  const { setActiveApp, setAuthData } = useAuthStore()
+  const { setActiveApp, setAuthData, authData } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false);
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -50,8 +53,7 @@ const LoginScreen = () => {
       password: '',
     },
   });
-  console.log({data})
-
+  const [visible, setVisible] = useState(false)
   const onSubmit = (formData: LoginSchema) => {
     mutate(formData, {
       onSuccess: (data) => {
@@ -68,7 +70,16 @@ const LoginScreen = () => {
         })
         // setActiveApp("Client")
       },
-      onError: (error) => {
+      onError: (error: any) => {
+        if (error?.response?.status === 400) {
+          if (authData.role === "photographer") {
+            navigate(navigationEnums.COMPLETE_PHOTOGRAPHER, { id: error.response.data.id })
+          } else {
+            navigate(navigationEnums.COMPLETE_STABLE, { id: error.response.data.id })
+          }
+
+        }
+
         showGlobalToast({
           type: "error",
           title: "Login Failed",
@@ -135,7 +146,7 @@ const LoginScreen = () => {
         </TouchableOpacity>}
       </Row>
       <AppButton loading={isPending} title="Login" onPress={handleSubmit(onSubmit)} />
-      {role === "auth" &&  <>
+      {role === "auth" && <>
         <Text className="text-center text-brownColor-400 mt-4">
           Don't have an account ?{' '}
           <Text className="text-brownColor-300" onPress={() => navigate('signUp')}>
@@ -170,6 +181,8 @@ const LoginScreen = () => {
         variant="outline"
         onPress={() => setActiveApp("Client")}
       />
+      <CompleteModal visible={visible} onClose={() => { setVisible(false) }} />
+
     </AuthWrapper>
   );
 };

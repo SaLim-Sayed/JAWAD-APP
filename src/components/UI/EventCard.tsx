@@ -7,7 +7,8 @@ import { Icons } from "@/constants";
 import { Event } from "@/packages/Client/home/@types/event.type";
 import React from "react";
 import moment from "moment";
- 
+import { View } from "react-native";
+
 
 interface EventCardProps {
   event: Event;
@@ -15,9 +16,9 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
-  <Row gap={8} className="bg-white rounded-2xl mx-6 mb-4 w-[90%] shadow items-center">
+  <View className="bg-white relative rounded-2xl flex-1 mx-4 gap-4 w-[90%] flex-row mb-4 shadow items-start">
     <Image source={event.picUrl} className="rounded-l-2xl" style={{ width: 164, height: 147 }} />
-    <Col gap={4} className="flex-1 mt-4">
+    <Col gap={4} items="start" justify="start" className="flex-1 pt-2 pr-4 ">
       <Col gap={8}>
         <Row items="center" gap={4}>
           <Icons.location color="#5E3E2C" width={14} height={14} />
@@ -25,23 +26,24 @@ const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
         </Row>
         <Row items="center" gap={4}>
           <Icons.calendar color="#5E3E2C" width={14} height={14} />
-          <AppText className="ml-1 text-brownColor-400">{ moment(event.date).format("MMMM D, YYYY")}</AppText>
+          <AppText className="ml-1 text-brownColor-400">{moment(event.date).format("MMMM D, YYYY")}</AppText>
         </Row>
         <Row items="center" gap={4}>
           <Icons.coin color="#5E3E2C" width={14} height={14} />
           <AppText className="ml-1 text-brownColor-400">{event.price}</AppText>
         </Row>
       </Col>
-      <AppButton
-        title="Start Now"
-        className="mt-1 bottom-2 py-1 px-2 w-full border-transparent"
-        textClassName="text-brownColor-400"
-        variant="outline"
-        endIcon={<Icons.arrowRightFill width={14} height={14} />}
-        onPress={onStart}
-      />
+
     </Col>
-  </Row>
+    <AppButton
+      title="Start Now"
+      className="absolute bottom-0 right-2 py-1 w-[30%] border border-brownColor-50 rounded-2xl"
+      textClassName="text-brownColor-400"
+      variant="outline"
+      endIcon={<Icons.arrowRightFill />}
+      onPress={onStart}
+    />
+  </View>
 );
 
 export default EventCard;

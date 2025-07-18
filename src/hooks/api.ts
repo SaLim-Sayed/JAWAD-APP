@@ -1,1 +1,1 @@
-export const API_URL='http://jawad-gbvq.onrender.com'
+export const API_URL='https://jawad-gbvq.onrender.com'

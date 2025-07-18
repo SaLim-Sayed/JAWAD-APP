@@ -1,7 +1,11 @@
 import AppWrapper from "@/components/UI/AppWrapper";
+import CompleteModal from "@/components/UI/CompleteModal";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
+import PhotographyCard from "@/components/UI/PhotographyCard";
 import SearchInput from "@/components/UI/SearchInput";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
+import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import React, { useState } from "react";
@@ -12,11 +16,7 @@ import BestStableSection from "../components/BestStableSection";
 import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
-import PhotographyCard from "@/components/UI/PhotographyCard";
-import { navigationEnums } from "@/provider/navigationEnums";
-import AppLoader from "@/components/UI/AppLoader";
-import LoaderBoundary from "@/components/UI/LoaderBoundary";
- 
+
 const HomeScreen = () => {
   const { navigate } = useGlobalNavigation();
   const userName = "George Mikhaiel";
@@ -24,7 +24,8 @@ const HomeScreen = () => {
   const { authData } = useAuthStore();
   const [search, setSearch] = useState("");
 
-  const { data,isLoading } = useApiQuery<GetPhotographersResponse>({
+  const [completeModalVisible, setCompleteModalVisible] = useState(authData.isCompleted===false);
+  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotograoher"],
   });
@@ -32,51 +33,53 @@ const HomeScreen = () => {
   // Define sections based on role
   const showStableSection = ["auth", "photographer"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
-  const showEventsSection = ["auth", "photographer","stable"].includes(authData.role);
+  const showEventsSection = ["auth", "photographer", "stable"].includes(authData.role);
 
   return (
     <AppWrapper>
       <HomeHeader userName={userName} location={location} />
       <View className="bg-white flex-1 rounded-t-3xl -mt-6 pt-6  ">
         <LoaderBoundary isLoading={isLoading}>
-        <ScrollView
-          contentContainerStyle={{
-            paddingBottom: 220,
-            flexGrow: 1,
-          }}
-        >
-          {/* Search */}
-          <View className="px-4">
-            <SearchInput value={search} onChange={setSearch} />
-            <QuoteCard />
-          </View>
+          <ScrollView
+            contentContainerStyle={{
+              paddingBottom: 220,
+              flexGrow: 1,
+            }}
+          >
+            {/* Search */}
+            <View className="px-4">
+              <SearchInput value={search} onChange={setSearch} />
+              <QuoteCard />
+            </View>
 
-          {/* Conditional Sections */}
-          {showStableSection && <BestStableSection />}
-          {showHorseSection && <HorseSection stableId={authData.id} />}
-          {showEventsSection && <EventsSection />}
+            {/* Conditional Sections */}
+            {showStableSection && <BestStableSection />}
+            {showHorseSection && <HorseSection stableId={authData.id} />}
+            {showEventsSection && <EventsSection />}
 
-          {/* Photographer's list (optional rendering) */}
-         
-         
+            {/* Photographer's list (optional rendering) */}
+
+
             <FlatList
               data={data?.photographers}
               style={{ marginTop: 20 }}
               renderItem={({ item }) => (
-                <PhotographyCard
+                 <PhotographyCard
                   Photography={item}
                   onStart={() =>
                     navigate(navigationEnums.PHOTO_SESSION_DETAILS, {
                       id: item._id,
                     })
                   }
-                />
+                /> 
               )}
               keyExtractor={(item) => item._id.toString()}
               ListFooterComponent={<View className="h-44" />}
             />
-         </ScrollView></LoaderBoundary>
+          </ScrollView>
+        </LoaderBoundary>
       </View>
+      <CompleteModal visible={completeModalVisible} onClose={() => {setCompleteModalVisible(false)}} />
     </AppWrapper>
   );
 };

@@ -22,6 +22,8 @@ import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
 import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
 
+import CompletePhotographer from '@/components/UI/CompletePhotographer';
+import CompleteStable from '@/components/UI/CompleteStable';
 import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
 import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
 import EventDetails from '@/packages/Client/Events/screens/EventDetails';
@@ -153,6 +155,8 @@ function OnboardingNavigator() {
       <Stack.Screen name="onboard3" component={OnboardingScreen} />
       <Stack.Screen name={navigationEnums.LOGIN_SCREEN} component={LoginScreen} />
       <Stack.Screen name={navigationEnums.SIGNUP_SCREEN} component={SignUpScreen} />
+      <Stack.Screen name={navigationEnums.COMPLETE_STABLE} component={CompleteStable} />
+      <Stack.Screen name={navigationEnums.COMPLETE_PHOTOGRAPHER} component={CompletePhotographer} />
       <Stack.Screen name={navigationEnums.FORGET_PASSWORD_SCREEN} component={ForgetScreen} />
       <Stack.Screen name={navigationEnums.OTP_SCREEN} component={OtpScreen} />
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SCREEN} component={ChangePassword} />

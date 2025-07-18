@@ -4,31 +4,32 @@ import { Icons } from "@/constants";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { Platform, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
- 
+
 interface AppHeaderProps {
-  title?: string; 
+  title?: string;
   userName?: string;
   onBack?: () => void;
   showBackButton?: boolean;
+  isModal?: boolean;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ title, userName,onBack,showBackButton }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ title, userName, onBack, showBackButton, isModal }) => {
   const { goBack } = useGlobalNavigation();
   return (
     <View style={styles.root}>
-       <View style={{ height: Platform.OS === "ios" ? 44 : StatusBar.currentHeight }} />
+      <View style={{ height: Platform.OS === "ios" ? 44 :( isModal ? 10 : StatusBar.currentHeight )}} />
       <View style={styles.headerContent}>
-        {showBackButton && <TouchableOpacity onPress={onBack?onBack:goBack} style={styles.backButton} hitSlop={{top: 10, bottom: 10, left: 10, right: 10}} disabled={!showBackButton}>
+        {showBackButton && <TouchableOpacity onPress={onBack ? onBack : goBack} style={styles.backButton} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} disabled={!showBackButton}>
           <Icons.backArrow width={24} height={24} />
         </TouchableOpacity>}
-       {userName ? <View style={styles.title}>  
-            <AppText className="tajawal-semibold-16 text-center text-brownColor-400">{userName}</AppText>
+        {userName ? <View style={styles.title}>
+          <AppText className="tajawal-semibold-16 text-center text-brownColor-400">{userName}</AppText>
         </View> : <View style={styles.title}>
-            <AppText className="tajawal-semibold-16 text-center text-brownColor-400">{title}</AppText>
+          <AppText className="tajawal-semibold-16 text-center text-brownColor-400">{title}</AppText>
         </View>}
         <View style={{ width: 32 }} />
       </View>
-      <Divider/>
+      <Divider />
     </View>
   );
 };
