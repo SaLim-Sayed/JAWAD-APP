@@ -1,39 +1,38 @@
 import AppButton from "@/components/UI/AppButton";
+import AppHeader from "@/components/UI/AppHeader";
 import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
 import SearchInput from "@/components/UI/SearchInput";
 import { Icons } from "@/constants";
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
-import ServiceHeadr from "../components/HomeHeader";
+import { GetStableDetailsResponse } from "../@types/horse.types";
 import HorseSection from "../components/HorseSection";
 import StableDescription from "../components/StableDescription";
 import StableDetailsHeader from "../components/StableDetailsHeader";
-import { bestStables } from "./mock";
-import { apiKeys } from "@/hooks/apiKeys";
-import { useApiQuery } from "@/hooks";
-import { GetStableDetailsResponse } from "../@types/horse.types";
-// Dummy data for best stables/events
 
 
 
 const StableServicesDetails = () => {
   const { id } = useAppRouteParams("STABLE_SERVICES_DETAILS")
   const { data, isLoading } = useApiQuery<GetStableDetailsResponse>({
-    key: ["stableDetails"],
-    url: apiKeys.stable.stableDetails,
+    key: ["stableDetails", id],
+    url: apiKeys.stable.stableDetail(id),
   })
   console.log(id)
   // Header user info
-  const userName = "George Mikhaiel";
-  const location = "Fifth Settlement";
+ 
   const [search, setSearch] = useState("");
   const title = data?.stable.name.en;
+  const { t } = useTranslation()
   console.log({data})
   return (
     <AppWrapper>
-      <ServiceHeadr title={data?.stable.name.en} showBackButton />
+      <AppHeader title={title} showBackButton />
       <View className="bg-white  h-full ">
         <ScrollView
           contentContainerStyle={{
@@ -69,7 +68,7 @@ const StableServicesDetails = () => {
           {/* The Events Section */}
 
           <AppButton
-            title="Start now"
+            title={t("Global.start_now")}
             onPress={() => { }}
             className="my-4"
           />

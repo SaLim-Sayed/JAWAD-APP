@@ -16,7 +16,7 @@ const RidesScreen = () => {
   return (
     <AppWrapper>
       <AppHeader title={userName} showBackButton={true} />
-      <View className="bg-white flex-1 pt-6  pb-60">
+      <View className="bg-white flex-1 pt-6  pb-6">
           <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
             <SearchInput  value={search} onChange={setSearch} />
             <AppButton

@@ -4,6 +4,8 @@ import { Icons } from "@/constants";
 import AppText from "./AppText";
 import Image from "./Image";
 import NavButton from "@/packages/Onboarding/components/NavbarButton";
+import { isRTL } from "@/provider/constant";
+import { useTranslation } from "react-i18next";
 
 interface ServiceCardProps {
     title: string;
@@ -12,6 +14,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
+    const {t}=useTranslation()
     return (
         <TouchableOpacity
             className="w-[180px] bg-white rounded-xl mb-3  shadow-sm"
@@ -32,11 +35,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
                         </View>
                         <NavButton
                             className="w-32 h-8"
-                            text="Start Now"
+                            text={t("Global.start_now")}
                             onPress={() => onPress()}
                             iconLeft={
-                                <View className="flex items-center justify-center h-9 p-2 w-9 rounded-full bg-amber-950">
-                                    <Icons.arrowRight className="text-white" />
+                                <View className="flex items-center justify-center h-10 p-2 w-10 rounded-full bg-amber-950">
+                                    <Icons.arrowRight style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],margin: 4,width: 20, height: 20 }} className="text-white w-4 h-4" />
                                 </View>
                             }
                         />

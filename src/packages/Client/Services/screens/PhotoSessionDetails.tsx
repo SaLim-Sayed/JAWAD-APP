@@ -1,23 +1,20 @@
 import AppButton from "@/components/UI/AppButton";
 import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
-import SearchInput from "@/components/UI/SearchInput";
-import { Icons } from "@/constants";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import ServiceHeadr from "../components/HomeHeader";
-import HorseSection from "../components/HorseSection";
-import StableDescription from "../components/StableDescription";
-import StableDetailsHeader from "../components/StableDetailsHeader";
-import { photoSessionData } from "./mock";
 import PhotoSessionHeader from "../components/PhotoSessionHeader";
+import { photoSessionData } from "./mock";
+import { useTranslation } from "react-i18next";
 // Dummy data for best stables/events
 
 
 
 const PhotoSessionDetails = () => {
   const { id } = useAppRouteParams("PHOTO_SESSION_DETAILS")
+  const { t } = useTranslation()
   console.log(id)
   // Header user info
   const userName = "George Mikhaiel";
@@ -43,7 +40,7 @@ const PhotoSessionDetails = () => {
 
 
           <AppButton
-            title="Start now"
+            title={t("Global.start_now")}
             onPress={() => { }}
             className="my-4"
           />

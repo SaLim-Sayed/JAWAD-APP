@@ -11,6 +11,8 @@ export const apiKeys = {
       completed: (id:string) => `/api/v1/stable/completed/${id}`,
       getStable: "/api/v1/stable/get?page=",
       stableDetails: "/api/v1/stable/details/",
+      stableDetail:(id:string) => `/api/v1/stable/details/${id}`,
+
       updateStable:(id:string) => `/api/v1/stable/update/${id}`,
       completeStable:(id:string) => `/api/v1/stable/completed/${id}`,
     },
@@ -37,5 +39,6 @@ export const apiKeys = {
       login: "/api/v1/photographer/login",
       getPhotograoher:"/api/v1/photographer/get?page=1",
       completed:(id:string) => `/api/v1/photographer/completed/${id}`,
+      getPhotographerDetails:(id:string) => `/api/v1/photographer/get/detail/${id}`,
     },
   };

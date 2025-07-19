@@ -16,28 +16,37 @@ import BestStableSection from "../components/BestStableSection";
 import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
+import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
+import { useLanguage } from "@/store";
 
 const HomeScreen = () => {
   const { navigate } = useGlobalNavigation();
-  const userName = "George Mikhaiel";
-  const location = "Fifth Settlement";
+const {language}=useLanguage()
   const { authData } = useAuthStore();
   const [search, setSearch] = useState("");
 
-  const [completeModalVisible, setCompleteModalVisible] = useState(authData.isCompleted===false);
+  const [completeModalVisible, setCompleteModalVisible] = useState(authData.isCompleted === false);
   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotograoher"],
   });
 
-  // Define sections based on role
+  const { data: stableData, isLoading: stableLoading } = useApiQuery<GetStableDetailsResponse>({
+    url: apiKeys.stable.stableDetail(authData.id),
+    key: ["getPhotograoherDetails"],
+  });
+
+
+  const userName = authData.role === "stable" ? stableData?.stable.name[language] : data?.photographers.find((photographer) => photographer._id === authData.id)?.name ;
+  const location = authData.role === "stable" ? stableData?.stable.city[language] : data?.photographers.find((photographer) => photographer._id === authData.id)?.city ;
+
   const showStableSection = ["auth", "photographer"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
   const showEventsSection = ["auth", "photographer", "stable"].includes(authData.role);
 
   return (
     <AppWrapper>
-      <HomeHeader userName={userName} location={location} />
+      <HomeHeader userName={userName||""} location={location||""} />
       <View className="bg-white flex-1 rounded-t-3xl -mt-6 pt-6  ">
         <LoaderBoundary isLoading={isLoading}>
           <ScrollView
@@ -46,32 +55,30 @@ const HomeScreen = () => {
               flexGrow: 1,
             }}
           >
-            {/* Search */}
-            <View className="px-4">
+
+             <View className="px-4">
               <SearchInput value={search} onChange={setSearch} />
               <QuoteCard />
             </View>
 
-            {/* Conditional Sections */}
             {showStableSection && <BestStableSection />}
             {showHorseSection && <HorseSection stableId={authData.id} />}
             {showEventsSection && <EventsSection />}
 
-            {/* Photographer's list (optional rendering) */}
 
 
             <FlatList
               data={data?.photographers}
               style={{ marginTop: 20 }}
               renderItem={({ item }) => (
-                 <PhotographyCard
+                <PhotographyCard
                   Photography={item}
                   onStart={() =>
                     navigate(navigationEnums.PHOTO_SESSION_DETAILS, {
                       id: item._id,
                     })
                   }
-                /> 
+                />
               )}
               keyExtractor={(item) => item._id.toString()}
               ListFooterComponent={<View className="h-44" />}
@@ -79,7 +86,7 @@ const HomeScreen = () => {
           </ScrollView>
         </LoaderBoundary>
       </View>
-      <CompleteModal visible={completeModalVisible} onClose={() => {setCompleteModalVisible(false)}} />
+      <CompleteModal visible={completeModalVisible} onClose={() => { setCompleteModalVisible(false) }} />
     </AppWrapper>
   );
 };

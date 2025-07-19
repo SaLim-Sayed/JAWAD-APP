@@ -1,19 +1,12 @@
-import React from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
 import AppText from "@/components/UI/AppText";
-import AppButton from "@/components/UI/AppButton";
-import Row from "@/components/UI/Row";
-import Image from "@/components/UI/Image";
-import { Icons } from "@/constants";
-import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import NavButton from "@/packages/Onboarding/components/NavbarButton";
-import Col from "@/components/UI/Col";
 import StableCard from "@/components/UI/StableCard";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
-import { GetStablesResponse } from "../@types/stable.type";
-import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { navigationEnums } from "@/provider/navigationEnums";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import React from "react";
+import { FlatList, TouchableOpacity, View } from "react-native";
+import { GetStablesResponse } from "../@types/stable.type";
  
 interface Stable {
     id: number;

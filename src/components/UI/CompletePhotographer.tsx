@@ -42,8 +42,7 @@ export const photographerSchema = z.object({
 
 export type PhotographerForm = z.infer<typeof photographerSchema>;
 
-// ========== Main Component ==========
-const CompletePhotographer = ({ onClose }: { onClose?: () => void }) => {
+ const CompletePhotographer = ({ onClose }: { onClose?: () => void }) => {
   const { authData } = useAuthStore();
   const { navigate } = useGlobalNavigation();
   const { id } = useAppRouteParams("COMPLETE_PHOTOGRAPHER");

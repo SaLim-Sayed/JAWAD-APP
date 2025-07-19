@@ -7,6 +7,8 @@ import Image from "@/components/UI/Image";
 import { Icons } from "@/constants";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import NavButton from "@/packages/Onboarding/components/NavbarButton";
+import { isRTL } from "@/provider/constant";
+import { useTranslation } from "react-i18next";
 
 interface StableCardProps {
     image: any;
@@ -22,49 +24,53 @@ const StableCard: React.FC<StableCardProps> = ({
     type,
     rating,
     onPressStart,
-}) => (
-    <TouchableOpacity onPress={onPressStart} style={styles.card}>
-        <Image className="rounded-t-2xl" source={image} style={styles.image} />
-        <Col className="p-2" gap={4}>
-            <Row items="center" gap={12}>
-                <Image source={Icons.location} style={styles.icon} />
-                <AppText className="font-bold tajawal-semibold-20 text-brownColor-400 mt-2">{name}</AppText>
-            </Row>
-            <Row items="center" gap={12}>
-                <Image source={Icons.stable} style={styles.icon} />
-                <AppText className="text-brownColor-300">{type}</AppText>
-            </Row>
-            <Row gap={12} className="my-2">
-                <StarRatingDisplay
-                    rating={rating}
-                    starStyle={{ width: 20, height: 14 }}
-                    color="#FEAF48"
-                />
-                <AppText className="pt-4 text-brownColor-400 text-sm">{rating}</AppText>
-            </Row>
-            <Row gap={2} items="center" className="my-2 gap-2">
-                <NavButton
-                    className="w-32 h-8"
-                    text="Start Now"
-                    onPress={() => onPressStart?.()}
-                    iconLeft={
-                        <View className="flex items-center justify-center h-8 p-2 w-8 rounded-full bg-amber-950">
-                            <Icons.arrowRight className="text-white" />
-                        </View>
-                    }
-                />
-                <Image source={Icons.camera} style={styles.icon} />
-                {/* <Image source={Icons.horse} style={styles.icon} /> */}
-            </Row>
-        </Col>
-    </TouchableOpacity>
-);
-
+}) => {
+    const { t } = useTranslation()
+    return (
+        <TouchableOpacity onPress={onPressStart} style={styles.card}>
+            <Image className="rounded-t-2xl" source={image} style={styles.image} />
+            <Col className="p-2" gap={4}>
+                <Row items="center" gap={12}>
+                    <Image source={Icons.location} style={styles.icon} />
+                    <AppText className="font-bold tajawal-semibold-20 text-brownColor-400 mt-2">{name}</AppText>
+                </Row>
+                <Row items="center" gap={12}>
+                    <Image source={Icons.stable} style={styles.icon} />
+                    <AppText className="text-brownColor-300">{type}</AppText>
+                </Row>
+                <Row gap={12} className="my-2">
+                    <StarRatingDisplay
+                        rating={rating}
+                        starStyle={{ width: 20, height: 14 }}
+                        color="#FEAF48"
+                    />
+                    <AppText className="pt-4 text-brownColor-400 text-sm">{rating}</AppText>
+                </Row>
+                <Row gap={2} items="center" className="my-2 gap-2">
+                    <NavButton
+                        className="w-32 h-8"
+                        text={t("Global.start_now")}
+                        onPress={() => onPressStart?.()}
+                        iconLeft={
+                            <View className="flex items-center justify-center h-8 p-2 w-8 rounded-full bg-amber-950">
+                                <Icons.arrowRight style={{
+                                    transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],
+                                }} className="text-white" />
+                            </View>
+                        }
+                    />
+                    <Image source={Icons.camera} style={styles.icon} />
+                    {/* <Image source={Icons.horse} style={styles.icon} /> */}
+                </Row>
+            </Col>
+        </TouchableOpacity>
+    );
+}
 const styles = StyleSheet.create({
     card: {
         backgroundColor: "#E7E7E74D",
         borderRadius: 16,
-         maxWidth: 180,
+        maxWidth: 180,
         shadowColor: "#000",
         shadowOpacity: 0.06,
         shadowRadius: 6,
@@ -79,8 +85,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 16,
     },
     icon: {
-      
-     },
+
+    },
 });
 
 export default StableCard;

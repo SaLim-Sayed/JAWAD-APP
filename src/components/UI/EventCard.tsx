@@ -8,6 +8,9 @@ import { Event } from "@/packages/Client/home/@types/event.type";
 import React from "react";
 import moment from "moment";
 import { View } from "react-native";
+import { useLanguage } from "@/store";
+import { isRTL } from "@/provider/constant";
+import { useTranslation } from "react-i18next";
 
 
 interface EventCardProps {
@@ -15,7 +18,10 @@ interface EventCardProps {
   onStart?: () => void;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
+const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => {
+  const { language } = useLanguage()
+  const {t}=useTranslation()
+  return (
   <View className="bg-white relative rounded-2xl flex-1 mx-4 gap-4 w-[90%] flex-row mb-4 shadow items-start">
     <Image source={event.picUrl} className="rounded-l-2xl" style={{ width: 164, height: 147 }} />
     <Col gap={4} items="start" justify="start" className="flex-1 pt-2 pr-4 ">
@@ -36,14 +42,16 @@ const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => (
 
     </Col>
     <AppButton
-      title="Start Now"
+      title={t("Global.start_now")}
       className="absolute bottom-0 right-2 py-1 w-[30%] border border-brownColor-50 rounded-2xl"
       textClassName="text-brownColor-400"
       variant="outline"
-      endIcon={<Icons.arrowRightFill />}
+      endIcon={<Icons.arrowRightFill  style={{
+        transform: [{ rotate: `${isRTL? 180 : 0}deg` }],
+      }} />}
       onPress={onStart}
     />
   </View>
-);
+);}
 
 export default EventCard;
