@@ -44,6 +44,14 @@ export type NavigationParamsList = {
   [navigationEnums.PHOTO_SESSION_DETAILS]: { id: any };
   [navigationEnums.PROFILE]: undefined;
 
+
+  // Stable
+  [navigationEnums.STABLE_OVERVIEW]: undefined,
+  [navigationEnums.HORSE_DETAIL]: undefined,
+  [navigationEnums.MY_WALLET]: undefined,
+  [navigationEnums.HORSE_EDIT]: { id: any },
+  [navigationEnums.HORSE_CREATE]: undefined,
+
   //EVENTs
   [navigationEnums.EVENTS]: undefined;
   [navigationEnums.EVENT_DETAILS]: { id: any };

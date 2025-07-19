@@ -47,6 +47,13 @@ import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
 import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
 import { useSplashStore } from '@/store/useSplashStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
+import AddHorse from '@/packages/Client/My-stable/screens/AddHorse';
+import MyStable from '@/packages/Client/My-stable/screens/MyStable';
+import StableOverview from '@/packages/Client/My-stable/screens/StableOverview';
+import StableHorse from '@/packages/Client/My-stable/screens/StableHorse';
+import EditHorseForm from '@/packages/Client/My-stable/components/EditHorseForm';
+import EditHorse from '@/packages/Client/My-stable/screens/EditHorse';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -56,6 +63,8 @@ export type MainTabParamList = {
   home: undefined;
   event: undefined;
   service: undefined;
+  myStable: undefined;
+  add: undefined;
   profile: undefined;
 };
 
@@ -65,14 +74,37 @@ const Stack = createNativeStackNavigator<NavigationParamsList>();
 // Helper for Tab Icon
 const TabBarIcon = ({ route, focused }: { route: { name: string }, focused: boolean }) => {
   const iconSize = 24;
+
   let IconComponent;
+  let FocusedIconComponent;
 
   switch (route.name) {
-    case 'home': IconComponent = Icons.home; break;
-    case 'event': IconComponent = Icons.discountShape; break;
-    case 'service': IconComponent = Icons.service; break;
-    case 'profile': IconComponent = Icons.profile; break;
-    default: return null;
+    case 'home':
+      IconComponent = Icons.homeOutline;
+      FocusedIconComponent = Icons.home; // أيقونة مختلفة عند التركيز
+      break;
+    case 'event':
+      IconComponent = Icons.discountShapeOutline;
+      FocusedIconComponent = Icons.discountShape;
+      break;
+    case 'service':
+      IconComponent = Icons.serviceOutline;
+      FocusedIconComponent = Icons.service;
+      break;
+    case 'profile':
+      IconComponent = Icons.profileOutline;
+      FocusedIconComponent = Icons.profile;
+      break;
+    case 'add':
+      IconComponent = Icons.addOutline;
+      FocusedIconComponent = Icons.add;
+      break;
+    case 'myStable':
+      IconComponent = Icons.stableOutline;
+      FocusedIconComponent = Icons.stable;
+      break;
+    default:
+      return null;
   }
 
   if (focused) {
@@ -83,18 +115,26 @@ const TabBarIcon = ({ route, focused }: { route: { name: string }, focused: bool
           borderRadius: 999,
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: 30,
+          marginBottom: 10,
         }}
       >
-        <View className='border-b-transparent border-[#E7E7E7]  border-[35px] border-t-[50px] rounded-[99999px] rounded-b-none flex items-center justify-center'>
-          <View className='bg-[#5E3E2C] mb-4 rounded-full flex items-center justify-center h-[50px] p-2 w-[50px]'>
-            <IconComponent width={iconSize} height={iconSize} stroke="#fff" color="#fff" />
+        <View className='border-b-transparent border-[#E7E7E7] border-[35px] border-t-[20px] rounded-[99999px] rounded-b-none flex items-center justify-center'>
+          <View className='bg-[#5E3E2C] rounded-full flex items-center justify-center h-[30px] p-2 w-[30px]'>
+            <FocusedIconComponent width={iconSize} height={iconSize} stroke="#fff" color="#fff" />
           </View>
         </View>
       </View>
     );
   }
-  return <IconComponent width={iconSize} height={iconSize} color="#fff" />;
+
+  return (
+    <IconComponent
+      width={iconSize}
+      height={iconSize}
+      stroke="#9C9D9E"
+      color="#9C9D9E"
+    />
+  );
 };
 
 const tabScreenOptions = ({ route }: any) => ({
@@ -113,9 +153,7 @@ const tabScreenOptions = ({ route }: any) => ({
   tabBarStyle: {
     height: 100,
     borderRadius: 16,
-    position: 'absolute',
     paddingHorizontal: 12,
-    bottom: 20,
     backgroundColor: '#E7E7E7',
   },
 });
@@ -135,13 +173,17 @@ function AdminTabs() {
 
 // Main Bottom Tabs for Client (if you want to differentiate)
 function ClientTabs() {
+  const { t } = useTranslation();
+  const { authData } = useAuthStore();
   return (
     // @ts-ignore
     <Tab.Navigator screenOptions={tabScreenOptions}>
-      <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
-      <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: 'Service' }} />
-      <Tab.Screen name="event" component={Events} options={{ tabBarLabel: 'Events' }} />
-      <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
+      <Tab.Screen name={navigationEnums.HOME} component={HomeScreen} options={{ tabBarLabel: t('Global.Home') }} />
+      {authData?.role === "stable" && <Tab.Screen name="myStable" component={MyStable} options={{ tabBarLabel: t('Global.My Stable') }} />}
+      {authData?.role !== "stable" && <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: t('Global.Services') }} />}
+      {authData?.role !== "stable" && <Tab.Screen name="event" component={Events} options={{ tabBarLabel: t('Global.Events') }} />}
+      {authData?.role === "stable" && <Tab.Screen name="add" component={AddHorse} options={{ tabBarLabel: t('Global.Add') }} />}
+      <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: t('Global.Profile') }} />
     </Tab.Navigator>
   );
 }
@@ -191,6 +233,10 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.BOOKING_DETAILS} component={BookingDetails} />
       <Stack.Screen name={navigationEnums.COMPLAINT} component={ComplaintScreen} />
       <Stack.Screen name={navigationEnums.LANGUAGE} component={Language} />
+      <Stack.Screen name={navigationEnums.STABLE_OVERVIEW} component={StableOverview} />
+      <Stack.Screen name={navigationEnums.HORSE_DETAIL} component={StableHorse} />
+      <Stack.Screen name={navigationEnums.HORSE_EDIT} component={EditHorse} />
+      <Stack.Screen name={navigationEnums.HORSE_CREATE} component={AddHorse} />
 
     </Stack.Navigator>)
 }
@@ -281,10 +327,10 @@ export default function Root() {
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
       <NavigationContainer
-        // initialState={initialState}
-        // onStateChange={(state) =>
-        //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
-        // }
+      // initialState={initialState}
+      // onStateChange={(state) =>
+      //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
+      // }
       >
         <I18nContext>
           <App />

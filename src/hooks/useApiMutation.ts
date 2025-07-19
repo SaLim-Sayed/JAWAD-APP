@@ -1,4 +1,4 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useMutation, useQueryClient, UseMutationOptions } from '@tanstack/react-query';
 import axios from 'axios';
 import { API_URL } from './api';
 import { useLanguage } from '@/store';
@@ -11,6 +11,7 @@ type ApiMutationProps<TInput, TResponse> = {
   method?: HttpMethod;
   config?: UseMutationOptions<TResponse, unknown, TInput>;
   isFormData?: boolean;
+  refetchKeys?: (string | unknown[])[]; // << هنا نضيف المفاتيح التي تريد عمل refetch لها
 };
 
 export function useApiMutation<TInput = any, TResponse = any>({
@@ -18,9 +19,11 @@ export function useApiMutation<TInput = any, TResponse = any>({
   method = 'post',
   config,
   isFormData = false,
+  refetchKeys = [],
 }: ApiMutationProps<TInput, TResponse>) {
   const { language } = useLanguage();
   const { authData } = useAuthStore();
+  const queryClient = useQueryClient(); // نستخدمه لإعادة الجلب
 
   return useMutation<TResponse, Error, TInput>({
     mutationFn: async (body: TInput) => {
@@ -29,7 +32,6 @@ export function useApiMutation<TInput = any, TResponse = any>({
         Accept: 'application/json',
       };
 
-      // Override Content-Type only if it's not FormData (axios sets it automatically for FormData)
       if (!isFormData) {
         headers['Content-Type'] = 'application/json';
       }
@@ -52,7 +54,7 @@ export function useApiMutation<TInput = any, TResponse = any>({
         case 'delete':
           response = await axios.delete(fullUrl, {
             ...axiosConfig,
-            data: body, // send body in delete
+            data: body,
           });
           break;
         case 'post':
@@ -62,6 +64,15 @@ export function useApiMutation<TInput = any, TResponse = any>({
       }
 
       return response.data;
+    },
+
+    onSuccess: (data, variables, context) => {
+      // invalidate queries by refetchKeys
+      refetchKeys.forEach((key: string | unknown[]) => {
+        queryClient.invalidateQueries({ queryKey: key as readonly unknown[] });
+      });
+
+      config?.onSuccess?.(data, variables, context);
     },
 
     ...config,

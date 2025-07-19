@@ -1,6 +1,6 @@
 export interface Horse {
     _id: string;
-    name: string;
+    name: LocalizedField|string;
     price: number;
     type: string;
     level: string;
@@ -8,7 +8,7 @@ export interface Horse {
   }
   export interface HorseDetail {
     _id: string;
-    name: string;
+    name: any;
     description: string;
     gender: string;
     price: number;

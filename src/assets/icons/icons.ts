@@ -1,8 +1,16 @@
 
-import home from "@/assets/icons/home-2.svg"
+import home from "@/assets/icons/home-3.svg"
+import homeOutline from "@/assets/icons/home-2.svg"
 import stable from "@/assets/icons/stable.svg"
+import stableOutline from "@/assets/icons/stable.svg"
 import service from "@/assets/icons/service.svg"
-import profile from "@/assets/icons/profile.svg"
+import serviceOutline from "@/assets/icons/service.svg"
+import profile from "@/assets/icons/profile-2.svg"
+import profileOutline from "@/assets/icons/profile.svg"
+import discountShape from "@/assets/icons/discount-shape2.svg"
+import discountShapeOutline from "@/assets/icons/discount-shape.svg"
+import add from "@/assets/icons/add.svg"
+import addOutline from "@/assets/icons/add2.svg"
 import search from "@/assets/icons/search-normal.svg"
 import arrowLeft from "@/assets/icons/arrow-left.svg"
 import arrowRight from "@/assets/icons/arrow-right.svg"
@@ -30,7 +38,6 @@ import filter from "@/assets/icons/filter.svg"
 import likeTag from "@/assets/icons/like-tag.svg"
 import hashtag1 from "@/assets/icons/hashtag.svg"
 import share from "@/assets/icons/share.svg"
-import discountShape from "@/assets/icons/discount-shape.svg"
 import grid8 from "@/assets/icons/grid-8.svg"
 import cardTick from "@/assets/icons/card-tick.svg"
 import clipboardTick from "@/assets/icons/clipboard-tick.svg"
@@ -47,6 +54,10 @@ import lang from "@/assets/icons/lang.svg"
 import logout2 from "@/assets/icons/logout-2.svg"
 import logout from "@/assets/icons/logout.svg"
 import arrow from "@/assets/icons/arrow.svg"
+import edit from "@/assets/icons/edit.svg"
+import addtoStable from "@/assets/icons/addtoStable.svg"
+import trash from "@/assets/icons/trash.svg"
+
 
 
 
@@ -56,9 +67,15 @@ import arrow from "@/assets/icons/arrow.svg"
 
 export const Icons = {
     home,
+    homeOutline,
     stable,
+    stableOutline,
     service,
+    serviceOutline,
     profile,
+    profileOutline,
+    add,
+    addOutline,
     arrowLeft,
     arrowRight,
     jawadapp,
@@ -87,6 +104,7 @@ export const Icons = {
     hashtag1,
     share,
     discountShape,
+    discountShapeOutline,
     grid8,
     cardTick,
     clipboardTick,
@@ -102,5 +120,8 @@ export const Icons = {
     lang,
     logout2,
     logout,
-        arrow,
+    arrow,
+    edit,
+    addtoStable,
+    trash,
 }

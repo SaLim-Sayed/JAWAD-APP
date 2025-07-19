@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useLanguage } from '@/store';
 import { API_URL } from './api';
+import { useAuthStore } from '@/store/useAuthStore';
 
 type UsePutMutationOptions<T> = {
   endpoint: string;
@@ -18,12 +19,14 @@ export const usePutMutation = <T = any>({
 }: UsePutMutationOptions<T>) => {
   const { language } = useLanguage();
 
+  const { authData } = useAuthStore()
   const axiosInstance = axios.create({
     baseURL: API_URL,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
       'accept-language': language,
+      'authorization': `jawJQ${authData?.token}`,
     },
   });
 

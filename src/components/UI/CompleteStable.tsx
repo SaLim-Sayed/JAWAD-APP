@@ -38,7 +38,7 @@ export const horseSchema = z.object({
   enAddress: z.string().optional(),
   location: z.string().min(1, "Location is required"),
   sessionPercentage: z.string().min(1, "Session percentage is required"),
-  image: z.string().optional(), // single image URI
+  image: z.string().optional(),  
 });
 
 export type HorseForm = z.infer<typeof horseSchema>;

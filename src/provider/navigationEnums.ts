@@ -42,6 +42,13 @@
   PHOTO_SESSION_DETAILS: "photo/session/details/:id",
   LOGOUT: "logout",
 
+  // Stable
+  STABLE_OVERVIEW: "stable/overview",
+  HORSE_DETAIL: "horse/details",  
+  MY_WALLET: "my/wallet",
+  HORSE_EDIT: "horse/edit/:id",
+  HORSE_CREATE: "horse/create",
+  
   //EVENTs
   EVENTS: "events",
   EVENT_DETAILS: "event/details/:id",

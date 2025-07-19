@@ -17,13 +17,14 @@ export const apiKeys = {
       completeStable:(id:string) => `/api/v1/stable/completed/${id}`,
     },
     horse: {
-      addHorse: "/api/v1/horse/add",
+      addHorse:(stableId:string) => `/api/v1/horse/add/${stableId}`,
       getHorse:(stableId:string) => `/api/v1/horse/get/${stableId}?page=1&nationality=Foreign&service=Ride`,
       horseDetails: "/api/v1/horse/details/",
-      updateHorse: "/api/v1/horse/updateHorse",
+      horseDetail:(id:string) => `/api/v1/horse/details/${id}`,
+      updateHorse: (id:string) => `/api/v1/horse/update/${id}`,
       horseAvailable: "/api/v1/horse/horseAvailable",
       reservedTimes: "/api/v1/horse/reservedTimes",
-      deleteHorse: "/api/v1/horse/deleteHorse",
+      deleteHorse:(id:string) => `/api/v1/horse/delete/${id}`,
     },
     event: {
       addEvent: "/api/v1/event/addEvent",
