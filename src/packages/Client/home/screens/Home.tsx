@@ -1,5 +1,4 @@
 import AppWrapper from "@/components/UI/AppWrapper";
-import CompleteModal from "@/components/UI/CompleteModal";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import PhotographyCard from "@/components/UI/PhotographyCard";
 import SearchInput from "@/components/UI/SearchInput";
@@ -7,17 +6,17 @@ import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { useLanguage } from "@/store";
 import { useAuthStore } from "@/store/useAuthStore";
 import React, { useState } from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
+import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
 import HorseSection from "../../Services/components/HorseSection";
 import BestStableSection from "../components/BestStableSection";
 import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
-import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
-import { useLanguage } from "@/store";
 
 const HomeScreen = () => {
   const { navigate } = useGlobalNavigation();
@@ -25,8 +24,7 @@ const {language}=useLanguage()
   const { authData } = useAuthStore();
   const [search, setSearch] = useState("");
 
-  const [completeModalVisible, setCompleteModalVisible] = useState(authData.isCompleted === false);
-  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotograoher"],
   });
@@ -37,8 +35,8 @@ const {language}=useLanguage()
   });
 
 
-  const userName = authData.role === "stable" ? stableData?.stable.name[language] : data?.photographers.find((photographer) => photographer._id === authData.id)?.name ;
-  const location = authData.role === "stable" ? stableData?.stable.city[language] : data?.photographers.find((photographer) => photographer._id === authData.id)?.city ;
+  const userName = authData.role === "stable" ? stableData?.stable.name[language] : authData.role==="photographer"?data?.photographers.find((photographer) => photographer._id === authData.id)?.name:"Guest" ;
+  const location = authData.role === "stable" ? stableData?.stable.city[language] : authData.role==="photographer"? data?.photographers.find((photographer) => photographer._id === authData.id)?.city :"Cairo";
 
   const showStableSection = ["auth", "photographer"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
@@ -86,8 +84,7 @@ const {language}=useLanguage()
           </ScrollView>
         </LoaderBoundary>
       </View>
-      <CompleteModal visible={completeModalVisible} onClose={() => { setCompleteModalVisible(false) }} />
-    </AppWrapper>
+     </AppWrapper>
   );
 };
 

@@ -18,11 +18,11 @@ interface AppLayoutProps {
 export default function AppLayout({ children,title,showBackButton=true,isScrollable=true }: AppLayoutProps) {
      return (
         <SafeAreaView className="flex-1 bg-white">
-            <StatusBar backgroundColor="white" barStyle="dark-content" />
+             <StatusBar backgroundColor="white" barStyle="dark-content" />
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 style={{ flex: 1 }}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 40}
             >
                 <View style={{ flex: 1 }}>
                 { title&&<AppHeader title={title} showBackButton={showBackButton} />}
@@ -34,7 +34,7 @@ export default function AppLayout({ children,title,showBackButton=true,isScrolla
                         extraScrollHeight={30}
                     >
                         
-                        <View className="flex-[0.9] px-6">
+                        <View className="flex-[0.9] p-6">
 
                             {children}
                         </View>

@@ -28,6 +28,7 @@ import { useApiQuery } from "@/hooks";
 import { GetHorseDetailResponse } from "../../Services/@types/horse.types";
 import { navigationEnums } from "@/provider/navigationEnums";
 import { Icons } from "@/constants";
+import { useLanguage } from "@/store";
 
 export const genders = [
   { ar: "ذكر", en: "Male" },
@@ -44,10 +45,10 @@ export const levels = [
 
 
 const EditHorseForm = () => {
-  const { navigate } = useGlobalNavigation();
+  const { navigate ,goBack} = useGlobalNavigation();
   const { id } = useAppRouteParams("HORSE_EDIT");
   const [uploading, setUploading] = useState(false);
-
+const {language}=useLanguage()
   const { control, handleSubmit, setValue, watch, formState: { errors } } = useForm<HorseForm>({
     resolver: zodResolver(horseSchema),
     defaultValues: {
@@ -112,7 +113,7 @@ const EditHorseForm = () => {
 
     mutate(formData, {
       onSuccess: () => {
-        navigate(navigationEnums.HORSE_DETAIL);
+        goBack()
       },
     });
     setUploading(false);
@@ -177,21 +178,21 @@ const EditHorseForm = () => {
 
         <Controller
           control={control}
-          name="arGender"
+          name={language === "ar" ? "arGender" : "enGender"}
           render={({ field: { value, onChange } }) => (
             <AppSelect
               label="الجنس"
               value={value}
               onChange={(selected) => {
-                const selectedGender = genders.find((g) => g.ar === selected);
+                const selectedGender = genders.find((g) => g[language] === selected);
                 if (selectedGender) {
-                  onChange(selectedGender.ar);
-                  setValue("enGender", selectedGender.en);
+                  onChange(selectedGender[language]);
+                  setValue(language === "ar" ? "enGender" : "arGender", selectedGender[language]);
                 }
               }}
               options={genders.map((g) => ({
-                label: g.ar + " - " + g.en,
-                value: g.ar,
+                label: g[language] + " - " + g[language === "ar" ? "en" : "ar"],
+                value: g[language],
               }))}
               dropdownWidth="90%"
             />
@@ -200,21 +201,21 @@ const EditHorseForm = () => {
 
         <Controller
           control={control}
-          name="arLevel"
+          name={language === "ar" ? "arLevel" : "enLevel"}
           render={({ field: { value, onChange } }) => (
             <AppSelect
               label="المستوى"
               value={value}
               onChange={(selected) => {
-                const selectedLevel = levels.find((l) => l.ar === selected);
+                const selectedLevel = levels.find((l) => l[language] === selected);
                 if (selectedLevel) {
-                  onChange(selectedLevel.ar);
-                  setValue("enLevel", selectedLevel.en);
+                  onChange(selectedLevel[language]);
+                  setValue(language === "ar" ? "enLevel" : "arLevel", selectedLevel[language]);
                 }
               }}
               options={levels.map((l) => ({
-                label: l.ar + " - " + l.en,
-                value: l.ar,
+                label: l[language] + " - " + l[language === "ar" ? "en" : "ar"],
+                value: l[language],
               }))}
               dropdownWidth="90%"
             />

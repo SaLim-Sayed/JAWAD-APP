@@ -22,7 +22,6 @@ import { usePutMutation } from "@/hooks/usePutMutation";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
-import { useLanguage } from "@/store";
 import { useAuthStore } from "@/store/useAuthStore";
 import AppHeader from "./AppHeader";
 import AppWrapper from "./AppWrapper";
@@ -52,10 +51,9 @@ const genderOptions = [
 const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
   const { authData } = useAuthStore();
   const { navigate } = useGlobalNavigation()
-  const { language } = useLanguage()
-  const { id } = useAppRouteParams("COMPLETE_STABLE")
+   const params = useAppRouteParams("COMPLETE_STABLE")
   const { mutate, isPending } = usePutMutation({
-    endpoint: apiKeys.stable.completeStable(id),
+    endpoint: apiKeys.stable.completeStable(params?.id),
     onSuccess: () => {
       console.log("تم التحديث بنجاح");
       showGlobalToast({

@@ -46,7 +46,7 @@ type StableForm = z.infer<typeof stableSchema>;
 const StableOverviews = () => {
     const [logo, setLogo] = useState<string | undefined>();
 
-    const { authData } = useAuthStore()
+     const { authData } = useAuthStore()
     const { data } = useApiQuery<GetStableDetailsResponse>({
         url: apiKeys.stable.stableDetail(authData?.id as string),
         key: [apiKeys.stable.stableDetail(authData?.id as string)],
@@ -215,7 +215,7 @@ const StableOverviews = () => {
                     )}
                 />
                 <Controller
-                    name="arCity"
+                    name={language === "ar" ? "arCity" : "enCity"}
                     control={control}
                     render={({ field: { value, onChange } }) => (
                         <AppSelect
@@ -223,13 +223,13 @@ const StableOverviews = () => {
                             //@ts-ignore
                             value={value}
                             onChange={(selectedAr) => {
-                                const selectedCity = cities.find((c) => c.ar === selectedAr);
+                                const selectedCity = cities.find((c) => c[language] === selectedAr);
                                 if (selectedCity) {
-                                    onChange(selectedCity.ar);
-                                    setValue("enCity", selectedCity.en);
+                                    onChange(selectedCity[language]);
+                                    setValue(language === "ar" ? "enCity" : "arCity", selectedCity[language]);
                                 }
                             }}
-                            options={cities.map((city) => ({ label: city.ar + " - " + city.en, value: city.ar }))}
+                            options={cities.map((city) => ({ label: city[language] + " - " + city[language === "ar" ? "en" : "ar"], value: city[language] }))}
                             dropdownWidth="80%"
                         />
                     )
