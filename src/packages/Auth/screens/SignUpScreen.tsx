@@ -18,18 +18,23 @@ import Row from '@/components/UI/Row';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { useApiMutation } from '@/hooks';
 import { showGlobalToast } from '@/hooks/useGlobalToast';
-const signUpSchema = z.object({
-    name: z.string().min(3, 'Username required'),
-    // phone: z.string().min(6, 'Phone number required'),
-    email: z.string().email('Invalid email'),
-    nationality: z.string().nonempty('Select nationality'),
-    password: z.string().min(6, 'Password too short'),
-    gender: z.enum(['male', 'female']),
-});
-
-type SignUpForm = z.infer<typeof signUpSchema>;
+import { useTranslation } from 'react-i18next';
+import Image from '@/components/UI/Image';
+import { isRTL } from '@/provider/constant';
 
 export const SignUpScreen = () => {
+    const {t} = useTranslation()
+    const signUpSchema = z.object({
+        name: z.string().min(3, t("signup.name_error")),
+        // phone: z.string().min(6, 'Phone number required'),
+        email: z.string().email(t("signup.email_error")),
+        nationality: z.string().nonempty(t("signup.nationality_error")),
+        password: z.string().min(6, t("signup.password_error")),
+        gender: z.enum(['male', 'female']),
+    });
+    
+    type SignUpForm = z.infer<typeof signUpSchema>;
+    
     const { navigate } = useGlobalNavigation();
     const { setActiveApp ,authData} = useAuthStore()
 
@@ -42,7 +47,7 @@ export const SignUpScreen = () => {
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
         { value: 'American', label: 'American', icon: images.en },
-        { value: 'Egyptian', label: 'Egyptian', icon: images.ar },
+        { value: 'Egyptian', label: 'مصري', icon: images.ar },
     ];
 
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
@@ -82,20 +87,20 @@ export const SignUpScreen = () => {
     return (
         <AuthWrapper>
 
-            <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Sign Up</AppText>
-            <AppText className="text-brownColor-300 mb-4">Welcome To Lorem..!</AppText>
-            <AppText className="text-brownColor-40 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</AppText>
+            <AppText className="text-brownColor-400 text-3xl font-bold mb-2">{t("signup.title")}</AppText>
+            <AppText className="text-brownColor-300 mb-4">{t("signup.welcome")}</AppText>
+            <AppText className="text-brownColor-40 mb-4">{t("signup.description")}</AppText>
 
             <Controller
                 control={control}
                 name="name"
                 render={({ field: { onChange, value } }) => (
                     <Input
-                        label="User Name"
+                        label={t("signup.name_label")}
                         name="name"
                         control={control}
                         className="bg-white p-3 rounded-xl border mt-1 mb-3"
-                        placeholder="Enter Your User Name"
+                        placeholder={t("signup.name_placeholder")}
                         onChangeText={onChange}
                         value={value}
                     />
@@ -107,11 +112,11 @@ export const SignUpScreen = () => {
                 name="email"
                 render={({ field: { onChange, value } }) => (
                     <Input
-                        label="Email"
+                        label={t("signup.email_label")}
                         name="email"
                         control={control}
                         className="bg-white p-3 rounded-xl border mt-1 mb-3"
-                        placeholder="Enter Your Email"
+                        placeholder={t("signup.email_placeholder")}
                         onChangeText={onChange}
                         value={value}
                     />
@@ -140,7 +145,7 @@ export const SignUpScreen = () => {
                 name="nationality"
                 render={({ field: { onChange, value } }) => (
                     <AppSelect
-                        label="Nationality"
+                        label={t("signup.nationality_label")}
                         options={nationalityOptions}
                         value={watch('nationality')}
                         dropdownWidth={"75%"}
@@ -155,14 +160,16 @@ export const SignUpScreen = () => {
                 render={({ field: { onChange, value } }) => (
                     <Input
                         className="bg-white p-3 rounded-xl border mt-1 mb-3"
-                        placeholder="Enter Your Password"
+                        placeholder={t("signup.password_placeholder")}
                         secureTextEntry={!showPassword}
                         onChangeText={onChange}
                         value={value}
                         name="password"
                         control={control}
-                        label="Password"
-                    />
+                        dir={isRTL ? "rtl" : "ltr"}
+                        label={t("signup.password_label")}
+                        endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
+                        onEndIconPress={() => setShowPassword((prev) => !prev)}                      />
                 )}
             />
 
@@ -178,16 +185,16 @@ export const SignUpScreen = () => {
 
             <AppButton
             loading={isPending}
-                title="Sign up"
+                title={t("signup.submit")}
                 onPress={handleSubmit(onSubmit)}
             />
             <Row>
                 <AppText className="text-center text-brownColor-400 mt-4">
-                    Already have an account ?
+                    {t("signup.already_have_account")}
 
                 </AppText>
                 <AppText className="text-brownColor-400" onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}>
-                    Login
+                    {t("signup.login")}
                 </AppText>
             </Row>
 
@@ -197,7 +204,7 @@ export const SignUpScreen = () => {
                 <AppButton
                     className='w-[50%] bg-brownColor-50'
                     textClassName='text-brownColor-400'
-                    title="Google"
+                    title={t("signup.google")}
                     onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.google />}
                 />
@@ -216,7 +223,7 @@ export const SignUpScreen = () => {
                 />
             </View>
             <AppButton
-                title="Continue as Guest"
+                title={t("signup.continue_guest")}
                 variant="outline"
                 onPress={() => setActiveApp("Client")}
             />

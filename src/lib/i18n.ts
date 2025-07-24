@@ -17,5 +17,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+export  const t = i18n.t.bind(i18n);
+ 
 
 export default i18n;

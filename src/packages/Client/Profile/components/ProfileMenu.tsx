@@ -13,6 +13,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { apiKeys } from '@/hooks/apiKeys';
 import { GetPhotographersResponse } from '../../Photo-session/@types/photography.types';
 import { GetStableDetailsResponse } from '../../Services/@types/horse.types';
+import { t } from '@/lib';
 
 const user = {
   avatar: 'https://randomuser.me/api/portraits/men/50.jpg', // Replace with real avatar or local asset
@@ -58,12 +59,8 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     const isAuth = authData.role === "auth";
   
     const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : "Guest";
-    const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city||"Cairo" : "Cairo";
-  
-    const showStableSection = ["auth", "photographer"].includes(authData.role);
-    const showHorseSection = ["stable"].includes(authData.role);
-    const showEventsSection = ["auth", "photographer", "stable"].includes(authData.role);
-  
+   
+   
   const [visible, setVisible] = React.useState(false);
   const onCancel = () => setVisible(false);
   const onConfirm = () => {
@@ -71,16 +68,14 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     onLogout();
   };
   const menuItems = [
-    { key: 'profile', label: 'My Profile', icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
-    { key: 'cart', label: 'cart', icon: Icons.cartProfile, onPress: () => { } },
-    { key: 'history', label: 'Booking History', icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
-    { key: 'contact', label: 'Contact us', icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
-    { key: 'about', label: 'About us', icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },
-    { key: 'terms', label: 'Tarms & user', icon: Icons.addUser, onPress: () => { navigate(navigationEnums.TERMS) } },
-    { key: 'complaint', label: 'Complaint or suggestion', icon: Icons.likeTag, onPress: () => { navigate(navigationEnums.COMPLAINT) } },
-    { key: 'invite', label: 'Invite a friend', icon: Icons.likeTag, onPress: () => { } },
-    { key: 'language', label: 'Language Setting', icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
-    { key: 'logout', label: 'Logout', icon: Icons.logout2, onPress: () => { setVisible(true) } },
+    { key: 'profile', label: t("ProfileMenu.profile"), icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
+    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.cartProfile, onPress: () => { } },
+    { key: 'history', label: t("ProfileMenu.history"), icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
+    { key: 'contact', label: t("ProfileMenu.contact"), icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
+    { key: 'about', label: t("ProfileMenu.about"), icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },
+    { key: 'terms', label: t("ProfileMenu.terms"), icon: Icons.addUser, onPress: () => { navigate(navigationEnums.TERMS) } },
+    { key: 'language', label: t("ProfileMenu.language"), icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
+    { key: 'logout', label: t("ProfileMenu.logout"), icon: Icons.logout2, onPress: () => { setVisible(true) } },
   ];
   return (
     <View
@@ -94,8 +89,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             className="w-24 h-24 rounded-full"
           />
           <AppText className="pt-4 text-lg">
-            <AppText className="text-brownColor-400 font-bold">{authData.role}</AppText>
-            <AppText className="text-black font-bold"> / {userName}</AppText>
+             <AppText className="text-black font-bold"> / {userName||t("ProfileMenu.guest")}</AppText>
           </AppText>
         </View>
         <View className="gap-0">
@@ -115,17 +109,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             )}
             ListFooterComponent={<View className="h-80" />}
           />
-          <SettingsListItem
-            label="Logout"
-            icon={Icons.logout2}
-            onPress={() => { setVisible(true) }}
-            style={{
-              marginBottom: 0,
-              marginTop: 4,
-              backgroundColor: '#FBF8F6',
-            }}
-            testID="logout"
-          />
+          
         </View>
       </View>
       <LogoutConfirmModal visible={visible} onCancel={onCancel} onConfirm={onConfirm} />

@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AppText from "./AppText";
-
+import { isRTL } from "@/provider/constant";
+ 
 interface InputProps extends TextInputProps {
   label: string;
   name: string;
@@ -16,6 +17,7 @@ interface InputProps extends TextInputProps {
   error?: string;
   secureTextEntry?: boolean;
   endIcon?: React.ReactNode;
+  dir?: "rtl" | "ltr";
   onEndIconPress?: () => void;
 }
 
@@ -27,13 +29,14 @@ export const Input: React.FC<InputProps> = ({
   secureTextEntry,
   endIcon,
   numberOfLines,
+  dir="ltr",
   onEndIconPress,
   ...rest
 }) => {
   return (
     <View className="w-full">
       <AppText className="text-brownColor-400 mb-2">{label}</AppText>
-      <View className="relative">
+      <View  className="relative  ">
         <Controller
           control={control}
           name={name}
@@ -54,6 +57,7 @@ export const Input: React.FC<InputProps> = ({
                   borderColor: "#684735",
                   borderRadius: 10,
                   flex: 1,
+                  textAlign: dir === "rtl" ? "right" :  undefined,
                   width: "100%",
                 }}
                 numberOfLines={numberOfLines}

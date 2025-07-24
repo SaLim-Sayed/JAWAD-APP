@@ -9,11 +9,13 @@ import Image from '@/components/UI/Image';
 import Row from '@/components/UI/Row';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { navigationEnums } from '@/provider/navigationEnums';
+import { useAuthStore } from '@/store/useAuthStore';
 const ChangeSuccessScreen = () => {
   const { navigate } = useGlobalNavigation();
+  const { authData } = useAuthStore()
 
   const onSubmit = () => {
-    navigate(navigationEnums.LOGIN_SCREEN)
+    navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})
   };
 
   return (

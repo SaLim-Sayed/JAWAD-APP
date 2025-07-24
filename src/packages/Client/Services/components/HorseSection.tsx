@@ -15,7 +15,7 @@ import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { GetHorsesResponse } from "../@types/horse.types";
-
+import { t } from "@/lib";
 const HorseSection = ({stableId}: {stableId: string}) => {
   const { navigate } = useGlobalNavigation();
   const screenWidth = Dimensions.get("window").width;
@@ -46,10 +46,10 @@ const HorseSection = ({stableId}: {stableId: string}) => {
     <View className="mb-4">
       <Row className="mt-2 mb-2 px-4 flex-row justify-between items-center">
         <AppText className="font-bold text-brownColor-400 text-lg">
-          Horses
+          {t("Global.horses")}
         </AppText>
         <TouchableOpacity onPress={() => navigate(navigationEnums.HORSES,{id:stableId})}>
-          <AppText className="text-brownColor-400 text-sm">See All</AppText>
+          <AppText className="text-brownColor-400 text-sm">{t("Global.see_all")}</AppText>
         </TouchableOpacity>
       </Row>
 

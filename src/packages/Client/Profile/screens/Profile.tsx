@@ -1,17 +1,16 @@
-import AppHeader from '@/components/UI/AppHeader';
-import AppWrapper from '@/components/UI/AppWrapper';
+import AppLayout from '@/components/UI/AppLayout';
+import { t } from '@/lib';
 import { useAuthStore } from '@/store/useAuthStore';
 import React from 'react';
 import ProfileMenu from '../components/ProfileMenu';
 
 export default function Profile() {
-  const { setActiveApp,logout } = useAuthStore();
+  const {  logout } = useAuthStore();
 
 
   return (
-    <AppWrapper>
-      <AppHeader title="Profile" />
+    <AppLayout isScrollable={false} title={t("ProfileMenu.profile")}>
       <ProfileMenu onLogout={() => logout()} />
-    </AppWrapper>
+    </AppLayout>
   )
 }

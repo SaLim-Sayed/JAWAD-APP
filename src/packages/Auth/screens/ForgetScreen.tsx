@@ -12,14 +12,17 @@ import Or from '@/components/UI/Or';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-const loginSchema = z.object({
-  phone: z.string().min(6, 'Phone number is required'),
-});
-
-type LoginSchema = z.infer<typeof loginSchema>;
 
 const ForgetScreen = () => {
+  const {t} = useTranslation()
+  const loginSchema = z.object({
+    phone: z.string().min(6, t("auth.validation.phone_required")),
+  });
+  
+  type LoginSchema = z.infer<typeof loginSchema>;
+  
   const { navigate } = useGlobalNavigation();
   const { setActiveApp } = useAuthStore()
 
@@ -43,9 +46,9 @@ const ForgetScreen = () => {
     <AuthWrapper>
       <View className='mt-12 flex-1 w-full'>
         <Col gap={4}>
-          <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Don’t WORRY !</AppText>
-          <AppText className="text-brownColor-400 mb-4">did you forgot your password?</AppText>
-          <AppText className="text-brownColor-100 mb-4">Enter your Mobile number to get OPT Code.</AppText>
+          <AppText className="text-brownColor-400 text-3xl font-bold mb-2">{t("auth.title")}</AppText>
+          <AppText className="text-brownColor-400 mb-4">{t("auth.subtitle")}</AppText>
+          <AppText className="text-brownColor-100 mb-4">{t("auth.instruction")}</AppText>
         </Col>
         <Controller
           control={control}
@@ -54,8 +57,8 @@ const ForgetScreen = () => {
             <Input
               name='phone'
               control={control}
-              label="Mobile Number"
-              placeholder="Enter your phone number"
+              label={t("auth.phone_label")}
+              placeholder={t("auth.phone_placeholder")}
               keyboardType="phone-pad"
               className="bg-white p-3 rounded-xl border mt-1 mb-3"
               onChangeText={onChange}
@@ -69,14 +72,14 @@ const ForgetScreen = () => {
 
 
 
-        <AppButton title="Next" onPress={handleSubmit(onSubmit)} />
+        <AppButton title={t("auth.next")} onPress={handleSubmit(onSubmit)} />
 
 
-        <Or />
+        <Or text={t("auth.or")} />
 
 
         <AppButton
-          title="Continue as Guest"
+          title={t("auth.guest")}
           variant="outline"
           onPress={() => setActiveApp("Client")}
         />

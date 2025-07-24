@@ -7,7 +7,7 @@ import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { navigationEnums } from "@/provider/navigationEnums";
-
+import { t } from "@/lib";
 interface Event {
   id: number;
   image: any;
@@ -30,9 +30,9 @@ const EventsSection: React.FC<EventsSectionProps> = ({ events, onSeeAll }) => {
   return (
   <>
     <View className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
-      <AppText className="font-bold tajawal-semibold-20 text-brownColor-400">The Events</AppText>
+      <AppText className="font-bold tajawal-semibold-20 text-brownColor-400">{t("Global.events")}</AppText>
       <TouchableOpacity onPress={onSeeAll}>
-        <AppText className="text-brownColor-300 text-sm">See All</AppText>
+        <AppText className="text-brownColor-300 text-sm">{t("Global.see_all")}</AppText>
       </TouchableOpacity>
     </View>
     <FlatList

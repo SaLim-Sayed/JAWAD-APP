@@ -8,7 +8,8 @@ import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { GetStablesResponse } from "../@types/stable.type";
 import { useStableStore } from "@/store/useStableStore";
- 
+import { useTranslation } from "react-i18next"; 
+import { t } from "@/lib";
 interface Stable {
     id: number;
     image: any;
@@ -23,7 +24,7 @@ interface BestStableSectionProps {
 }
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSeeAll }) => {
-    const { data } = useApiQuery<GetStablesResponse>({
+     const { data } = useApiQuery<GetStablesResponse>({
         key: ["getStable"],
         url: apiKeys.stable.getStable+1,
     })
@@ -36,9 +37,9 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
         return (
         <>
             <View className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
-                <AppText className="font-bold text-brownColor-400 text-lg">The Best Stable</AppText>
+                <AppText className="font-bold text-brownColor-400 text-lg"> {t("Global.best_stables")}</AppText>
                 <TouchableOpacity onPress={onSeeAll}>
-                    <AppText className="text-brownColor-400  text-sm">See All</AppText>
+                    <AppText className="text-brownColor-400  text-sm">{t("Global.see_all")}</AppText>
                 </TouchableOpacity>
             </View>
             <FlatList

@@ -21,14 +21,21 @@ import { showGlobalToast } from '@/hooks/useGlobalToast';
 import useAppRouteParams from '@/provider/useAppRouteParams';
 import CompleteModal from '@/components/UI/CompleteModal';
 import { navigationEnums } from '@/provider/navigationEnums';
-const loginSchema = z.object({
-  email: z.string().min(6, 'Email is required'),
-  password: z.string().min(4, 'Password too short'),
-});
+import { useTranslation } from 'react-i18next';
+import { isRTL } from '@/provider/constant';
 
-type LoginSchema = z.infer<typeof loginSchema>;
 
 const LoginScreen = () => {
+
+  const {t} = useTranslation()
+
+  const loginSchema = z.object({
+    email: z.string().min(6, t("Login.email_error")),
+    password: z.string().min(4, t("Login.password_error")),
+  });
+
+  type LoginSchema = z.infer<typeof loginSchema>;
+  
   const { role } = useAppRouteParams("LOGIN_SCREEN")
   const url = `/api/v1/${role}/login`
   const { mutate, isPending, error, data, isSuccess } = useApiMutation(
@@ -94,9 +101,9 @@ const LoginScreen = () => {
     <AuthWrapper>
 
       <Col gap={4}>
-        <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Login</AppText>
-        <AppText className="text-brownColor-400 mb-4">Welcome back! Please login to continue</AppText>
-        <AppText className="text-brownColor-100 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</AppText>
+        <AppText className="text-brownColor-400 text-3xl font-bold mb-2">{t("Login.title")}</AppText>
+        <AppText className="text-brownColor-400 mb-4">{t("Login.welcome")}</AppText>
+        <AppText className="text-brownColor-100 mb-4">{t("Login.subtitle")}</AppText>
       </Col>
       <Controller
         control={control}
@@ -105,8 +112,8 @@ const LoginScreen = () => {
           <Input
             name='email'
             control={control}
-            label="Email"
-            placeholder="Enter your email"
+            label={t("Login.email_label")}
+            placeholder={t("Login.email_placeholder")}
             keyboardType="email-address"
             className="bg-white p-3 rounded-xl border mt-1 mb-3"
             onChangeText={onChange}
@@ -121,13 +128,14 @@ const LoginScreen = () => {
         render={({ field: { onChange, value } }) => (
           <Input
             className="bg-white p-3 rounded-xl border mt-1 mb-3"
-            placeholder="Enter Your Password"
+            placeholder={t("Login.password_placeholder")}
             secureTextEntry={!showPassword}
             onChangeText={onChange}
             value={value}
             name="password"
             control={control}
-            label="Password"
+            dir={isRTL ? "rtl" : "ltr"}
+            label={t("Login.password_label")}
             endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
             onEndIconPress={() => setShowPassword((prev) => !prev)}
           />
@@ -135,32 +143,32 @@ const LoginScreen = () => {
       />
       <Row className="justify-between items-center">
         <Radio
-          label="Remember me"
+          label={t("Login.remember_me")}
           value="remember"
           selected={rememberMe}
           onPress={() => setRememberMe((prev) => !prev)}
         />
         {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')}>
-          <AppText className="text-brownColor-300 text-sm">Forgot Password?</AppText>
+          <AppText className="text-brownColor-300 text-sm">{t("Login.forgot_password")}</AppText>
 
         </TouchableOpacity>}
       </Row>
-      <AppButton loading={isPending} title="Login" onPress={handleSubmit(onSubmit)} />
+      <AppButton loading={isPending} title={t("Login.login_button")} onPress={handleSubmit(onSubmit)} />
       {role === "auth" && <>
         <Text className="text-center text-brownColor-400 mt-4">
-          Don't have an account ?{' '}
+          {t("Login.no_account")}{' '}
           <Text className="text-brownColor-300" onPress={() => navigate('signUp')}>
-            Sign up
+            {t("Login.sign_up")}
           </Text>
         </Text>
 
-        <Or />
+        <Or text={t("Login.or")} />
 
         <View className="flex-row w-full mb-3 justify-between items-center gap-4">
           <AppButton
             className="flex-1 bg-brownColor-50"
             textClassName="text-brownColor-400"
-            title="Google"
+            title={t("Login.login_google")}
             onPress={() => { }}
             startIcon={<Icons.google />}
           />
@@ -177,7 +185,7 @@ const LoginScreen = () => {
         </View>
       </>}
       <AppButton
-        title="Continue as Guest"
+        title={t("Login.continue_guest")}
         variant="outline"
         onPress={() => setActiveApp("Client")}
       />

@@ -3,7 +3,8 @@ import { Modal, View, TouchableOpacity } from 'react-native';
 import AppText from '@/components/UI/AppText';
 import Image from '@/components/UI/Image';
 import { Icons } from '@/assets/icons/icons';
-
+import { t } from '@/lib';
+ 
 type LogoutConfirmModalProps = {
   visible: boolean;
   onCancel: () => void;
@@ -29,10 +30,10 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalProps> = ({
         className="bg-white w-[90%] py-10 px-4 items-center"
       >
         <AppText className="text-2xl font-bold text-brownColor-400 mb-2 text-center">
-          Are you sure you want to loge out ?
+            {t('LogoutModal.confirmTitle')} 
         </AppText>
         <AppText className=" tajawal-light-16 text-brownColor-300 mb-6 text-center">
-          By Clicking Yes You Will Be Logged Out
+            {t('LogoutModal.confirmDescription')} 
         </AppText>
         <View className="mb-8">
           <View className="bg-[#F9EDED] rounded-2xl p-6 items-center justify-center">
@@ -59,7 +60,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalProps> = ({
             focusable={false}
              activeOpacity={0.8}
           >
-            <AppText className="text-green-500 text-xl font-semibold">Cancel</AppText>
+            <AppText className="text-green-500 text-xl font-semibold">{t('LogoutModal.cancel')}</AppText>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onConfirm}
@@ -78,7 +79,7 @@ const LogoutConfirmModal: React.FC<LogoutConfirmModalProps> = ({
             }}
             activeOpacity={0.8}
           >
-            <AppText className="text-white text-xl font-semibold">Yes</AppText>
+            <AppText className="text-white text-xl font-semibold">{t('LogoutModal.confirm')}</AppText>
           </TouchableOpacity>
         </View>
       </View>
