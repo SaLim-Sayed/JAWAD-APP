@@ -3,14 +3,16 @@ import { useTranslation } from "react-i18next";
 import { FlatList, View, ViewToken } from "react-native";
 import { OnboardItem } from "../@types/OnboardItem";
 import Navbar from "./Navbar";
-import { onboardData } from "./onboardData";
-import OnboardingBox from "./OnboardingBox";
+ import OnboardingBox from "./OnboardingBox";
+import { useOnboardData } from "./onboardData";
 
 export default function Onboarding() {
   const flatListRef = useRef<FlatList<OnboardItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { i18n } = useTranslation();
+  const { i18n,t } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+
+  const onboardData = useOnboardData();
 
   const handleNext = () => {
     const newIndex = isRTL ? currentIndex - 1 : currentIndex + 1;

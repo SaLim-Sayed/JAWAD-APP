@@ -16,40 +16,34 @@
     "start_now": "ابدأ الآن",
     "signup": "الاشتراك"
   },
-  "DeviceLogin": {
-    "follow_instruction": "يرجى اتباع الرابط التالي",
-    "add_manage_playlist": "لإضافة/إدارة قائمة التشغيل فقط أضف",
-    "mac_address": "عنوان MAC",
-    "device_key": "مفتاح الجهاز",
-    "or_login_with": "أو تسجيل الدخول باستخدام",
-    "m3u_url": "رابط M3U",
-    "free_trial": "تجربة مجانية",
-    "contact_support": "تواصل معنا للدعم"
+ 
+ 
+    "Onboard": {
+      "slide1_title": "اكتشف أفضل الإسطبلات القريبة منك",
+      "slide1_description": "استكشف أفضل الإسطبلات لركوب الخيل في مكان واحد. سواء كنت مبتدئًا أو فارسًا متمرسًا، ستجد الإسطبل المثالي الذي يناسب احتياجاتك.",
+      "slide2_title": "ابحث عن تجربة الركوب المثالية لك",
+      "slide2_description": "استكشف أفضل الإسطبلات لركوب الخيل في مكان واحد. سواء كنت مبتدئًا أو فارسًا متمرسًا، ستجد الإسطبل المثالي الذي يناسب احتياجاتك.",
+      "back": "رجوع",
+      "next": "التالي",
+      "start": "ابدأ",
+      "choose_role": "اختر دورك",
+      "login_user": "تسجيل الدخول كمستخدم",
+      "login_business": "تسجيل الدخول كصاحب عمل",
+      "view_guest": "تصفح كزائر",
+      "choose_business_role": "اختر نوع العمل",
+      "photographer": "مصور",
+      "stable": "اسطبل",
+      "school": "مدرسة",
+      "cancel": "إلغاء"
+      
   },
+  
+ 
+  
   "Profile": {
-    "playlist": "قائمة التشغيل",
-    "settings": "الإعدادات",
-    "language": "اللغة",
-    "manage_your_app": "إدارة بيانات التطبيق المخزنة مؤقتا",
-    "success": "نجاح",
-    "failed": "فشل",
-    "clear_cache_success": "مسح المخزن المؤقت نجاح",
-    "clear_cache_failed": "فشل مسح المخزن المؤقت",
-    "clear_cache": "مسح المخزن المؤقت",
-    "manage_your_profile": "ادارة الملف الشخصي",
-    "application_info": "معلومات التطبيق",
-    "device_id": "معرف الجهاز",
-    "device_key": "مفتاح الجهاز",
-    "app_version": "إصدار التطبيق",
     "logout": "تسجيل الخروج"
   },
   "Error": {
-    "retry": "إعادة المحاولة",
-    "add_playlist": "إضافة قائمة تشغيل جديدة",
-    "failed_to_load": "فشل في تحميل {{type}}",
-    "failed_to_load_live": "فشل في تحميل بيانات البث المباشر",
-    "failed_to_load_series": "فشل في تحميل بيانات المسلسلات",
-    "failed_to_load_movies": "فشل في تحميل بيانات الأفلام",
-    "please_check_connection": "يرجى التحقق من اتصالك أو المحاولة مرة أخرى لاحقا"
+    "retry": "إعادة المحاولة"
   }
 }

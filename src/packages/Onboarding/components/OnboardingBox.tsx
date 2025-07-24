@@ -89,17 +89,17 @@ export default function OnboardingBox({
         ) : (
           <View className="items-center">
             <AppText className="text-brownColor-400  text-center mb-4 tajawal-semibold-18">
-              Choose your role
+              {t("Onboard.choose_role")}
             </AppText>
             <TouchableOpacity onPress={() => navigateToLogin("auth")} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
               <AppText className="text-brownColor-50 tajawal-semibold-16">
-                Login as  User
+                {t("Onboard.login_user")}
               </AppText>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => openBusinessModal()} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-4 w-full items-center">
               <AppText className="text-brownColor-50 tajawal-semibold-16">
-                Login as  Business owner
+                {t("Onboard.login_business")}
               </AppText>
             </TouchableOpacity>
 
@@ -109,7 +109,7 @@ export default function OnboardingBox({
               className="bg-brownColor-50 px-6 py-2 rounded-2xl mb-4 w-full items-center"
             >
               <AppText className="text-brownColor-400 tajawal-semibold-16">
-                {t("View as a Guest")}
+                {t("Onboard.view_guest")}
               </AppText>
             </TouchableOpacity>
           </View>
@@ -169,23 +169,23 @@ export default function OnboardingBox({
             <View className="bg-white w-11/12 rounded-2xl p-6">
 
               <AppText className="text-center mb-4 tajawal-semibold-18 text-brownColor-400">
-                Choose your business role
+                {t("Onboard.choose_business_role")}
               </AppText>
 
               <TouchableOpacity onPress={() => { closeBusinessModal(); navigateToLogin("photographer"); }} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-3 w-full items-center">
-                <AppText className="text-white tajawal-semibold-16">Photographer</AppText>
+                <AppText className="text-white tajawal-semibold-16">{t("Onboard.photographer")}</AppText>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => { closeBusinessModal(); navigateToLogin("stable"); }} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-3 w-full items-center">
-                <AppText className="text-white tajawal-semibold-16">Stable</AppText>
+                <AppText className="text-white tajawal-semibold-16">{t("Onboard.stable")}</AppText>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => { closeBusinessModal(); navigateToLogin("school"); }} className="bg-brownColor-400 px-6 py-2 rounded-2xl mb-3 w-full items-center">
-                <AppText className="text-white tajawal-semibold-16">School</AppText>
+                <AppText className="text-white tajawal-semibold-16">{t("Onboard.school")}</AppText>
               </TouchableOpacity>
 
               <Pressable onPress={closeBusinessModal} className="mt-2 items-center">
-                <AppText className="text-brownColor-400 tajawal-14 underline">Cancel</AppText>
+                <AppText className="text-brownColor-400 tajawal-14 underline">{t("Onboard.cancel")}</AppText>
               </Pressable>
             </View>
           </View>
