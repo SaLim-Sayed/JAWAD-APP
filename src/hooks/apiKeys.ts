@@ -4,6 +4,7 @@ export const apiKeys = {
       login: "/api/v1/auth/login",
       googleAuth: "/api/v1/auth/googleAuth",
       appleAuth: "/api/v1/auth/appleAuth",
+      getUserDetails:"/api/v1/user/details",
     },
     stable: {
       addStable: "/api/v1/stable/add",
@@ -41,5 +42,10 @@ export const apiKeys = {
       getPhotograoher:"/api/v1/photographer/get?page=1",
       completed:(id:string) => `/api/v1/photographer/completed/${id}`,
       getPhotographerDetails:(id:string) => `/api/v1/photographer/get/detail/${id}`,
+    },
+
+    booking:{
+      Photo_session:"/api/v1/booking/create",
+      event:"/api/v1/event/booking",
     },
   };

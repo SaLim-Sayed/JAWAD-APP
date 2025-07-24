@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, UseMutationOptions } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios'; // import AxiosError for typing
 import { API_URL } from './api';
 import { useLanguage } from '@/store';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -11,7 +11,7 @@ type ApiMutationProps<TInput, TResponse> = {
   method?: HttpMethod;
   config?: UseMutationOptions<TResponse, unknown, TInput>;
   isFormData?: boolean;
-  refetchKeys?: (string | unknown[])[]; // << هنا نضيف المفاتيح التي تريد عمل refetch لها
+  refetchKeys?: (string | unknown[])[];
 };
 
 export function useApiMutation<TInput = any, TResponse = any>({
@@ -23,9 +23,9 @@ export function useApiMutation<TInput = any, TResponse = any>({
 }: ApiMutationProps<TInput, TResponse>) {
   const { language } = useLanguage();
   const { authData } = useAuthStore();
-  const queryClient = useQueryClient(); // نستخدمه لإعادة الجلب
+  const queryClient = useQueryClient();
 
-  return useMutation<TResponse, Error, TInput>({
+  return useMutation<TResponse, AxiosError<any>, TInput>({
     mutationFn: async (body: TInput) => {
       const headers: Record<string, string> = {
         'accept-language': language,
@@ -40,10 +40,7 @@ export function useApiMutation<TInput = any, TResponse = any>({
         headers['authorization'] = `jawJQ${authData.token}`;
       }
 
-      const axiosConfig = {
-        headers,
-      };
-
+      const axiosConfig = { headers };
       const fullUrl = `${API_URL}${url}`;
       let response;
 
@@ -52,10 +49,7 @@ export function useApiMutation<TInput = any, TResponse = any>({
           response = await axios.put(fullUrl, body, axiosConfig);
           break;
         case 'delete':
-          response = await axios.delete(fullUrl, {
-            ...axiosConfig,
-            data: body,
-          });
+          response = await axios.delete(fullUrl, { ...axiosConfig, data: body });
           break;
         case 'post':
         default:
@@ -67,12 +61,29 @@ export function useApiMutation<TInput = any, TResponse = any>({
     },
 
     onSuccess: (data, variables, context) => {
-      // invalidate queries by refetchKeys
       refetchKeys.forEach((key: string | unknown[]) => {
         queryClient.invalidateQueries({ queryKey: key as readonly unknown[] });
       });
 
       config?.onSuccess?.(data, variables, context);
+    },
+
+    onError: (error: AxiosError<any>, variables, context) => {
+       let errorMessage = error.message;
+
+      if (error.response?.data) {
+         if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.message ) {
+          errorMessage = error.response.data.message as string;
+        } else {
+          errorMessage = JSON.stringify(error.response.data);
+        }
+      }
+
+      const enhancedError = new Error(errorMessage);
+      Object.assign(enhancedError, error);
+      config?.onError?.(enhancedError, variables, context);
     },
 
     ...config,

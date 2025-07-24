@@ -14,25 +14,29 @@ import { GetStableDetailsResponse } from "../@types/horse.types";
 import HorseSection from "../components/HorseSection";
 import StableDescription from "../components/StableDescription";
 import StableDetailsHeader from "../components/StableDetailsHeader";
-
+import AppLayout from "@/components/UI/AppLayout";
+import { useLanguage } from "@/store";
+import LocationCard from "@/components/UI/MapCard";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
+  
 
 
 const StableServicesDetails = () => {
   const { id } = useAppRouteParams("STABLE_SERVICES_DETAILS")
+  const { language } = useLanguage()
   const { data, isLoading } = useApiQuery<GetStableDetailsResponse>({
     key: ["stableDetails", id],
     url: apiKeys.stable.stableDetail(id),
   })
   console.log(id)
   // Header user info
- 
+
   const [search, setSearch] = useState("");
   const title = data?.stable.name.en;
   const { t } = useTranslation()
-  console.log({data})
+  console.log({ data })
   return (
-    <AppWrapper>
-      <AppHeader title={title} showBackButton />
+    <AppLayout isScrollable={false}  title={data?.stable?.name[language] ||""}>
       <View className="bg-white  h-full ">
         <ScrollView
           contentContainerStyle={{
@@ -59,14 +63,17 @@ const StableServicesDetails = () => {
             />
           </View>
 
-          <StableDetailsHeader />
+<LoaderBoundary isLoading={isLoading}>
+          <StableDetailsHeader StableDetails={data?.stable!} />
           <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
-          <StableDescription />
+          <LocationCard mapUrl={data?.stable.location} city={data?.stable.city[language]!} region={data?.stable.region[language]!} address={data?.stable.address[language]!} />
+
+          {/* <StableDescription /> */}
           <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
           <HorseSection stableId={id} />
           {/* The Best Stable Section */}
           {/* The Events Section */}
-
+          </LoaderBoundary>
           <AppButton
             title={t("Global.start_now")}
             onPress={() => { }}
@@ -80,7 +87,7 @@ const StableServicesDetails = () => {
           />
         </ScrollView>
       </View>
-    </AppWrapper>
+    </AppLayout>
   );
 };
 

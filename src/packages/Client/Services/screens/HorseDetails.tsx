@@ -13,11 +13,14 @@ import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import { useFocusEffect } from "@react-navigation/native";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { navigationEnums } from "@/provider/navigationEnums";
 
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS")
 
+  const {navigate}=useGlobalNavigation()
   const { data, isLoading, refetch, isFetching } = useApiQuery<GetHorseDetailResponse>({
     key: ["getHorseDetails", id],
     url: apiKeys.horse.horseDetails + id,
@@ -53,7 +56,7 @@ const HorseDetails = () => {
         <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
             title="Select"
-            onPress={() => { }}
+            onPress={() => {navigate(navigationEnums.EVENT_BOOKING,{id,type:"Photo_session"}) }}
             className="w-[90%]"
           />
           <AppButton

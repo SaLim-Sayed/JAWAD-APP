@@ -7,6 +7,7 @@ import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { GetStablesResponse } from "../@types/stable.type";
+import { useStableStore } from "@/store/useStableStore";
  
 interface Stable {
     id: number;
@@ -26,7 +27,12 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
         key: ["getStable"],
         url: apiKeys.stable.getStable+1,
     })
+    const {setStableId}=useStableStore()
     const { navigate } = useGlobalNavigation();
+    const handleNavigation=(id:string)=>{
+        setStableId(id)
+        navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: id })
+    }
         return (
         <>
             <View className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
@@ -43,11 +49,12 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
                 contentContainerStyle={{ paddingLeft: 16, paddingRight: 16, alignItems: "center", gap: 6 }}
                 renderItem={({ item }) => (
                     <StableCard
+                        id={item._id}
                         image={item.picUrl}
                         name={item.name.slice(0, 15)}
                         type={item.region}
                         rating={item.totalRating}
-                        onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
+                        onPressStart={()=>handleNavigation(item._id)}
                     />
                 )}
             />

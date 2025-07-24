@@ -19,10 +19,10 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
     <View style={styles.overlay} />
     <View style={styles.content}>
       <AppText className="text-white  tajawal-semibold-16  mb-1 ">{t("Global.welcome")} 🐎</AppText>
-      <AppText className="text-white tajawal-semibold-16 mb-1">{userName}</AppText>
+      <AppText className="text-white tajawal-semibold-16 capitalize mb-1">{userName}</AppText>
       <View className="bg-brownColor-300 flex-row items-center w-48 rounded-full p-2 my-2 gap-2">
         <Image source={Icons.locationTick} tint="white"   />
-        <AppText className="text-white tajawal-semibold-16">{location}</AppText>
+        <AppText className="text-white tajawal-semibold-16 capitalize">{location}</AppText>
       </View>
     </View>
     <View style={styles.icons}>

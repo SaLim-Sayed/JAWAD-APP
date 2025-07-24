@@ -1,143 +1,189 @@
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
- import AppText from '@/components/UI/AppText';
-import AppSelect from '@/components/UI/AppSelect';
 import AppButton from '@/components/UI/AppButton';
- import RadioGroup from '@/components/UI/RadioGroup';
-import Row from '@/components/UI/Row';
-import Col from '@/components/UI/Col';
-import { images } from '@/assets/images';
+import RadioGroup from '@/components/UI/RadioGroup';
+import { Icons } from '@/constants';
+import { useApiMutation, useApiQuery } from '@/hooks';
+import { apiKeys } from '@/hooks/apiKeys';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
+import { navigationEnums } from '@/provider/navigationEnums';
+import useAppRouteParams from '@/provider/useAppRouteParams';
+import useGlobalNavigation from '@/provider/useGlobalNavigation';
+import { useStableStore } from '@/store/useStableStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
+import { GetHorseDetailResponse } from '../../Services/@types/horse.types';
+import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
-import { Input } from '@/components';
 
-const nationalityOptions = [
-  { value: 'American', label: 'American', icon: images.en },
-  { value: 'Arabian', label: 'Arabian', icon: images.ar },
+const serviceOptions = [
+  { label: 'Photo session', value: 'Photo session' },
+  { label: 'Event', value: 'event' },
 ];
 
-const genderOptions = [
-  { label: 'Male', value: 'male' },
-  { label: 'Female', value: 'female' },
-  { label: 'Mixed', value: 'mixed' },
-];
+export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
+  const { id, type } = useAppRouteParams('EVENT_BOOKING');
+  const { data: horseDetails, } = useApiQuery<GetHorseDetailResponse>({
+    key: ["getHorseDetails", id],
+    url: apiKeys.horse.horseDetails + id,
+  });
 
-const typeOptions = [
-  { label: 'My', value: 'my' },
-  { label: 'Group', value: 'group' },
-];
+  const { navigate } = useGlobalNavigation()
+  const { data: eventDetails, isLoading } = useApiQuery<GetEventDetailsResponse>({
+    key: ["getEventDetails", id],
+    url: apiKeys.event.eventDetails + id,
+  })
+  const { mutate, isPending } = useApiMutation({
+    url: apiKeys.booking[type as "event" | "Photo_session"],
+  });
 
-export const GroupBooking = ({onNext}: {onNext: () => void}) => {
+
   const {
-    control,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
+    register,
   } = useForm<GroupBookingForm>({
+    //@ts-ignore
     resolver: zodResolver(groupBookingSchema),
     defaultValues: {
-      type: 'group',
-      riders: '5',
-      gender: 'mixed',
-      nationality: 'American',
-      promo: '',
+      date: new Date(),
+      startTime: new Date(),
+      endTime: new Date(),
+      service: "Photo session",
     },
   });
 
-  const type = watch('type');
-  const gender = watch('gender');
 
+
+
+  // Helpers for date/time picker visibility states
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
+  const { stableId } = useStableStore()
   const onSubmit = (data: GroupBookingForm) => {
-    console.log('✅ Booking Form:', data);
-    onNext()
-  };
+
+    const horsePayload = {
+      horses: [id],
+      date: data.date.toISOString().split('T')[0], // Format as "YYYY-MM-DD"
+      startTime: data.startTime.toTimeString().slice(0, 5), // Format as "HH:mm"
+      endTime: data.endTime.toTimeString().slice(0, 5),
+      totalPrice: Number(horseDetails?.horse?.price),
+      service: watch('service'),
+      stable: stableId,
+    };
+
+
+
+    mutate(horsePayload, {
+      onSuccess: () => {
+        showGlobalToast({ type: 'success', title: 'Booking created successfully' });
+        navigate(navigationEnums.EVENT_BOOKING_SUCCESS)
+      },
+      onError: (error: any) => {
+        if (error.response?.data) {
+          const serverMessage = error.response.data.message
+          showGlobalToast({ type: 'error', title: `Error: ${serverMessage}` });
+        } else {
+          showGlobalToast({ type: 'error', title: error.message || 'Unknown error' });
+        }
+      }
+
+
+
+
+    })
+  }
 
   return (
     <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
 
-      {/* Radio: My / Group */}
       <RadioGroup
-        options={typeOptions}
-        value={type}
-        onChange={(val:any) => setValue('type', val)}
-       />
-
-      {/* Riders & Gender */}
-      <Row justify='between' className="gap-4">
-        <Controller
-          control={control}
-          name="riders"
-          render={({ field: { onChange, value } }) => (
-            <Input
-              label="Number of riders"
-              name="riders"
-              control={control}
-              value={value}
-              onChangeText={onChange}
-              placeholder="0"
-              keyboardType="number-pad"
-              className="flex-1 w-[100%] bg-white border p-3 rounded-xl"
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="gender"
-          render={() => (
-            <AppSelect
-              label="Group Gender"
-              options={genderOptions}
-              value={gender}
-              buttonClassName='w-40'
-
-              onChange={(val:any) => setValue('gender', val)}
-              dropdownWidth={'40%'}
-             />
-          )}
-        />
-      </Row>
-
-      {/* Nationality */}
-      <Controller
-        control={control}
-        name="nationality"
-        render={() => (
-          <AppSelect
-            label="Nationality"
-            options={nationalityOptions}
-            value={watch('nationality')}
-            onChange={(val) => setValue('nationality', val)}
-            dropdownWidth={'85%'}
-          />
-        )}
+        options={serviceOptions}
+        value={watch('service')}
+        onChange={(value) => setValue('service', value)}
       />
 
-      {/* Promo Code */}
-      <Controller
-        control={control}
-        name="promo"
-        render={({ field: { value, onChange } }) => (
-          <Input
-            label="Add promocode"
-            name="promo"
-            control={control}
-            value={value}
-            onChangeText={onChange}
-            placeholder="Enter promo code"
-            className="bg-white border p-3 rounded-xl"
-          />
-        )}
-      />
 
-      {/* Submit */}
+
       <AppButton
-        title="Next"
-        onPress={handleSubmit(onSubmit)}
-        className="bg-brownColor-400 mt-4"
+        title={`Date: ${watch('date') ? watch('date').toISOString().split('T')[0] : 'Select Date'}`}
+        onPress={() => setShowDatePicker(true)}
+        variant='outline'
+        endIcon={<Icons.calendar />}
       />
+      {showDatePicker && (
+        <DateTimePicker
+          {...register('date')}
+          value={watch('date') ?? new Date()}
+          mode="date"
+          display="default"
+          onChange={(_, selectedDate) => {
+            setShowDatePicker(false);
+            if (selectedDate) {
+              setValue('date', selectedDate);
+            }
+          }}
+        />
+      )}
+
+      <AppButton
+        title={`Start Time: ${watch('startTime') ? watch('startTime').toTimeString().slice(0, 5) : 'Select Time'}`}
+        onPress={() => setShowStartTimePicker(true)}
+        variant='outline'
+        endIcon={<Icons.calendar />}
+      />
+      {showStartTimePicker && (
+        <DateTimePicker
+          {...register('startTime')}
+          value={watch('startTime') ?? new Date()}
+          mode="time"
+          display="default"
+          onChange={(_, selectedTime) => {
+            setShowStartTimePicker(false);
+            if (selectedTime) {
+              setValue('startTime', selectedTime);
+            }
+          }}
+        />
+      )}
+
+      <AppButton
+        title={`End Time: ${watch('endTime') ? watch('endTime').toTimeString().slice(0, 5) : 'Select Time'}`}
+        onPress={() => setShowEndTimePicker(true)}
+        variant='outline'
+        endIcon={<Icons.calendar />}
+      />
+      {showEndTimePicker && (
+        <DateTimePicker
+          {...register('endTime')}
+          value={watch('endTime') ?? new Date()}
+          mode="time"
+          display="default"
+          onChange={(_, selectedTime) => {
+            setShowEndTimePicker(false);
+            if (selectedTime) {
+              setValue('endTime', selectedTime);
+            }
+          }}
+        />
+      )}
+
+
+
+
+
+
+
+      <AppButton
+        disabled={isPending}
+        loading={isPending}
+        title="Next"
+        //@ts-ignore
+        onPress={handleSubmit(onSubmit)}
+       />
     </View>
   );
 };

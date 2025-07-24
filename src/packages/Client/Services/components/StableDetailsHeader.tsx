@@ -9,17 +9,20 @@ import { FlatList, View, Dimensions } from "react-native";
 import { bestStables, horseDate } from "../screens/mock";
 import Col from "@/components/UI/Col";
 import { Icons } from "@/constants";
+import { StableDetails } from "../@types/horse.types";
+import { useLanguage } from "@/store";
 
-const StableDetailsHeader = () => {
+const StableDetailsHeader = ({ StableDetails }: { StableDetails: StableDetails }) => {
     const { navigate } = useGlobalNavigation();
     const screenWidth = Dimensions.get("window").width;
+    const { language } = useLanguage()
     const itemSize = screenWidth / 4 - 16;
 
     return (
         <View  className="mb-4" >
-            <Image source={bestStables[0].image} className="w-full h-48" />
+            <Image source={StableDetails.picUrl} className="w-full h-48" />
 
-            <FlatList
+            {/* <FlatList
                 data={horseDate}
                 numColumns={4}
                 keyExtractor={(item) => item.id.toString()}
@@ -41,17 +44,17 @@ const StableDetailsHeader = () => {
                         }}
                     />
                 )}
-            />
+            /> */}
             <Row justify="between" items="start" className="px-4 w-full gap-4">
                 {/* الصف الأول */}
                 <Col justify="between" items="start" gap={6} className="w-full">
                     <Row gap={6} items="center" className="w-full">
                         <Image source={Icons.location} className="w-6 h-6" />
-                        <AppText className="text-brownColor-400 font-bold">Pyramids (Saqqara)</AppText>
+                        <AppText className="text-brownColor-400 font-bold">{StableDetails.city[language]}</AppText>
                     </Row>
                     <Row gap={6} items="center" className="w-full">
                         <Image source={Icons.camera} className="w-6 h-6" />
-                        <AppText className="text-brownColor-400 font-bold">Photo sessions</AppText>
+                        <AppText className="text-brownColor-400 font-bold">{StableDetails.sessionPercentage}</AppText>
                     </Row>
                 </Col>
 
@@ -59,11 +62,11 @@ const StableDetailsHeader = () => {
                 <Col justify="between" items="end" gap={6} className="w-full">
                     <Row gap={6} items="center" className="w-full">
                         <Image source={Icons.coin} className="w-6 h-6" />
-                        <AppText className="text-brownColor-400 font-bold">250 $ Per Person</AppText>
+                        <AppText className="text-brownColor-400 font-bold">{StableDetails.region[language]}</AppText>
                     </Row>
                     <Row gap={6} items="center" className="w-full">
                         <Image source={Icons.horse} className="w-6 h-6" />
-                        <AppText className="text-brownColor-400 font-bold">Free ride</AppText>
+                        <AppText className="text-brownColor-400 font-bold">{StableDetails.address[language]}</AppText>
                     </Row>
                 </Col>
             </Row>

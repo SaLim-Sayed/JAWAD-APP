@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Image from './Image';
 import { images } from '@/assets/images';
 import Col from './Col';
 import AppText from './AppText';
-
-const LocationCard = ({ city, region, address }: { city: string, region: string, address: string }) => {
+import { Linking } from 'react-native';
+const LocationCard = ({ city, region, address , mapUrl}: { city: string, region: string, address: string , mapUrl?: string}) => {
     // Sample static map image URI (in production, use a real map API)
-
+    const handlePress = () => {
+        if (mapUrl) {
+          Linking.openURL(mapUrl).catch(err => console.error("Failed to open map URL", err));
+        }
+      };
     return (
+        <TouchableOpacity onPress={handlePress}>
         <View className="bg-brownColor-50 flex-row justify-between items-center rounded-2xl m-2 p-4">
             {/* Header */}
             <Col className='w-1/2'>
@@ -30,6 +35,7 @@ const LocationCard = ({ city, region, address }: { city: string, region: string,
          
 
         </View>
+        </TouchableOpacity>
     );
 };
  

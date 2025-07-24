@@ -3,7 +3,7 @@ import AppHeader from "@/components/UI/AppHeader";
 import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
-import { useApiQuery } from "@/hooks";
+import { useApiMutation, useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
@@ -12,6 +12,8 @@ import React from "react";
 import { ScrollView, View } from "react-native";
 import { GetEventDetailsResponse } from "../../home/@types/event.type";
 import EventDescription from "../components/EventDescription";
+import { showGlobalToast } from "@/hooks/useGlobalToast";
+import { AxiosError } from "axios";
 
 
 
@@ -25,9 +27,30 @@ const EventDetails = () => {
     key: ["getEventDetails", id],
     url: apiKeys.event.eventDetails + id,
   })
+   const { mutate, isPending } = useApiMutation({
+      url: apiKeys.booking.event,
+    });
+  
+  
   const { navigate } = useGlobalNavigation()
   const title = data?.event?.name;
 
+  const handleBooking = () => {
+    mutate({
+      event: id,
+      totalPrice: Number(data?.event?.price),
+      service: "event"
+    }, {
+      onSuccess: () => {
+        navigate(navigationEnums.EVENT_BOOKING_SUCCESS)
+      },
+      onError: (error ) => {
+       
+           showGlobalToast({ type: 'error', title: `Error: " "` });
+       
+      }
+    })
+  }
 
   return (
     <AppWrapper>
@@ -52,8 +75,10 @@ const EventDetails = () => {
         </LoaderBoundary>
         <AppButton
           title="Get the ticket"
+          disabled={isPending}
+          loading={isPending}
           className="w-[90%] mx-auto"
-          onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id }) }}
+          onPress={handleBooking}
         />
       </View>
     </AppWrapper>

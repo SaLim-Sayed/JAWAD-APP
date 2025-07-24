@@ -11,6 +11,7 @@ import { isRTL } from "@/provider/constant";
 import { useTranslation } from "react-i18next";
 
 interface StableCardProps {
+    id: string;
     image: any;
     name: string;
     type: string;
@@ -19,6 +20,7 @@ interface StableCardProps {
 }
 
 const StableCard: React.FC<StableCardProps> = ({
+    id,
     image,
     name,
     type,

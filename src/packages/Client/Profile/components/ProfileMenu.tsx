@@ -7,9 +7,15 @@ import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import SettingsListItem from './SettingsListItem';
+import { useApiQuery } from '@/hooks';
+import { useLanguage } from '@/store';
+import { useAuthStore } from '@/store/useAuthStore';
+import { apiKeys } from '@/hooks/apiKeys';
+import { GetPhotographersResponse } from '../../Photo-session/@types/photography.types';
+import { GetStableDetailsResponse } from '../../Services/@types/horse.types';
 
 const user = {
-  avatar: 'https://randomuser.me/api/portraits/men/31.jpg', // Replace with real avatar or local asset
+  avatar: 'https://randomuser.me/api/portraits/men/50.jpg', // Replace with real avatar or local asset
   role: 'Knight',
   name: 'Alex Marshall',
 };
@@ -29,6 +35,35 @@ const menuItems = [
 
 const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { navigate } = useGlobalNavigation()
+  const { language } = useLanguage()
+    const { authData } = useAuthStore();
+   
+    const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+      url: apiKeys.photographer.getPhotograoher,
+      key: ["getPhotograoher"],
+    });
+  
+    const { data: userDetails, isLoading: userDetailsLoading } = useApiQuery({
+      url: apiKeys.auth.getUserDetails,
+      key: ["getUserDetails"],
+    });
+  
+    const { data: stableData, isLoading: stableLoading } = useApiQuery<GetStableDetailsResponse>({
+      url: apiKeys.stable.stableDetail(authData.id),
+      key: ["getPhotograoherDetails"],
+    });
+  
+    const isStable = authData.role === "stable";
+    const isPhotographer = authData.role === "photographer";
+    const isAuth = authData.role === "auth";
+  
+    const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : "Guest";
+    const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city||"Cairo" : "Cairo";
+  
+    const showStableSection = ["auth", "photographer"].includes(authData.role);
+    const showHorseSection = ["stable"].includes(authData.role);
+    const showEventsSection = ["auth", "photographer", "stable"].includes(authData.role);
+  
   const [visible, setVisible] = React.useState(false);
   const onCancel = () => setVisible(false);
   const onConfirm = () => {
@@ -36,7 +71,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     onLogout();
   };
   const menuItems = [
-    { key: 'profile', label: 'My Profile', icon: Icons.profile, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
+    { key: 'profile', label: 'My Profile', icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
     { key: 'cart', label: 'cart', icon: Icons.cartProfile, onPress: () => { } },
     { key: 'history', label: 'Booking History', icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
     { key: 'contact', label: 'Contact us', icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
@@ -55,12 +90,12 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         {/* Profile Header */}
         <View className="items-end -mt-20 flex-row pt-6 ">
           <Image
-            source={user.avatar}
+            source={isStable ? stableData?.stable.picUrl : isPhotographer ? data?.photographers[0].picUrls[0] : isAuth ? userDetails?.details?.picUrl ||user.avatar : user.avatar}
             className="w-24 h-24 rounded-full"
           />
           <AppText className="pt-4 text-lg">
-            <AppText className="text-brownColor-400 font-bold">{user.role}</AppText>
-            <AppText className="text-black font-bold"> / {user.name}</AppText>
+            <AppText className="text-brownColor-400 font-bold">{authData.role}</AppText>
+            <AppText className="text-black font-bold"> / {userName}</AppText>
           </AppText>
         </View>
         <View className="gap-0">

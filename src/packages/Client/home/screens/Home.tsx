@@ -20,13 +20,18 @@ import QuoteCard from "../components/QuoteCard";
 
 const HomeScreen = () => {
   const { navigate } = useGlobalNavigation();
-const {language}=useLanguage()
+  const { language } = useLanguage()
   const { authData } = useAuthStore();
   const [search, setSearch] = useState("");
 
-   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotograoher"],
+  });
+
+  const { data: userDetails, isLoading: userDetailsLoading } = useApiQuery({
+    url: apiKeys.auth.getUserDetails,
+    key: ["getUserDetails"],
   });
 
   const { data: stableData, isLoading: stableLoading } = useApiQuery<GetStableDetailsResponse>({
@@ -34,19 +39,23 @@ const {language}=useLanguage()
     key: ["getPhotograoherDetails"],
   });
 
+  const isStable = authData.role === "stable";
+  const isPhotographer = authData.role === "photographer";
+  const isAuth = authData.role === "auth";
 
-  const userName = authData.role === "stable" ? stableData?.stable.name[language] : authData.role==="photographer"?data?.photographers.find((photographer) => photographer._id === authData.id)?.name:"Guest" ;
-  const location = authData.role === "stable" ? stableData?.stable.city[language] : authData.role==="photographer"? data?.photographers.find((photographer) => photographer._id === authData.id)?.city :"Cairo";
+  const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : "Guest";
+  const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city||"Cairo" : "Cairo";
 
   const showStableSection = ["auth", "photographer"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
   const showEventsSection = ["auth", "photographer", "stable"].includes(authData.role);
 
+  const loading = stableLoading || userDetailsLoading||isLoading;
   return (
     <AppWrapper>
-      <HomeHeader userName={userName||""} location={location||""} />
+      <HomeHeader userName={userName || ""} location={location || ""} />
       <View className="bg-white flex-1 rounded-t-3xl -mt-6 pt-6  ">
-        <LoaderBoundary isLoading={isLoading}>
+        <LoaderBoundary isLoading={loading}>
           <ScrollView
             contentContainerStyle={{
               paddingBottom: 220,
@@ -54,7 +63,7 @@ const {language}=useLanguage()
             }}
           >
 
-             <View className="px-4">
+            <View className="px-4">
               <SearchInput value={search} onChange={setSearch} />
               <QuoteCard />
             </View>
@@ -65,8 +74,8 @@ const {language}=useLanguage()
 
 
 
-            <FlatList
-              data={data?.photographers}
+            {/* <FlatList
+               data={data?.photographers}
               style={{ marginTop: 20 }}
               renderItem={({ item }) => (
                 <PhotographyCard
@@ -80,11 +89,11 @@ const {language}=useLanguage()
               )}
               keyExtractor={(item) => item._id.toString()}
               ListFooterComponent={<View className="h-44" />}
-            />
+            /> */}
           </ScrollView>
         </LoaderBoundary>
       </View>
-     </AppWrapper>
+    </AppWrapper>
   );
 };
 

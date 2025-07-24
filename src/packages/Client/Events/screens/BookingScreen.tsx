@@ -1,27 +1,22 @@
+import AppHeader from "@/components/UI/AppHeader";
+import AppWrapper from "@/components/UI/AppWrapper";
 import { Stepper } from "@/components/UI/Stepper";
 import { Icons } from "@/constants";
 import React, { useState } from "react";
-import Events from "./Events";
-import ServicesScreen from "../../Services/screens/ServicesScreen";
-import RidesScreen from "../../Services/screens/RidesScreen";
-import UserInfo from "../components/UserInfo";
-import useAppRouteParams from "@/provider/useAppRouteParams";
-import AppWrapper from "@/components/UI/AppWrapper";
-import AppHeader from "@/components/UI/AppHeader";
-import GroupBookingSummary from "../components/GroupBookingSummary";
-import { FormProvider } from "react-hook-form";
 import { View } from "react-native";
 import BookingPayment from "../components/BookingPayment";
+import GroupBookingSummary from "../components/GroupBookingSummary";
+import UserInfo from "../components/UserInfo";
 
 export default function BookingScreen() {
 
-  const { id } = useAppRouteParams("EVENT_BOOKING")
+ 
   const steps = [
-   
+
     {
       id: "events",
       icon: Icons.camera,
-      component: <UserInfo onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }}  />,
+      component: <UserInfo onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />,
 
     },
     {
@@ -40,8 +35,8 @@ export default function BookingScreen() {
   return (
     <AppWrapper>
       <View className="w-full bg-white flex-1 ">
-      <AppHeader title="Booking" showBackButton />
-      <Stepper steps={steps} setCurrentStepIndex={setCurrentStepIndex} currentStepIndex={currentStepIndex} />
+        <AppHeader title="Booking" showBackButton />
+        <Stepper steps={steps} setCurrentStepIndex={setCurrentStepIndex} currentStepIndex={currentStepIndex} />
       </View>
     </AppWrapper>
   );

@@ -52,7 +52,7 @@
   //EVENTs
   EVENTS: "events",
   EVENT_DETAILS: "event/details/:id",
-  EVENT_BOOKING: "event/booking/:id",
+  EVENT_BOOKING: "event/booking/:id?:type",
   EVENT_BOOKING_SUCCESS: "event/booking-success",
 
 

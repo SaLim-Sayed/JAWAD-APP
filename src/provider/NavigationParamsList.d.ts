@@ -55,7 +55,7 @@ export type NavigationParamsList = {
   //EVENTs
   [navigationEnums.EVENTS]: undefined;
   [navigationEnums.EVENT_DETAILS]: { id: any };
-  [navigationEnums.EVENT_BOOKING]: { id: any };
+  [navigationEnums.EVENT_BOOKING]: { id: any , type?: "event" | "Photo_session" };
   [navigationEnums.EVENT_BOOKING_SUCCESS]: undefined;
 
   //PROFILE
