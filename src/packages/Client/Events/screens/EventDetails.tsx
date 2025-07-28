@@ -44,9 +44,10 @@ const EventDetails = () => {
       onSuccess: () => {
         navigate(navigationEnums.EVENT_BOOKING_SUCCESS)
       },
-      onError: (error ) => {
+      onError: (error: AxiosError<any>) => {
        
-           showGlobalToast({ type: 'error', title: `Error: " "` });
+          const serverMessage = error?.response?.data?.message
+          showGlobalToast({ type: 'error', title: `Error: "${serverMessage}"` });
        
       }
     })

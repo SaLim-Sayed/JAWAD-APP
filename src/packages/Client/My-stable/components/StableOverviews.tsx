@@ -131,7 +131,7 @@ const StableOverviews = () => {
         formData.append("enAddress", data.enAddress);
         formData.append("sessionPercentage", data.sessionPercentage?.toString());
         if (logo) {
-            formData.append("logo", {
+            formData.append("image", {
                 uri: logo,
                 name: "logo.jpg",
                 type: "image/jpeg",
