@@ -6,6 +6,7 @@ import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
+import { Photographer } from "../../Photo-session/@types/photography.types";
 
 interface Stable {
     id: number;
@@ -15,7 +16,7 @@ interface Stable {
 }
 
 interface PhotoSessionListProps {
-    photoSessions: Stable[];
+    photoSessions:Photographer[];
     onSeeAll?: () => void;
 }
 
@@ -34,17 +35,17 @@ const PhotoSessionList: React.FC<PhotoSessionListProps> = ({ photoSessions, onSe
                 numColumns={2}
                 data={photoSessions}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item._id.toString()}
                 columnWrapperStyle={{ gap: 6 }}
                 contentContainerStyle={{
                     alignItems: "center", gap: 20, paddingBottom: 220,
                 }}
                 renderItem={({ item }) => (
                     <PhotoSessionCard
-                        image={item.image}
+                        image={item.picUrls[0]}
                         name={item.name}
-                        rating={item.rating}
-                        onPressStart={() => { navigate(navigationEnums.PHOTO_SESSION_DETAILS, { id: item.id }) }}
+                        rating={item.totalRating}
+                        onPressStart={() => { navigate(navigationEnums.PHOTO_SESSION_DETAILS, { id: item._id }) }}
                     />
                 )}
             />

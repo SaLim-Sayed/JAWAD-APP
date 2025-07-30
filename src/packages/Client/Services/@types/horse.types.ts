@@ -5,6 +5,7 @@ export interface Horse {
     type: string;
     level: string;
     picUrls: string[];
+    stable:string
   }
   export interface HorseDetail {
     _id: string;
@@ -18,6 +19,7 @@ export interface Horse {
     color: string;
     picUrls: string[];
     __v: number;
+    stable:string
   }
   
   export interface GetHorseDetailResponse {

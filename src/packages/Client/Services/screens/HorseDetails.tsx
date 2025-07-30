@@ -1,21 +1,20 @@
 import AppButton from "@/components/UI/AppButton";
 import AppLayout from "@/components/UI/AppLayout";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
+import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { useHorseStore } from "@/store/useHorseStore";
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import { ActivityIndicator, ScrollView, View, Text, Alert } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { GetHorseDetailResponse } from "../@types/horse.types";
-import ServiceHeadr from "../components/HomeHeader";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
-import LoaderBoundary from "@/components/UI/LoaderBoundary";
-import { useFocusEffect } from "@react-navigation/native";
-import useGlobalNavigation from "@/provider/useGlobalNavigation";
-import { navigationEnums } from "@/provider/navigationEnums";
-import { useHorseStore } from "@/store/useHorseStore";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
@@ -92,14 +91,14 @@ const HorseDetails = () => {
         
         <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
-            title={isInCart ? "Added to Cart" : "Select"}
+            title={ "Select"}
             onPress={handleSelectHorse}
-            className="w-[90%]"
-            variant={isInCart ? "solid" : "outline"}
+            className="w-[80%]"
+            variant="solid"
           />
           <AppButton
-            title={isStored ? "Stored" : "Store"}
-            variant="outline"
+            title={isStored ? "Stored" :"Added to Cart" }
+            variant={isStored ? "solid" : "outline"}
             onPress={handleStoreHorse}
             className="w-[80%]"
             endIcon={<Icons.cardTick />}

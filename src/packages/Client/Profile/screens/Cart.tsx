@@ -24,46 +24,46 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item, onUpdateQuantity, onR
   return (
     <TouchableOpacity onPress={onPress} className="bg-white rounded-lg p-4 mb-4 shadow-sm border border-gray-100">
       <View className="flex-row">
-        <Image 
-          source={{ uri: horseImage }} 
+        <Image
+          source={{ uri: horseImage }}
           className="w-20 h-20 rounded-lg"
           defaultSource={images.horseImg}
         />
-        
+
         <View className="flex-1 ml-4">
           <Text className="text-lg font-semibold text-gray-800">{horseName}</Text>
           <Text className="text-sm text-gray-500 mt-1">{item.type}</Text>
-          
+
           {item.sessionDate && (
             <Text className="text-sm text-gray-600 mt-1">Date: {item.sessionDate}</Text>
           )}
-          
+
           {item.sessionTime && (
             <Text className="text-sm text-gray-600">Time: {item.sessionTime}</Text>
           )}
-          
+
           <Text className="text-lg font-bold text-primary mt-2">${item.horse.price}</Text>
         </View>
-        
+
         <View className="items-end justify-between">
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => onRemove(item.horse._id, item.type)}
             className="p-2"
           >
             <Icons.trash className="w-5 h-5 text-red-500" />
           </TouchableOpacity>
-          
+
           <View className="flex-row items-center bg-gray-100 rounded-lg">
-            <TouchableOpacity 
+            <TouchableOpacity
               onPress={() => onUpdateQuantity(item.horse._id, item.type, item.quantity - 1)}
               className="p-2 px-3"
             >
               <Text className="text-lg font-bold text-gray-600">-</Text>
             </TouchableOpacity>
-            
+
             <Text className="px-4 py-2 font-semibold">{item.quantity}</Text>
-            
-            <TouchableOpacity 
+
+            <TouchableOpacity
               onPress={() => onUpdateQuantity(item.horse._id, item.type, item.quantity + 1)}
               className="p-2 px-3"
             >
@@ -78,13 +78,13 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item, onUpdateQuantity, onR
 
 export default function Cart() {
   const { navigate } = useGlobalNavigation();
-  const { 
-    cartItems, 
-    updateCartItemQuantity, 
-    removeFromCart, 
-    clearCart, 
+  const {
+    cartItems,
+    updateCartItemQuantity,
+    removeFromCart,
+    clearCart,
     getCartTotal,
-    getCartItemsCount 
+    getCartItemsCount
   } = useHorseStore();
 
   const handleUpdateQuantity = (horseId: string, type: string, quantity: number) => {
@@ -97,8 +97,8 @@ export default function Cart() {
       'Are you sure you want to remove this item from your cart?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Remove', 
+        {
+          text: 'Remove',
           style: 'destructive',
           onPress: () => removeFromCart(horseId, type)
         }
@@ -112,8 +112,8 @@ export default function Cart() {
       'Are you sure you want to remove all items from your cart?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Clear All', 
+        {
+          text: 'Clear All',
           style: 'destructive',
           onPress: () => clearCart()
         }
@@ -126,9 +126,9 @@ export default function Cart() {
       Alert.alert('Empty Cart', 'Please add some items to your cart first.');
       return;
     }
-    
+
     // Navigate to checkout or booking confirmation
-    navigate(navigationEnums.EVENT_BOOKING, { cartItems });
+    navigate(navigationEnums.EVENT_BOOKING, { type:"Rids",id:cartItems[0].horse._id });
   };
 
   const handleItemPress = (item: any) => {
@@ -161,12 +161,12 @@ export default function Cart() {
 
   return (
     <AppWrapper>
-      <AppHeader 
-        title={`Cart (${totalItems})`} 
-        showBackButton 
-       
+      <AppHeader
+        title={`Cart (${totalItems})`}
+        showBackButton
+
       />
-      
+
       <View className="flex-1 px-5 pt-4">
         <FlatList
           data={cartItems}
@@ -192,11 +192,11 @@ export default function Cart() {
             <Text className="text-2xl font-bold text-gray-800">${totalAmount.toFixed(2)}</Text>
           </View>
         </View>
-        
+
         <AppButton
           title="Proceed to Checkout"
           onPress={handleCheckout}
-          className="w-full"
+          className="w-full mb-4"
         />
       </View>
     </AppWrapper>

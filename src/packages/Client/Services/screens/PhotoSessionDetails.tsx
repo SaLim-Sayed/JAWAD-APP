@@ -8,13 +8,22 @@ import ServiceHeadr from "../components/HomeHeader";
 import PhotoSessionHeader from "../components/PhotoSessionHeader";
 import { photoSessionData } from "./mock";
 import { useTranslation } from "react-i18next";
-// Dummy data for best stables/events
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
+ // Dummy data for best stables/events
 
 
 
 const PhotoSessionDetails = () => {
   const { id } = useAppRouteParams("PHOTO_SESSION_DETAILS")
+    const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+      url: apiKeys.photographer.getPhotograoher,
+      key: ["getPhotograoher"],
+    });
   const { t } = useTranslation()
+  console.log(data)
+  const photographer=data?.photographers.find((photographer)=>photographer._id===id)
   console.log(id)
   // Header user info
   const userName = "George Mikhaiel";
@@ -34,7 +43,7 @@ const PhotoSessionDetails = () => {
           }}
         >
         
-          <PhotoSessionHeader />
+          <PhotoSessionHeader photographer={photographer!} />
           <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
 
 

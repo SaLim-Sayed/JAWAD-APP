@@ -1,6 +1,5 @@
-import { Input } from '@/components';
+
 import AppButton from '@/components/UI/AppButton';
-import AppHeader from '@/components/UI/AppHeader';
 import RadioGroup from '@/components/UI/RadioGroup';
 import { Icons } from '@/constants';
 import { useApiMutation, useApiQuery } from '@/hooks';
@@ -14,12 +13,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import { View, Modal, StyleSheet, SafeAreaView, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { GetHorseDetailResponse } from '../../Services/@types/horse.types';
 import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
-import { useHorseStore } from '@/store/useHorseStore';
+import AppHeader from '@/components/UI/AppHeader';
+import { Input } from '@/components';
 
 const serviceOptions = [
   { label: 'Photo session', value: 'Photo session' },
@@ -27,57 +27,44 @@ const serviceOptions = [
 ];
 
 export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
-  const [payId, setPayId] = useState("")
   const { id, type } = useAppRouteParams('EVENT_BOOKING');
+  const { navigate } = useGlobalNavigation();
+  const { stableId } = useStableStore();
+
+  // API queries
   const { data: horseDetails } = useApiQuery<GetHorseDetailResponse>({
     key: ["getHorseDetails", id],
     url: apiKeys.horse.horseDetails + id,
   });
 
-    const {
-      cartItems,
-      updateCartItemQuantity,
-      removeFromCart,
-      clearCart,
-      getCartTotal,
-      getCartItemsCount
-    } = useHorseStore();
-    const totalAmount = getCartTotal();
-
-    const horsesId=cartItems.map((item)=>item.horse._id)
-  const { navigate } = useGlobalNavigation();
   const { data: eventDetails, isLoading } = useApiQuery<GetEventDetailsResponse>({
     key: ["getEventDetails", id],
     url: apiKeys.event.eventDetails + id,
   });
 
-  const parseUrlParams = (url: string) => {
-    const params: { [key: string]: string } = {};
-    const queryString = url.split('?')[1];
-
-    if (!queryString) return params;
-
-    queryString.split('&').forEach(pair => {
-      const [key, value] = pair.split('=');
-      if (key && value) {
-        params[key] = decodeURIComponent(value);
-      }
-    });
-
-    return params;
-  };
-
   // State for payment WebView
   const [showPaymentWebView, setShowPaymentWebView] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState('');
+  const [currentWebViewUrl, setCurrentWebViewUrl] = useState('');
+  const [merchantRefNumber, setMerchantRefNumber] = useState('');
+  const [bookingFormData, setBookingFormData] = useState<GroupBookingForm | null>(null);
+  const [isWebViewLoading, setIsWebViewLoading] = useState(true);
 
+  // Date/time picker visibility states
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
+
+  // API mutations
   const { mutate, isPending } = useApiMutation({
     url: apiKeys.booking.payment,
   });
-  const { mutate: createBooking, isPending: createBookingPending } = useApiMutation({
-    url: type === "event" ?apiKeys.booking.event: apiKeys.booking.Photo_session,
+
+  const { mutate: createBooking, isPending: isBookingPending } = useApiMutation({
+    url: apiKeys.booking.Photo_session,
   });
 
+  // Form setup
   const {
     handleSubmit,
     watch,
@@ -92,66 +79,94 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
       date: new Date(),
       startTime: new Date(),
       endTime: new Date(),
-      service: type,
+      service: "Photo session",
     },
   });
 
-  // Helpers for date/time picker visibility states
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
-  const [showEndTimePicker, setShowEndTimePicker] = useState(false);
-  const { stableId } = useStableStore();
-  console.log("payId", payId)
-  
-  const onSubmit = (data: GroupBookingForm) => {
-    const paymentData = {
-      customerProfileId: "1212",
-      customerMobile: data.customerMobile,
-      totalPrice: type === "Photo_session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
-      chargeItems: [
-        {
-          itemId: '6b5fdea340e31b3b0339d4d4ae5',
-          description: "Booking",
-          price: type === "Photo_session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
-          quantity: 1,
-          imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
-        }
-      ],
+  // Create booking after successful payment
+  const createBookingAfterPayment = (merchantRefNumber: string) => {
+    if (!bookingFormData) {
+      console.error('No booking form data available');
+      showGlobalToast({
+        type: 'error',
+        title: 'Booking data not found'
+      });
+      return;
+    }
+
+    const bookingPayload = {
+      horses: [id],
+      date: bookingFormData.date.toISOString().split('T')[0],
+      startTime: bookingFormData.startTime.toTimeString().slice(0, 5),
+      endTime: bookingFormData.endTime.toTimeString().slice(0, 5),
+      totalPrice: Number(horseDetails?.horse?.price || 500),
+      service: bookingFormData.service,
+      stable: stableId,
+      paymentReference: merchantRefNumber,
+      customerMobile: bookingFormData.customerMobile,
+      description: bookingFormData.description,
     };
 
-    mutate(paymentData, {
-      onSuccess: (response: any) => {
-        if (response?.url) {
-          const url = response.url;
-          setPaymentUrl(response.url);
-          setShowPaymentWebView(true);
+    console.log('Creating booking with payload:', bookingPayload);
 
-        } else {
-          showGlobalToast({ type: 'success', title: 'Booking created successfully' });
-          navigate(navigationEnums.EVENT_BOOKING_SUCCESS);
-        }
+    createBooking(bookingPayload, {
+      onSuccess: (response: any) => {
+        console.log('Booking created successfully:', response);
+        showGlobalToast({
+          type: 'success',
+          title: 'Booking Confirmed!',
+          body: `Booking ID: ${response.bookingId || merchantRefNumber}`
+        });
+
+       
       },
       onError: (error: any) => {
-        if (error.response?.data) {
-          const serverMessage = error.response.data.message;
-          showGlobalToast({ type: 'error', title: `Error: ${serverMessage}` });
-        } else {
-          showGlobalToast({ type: 'error', title: error.message || 'Unknown error' });
-        }
+        console.error('Booking creation failed:', error);
+        const errorMessage = error.response?.data?.message || error.message || 'Failed to create booking';
+        showGlobalToast({
+          type: 'error',
+          title: 'Booking Failed',
+          body: errorMessage
+        });
       }
     });
   };
-
+  const parseUrlParams = (url: string) => {
+    const params: { [key: string]: string } = {};
+    const queryString = url.split('?')[1];
+    
+    if (!queryString) return params;
+    
+    queryString.split('&').forEach(pair => {
+      const [key, value] = pair.split('=');
+      if (key && value) {
+        params[key] = decodeURIComponent(value);
+      }
+    });
+    
+    return params;
+  };
+  // Handle WebView navigation state changes
   const handleWebViewNavigationStateChange = (navState: any) => {
     const { url } = navState;
 
+    // Save the current URL in state and log it
+    setCurrentWebViewUrl(url);
+    console.log('WebView URL changed to:', url);
+
     // Check if this is a payment callback URL
     if (url.includes('/payment/callback')) {
+      console.log('Payment callback detected:', url);
 
       try {
+        // Parse the URL and extract parameters
+        const urlObj = new URL(url);
         const params = parseUrlParams(url);
-        setPayId(params.merchantRefNumber)
-        console.log("salim", params.merchantRefNumber)
+        console.log("salim",params)
+        const merchantRefNumber = params.merchantRefNumber;
+
+        console.log("salim",merchantRefNumber)
+        // Extract all relevant parameters
         const paymentData = {
           type: params.type,
           referenceNumber: params.referenceNumber,
@@ -164,55 +179,39 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           statusDescription: params.statusDescription,
         };
 
+        console.log('Payment Data:', paymentData);
 
+        // Check if payment was successful
         if (paymentData.orderStatus === 'PAID' && paymentData.statusCode === '200') {
           const merchantRef = paymentData.merchantRefNumber;
 
           if (merchantRef) {
-            const horsePayload = {
-              horses:type === "Photo_session" ? [id]:horsesId,
-              date: watch('date').toISOString().split('T')[0],
-              startTime: watch('startTime').toTimeString().slice(0, 5),
-              endTime: watch('endTime').toTimeString().slice(0, 5),
-              totalPrice: type === "Photo_session" ? Number(horseDetails?.horse?.price):totalAmount,
-              service: type,
-              stable: type === "Photo_session" ? stableId:cartItems[0].horse.stable,
-              payId: merchantRef
-            };
-            const eventPayload={
-              event: id,
-              totalPrice: Number(eventDetails?.event?.price),
-              service: "event",
-              payId: merchantRef
-            }
+            console.log('Payment Success! Merchant Ref Number:', merchantRef);
+            setMerchantRefNumber(merchantRef);
 
-            createBooking(type === "event" ? eventPayload:horsePayload, {
-              onSuccess: () => {
-                setShowPaymentWebView(false);
-                showGlobalToast({
-                  type: 'success',
-                  title: 'Booking Confirmed',
-                });
-                navigate(navigationEnums.EVENT_BOOKING_SUCCESS);
-              },
-              onError: () => {
-                setShowPaymentWebView(false);
-                showGlobalToast({
-                  type: 'error',
-                  title: 'Failed to create booking',
-                });
-              }
+            // Close WebView
+            setShowPaymentWebView(false);
+
+            // Show success message
+            showGlobalToast({
+              type: 'success',
+              title: 'Payment Successful',
+              body: `Reference: ${merchantRef}`
             });
+
+            // Create the booking with merchant reference
+            createBookingAfterPayment(merchantRef);
           } else {
             console.error('No merchant reference number found');
             setShowPaymentWebView(false);
             showGlobalToast({
               type: 'error',
-              title: 'Payment succeeded but no reference',
+              title: 'Payment completed but reference missing'
             });
           }
-        }
-        else if (paymentData.orderStatus === 'FAILED' || paymentData.orderStatus === 'CANCELLED') {
+        } else if (paymentData.orderStatus === 'FAILED' || paymentData.orderStatus === 'CANCELLED') {
+          // Payment failed
+          console.log('Payment failed:', paymentData.statusDescription);
           setShowPaymentWebView(false);
           showGlobalToast({
             type: 'error',
@@ -222,18 +221,81 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         }
       } catch (error) {
         console.error('Error parsing payment callback URL:', error);
+        // Don't close WebView on parsing errors - might be a different URL
       }
     }
   };
+
+  // Handle form submission
+  const onSubmit = (data: GroupBookingForm) => {
+    // Store form data for later use after payment
+    setBookingFormData(data);
+
+    const paymentData = {
+      customerProfileId: "1212",
+      customerMobile: data.customerMobile,
+      totalPrice: 500,
+      chargeItems: [
+        {
+          itemId: '6b5fdea340e31b3b0339d4d4ae5',
+          description: data.description,
+          price: 500,
+          quantity: 1,
+          imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
+        }
+      ],
+    };
+
+    console.log('Initiating payment with data:', paymentData);
+
+    mutate(paymentData, {
+      onSuccess: (response: any) => {
+        console.log('Payment API response:', response);
+        if (response?.url) {
+          setPaymentUrl(response.url);
+          setShowPaymentWebView(true);
+          setIsWebViewLoading(true);
+        } else {
+          console.error('No payment URL in response');
+          showGlobalToast({
+            type: 'error',
+            title: 'Failed to get payment URL'
+          });
+        }
+      },
+      onError: (error: any) => {
+        console.error('Payment API error:', error);
+        const errorMessage = error.response?.data?.message || error.message || 'Payment initiation failed';
+        showGlobalToast({
+          type: 'error',
+          title: 'Payment Error',
+          body: errorMessage
+        });
+      }
+    });
+  };
+
+  // Handle WebView close
   const handleCloseWebView = () => {
+    console.log('WebView closed. Last URL was:', currentWebViewUrl);
     setShowPaymentWebView(false);
+    setCurrentWebViewUrl('');
+    setIsWebViewLoading(true);
     showGlobalToast({ type: 'info', title: 'Payment process cancelled' });
   };
+
+   
+
+
 
   return (
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
-        
+        <RadioGroup
+          options={serviceOptions}
+          value={watch('service')}
+          onChange={(value) => setValue('service', value)}
+        />
 
         <Input
           control={control}
@@ -243,7 +305,14 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           error={errors.customerMobile?.message}
         />
 
-    
+        <Input
+          control={control}
+          label="Description"
+          placeholder="Enter description"
+          {...register('description')}
+          error={errors.description?.message}
+        />
+
         <AppButton
           title={`Date: ${watch('date') ? watch('date').toISOString().split('T')[0] : 'Select Date'}`}
           onPress={() => setShowDatePicker(true)}
@@ -314,6 +383,18 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           //@ts-ignore
           onPress={handleSubmit(onSubmit)}
         />
+
+        {/* NEW: Display current WebView URL and merchantRefNumber for debugging */}
+        {currentWebViewUrl && (
+          <Text style={{ fontSize: 12, color: '#666', marginTop: 10 }}>
+            Current WebView URL: {currentWebViewUrl}
+          </Text>
+        )}
+        {merchantRefNumber && (
+          <Text style={{ fontSize: 12, color: '#008000', marginTop: 5 }}>
+            Merchant Ref Number: {merchantRefNumber}
+          </Text>
+        )}
       </View>
 
       {/* Payment WebView Modal */}
@@ -340,6 +421,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
               mixedContentMode="compatibility"
               thirdPartyCookiesEnabled={true}
               sharedCookiesEnabled={true}
+              setDisplayZoomControls
               onError={(syntheticEvent) => {
                 const { nativeEvent } = syntheticEvent;
                 console.error('WebView error:', nativeEvent);

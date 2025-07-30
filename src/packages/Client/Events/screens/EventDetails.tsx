@@ -21,17 +21,21 @@ import { AxiosError } from "axios";
 const EventDetails = () => {
   const { id } = useAppRouteParams("EVENT_DETAILS")
   console.log(id)
+  const handleSelectEvent = () => {
 
+    navigate(navigationEnums.EVENT_BOOKING, { id, type: "event" });
+
+  };
   console.log(apiKeys.event.eventDetails + id)
   const { data, isLoading } = useApiQuery<GetEventDetailsResponse>({
     key: ["getEventDetails", id],
     url: apiKeys.event.eventDetails + id,
   })
-   const { mutate, isPending } = useApiMutation({
-      url: apiKeys.booking.event,
-    });
-  
-  
+  const { mutate, isPending } = useApiMutation({
+    url: apiKeys.booking.event,
+  });
+
+
   const { navigate } = useGlobalNavigation()
   const title = data?.event?.name;
 
@@ -45,10 +49,10 @@ const EventDetails = () => {
         navigate(navigationEnums.EVENT_BOOKING_SUCCESS)
       },
       onError: (error: AxiosError<any>) => {
-       
-          const serverMessage = error?.response?.data?.message
-          showGlobalToast({ type: 'error', title: `Error: "${serverMessage}"` });
-       
+
+        const serverMessage = error?.response?.data?.message
+        showGlobalToast({ type: 'error', title: `Error: "${serverMessage}"` });
+
       }
     })
   }
@@ -79,7 +83,7 @@ const EventDetails = () => {
           disabled={isPending}
           loading={isPending}
           className="w-[90%] mx-auto"
-          onPress={handleBooking}
+          onPress={handleSelectEvent}
         />
       </View>
     </AppWrapper>

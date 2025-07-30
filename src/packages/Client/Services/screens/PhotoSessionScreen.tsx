@@ -10,10 +10,17 @@ import { Icons } from "@/constants";
 import AppButton from "@/components/UI/AppButton";
 import { bestStables, photoSessionData } from "./mock";
 import PhotoSessionList from "../components/PhotoSessionList";
-
- 
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
+  
 
 const PhotoSessionScreen = () => {
+  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+      url: apiKeys.photographer.getPhotograoher,
+      key: ["getPhotograoher"],
+    });
+  
   // Header user info
   const userName = "George Mikhaiel";
    const [search, setSearch] = useState("");
@@ -40,7 +47,7 @@ const PhotoSessionScreen = () => {
           </View>
 
           {/* The Best Stable Section */}
-          <PhotoSessionList photoSessions={photoSessionData} />
+          <PhotoSessionList photoSessions={data?.photographers!} />
           {/* The Events Section */}
        </View>
     </AppWrapper>

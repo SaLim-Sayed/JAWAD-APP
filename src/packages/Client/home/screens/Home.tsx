@@ -74,7 +74,7 @@ const HomeScreen = () => {
 
 
 
-            {/* <FlatList
+            <FlatList
                data={data?.photographers}
               style={{ marginTop: 20 }}
               renderItem={({ item }) => (
@@ -89,7 +89,7 @@ const HomeScreen = () => {
               )}
               keyExtractor={(item) => item._id.toString()}
               ListFooterComponent={<View className="h-44" />}
-            /> */}
+            />
           </ScrollView>
         </LoaderBoundary>
       </View>

@@ -37,7 +37,6 @@ export const apiKeys = {
     },
     photographer: {
       addPhotographer: "/api/v1/photographer/addPhotographer",
-
       login: "/api/v1/photographer/login",
       getPhotograoher:"/api/v1/photographer/get?page=1",
       completed:(id:string) => `/api/v1/photographer/completed/${id}`,
