@@ -21,19 +21,7 @@ const user = {
   name: 'Alex Marshall',
 };
 
-const menuItems = [
-  { key: 'profile', label: 'My Profile', icon: Icons.profile, onPress: () => { } },
-  { key: 'cart', label: 'cart', icon: Icons.cartProfile, onPress: () => { } },
-  { key: 'history', label: 'History', icon: Icons.card8Profile, onPress: () => { } },
-  { key: 'contact', label: 'Contact us', icon: Icons.telephon, onPress: () => { } },
-  { key: 'about', label: 'About us', icon: Icons.building2, onPress: () => { } },
-  { key: 'terms', label: 'Tarms & user', icon: Icons.addUser, onPress: () => { } },
-  { key: 'complaint', label: 'Complaint or suggestion', icon: Icons.likeTag, onPress: () => { } },
-  { key: 'invite', label: 'Invite a friend', icon: Icons.likeTag, onPress: () => { } },
-  { key: 'language', label: 'Language Setting', icon: Icons.lang, onPress: () => { } },
-  { key: 'logout', label: 'Logout', icon: Icons.logout2, onPress: () => { } },
-];
-
+ 
 const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const { navigate } = useGlobalNavigation()
   const { language } = useLanguage()
@@ -69,7 +57,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   };
   const menuItems = [
     { key: 'profile', label: t("ProfileMenu.profile"), icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
-    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.cartProfile, onPress: () => { } },
+    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.cartProfile, onPress: () => { navigate(navigationEnums.CART) } },
     { key: 'history', label: t("ProfileMenu.history"), icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
     { key: 'contact', label: t("ProfileMenu.contact"), icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
     { key: 'about', label: t("ProfileMenu.about"), icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },

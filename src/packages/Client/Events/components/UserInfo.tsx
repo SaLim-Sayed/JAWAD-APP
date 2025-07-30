@@ -8,7 +8,7 @@ import { useApiQuery } from '@/hooks'
 import { apiKeys } from '@/hooks/apiKeys'
 import { useLanguage } from '@/store'
 
-export default function UserInfo({ onNext }: { onNext: () => void }) {
+export default function UserInfo({ onNext,setPaymentUrl }: { onNext: () => void ,setPaymentUrl:(url:string)=>void}) {
   const { authData } = useAuthStore();
   const { language } = useLanguage()
 

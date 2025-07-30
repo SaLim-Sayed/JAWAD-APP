@@ -7,22 +7,24 @@ import { View } from "react-native";
 import BookingPayment from "../components/BookingPayment";
 import GroupBookingSummary from "../components/GroupBookingSummary";
 import UserInfo from "../components/UserInfo";
+import { Payment } from "../components/Payment";
 
 export default function BookingScreen() {
 
+ const [paymentUrl,setPaymentUrl] = useState('') 
  
   const steps = [
 
     {
       id: "events",
       icon: Icons.camera,
-      component: <UserInfo onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />,
+      component: <UserInfo setPaymentUrl={setPaymentUrl} onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />,
 
     },
     {
       id: "review",
-      icon: Icons.clipboardTick,
-      component: <GroupBookingSummary hasFemaleRiders type="group" date="2025-07-03" riders={5} gender="male" promo="" perPerson={100} taxes={10} total={110} onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />,
+      icon: Icons.cardTick,
+      component: <Payment paymentUrl={paymentUrl} onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />,
     },
     {
       id: "payment",
@@ -36,7 +38,8 @@ export default function BookingScreen() {
     <AppWrapper>
       <View className="w-full bg-white flex-1 ">
         <AppHeader title="Booking" showBackButton />
-        <Stepper steps={steps} setCurrentStepIndex={setCurrentStepIndex} currentStepIndex={currentStepIndex} />
+        <UserInfo setPaymentUrl={setPaymentUrl} onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />
+        {/* <Stepper steps={steps} setCurrentStepIndex={setCurrentStepIndex} currentStepIndex={currentStepIndex} /> */}
       </View>
     </AppWrapper>
   );

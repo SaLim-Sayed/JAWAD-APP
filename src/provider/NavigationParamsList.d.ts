@@ -63,6 +63,7 @@ export type NavigationParamsList = {
   [navigationEnums.ABOUT_US]: undefined;
   [navigationEnums.TERMS]: undefined;
   [navigationEnums.CONTACT_US]: undefined;
+  [navigationEnums.CART]: undefined,
   [navigationEnums.BOOKING_HISTORY]: undefined;
   [navigationEnums.BOOKING_DETAILS]: { id: any };
   [navigationEnums.COMPLAINT]: undefined;

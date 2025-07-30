@@ -54,6 +54,7 @@ import StableOverview from '@/packages/Client/My-stable/screens/StableOverview';
 import StableHorse from '@/packages/Client/My-stable/screens/StableHorse';
 import EditHorseForm from '@/packages/Client/My-stable/components/EditHorseForm';
 import EditHorse from '@/packages/Client/My-stable/screens/EditHorse';
+import Cart from '@/packages/Client/Profile/screens/Cart';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -229,6 +230,7 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.ABOUT_US} component={AboutUs} />
       <Stack.Screen name={navigationEnums.TERMS} component={Terms} />
       <Stack.Screen name={navigationEnums.CONTACT_US} component={ContactUsScreen} />
+      <Stack.Screen name={navigationEnums.CART} component={Cart} />
       <Stack.Screen name={navigationEnums.BOOKING_HISTORY} component={BookingHistory} />
       <Stack.Screen name={navigationEnums.BOOKING_DETAILS} component={BookingDetails} />
       <Stack.Screen name={navigationEnums.COMPLAINT} component={ComplaintScreen} />

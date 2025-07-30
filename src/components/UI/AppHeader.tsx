@@ -13,9 +13,10 @@ interface AppHeaderProps {
   onBack?: () => void;
   showBackButton?: boolean;
   isModal?: boolean;
+  customCloseButton?: () => void;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ title, userName, onBack, showBackButton, isModal }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ title, userName, onBack, showBackButton, isModal,customCloseButton }) => {
   const { goBack } = useGlobalNavigation();
   const { language } = useLanguage()
   return (
@@ -32,6 +33,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, userName, onBack, showBack
         </View> : <View style={styles.title}>
           <AppText className="tajawal-semibold-16 text-center text-brownColor-400">{title}</AppText>
         </View>}
+        {customCloseButton && <TouchableOpacity onPress={customCloseButton} style={styles.backButton} hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }} disabled={!customCloseButton}>
+         <AppText className="tajawal-semibold-16 text-center text-brownColor-400">X</AppText>
+        </TouchableOpacity>}
         <View style={{ width: 32 }} />
       </View>
       <Divider />

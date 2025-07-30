@@ -23,7 +23,7 @@ const BookingSuccessScreen = () => {
 
   return (
     <AppWrapper>
-      <View className='mt-12 flex-1 flex-col items-center justify-center'>
+      <View className='mt-12 flex-1 flex-col items-center bg-white justify-center'>
         <AppText className="text-brownColor-400 text-center text-3xl font-bold mb-2">Congratulations!</AppText>
         <AppText className="text-brownColor-300 text-center mb-4 text-lg">You have successfully booked  </AppText>
 

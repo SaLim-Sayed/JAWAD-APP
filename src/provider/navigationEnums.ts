@@ -62,6 +62,7 @@
    ABOUT_US:"profile/about_us",
    TERMS:"profile/terms",
    CONTACT_US:"profile/contact_us",
+   CART:"profile/cart",
    BOOKING_HISTORY:"profile/booking_history",
    BOOKING_DETAILS:"profile/booking_details/:id",
    COMPLAINT:"profile/complaint",

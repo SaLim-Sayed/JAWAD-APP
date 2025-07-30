@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 
 export const groupBookingSchema = z.object({
+  customerMobile: z.string({ required_error: 'Customer mobile is required' }),
+  description: z.string({ required_error: 'Description is required' }),
   date: z.date({ required_error: 'Select a date' }),
   startTime: z.date({ required_error: 'Select start time' }),
   endTime: z.date({ required_error: 'Select end time' }),
