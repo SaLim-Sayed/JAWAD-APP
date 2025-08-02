@@ -7,11 +7,17 @@ import { FlatList, View } from 'react-native'
 import BookingCard from '@/components/UI/BookingCard'
  import useGlobalNavigation from '@/provider/useGlobalNavigation'
 import { navigationEnums } from '@/provider/navigationEnums'
+import { useApiQuery } from '@/hooks'
+import { apiKeys } from '@/hooks/apiKeys'
  
 export default function BookingHistory() {
   const horse1 = images.horseImg; // replace with your horse asset
   const horse2 = images.horseImg;
   const horse3 = images.horseImg;
+    // const { data, isLoading } = useApiQuery({
+    //     url: apiKeys.booking.getBooking,
+    //     key: ["getBooking"],
+    //   });
 const { navigate } = useGlobalNavigation()
   const bookingData = [
     {

@@ -51,7 +51,7 @@ const HorseDetails = () => {
       setSelectedHorse(horse);
       
       // Navigate to booking or cart
-      navigate(navigationEnums.EVENT_BOOKING, { id, type: "Photo_session" });
+      navigate(navigationEnums.EVENT_BOOKING, { id, type: "Photo session" });
     }
   };
 

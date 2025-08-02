@@ -47,5 +47,6 @@ export const apiKeys = {
       payment:"/api/v1/payment/pay",
       Photo_session:"/api/v1/booking/create",
       event:"/api/v1/event/booking",
+      getBooking:"/api/v1/booking/get",
     },
   };

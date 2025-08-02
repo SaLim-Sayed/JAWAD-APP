@@ -107,12 +107,12 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
     const paymentData = {
       customerProfileId: "1212",
       customerMobile: data.customerMobile,
-      totalPrice: type === "Photo_session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
+      totalPrice: type === "Photo session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
       chargeItems: [
         {
           itemId: '6b5fdea340e31b3b0339d4d4ae5',
           description: "Booking",
-          price: type === "Photo_session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
+          price: type === "Photo session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
           quantity: 1,
           imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
         }
@@ -170,13 +170,13 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
 
           if (merchantRef) {
             const horsePayload = {
-              horses:type === "Photo_session" ? [id]:horsesId,
+              horses:type === "Photo session" ? [id]:horsesId,
               date: watch('date').toISOString().split('T')[0],
               startTime: watch('startTime').toTimeString().slice(0, 5),
               endTime: watch('endTime').toTimeString().slice(0, 5),
-              totalPrice: type === "Photo_session" ? Number(horseDetails?.horse?.price):totalAmount,
+              totalPrice: type === "Photo session" ? Number(horseDetails?.horse?.price):totalAmount,
               service: type,
-              stable: type === "Photo_session" ? stableId:cartItems[0].horse.stable,
+              stable: type === "Photo session" ? stableId:cartItems[0].horse.stable,
               payId: merchantRef
             };
             const eventPayload={
