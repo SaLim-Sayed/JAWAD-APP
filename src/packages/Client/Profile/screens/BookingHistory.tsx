@@ -1,57 +1,53 @@
-import { images } from '@/assets/images'
 import AppHeader from '@/components/UI/AppHeader'
 import AppWrapper from '@/components/UI/AppWrapper'
-import React from 'react'
-import { ContactUs } from '../components/ContactUs'
-import { FlatList, View } from 'react-native'
 import BookingCard from '@/components/UI/BookingCard'
- import useGlobalNavigation from '@/provider/useGlobalNavigation'
-import { navigationEnums } from '@/provider/navigationEnums'
 import { useApiQuery } from '@/hooks'
 import { apiKeys } from '@/hooks/apiKeys'
- 
+import { navigationEnums } from '@/provider/navigationEnums'
+import useGlobalNavigation from '@/provider/useGlobalNavigation'
+import React, { useState } from 'react'
+import { ActivityIndicator, FlatList, View } from 'react-native'
+import { GetBookingsResponse } from '../@types/booking.'
+import LoaderBoundary from '@/components/UI/LoaderBoundary'
+
 export default function BookingHistory() {
-  const horse1 = images.horseImg; // replace with your horse asset
-  const horse2 = images.horseImg;
-  const horse3 = images.horseImg;
-    // const { data, isLoading } = useApiQuery({
-    //     url: apiKeys.booking.getBooking,
-    //     key: ["getBooking"],
-    //   });
-const { navigate } = useGlobalNavigation()
-  const bookingData = [
-    {
-      horseImage: images.horseImg,
-      location: "Pyramids (Saqqara)",
-      date: "15 JUN. 2024",
-      price: "250 $",
-      time: "12:12",
-      highlightTime: true,
-    },
-    {
-      horseImage: images.horseImg,
-      location: "Pyramids (Saqqara)",
-      date: "15 JUN. 2024",
-      price: "250 $",
-    },
-    {
-      horseImage: images.horseImg,
-      location: "Pyramids (Saqqara)",
-      date: "15 JUN. 2024",
-      price: "250 $",
-    },
-  ];
+  const { navigate } = useGlobalNavigation()
+
+  const { data: bookingData, isLoading } = useApiQuery<GetBookingsResponse>({
+    url: apiKeys.booking.getBooking,
+    key: ["getBooking"],
+  });
+
+  const [visibleCount, setVisibleCount] = useState(5)
+
+  const loadMore = () => {
+    if (bookingData && visibleCount < bookingData.booking.length) {
+      setVisibleCount(prev => prev + 5)
+    }
+  }
+
   return (
-    <AppWrapper >
+    <AppWrapper>
       <AppHeader title="Booking History" showBackButton />
-      <View style={{ paddingHorizontal: 20, paddingTop: 12 }}>
-        <FlatList
-          data={bookingData}
-          renderItem={({ item, index }) => (
-            <BookingCard key={index} {...item} onPress={()=>{navigate(navigationEnums.BOOKING_DETAILS, { id: 1 })}}  />
-          )}
-        />
-      </View>    
-    </AppWrapper>
+         <LoaderBoundary isLoading={isLoading}>
+          <FlatList
+            data={bookingData?.booking.slice(0, visibleCount)}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <BookingCard
+                {...item}
+                onPress={() => {
+                  navigate(navigationEnums.BOOKING_DETAILS, { id: item._id,item:item });
+                }}
+              />
+            )}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.5}  
+            ListFooterComponent={
+              <View style={{height: 200 ,paddingBottom: 200}} />
+            }
+          /></LoaderBoundary>
+       
+     </AppWrapper>
   )
 }

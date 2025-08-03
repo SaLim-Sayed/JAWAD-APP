@@ -64,7 +64,7 @@
    CONTACT_US:"profile/contact_us",
    CART:"profile/cart",
    BOOKING_HISTORY:"profile/booking_history",
-   BOOKING_DETAILS:"profile/booking_details/:id",
+   BOOKING_DETAILS:"profile/booking_details/:id/:item",
    COMPLAINT:"profile/complaint",
    LANGUAGE:"profile/language",
 } as const;

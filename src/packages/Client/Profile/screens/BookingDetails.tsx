@@ -16,7 +16,7 @@ import Row from "@/components/UI/Row";
 
 
 const BookingDetails = () => {
-  const { id } = useAppRouteParams("EVENT_DETAILS")
+  const { id , item} = useAppRouteParams("BOOKING_DETAILS")
   console.log(id)
  
 const {navigate}=useGlobalNavigation()
@@ -35,21 +35,14 @@ const {navigate}=useGlobalNavigation()
         >
          <Row items="center" justify="center" className="w-full">
          <Image
-            source={bookingData.find((item) => item.id === id)?.horseImage}
-            className="w-40 h-40  "
+            source={item?.stable?.picUrl}
+            className="w-[330px] h-[300px]  flex-1 rounded-2xl"
+            resizeMode="stretch"
           />
          </Row>
         
-          <HistoryDescription item={bookingData.find((item) => item.id === id)}/>
-          <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
-
-
-
-          <AppButton
-            title="Get the ticket"
-            onPress={() => { navigate(navigationEnums.EVENT_BOOKING, { id })}}
-            className="my-4"
-          />
+          <HistoryDescription item={item}/>
+           
           
         </ScrollView>
       </View>

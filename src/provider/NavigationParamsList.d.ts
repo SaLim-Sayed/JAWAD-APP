@@ -1,5 +1,6 @@
 import { stable } from '@/assets/icons/stable.svg';
 import { navigationEnums } from './navigationEnums';
+import { TBooking } from '@/packages/Client/Profile/@types/booking.';
 export type Role = "auth" | "stable" | "photographer" | "school"
 
 export type NavigationParamsList = {
@@ -65,7 +66,7 @@ export type NavigationParamsList = {
   [navigationEnums.CONTACT_US]: undefined;
   [navigationEnums.CART]: undefined,
   [navigationEnums.BOOKING_HISTORY]: undefined;
-  [navigationEnums.BOOKING_DETAILS]: { id: any };
+  [navigationEnums.BOOKING_DETAILS]: { id: any ,item: TBooking };
   [navigationEnums.COMPLAINT]: undefined;
   [navigationEnums.LANGUAGE]: undefined;
 
