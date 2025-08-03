@@ -15,6 +15,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
@@ -47,8 +48,7 @@ const HorseDetails = () => {
   const handleSelectHorse = () => {
     if (horse) {
       // Add to cart and set as selected
-      addToCart(horse, "Photo_session");
-      setSelectedHorse(horse);
+       setSelectedHorse(horse);
       
       // Navigate to booking or cart
       navigate(navigationEnums.EVENT_BOOKING, { id, type: "Photo session" });
@@ -68,6 +68,8 @@ const HorseDetails = () => {
   const isInCart = horse ? isHorseInCart(horse._id, "Photo_session") : false;
   const isStored = horse ? isHorseStored(horse._id) : false;
   const cartCount = getCartItemsCount();
+  const {authData}=useAuthStore()
+  const isadmin=authData?.role==='stable'||authData?.role==='photographer'
 
   return (
     <AppLayout title={title} isScrollable={false} showBackButton>
@@ -97,7 +99,7 @@ const HorseDetails = () => {
             variant="solid"
           />
           <AppButton
-            title={isStored ? "Stored" :"Added to Cart" }
+            title={isStored ? "Stored" :"Add to Cart" }
             variant={isStored ? "solid" : "outline"}
             onPress={handleStoreHorse}
             className="w-[80%]"

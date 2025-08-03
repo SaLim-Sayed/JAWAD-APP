@@ -11,7 +11,7 @@ const fields = [
   { label: "Horse Description", valueKey: "description" },
   { label: "Horse Gender", valueKey: "gender" },
   { label: "Horse Level", valueKey: "level" },
-  { label: "Horse Features", valueKey: "features" },
+  { label: "Horse Features", valueKey: "feature" },
   { label: "Price", valueKey: "price" },
 ];
 

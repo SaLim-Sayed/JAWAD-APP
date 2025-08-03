@@ -1,34 +1,34 @@
-import AppButton from "@/components/UI/AppButton";
 import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
+import StableCard from "@/components/UI/StableCard";
+import { useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import React from "react";
+import { FlatList, ScrollView, View } from "react-native";
+import { GetStablesResponse } from "../../home/@types/stable.type";
+import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
 import ServiceHeadr from "../components/HomeHeader";
 import PhotoSessionHeader from "../components/PhotoSessionHeader";
 import { photoSessionData } from "./mock";
-import { useTranslation } from "react-i18next";
-import { useApiQuery } from "@/hooks";
-import { apiKeys } from "@/hooks/apiKeys";
-import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
- // Dummy data for best stables/events
-
-
 
 const PhotoSessionDetails = () => {
+  const { navigate } = useGlobalNavigation();
+
   const { id } = useAppRouteParams("PHOTO_SESSION_DETAILS")
     const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
       url: apiKeys.photographer.getPhotograoher,
       key: ["getPhotograoher"],
     });
-  const { t } = useTranslation()
-  console.log(data)
-  const photographer=data?.photographers.find((photographer)=>photographer._id===id)
-  console.log(id)
-  // Header user info
-  const userName = "George Mikhaiel";
-  const location = "Fifth Settlement";
-  const [search, setSearch] = useState("");
+    const { data:stablesData, isLoading:stableLoading } = useApiQuery<GetStablesResponse>({
+      url: apiKeys.photographer.getStables(id),
+      key: ["getStables",id],
+    });
+    const photographer=data?.photographers.find((photographer)=>photographer._id===id)
+ 
   const title = photoSessionData.find((photoSession) => photoSession.id === id)?.name;
   return (
     <AppWrapper>
@@ -46,19 +46,29 @@ const PhotoSessionDetails = () => {
           <PhotoSessionHeader photographer={photographer!} />
           <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
 
-
-
-          <AppButton
-            title={t("Global.start_now")}
-            onPress={() => { }}
-            className="my-4"
-          />
-          <AppButton
-            title="Add to cart"
-            variant="outline"
-            onPress={() => { }}
-
-          />
+          <LoaderBoundary isLoading={stableLoading}>
+                <FlatList
+                    numColumns={2}
+                    data={stablesData?.stables}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item) => item._id.toString()}
+                    columnWrapperStyle={{ gap: 6 }}
+                    contentContainerStyle={{
+                        alignItems: "center", gap: 20, paddingBottom: 220,
+                    }}
+                    renderItem={({ item }) => (
+                        <StableCard
+                        id={item._id}
+                            image={item.picUrl}
+                            name={item.name}
+                            type={item.region}
+                            rating={item.totalRating}
+                            onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
+                        />
+                    )}
+                />
+            </LoaderBoundary>
+ 
         </ScrollView>
       </View>
     </AppWrapper>

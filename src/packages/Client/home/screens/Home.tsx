@@ -58,17 +58,16 @@ const HomeScreen = () => {
         <LoaderBoundary isLoading={loading}>
           <ScrollView
             contentContainerStyle={{
-              paddingBottom: 220,
-              flexGrow: 1,
+               flexGrow: 1,
             }}
           >
 
-            <View className="px-4">
+            {/* <View className="px-4">
               <SearchInput value={search} onChange={setSearch} />
               <QuoteCard />
-            </View>
+            </View> */}
 
-            {showStableSection && <BestStableSection />}
+            {showStableSection && <BestStableSection  onSeeAll={()=>navigate(navigationEnums.RIDES)}/>}
             {showHorseSection && <HorseSection stableId={authData.id} />}
             {showEventsSection && <EventsSection />}
 
@@ -88,7 +87,7 @@ const HomeScreen = () => {
                 />
               )}
               keyExtractor={(item) => item._id.toString()}
-              ListFooterComponent={<View className="h-44" />}
+              ListFooterComponent={<View className="h-24" />}
             />
           </ScrollView>
         </LoaderBoundary>

@@ -10,7 +10,7 @@ interface PictureGalleryProps {
   pictures: Picture[];
 }
 
-const ITEM_WIDTH = 380;
+const ITEM_WIDTH =300;
 const MARGIN_HORIZONTAL = 5;
 
 const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures }) => {
@@ -50,7 +50,7 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures }) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        data={pictures}
+         data={pictures}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>

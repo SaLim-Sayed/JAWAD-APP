@@ -9,6 +9,7 @@ import { Dimensions, FlatList, View } from "react-native";
 import { photoSessionData } from "../screens/mock";
 import { Photographer } from "../../Photo-session/@types/photography.types";
 import PictureGallery from "@/components/UI/PictureGallery";
+import BestStableSection from "./BestStableSection";
 
 const PhotoSessionHeader = ({photographer}: {photographer:Photographer}) => {
     const { navigate } = useGlobalNavigation();
@@ -16,7 +17,7 @@ const PhotoSessionHeader = ({photographer}: {photographer:Photographer}) => {
     const itemSize = screenWidth / 4 - 16;
 
     return (
-        <View className="mb-4 flex-col gap-6" >
+        <View className="mb-4 flex-col  gap-6" >
             <PictureGallery pictures={photographer.picUrls.map((url, index) => ({ id: index, url }))} />
 
          
@@ -30,7 +31,6 @@ const PhotoSessionHeader = ({photographer}: {photographer:Photographer}) => {
                     <AppText className="text-brownColor-400 font-bold">{photographer.name}</AppText>
                 </Row>
             </Row>
-
 
 
         </View>

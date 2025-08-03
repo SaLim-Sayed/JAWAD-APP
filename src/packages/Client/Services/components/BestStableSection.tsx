@@ -41,6 +41,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
                     }}
                     renderItem={({ item }) => (
                         <StableCard
+                            id={item._id}
                             image={item.picUrl}
                             name={item.name}
                             type={item.region}

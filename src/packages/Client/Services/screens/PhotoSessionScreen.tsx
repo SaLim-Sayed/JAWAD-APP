@@ -13,43 +13,40 @@ import PhotoSessionList from "../components/PhotoSessionList";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
-  
+import AppHeader from "@/components/UI/AppHeader";
+
 
 const PhotoSessionScreen = () => {
   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
-      url: apiKeys.photographer.getPhotograoher,
-      key: ["getPhotograoher"],
-    });
-  
+    url: apiKeys.photographer.getPhotograoher,
+    key: ["getPhotograoher"],
+  });
+
   // Header user info
   const userName = "George Mikhaiel";
-   const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   return (
     <AppWrapper>
-      <ServiceHeadr userName={userName} />
+      <AppHeader title={userName} showBackButton />
       <View className="bg-white pt-6  pb-60">
-       
-          {/* Search */}
-          <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
 
-            <SearchInput  value={search} onChange={setSearch} />
+        {/* Search */}
+        <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
 
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.filter />}
-            />
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.locationTick />}
-            />
-          </View>
+          <SearchInput value={search} onChange={setSearch} />
 
-          {/* The Best Stable Section */}
-          <PhotoSessionList photoSessions={data?.photographers!} />
-          {/* The Events Section */}
-       </View>
+          <AppButton
+            className="w-12 h-12 bg-brownColor-400 items-center justify-center"
+            onPress={() => { }}
+            startIcon={<Icons.filter />}
+          />
+
+        </View>
+
+        {/* The Best Stable Section */}
+        <PhotoSessionList photoSessions={data?.photographers!} />
+        {/* The Events Section */}
+      </View>
     </AppWrapper>
   );
 };

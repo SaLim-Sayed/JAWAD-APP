@@ -36,8 +36,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, userName, onBack, showBack
         {customCloseButton && <TouchableOpacity onPress={customCloseButton} style={styles.backButton} hitSlop={{ top: 10, bottom: 10, left: 5, right: 5 }} disabled={!customCloseButton}>
          <AppText className="tajawal-semibold-16 text-center text-brownColor-400">X</AppText>
         </TouchableOpacity>}
-        <View style={{ width: 32 }} />
-      </View>
+       </View>
       <Divider />
     </View>
   );

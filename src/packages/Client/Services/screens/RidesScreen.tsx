@@ -24,11 +24,7 @@ const RidesScreen = () => {
               onPress={() => { }}
               startIcon={<Icons.filter />}
             />
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.locationTick />}
-            />
+            
           </View>
 
           <BestStableSection bestStables={bestStables} />

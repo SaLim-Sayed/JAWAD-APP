@@ -20,7 +20,7 @@ const StableDetailsHeader = ({ StableDetails }: { StableDetails: StableDetails }
 
     return (
         <View  className="mb-4" >
-            <Image source={StableDetails.picUrl} className="w-full h-48" />
+            <Image source={StableDetails.picUrl} className="w-full h-48" resizeMode="stretch" />
 
             {/* <FlatList
                 data={horseDate}

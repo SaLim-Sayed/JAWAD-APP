@@ -22,7 +22,7 @@ const HorseSection = ({stableId}: {stableId: string}) => {
   const itemSize = screenWidth * 0.4;
 
   const { data, isLoading } = useApiQuery<GetHorsesResponse>({
-    key: ["getHorse"],
+    key: ["getHorse",stableId],
     url: apiKeys.horse.getHorse(stableId),
   });
 
@@ -80,7 +80,7 @@ const HorseSection = ({stableId}: {stableId: string}) => {
             >
               <View className="absolute   top-0 left-0 right-0   bg-black/50 p-2">
                 <AppText className="text-white tajawal-semibold-16">
-                  {item.name}
+                  {item?.name as any}
                 </AppText>
               </View>
             </Image>

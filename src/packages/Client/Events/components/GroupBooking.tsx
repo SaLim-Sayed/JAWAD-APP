@@ -34,17 +34,17 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
     url: apiKeys.horse.horseDetails + id,
   });
 
-    const {
-      cartItems,
-      updateCartItemQuantity,
-      removeFromCart,
-      clearCart,
-      getCartTotal,
-      getCartItemsCount
-    } = useHorseStore();
-    const totalAmount = getCartTotal();
+  const {
+    cartItems,
+    updateCartItemQuantity,
+    removeFromCart,
+    clearCart,
+    getCartTotal,
+    getCartItemsCount
+  } = useHorseStore();
+  const totalAmount = getCartTotal();
 
-    const horsesId=cartItems.map((item)=>item.horse._id)
+  const horsesId = cartItems.map((item) => item.horse._id)
   const { navigate } = useGlobalNavigation();
   const { data: eventDetails, isLoading } = useApiQuery<GetEventDetailsResponse>({
     key: ["getEventDetails", id],
@@ -75,7 +75,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
     url: apiKeys.booking.payment,
   });
   const { mutate: createBooking, isPending: createBookingPending } = useApiMutation({
-    url: type === "event" ?apiKeys.booking.event: apiKeys.booking.Photo_session,
+    url: type === "event" ? apiKeys.booking.event : apiKeys.booking.Photo_session,
   });
 
   const {
@@ -102,17 +102,17 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
   const { stableId } = useStableStore();
   console.log("payId", payId)
-  
+
   const onSubmit = (data: GroupBookingForm) => {
     const paymentData = {
       customerProfileId: "1212",
       customerMobile: data.customerMobile,
-      totalPrice: type === "Photo session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
+      totalPrice: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : totalAmount,
       chargeItems: [
         {
           itemId: '6b5fdea340e31b3b0339d4d4ae5',
           description: "Booking",
-          price: type === "Photo session" ? horseDetails?.horse?.price:type === "event" ? eventDetails?.event?.price:totalAmount,
+          price: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : totalAmount,
           quantity: 1,
           imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
         }
@@ -170,23 +170,23 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
 
           if (merchantRef) {
             const horsePayload = {
-              horses:type === "Photo session" ? [id]:horsesId,
+              horses: type === "Photo session" ? [id] : horsesId,
               date: watch('date').toISOString().split('T')[0],
               startTime: watch('startTime').toTimeString().slice(0, 5),
               endTime: watch('endTime').toTimeString().slice(0, 5),
-              totalPrice: type === "Photo session" ? Number(horseDetails?.horse?.price):totalAmount,
+              totalPrice: type === "Photo session" ? Number(horseDetails?.horse?.price) : totalAmount,
               service: type,
-              stable: type === "Photo session" ? stableId:cartItems[0].horse.stable,
+              stable: type === "Photo session" ? stableId : cartItems[0].horse.stable,
               payId: merchantRef
             };
-            const eventPayload={
+            const eventPayload = {
               event: id,
               totalPrice: Number(eventDetails?.event?.price),
               service: "event",
               payId: merchantRef
             }
 
-            createBooking(type === "event" ? eventPayload:horsePayload, {
+            createBooking(type === "event" ? eventPayload : horsePayload, {
               onSuccess: () => {
                 setShowPaymentWebView(false);
                 showGlobalToast({
@@ -233,7 +233,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
   return (
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
-        
+
 
         <Input
           control={control}
@@ -243,7 +243,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           error={errors.customerMobile?.message}
         />
 
-    
+
         <AppButton
           title={`Date: ${watch('date') ? watch('date').toISOString().split('T')[0] : 'Select Date'}`}
           onPress={() => setShowDatePicker(true)}
@@ -272,18 +272,25 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           endIcon={<Icons.calendar />}
         />
         {showStartTimePicker && (
+          // @ts-ignore 
           <DateTimePicker
-            {...register('startTime')}
             value={watch('startTime') ?? new Date()}
             mode="time"
-            display="default"
+            display="spinner"
+            minuteInterval={60}
             onChange={(_, selectedTime) => {
               setShowStartTimePicker(false);
               if (selectedTime) {
-                setValue('startTime', selectedTime);
+                const hourOnly = new Date(selectedTime);
+                hourOnly.setMinutes(0);
+                hourOnly.setSeconds(0);
+                hourOnly.setMilliseconds(0);
+                setValue('startTime', hourOnly);
               }
             }}
           />
+
+
         )}
 
         <AppButton
@@ -293,18 +300,24 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           endIcon={<Icons.calendar />}
         />
         {showEndTimePicker && (
+          // @ts-ignore 
           <DateTimePicker
-            {...register('endTime')}
             value={watch('endTime') ?? new Date()}
             mode="time"
-            display="default"
+            display="spinner"
+            minuteInterval={60}
             onChange={(_, selectedTime) => {
               setShowEndTimePicker(false);
               if (selectedTime) {
-                setValue('endTime', selectedTime);
+                const hourOnly = new Date(selectedTime);
+                hourOnly.setMinutes(0);
+                hourOnly.setSeconds(0);
+                hourOnly.setMilliseconds(0);
+                setValue('endTime', hourOnly);
               }
             }}
           />
+
         )}
 
         <AppButton
