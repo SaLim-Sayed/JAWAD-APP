@@ -7,6 +7,7 @@ import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { FlatList, View } from "react-native";
 import { GetStablesResponse } from "../../home/@types/stable.type";
+import AppText from "@/components/UI/AppText";
 
 interface Stable {
     id: number;
@@ -18,37 +19,65 @@ interface Stable {
 
 interface BestStableSectionProps {
     search?: string;
+    filters: {
+        nationality: string[];
+        level: string[];
+        feature: string[];
+        color: string[];
+        service: string[];
+        rating: number;
+    };
 }
 
-const BestStableSection: React.FC<BestStableSectionProps> = ({search}) => {
+const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filters }) => {
+    const { nationality, level, feature, color, service, rating } = filters;
+
+    const queryParams = new URLSearchParams({
+        page: "1",
+        search,
+        ...(nationality.length && { nationality: nationality.join(",") }),
+        ...(level.length && { level: level.join(",") }),
+        ...(feature.length && { feature: feature.join(",") }),
+        ...(color.length && { color: color.join(",") }),
+        ...(service.length && { service: service.join(",") }),
+        ...(rating > 0 && { rating: rating.toString() }),
+    });
     const { data, isLoading } = useApiQuery<GetStablesResponse>({
-        key: ["getStable",search],
-        url: apiKeys.stable.getStable+"?page=1&search="+search,
-    })
+        key: ["getStable", search, filters],
+        url: `${apiKeys.stable.getStable}?${queryParams.toString()}`,
+    });
     const { navigate } = useGlobalNavigation();
     return (
         <View className="flex-1">
             <LoaderBoundary isLoading={isLoading}>
-                <FlatList
-                    numColumns={2}
-                    data={data?.stables}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => item._id.toString()}
-                    columnWrapperStyle={{ gap: 6 }}
-                    contentContainerStyle={{
-                        alignItems: "center", gap: 20, paddingBottom: 220,
-                    }}
-                    renderItem={({ item }) => (
-                        <StableCard
-                            id={item._id}
-                            image={item.picUrl}
-                            name={item.name}
-                            type={item.region}
-                            rating={item.totalRating}
-                            onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
-                        />
-                    )}
-                />
+                {data?.stables ? (
+                    <FlatList
+                        numColumns={2}
+                        data={data?.stables}
+                        showsVerticalScrollIndicator={false}
+                        keyExtractor={(item) => item._id.toString()}
+                        columnWrapperStyle={{ gap: 6 }}
+                        contentContainerStyle={{
+                            alignItems: "center", gap: 20, paddingBottom: 220,
+                        }}
+                        renderItem={({ item }) => (
+                            <StableCard
+                                id={item._id}
+                                image={item.picUrl}
+                                name={item.name}
+                                type={item.region}
+                                rating={item.totalRating}
+                                onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
+                            />
+                        )}
+                    />
+                ) :
+                    (
+                        <View className="flex-1 items-center justify-center">
+                            <AppText className="text-brownColor-400 text-2xl">No stables found</AppText>
+                        </View>
+                    )
+                }
             </LoaderBoundary>
         </View>
     );

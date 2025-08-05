@@ -15,14 +15,35 @@ import { apiKeys } from "@/hooks/apiKeys";
 import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
 import AppHeader from "@/components/UI/AppHeader";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
- 
+import FilterModal from "@/components/UI/FilterModal";
+import AppText from "@/components/UI/AppText";
+
 const PhotoSessionScreen = () => {
   const [search, setSearch] = useState("");
-  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
-    url: apiKeys.photographer.getPhotograoher+"?search="+search,
-    key: ["getPhotograoher",search],
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filters, setFilters] = useState({
+    nationality: [],
+    level: [],
+    feature: [],
+    color: [],
+    service: [],
+    rating: 0,
   });
 
+  const queryParams = new URLSearchParams({
+    search,
+    ...(filters.nationality.length && { nationality: filters.nationality.join(",") }),
+    ...(filters.level.length && { level: filters.level.join(",") }),
+    ...(filters.feature.length && { feature: filters.feature.join(",") }),
+    ...(filters.color.length && { color: filters.color.join(",") }),
+    ...(filters.service.length && { service: filters.service.join(",") }),
+    ...(filters.rating > 0 && { rating: filters.rating.toString() }),
+  });
+
+  const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
+    url: `${apiKeys.photographer.getPhotograoher}?${queryParams.toString()}`,
+    key: ["getPhotograoher", search, filters],
+  });
   // Header user info
   const userName = "George Mikhaiel";
   return (
@@ -37,17 +58,30 @@ const PhotoSessionScreen = () => {
 
           <AppButton
             className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-            onPress={() => { }}
+            onPress={() => setShowFilterModal(true)}
             startIcon={<Icons.filter />}
           />
 
         </View>
 
         <LoaderBoundary isLoading={isLoading}>
-        {/* The Best Stable Section */}
-        <PhotoSessionList photoSessions={data?.photographers!} />
-        {/* The Events Section */}
+          {data?.photographers ? (
+            <PhotoSessionList photoSessions={data?.photographers!} />
+          ) : (
+            <View className="flex-1 items-center justify-center">
+              <AppText className="text-brownColor-400 text-2xl">No photographers found</AppText>
+            </View>
+          )}
         </LoaderBoundary>
+        <FilterModal
+          visible={showFilterModal}
+          onClose={() => setShowFilterModal(false)}
+          onApply={(selectedFilters: any) => {
+            setFilters(selectedFilters);
+            setShowFilterModal(false);
+          }}
+          currentFilters={filters}
+        />
       </View>
     </AppWrapper>
   );
