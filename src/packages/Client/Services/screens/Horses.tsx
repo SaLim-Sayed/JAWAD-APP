@@ -1,21 +1,16 @@
-import { images } from "@/assets/images";
+import AppButton from "@/components/UI/AppButton";
+import AppHeader from "@/components/UI/AppHeader";
 import AppWrapper from "@/components/UI/AppWrapper";
 import SearchInput from "@/components/UI/SearchInput";
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import BestStableSection from "../components/BestStableSection";
-import ServiceHeadr from "../components/HomeHeader";
-import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
-import AppButton from "@/components/UI/AppButton";
-import { bestStables, horseDate } from "./mock";
-import HorseList from "../components/HorseList";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
+import useAppRouteParams from "@/provider/useAppRouteParams";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { GetHorsesResponse } from "../@types/horse.types";
-import useAppRouteParams from "@/provider/useAppRouteParams"; 
-import { navigationEnums } from "@/provider/navigationEnums";
-import AppHeader from "@/components/UI/AppHeader";
+import HorseList from "../components/HorseList";
+import { t } from "@/lib";
 
 const Horses = () => {
   const {id} = useAppRouteParams('HORSES')
@@ -28,7 +23,7 @@ const Horses = () => {
    const [search, setSearch] = useState("");
   return (
     <AppWrapper >
-      <AppHeader title="Horses" showBackButton />
+      <AppHeader title={t("Global.horses")} showBackButton />
        <View className="bg-white pt-6  pb-60">
        
           {/* Search */}

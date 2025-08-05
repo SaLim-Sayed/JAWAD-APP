@@ -1,7 +1,6 @@
 import { Input } from '@/components';
 import AppButton from '@/components/UI/AppButton';
 import AppHeader from '@/components/UI/AppHeader';
-import RadioGroup from '@/components/UI/RadioGroup';
 import { Icons } from '@/constants';
 import { useApiMutation, useApiQuery } from '@/hooks';
 import { apiKeys } from '@/hooks/apiKeys';
@@ -9,6 +8,7 @@ import { showGlobalToast } from '@/hooks/useGlobalToast';
 import { navigationEnums } from '@/provider/navigationEnums';
 import useAppRouteParams from '@/provider/useAppRouteParams';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
+import { useHorseStore } from '@/store/useHorseStore';
 import { useStableStore } from '@/store/useStableStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -19,7 +19,7 @@ import { WebView } from 'react-native-webview';
 import { GetHorseDetailResponse } from '../../Services/@types/horse.types';
 import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
-import { useHorseStore } from '@/store/useHorseStore';
+import { t } from '@/lib';
 
 const serviceOptions = [
   { label: 'Photo session', value: 'Photo session' },
@@ -237,15 +237,15 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
 
         <Input
           control={control}
-          label="Customer Mobile"
-          placeholder="Enter customer mobile"
+          label={t('booking.customer_mobile')}
+          placeholder={t('booking.customer_mobile_placeholder')}
           {...register('customerMobile')}
           error={errors.customerMobile?.message}
         />
 
 
         <AppButton
-          title={`Date: ${watch('date') ? watch('date').toISOString().split('T')[0] : 'Select Date'}`}
+          title={`${t('booking.date')}: ${watch('date') ? watch('date').toISOString().split('T')[0] : t('booking.select_date')}`}
           onPress={() => setShowDatePicker(true)}
           variant='outline'
           endIcon={<Icons.calendar />}
@@ -266,7 +266,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         )}
 
         <AppButton
-          title={`Start Time: ${watch('startTime') ? watch('startTime').toTimeString().slice(0, 5) : 'Select Time'}`}
+          title={`${t('booking.start_time')}: ${watch('startTime') ? watch('startTime').toTimeString().slice(0, 5) : t('booking.select_time')}`}
           onPress={() => setShowStartTimePicker(true)}
           variant='outline'
           endIcon={<Icons.calendar />}
@@ -294,7 +294,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         )}
 
         <AppButton
-          title={`End Time: ${watch('endTime') ? watch('endTime').toTimeString().slice(0, 5) : 'Select Time'}`}
+          title={`${t('booking.end_time')}: ${watch('endTime') ? watch('endTime').toTimeString().slice(0, 5) : t('booking.select_time')}`}
           onPress={() => setShowEndTimePicker(true)}
           variant='outline'
           endIcon={<Icons.calendar />}
@@ -323,7 +323,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         <AppButton
           disabled={isPending}
           loading={isPending}
-          title="Next"
+          title={t('booking.next')}
           //@ts-ignore
           onPress={handleSubmit(onSubmit)}
         />
@@ -337,7 +337,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         style={styles.modal}
       >
         <SafeAreaView style={styles.modalContainer}>
-          <AppHeader title="Payment" showBackButton onBack={handleCloseWebView} customCloseButton={handleCloseWebView} />
+          <AppHeader title={t('booking.payment')} showBackButton onBack={handleCloseWebView} customCloseButton={handleCloseWebView} />
 
           {paymentUrl ? (
             <WebView

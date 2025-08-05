@@ -21,8 +21,88 @@
     "services": "الخدمات",
     "my_stable": "الإملاك",
     "add": "إضافة",
+    "rides": "ركوب",
+    "stables": "إسطبلات",
+    "horses": "الخيول",
+    "horse_details": "تفاصيل الخيل",
+    "stored": "تم الحفظ",
+    "add_to_cart": "إضافة إلى السلة",
+    "booking": "الحجز",
+    "get_ticket": "احصل على التذكرة",
+    "no_data": "لا توجد بيانات",
     "signup": "الاشتراك"
   },
+  "horse": {
+    "name": "اسم الحصان",
+    "description": "وصف الحصان",
+    "gender": "جنس الحصان",
+    "level": "مستوى الحصان",
+    "feature": "مميزات الحصان",
+    "price": "السعر"
+  },
+ 
+    "booking": {
+      "customer_mobile": "رقم جوال العميل",
+      "customer_mobile_placeholder": "أدخل رقم جوال العميل",
+      "date": "التاريخ",
+      "select_date": "اختر التاريخ",
+      "start_time": "وقت البداية",
+      "end_time": "وقت النهاية",
+      "select_time": "اختر الوقت",
+      "next": "التالي",
+      "payment": "الدفع",
+      "payment_success": "تم تأكيد الحجز بنجاح",
+      "payment_failed": "فشل الدفع",
+      "payment_cancelled": "تم إلغاء عملية الدفع"
+    }
+ ,
+    "filters": {
+  "title": "الفلاتر",
+  "resetAll": "إعادة التعيين",
+  "apply": "تطبيق الفلاتر",
+  "cancel": "إلغاء",
+  "minRating": "الحد الأدنى للتقييم",
+  "anyRating": "أي تقييم",
+  "starCount": "{{count}}+ نجوم",
+  "applied": "الفلاتر المطبقة",
+  "noApplied": "لم يتم تطبيق أي فلاتر",
+  
+  "nationality": "الجنسية",
+  "level": "المستوى",
+  "feature": "الميزة",
+  "color": "اللون",
+  "service": "الخدمة",
+  "type": "النوع",
+  
+  "options": {
+    "saudi": "سعودي",
+    "egyptian": "مصري",
+    "kuwaiti": "كويتي",
+
+    "beginner": "مبتدئ",
+    "intermediate": "متوسط",
+    "professional": "محترف",
+
+    "arabic": "عربي",
+    "other": "أخرى",
+
+    "running": "جري",
+    "dancing": "أدب و رقص",
+    
+    "white": "أبيض",
+    "brown": "بني",
+    "black": "أسود",
+    
+    "trainer_available": "مدرب متاح",
+    "indoor": "داخلي",
+    "outdoor": "خارجي",
+
+    "riding": "ركوب",
+    "training": "تدريب",
+    "boarding": "إيواء"
+  }
+    },
+ 
   "Onboard": {
     "slide1_title": "اكتشف أفضل الإسطبلات القريبة منك",
     "slide1_description": "استكشف أفضل الإسطبلات لركوب الخيل في مكان واحد. سواء كنت مبتدئًا أو فارسًا متمرسًا، ستجد الإسطبل المثالي الذي يناسب احتياجاتك.",

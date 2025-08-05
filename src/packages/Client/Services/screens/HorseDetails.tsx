@@ -8,6 +8,7 @@ import { apiKeys } from "@/hooks/apiKeys";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useHorseStore } from "@/store/useHorseStore";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
@@ -15,7 +16,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
-import { useAuthStore } from "@/store/useAuthStore";
+import { t } from "i18next";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
@@ -23,8 +24,7 @@ const HorseDetails = () => {
   
   // Horse store hooks
   const { 
-    addToCart, 
-    setSelectedHorse, 
+     setSelectedHorse, 
     storeHorse,
     isHorseInCart, 
     isHorseStored,
@@ -93,13 +93,13 @@ const HorseDetails = () => {
         
         <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
-            title={ "Select"}
+            title={ t("Global.select")}
             onPress={handleSelectHorse}
             className="w-[80%]"
             variant="solid"
           />
           <AppButton
-            title={isStored ? "Stored" :"Add to Cart" }
+            title={isStored ? t("Global.stored") : t("Global.add_to_cart") }
             variant={isStored ? "solid" : "outline"}
             onPress={handleStoreHorse}
             className="w-[80%]"
@@ -108,12 +108,7 @@ const HorseDetails = () => {
           />
         </Row>
         
-        {/* Optional: Show cart badge if items exist */}
-        {cartCount > 0 && (
-          <View className="absolute top-4 right-4 bg-red-500 rounded-full w-6 h-6 items-center justify-center">
-            <Text className="text-white text-xs font-bold">{cartCount}</Text>
-          </View>
-        )}
+       
       </View>
     </AppLayout>
   );

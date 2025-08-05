@@ -1,13 +1,12 @@
 import AppHeader from "@/components/UI/AppHeader";
 import AppWrapper from "@/components/UI/AppWrapper";
-import { Stepper } from "@/components/UI/Stepper";
 import { Icons } from "@/constants";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { View } from "react-native";
 import BookingPayment from "../components/BookingPayment";
-import GroupBookingSummary from "../components/GroupBookingSummary";
-import UserInfo from "../components/UserInfo";
 import { Payment } from "../components/Payment";
+import UserInfo from "../components/UserInfo";
 
 export default function BookingScreen() {
 
@@ -37,7 +36,7 @@ export default function BookingScreen() {
   return (
     <AppWrapper>
       <View className="w-full bg-white flex-1 ">
-        <AppHeader title="Booking" showBackButton />
+        <AppHeader title={t("Global.booking")} showBackButton />
         <UserInfo setPaymentUrl={setPaymentUrl} onNext={() => { setCurrentStepIndex(currentStepIndex + 1) }} />
         {/* <Stepper steps={steps} setCurrentStepIndex={setCurrentStepIndex} currentStepIndex={currentStepIndex} /> */}
       </View>

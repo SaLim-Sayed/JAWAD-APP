@@ -16,7 +16,7 @@ import { GetStableDetailsResponse } from '../../Services/@types/horse.types';
 import { t } from '@/lib';
 
 const user = {
-  avatar: 'https://randomuser.me/api/portraits/men/50.jpg', // Replace with real avatar or local asset
+  avatar: 'https://images.icon-icons.com/1993/PNG/512/account_avatar_face_man_people_profile_user_icon_123197.png', // Replace with real avatar or local asset
   role: 'Knight',
   name: 'Alex Marshall',
 };
@@ -74,10 +74,10 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         <View className="items-end -mt-20 flex-row pt-6 ">
           <Image
             source={isStable ? stableData?.stable.picUrl : isPhotographer ? data?.photographers[0].picUrls[0] : isAuth ? userDetails?.details?.picUrl ||user.avatar : user.avatar}
-            className="w-24 h-24 rounded-full"
+            className="w-12 h-12 rounded-full"
           />
-          <AppText className="pt-4 text-lg">
-             <AppText className="text-black font-bold"> / {userName||t("ProfileMenu.guest")}</AppText>
+          <AppText className="px-4 text-lg">
+             <AppText className="text-black text-2xl font-bold">   {userName||t("ProfileMenu.guest")}</AppText>
           </AppText>
         </View>
         <View className="gap-0">
@@ -95,7 +95,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
               />
 
             )}
-            ListFooterComponent={<View className="h-80" />}
+            ListFooterComponent={<View className="h-20" />}
           />
           
         </View>

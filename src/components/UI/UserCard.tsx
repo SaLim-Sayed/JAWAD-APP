@@ -23,8 +23,6 @@ const UserCard: React.FC<UserCardProps> = ({ role, name, phone, avatar }) => {
 
         <Col gap={2}>
           <Row>
-            <AppText className="font-bold text-brownColor-400">{role}</AppText>
-            <AppText className="font-bold text-brownColor-400"> / </AppText>
             <AppText className="font-bold text-black ml-1">{name}</AppText>
           </Row>
 

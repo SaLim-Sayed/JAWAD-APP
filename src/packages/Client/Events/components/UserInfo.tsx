@@ -1,12 +1,12 @@
-import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
-import UserCard from '@/components/UI/UserCard'
 import { images } from '@/assets/images'
-import { GroupBooking } from './GroupBooking'
-import { useAuthStore } from '@/store/useAuthStore'
+import UserCard from '@/components/UI/UserCard'
 import { useApiQuery } from '@/hooks'
 import { apiKeys } from '@/hooks/apiKeys'
 import { useLanguage } from '@/store'
+import { useAuthStore } from '@/store/useAuthStore'
+import React from 'react'
+import { ScrollView } from 'react-native'
+import { GroupBooking } from './GroupBooking'
 
 export default function UserInfo({ onNext,setPaymentUrl }: { onNext: () => void ,setPaymentUrl:(url:string)=>void}) {
   const { authData } = useAuthStore();

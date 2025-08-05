@@ -1,6 +1,7 @@
 import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import { Icons } from "@/constants";
+import { t } from "@/lib";
 
 interface SearchInputProps {
   value: string;
@@ -8,7 +9,7 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, placeholder = "Search" }) => (
+const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, placeholder = t("Global.search") }) => (
   <View style={styles.container}>
     <Icons.search color="#999" width={20} height={20} />
     <TextInput

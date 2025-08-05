@@ -8,6 +8,7 @@ import React from "react";
 import { FlatList, View } from "react-native";
 import { GetStablesResponse } from "../../home/@types/stable.type";
 import AppText from "@/components/UI/AppText";
+import { t } from "@/lib";
 
 interface Stable {
     id: number;
@@ -20,26 +21,24 @@ interface Stable {
 interface BestStableSectionProps {
     search?: string;
     filters: {
-        nationality: string[];
         level: string[];
+        type: string[];
         feature: string[];
         color: string[];
-        service: string[];
         rating: number;
     };
 }
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filters }) => {
-    const { nationality, level, feature, color, service, rating } = filters;
+    const { level, type, feature, color, rating } = filters;
 
     const queryParams = new URLSearchParams({
         page: "1",
         search,
-        ...(nationality.length && { nationality: nationality.join(",") }),
         ...(level.length && { level: level.join(",") }),
+        ...(type.length && { type: type.join(",") }),
         ...(feature.length && { feature: feature.join(",") }),
         ...(color.length && { color: color.join(",") }),
-        ...(service.length && { service: service.join(",") }),
         ...(rating > 0 && { rating: rating.toString() }),
     });
     const { data, isLoading } = useApiQuery<GetStablesResponse>({
@@ -74,7 +73,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filt
                 ) :
                     (
                         <View className="flex-1 items-center justify-center">
-                            <AppText className="text-brownColor-400 text-2xl">No stables found</AppText>
+                            <AppText className="text-brownColor-400 text-2xl">{t("Global.no_data")}</AppText>
                         </View>
                     )
                 }

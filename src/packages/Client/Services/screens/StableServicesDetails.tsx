@@ -43,45 +43,17 @@ const StableServicesDetails = () => {
 
           }}
         >
-          {/* Search */}
-          <View className="flex-row w-full mb-3 justify-between items-center gap-4">
-
-            {/* <SearchInput value={search} onChange={setSearch} />
-
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.filter />}
-            /> */}
-            {/* <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.locationTick />}
-            /> */}
-          </View>
-
+         
           <LoaderBoundary isLoading={isLoading}>
             <StableDetailsHeader StableDetails={data?.stable!} />
             <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
             <LocationCard mapUrl={data?.stable.location} city={data?.stable.city[language]!} region={data?.stable.region[language]!} address={data?.stable.address[language]!} />
 
-            {/* <StableDescription /> */}
-            <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
+             <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
             <HorseSection stableId={id} />
-            {/* The Best Stable Section */}
-            {/* The Events Section */}
+          
           </LoaderBoundary>
-          {/* <AppButton
-            title={t("Global.start_now")}
-            onPress={() => { }}
-            className="my-4"
-          />
-          <AppButton
-            title="Add to cart"
-            variant="outline"
-            onPress={() => { }}
-
-          /> */}
+         
         </ScrollView>
       </View>
     </AppLayout>

@@ -1,9 +1,12 @@
+import AppHeader from "@/components/UI/AppHeader";
+import AppText from "@/components/UI/AppText";
 import AppWrapper from "@/components/UI/AppWrapper";
 import Divider from "@/components/UI/Divider";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import StableCard from "@/components/UI/StableCard";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
+import { t } from "@/lib";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
@@ -11,9 +14,7 @@ import React from "react";
 import { FlatList, ScrollView, View } from "react-native";
 import { GetStablesResponse } from "../../home/@types/stable.type";
 import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
-import ServiceHeadr from "../components/HomeHeader";
 import PhotoSessionHeader from "../components/PhotoSessionHeader";
-import { photoSessionData } from "./mock";
 
 const PhotoSessionDetails = () => {
   const { navigate } = useGlobalNavigation();
@@ -29,10 +30,9 @@ const PhotoSessionDetails = () => {
     });
     const photographer=data?.photographers.find((photographer)=>photographer._id===id)
  
-  const title = photoSessionData.find((photoSession) => photoSession.id === id)?.name;
-  return (
+   return (
     <AppWrapper>
-      <ServiceHeadr title={title} showBackButton />
+      <AppHeader title={data?.photographers.find((photographer)=>photographer._id===id)?.name} showBackButton />
       <View className="bg-white  h-full ">
         <ScrollView
           contentContainerStyle={{
@@ -44,10 +44,13 @@ const PhotoSessionDetails = () => {
         >
         
           <PhotoSessionHeader photographer={photographer!} />
-          <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
+          <Divider containerStyle={{ height: 2 }} className="h-[3px] my-4" />
 
           <LoaderBoundary isLoading={stableLoading}>
                 <FlatList
+                ListHeaderComponent={
+                  <AppText className="text-2xl text-start text-brownColor-400 font-bold">{t('Global.stables')}</AppText>
+                }
                     numColumns={2}
                     data={stablesData?.stables}
                     showsVerticalScrollIndicator={false}

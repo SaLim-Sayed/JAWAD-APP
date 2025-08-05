@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import { ActivityIndicator, FlatList, View } from 'react-native'
 import { GetBookingsResponse } from '../@types/booking.'
 import LoaderBoundary from '@/components/UI/LoaderBoundary'
+import { t } from '@/lib'
 
 export default function BookingHistory() {
   const { navigate } = useGlobalNavigation()
@@ -28,7 +29,7 @@ export default function BookingHistory() {
 
   return (
     <AppWrapper>
-      <AppHeader title="Booking History" showBackButton />
+      <AppHeader title={t('ProfileMenu.history')} showBackButton />
          <LoaderBoundary isLoading={isLoading}>
           <FlatList
             data={bookingData?.booking.slice(0, visibleCount)}

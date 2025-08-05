@@ -1,21 +1,21 @@
 import React from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from "react-native";
 
 import AppText from "@/components/UI/AppText";
 import Image from "@/components/UI/Image";
 import Row from "@/components/UI/Row";
-import { navigationEnums } from "@/provider/navigationEnums";
-import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
-import { GetHorsesResponse } from "../@types/horse.types";
 import { t } from "@/lib";
+import { navigationEnums } from "@/provider/navigationEnums";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
+import { GetHorsesResponse } from "../@types/horse.types";
 const HorseSection = ({stableId}: {stableId: string}) => {
   const { navigate } = useGlobalNavigation();
   const screenWidth = Dimensions.get("window").width;

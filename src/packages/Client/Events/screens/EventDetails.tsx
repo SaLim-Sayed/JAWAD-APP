@@ -14,6 +14,7 @@ import { GetEventDetailsResponse } from "../../home/@types/event.type";
 import EventDescription from "../components/EventDescription";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
 import { AxiosError } from "axios";
+import { t } from "@/lib";
 
 
 
@@ -79,7 +80,7 @@ const EventDetails = () => {
           </ScrollView>
         </LoaderBoundary>
         <AppButton
-          title="Get the ticket"
+          title={t("Global.get_ticket")}
           disabled={isPending}
           loading={isPending}
           className="w-[90%] mx-auto"

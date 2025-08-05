@@ -1,14 +1,14 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
-import AppWrapper from '@/components/UI/AppWrapper'
 import AppHeader from '@/components/UI/AppHeader'
-import { events } from './envent.data'
+import AppWrapper from '@/components/UI/AppWrapper'
 import EventCard from '@/components/UI/EventCard'
-import { navigationEnums } from '@/provider/navigationEnums'
-import useGlobalNavigation from '@/provider/useGlobalNavigation'
-import { GetEventsResponse } from '../../home/@types/event.type'
 import { useApiQuery } from '@/hooks'
 import { apiKeys } from '@/hooks/apiKeys'
+import { t } from '@/lib'
+import { navigationEnums } from '@/provider/navigationEnums'
+import useGlobalNavigation from '@/provider/useGlobalNavigation'
+import React from 'react'
+import { FlatList, View } from 'react-native'
+import { GetEventsResponse } from '../../home/@types/event.type'
  
 export default function Events() {
     const { navigate } = useGlobalNavigation();
@@ -18,7 +18,7 @@ export default function Events() {
       })
     return (
     <AppWrapper>
-      <AppHeader title={"Event"} showBackButton />
+      <AppHeader title={t('Global.events')} showBackButton />
       <FlatList
         data={data?.events}
         style={{ marginTop: 20 }}

@@ -6,28 +6,26 @@ import { Icons } from "@/constants";
 import React, { useState } from "react";
 import { View } from "react-native";
 import BestStableSection from "../components/BestStableSection";
-import { bestStables } from "./mock";
 import FilterModal from "@/components/UI/FilterModal";
+import { t } from "@/lib";
 
 
 
 
 const RidesScreen = () => {
-  const userName = "All Stable";
-  const [search, setSearch] = useState("");
+   const [search, setSearch] = useState("");
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filters, setFilters] = useState({
-    nationality: [],
     level: [],
+    type: [],
     feature: [],
     color: [],
-    service: [],
     rating: 0,
   });
 
   return (
     <AppWrapper>
-      <AppHeader title={userName} showBackButton={true} />
+      <AppHeader title={t("Global.stables")} showBackButton={true} />
       <View className="bg-white flex-1 pt-6 pb-6">
         <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
           <SearchInput value={search} onChange={setSearch} />
