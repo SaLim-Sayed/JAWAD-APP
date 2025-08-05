@@ -17,14 +17,13 @@ interface Stable {
 }
 
 interface BestStableSectionProps {
-    bestStables: Stable[];
-    onSeeAll?: () => void;
+    search?: string;
 }
 
-const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSeeAll }) => {
+const BestStableSection: React.FC<BestStableSectionProps> = ({search}) => {
     const { data, isLoading } = useApiQuery<GetStablesResponse>({
-        key: ["getStable"],
-        url: apiKeys.stable.getStable + 1,
+        key: ["getStable",search],
+        url: apiKeys.stable.getStable+"?page=1&search="+search,
     })
     const { navigate } = useGlobalNavigation();
     return (

@@ -10,7 +10,7 @@ export const apiKeys = {
       addStable: "/api/v1/stable/add",
       login: "/api/v1/stable/login",
       completed: (id:string) => `/api/v1/stable/completed/${id}`,
-      getStable: "/api/v1/stable/get?page=",
+      getStable: "/api/v1/stable/get",
       stableDetails: "/api/v1/stable/details/",
       stableDetail:(id:string) => `/api/v1/stable/details/${id}`,
 
@@ -38,7 +38,7 @@ export const apiKeys = {
     photographer: {
       addPhotographer: "/api/v1/photographer/addPhotographer",
       login: "/api/v1/photographer/login",
-      getPhotograoher:"/api/v1/photographer/get?page=1",
+      getPhotograoher:"/api/v1/photographer/get",
       getStables:(id:string)=>`/api/v1/photographer/getStables/${id}`,
       completed:(id:string) => `/api/v1/photographer/completed/${id}`,
       getPhotographerDetails:(id:string) => `/api/v1/photographer/get/detail/${id}`,

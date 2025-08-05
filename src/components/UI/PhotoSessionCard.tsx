@@ -49,7 +49,7 @@ const PhotoSessionCard: React.FC<PhotoSessionCardProps> = ({
                         onPress={() => onPressStart?.()}
                         iconLeft={
                             <View className="flex items-center justify-center h-8 p-2 w-8 rounded-full bg-amber-950">
-                                <Icons.arrowRight style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }] }} className="text-white" />
+                                <Icons.arrowRight style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }] }} width={20} height={20}  className="text-white" />
                             </View>
                         }
                     />

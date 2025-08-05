@@ -39,7 +39,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
                             onPress={() => onPress()}
                             iconLeft={
                                 <View className="flex items-center justify-center h-10 p-2 w-10 rounded-full bg-amber-950">
-                                    <Icons.arrowRight style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],margin: 4,width: 20, height: 20 }} className="text-white w-4 h-4" />
+                                    <Icons.arrowRight width={20} height={20}  style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],margin: 4,width: 20, height: 20 }} className="text-white w-4 h-4" />
                                 </View>
                             }
                         />

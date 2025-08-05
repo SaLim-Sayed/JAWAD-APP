@@ -14,21 +14,21 @@ import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { GetPhotographersResponse } from "../../Photo-session/@types/photography.types";
 import AppHeader from "@/components/UI/AppHeader";
-
-
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
+ 
 const PhotoSessionScreen = () => {
+  const [search, setSearch] = useState("");
   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
-    url: apiKeys.photographer.getPhotograoher,
-    key: ["getPhotograoher"],
+    url: apiKeys.photographer.getPhotograoher+"?search="+search,
+    key: ["getPhotograoher",search],
   });
 
   // Header user info
   const userName = "George Mikhaiel";
-  const [search, setSearch] = useState("");
   return (
     <AppWrapper>
       <AppHeader title={userName} showBackButton />
-      <View className="bg-white pt-6  pb-60">
+      <View className="bg-white pt-6  flex-1 pb-60">
 
         {/* Search */}
         <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
@@ -43,9 +43,11 @@ const PhotoSessionScreen = () => {
 
         </View>
 
+        <LoaderBoundary isLoading={isLoading}>
         {/* The Best Stable Section */}
         <PhotoSessionList photoSessions={data?.photographers!} />
         {/* The Events Section */}
+        </LoaderBoundary>
       </View>
     </AppWrapper>
   );

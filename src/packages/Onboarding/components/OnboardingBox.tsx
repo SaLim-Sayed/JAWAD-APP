@@ -127,7 +127,7 @@ export default function OnboardingBox({
                   onPress={isRTL ? handleNext : handleBack}
                   iconLeft={
                     isRTL ? <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
-                      <Icons.arrowLeft className="text-white" />
+                      <Icons.arrowLeft className="text-white" width={20} height={20} />
                     </View> : undefined
                   }
                   iconRight={
@@ -148,7 +148,7 @@ export default function OnboardingBox({
                   iconRight={
                     isRTL ?
                       <View className="flex items-center justify-center h-12 p-4 w-12 rounded-full bg-amber-950">
-                        <Icons.arrowRight className="text-white" />
+                        <Icons.arrowRight className="text-white"  width={20} height={20} />
                       </View>
                       : undefined
                   }

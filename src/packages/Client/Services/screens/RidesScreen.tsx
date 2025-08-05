@@ -27,7 +27,7 @@ const RidesScreen = () => {
             
           </View>
 
-          <BestStableSection bestStables={bestStables} />
+          <BestStableSection search={search} />
        </View>
     </AppWrapper>
   );

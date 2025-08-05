@@ -8,7 +8,7 @@ import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { GetStablesResponse } from "../@types/stable.type";
 import { useStableStore } from "@/store/useStableStore";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 import { t } from "@/lib";
 interface Stable {
     id: number;
@@ -23,18 +23,18 @@ interface BestStableSectionProps {
     onSeeAll?: () => void;
 }
 
-const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSeeAll }) => {
-     const { data } = useApiQuery<GetStablesResponse>({
+const BestStableSection: React.FC<BestStableSectionProps> = ({ onSeeAll }) => {
+    const { data, isLoading } = useApiQuery<GetStablesResponse>({
         key: ["getStable"],
-        url: apiKeys.stable.getStable+1,
+        url: apiKeys.stable.getStable + "?page=1",
     })
-    const {setStableId}=useStableStore()
+    const { setStableId } = useStableStore()
     const { navigate } = useGlobalNavigation();
-    const handleNavigation=(id:string)=>{
+    const handleNavigation = (id: string) => {
         setStableId(id)
         navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: id })
     }
-        return (
+    return (
         <>
             <View className="mx-4 mt-2 mb-2 py-2 flex-row w-[90%] justify-between items-center">
                 <AppText className="font-bold text-brownColor-400 text-lg"> {t("Global.best_stables")}</AppText>
@@ -55,7 +55,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ bestStables, onSe
                         name={item.name.slice(0, 15)}
                         type={item.region}
                         rating={item.totalRating}
-                        onPressStart={()=>handleNavigation(item._id)}
+                        onPressStart={() => handleNavigation(item._id)}
                     />
                 )}
             />
