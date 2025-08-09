@@ -12,7 +12,7 @@ import { useHorseStore } from '@/store/useHorseStore';
 import { useStableStore } from '@/store/useStableStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -70,6 +70,10 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
   // State for payment WebView
   const [showPaymentWebView, setShowPaymentWebView] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState('');
+  
+  // ADD: Prevent duplicate booking processing
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const processedPayments = useRef(new Set<string>());
 
   const { mutate, isPending } = useApiMutation({
     url: apiKeys.booking.payment,
@@ -125,7 +129,9 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           const url = response.url;
           setPaymentUrl(response.url);
           setShowPaymentWebView(true);
-
+          // RESET: Clear processed payments when starting new payment
+          processedPayments.current.clear();
+          setIsProcessingPayment(false);
         } else {
           showGlobalToast({ type: 'success', title: 'Booking created successfully' });
           navigate(navigationEnums.EVENT_BOOKING_SUCCESS);
@@ -147,15 +153,33 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
 
     // Check if this is a payment callback URL
     if (url.includes('/payment/callback')) {
+      // PREVENT DUPLICATE PROCESSING
+      if (isProcessingPayment) {
+        console.log('Payment already being processed, skipping...');
+        return;
+      }
 
       try {
         const params = parseUrlParams(url);
-        setPayId(params.merchantRefNumber)
-        console.log("salim", params.merchantRefNumber)
+        const merchantRefNumber = params.merchantRefNumber;
+        
+        // PREVENT DUPLICATE PROCESSING BY REFERENCE NUMBER
+        if (!merchantRefNumber || processedPayments.current.has(merchantRefNumber)) {
+          console.log('Payment already processed for reference:', merchantRefNumber);
+          return;
+        }
+
+        // MARK AS PROCESSING
+        setIsProcessingPayment(true);
+        processedPayments.current.add(merchantRefNumber);
+        
+        setPayId(merchantRefNumber);
+        console.log("salim", merchantRefNumber);
+        
         const paymentData = {
           type: params.type,
           referenceNumber: params.referenceNumber,
-          merchantRefNumber: params.merchantRefNumber,
+          merchantRefNumber: merchantRefNumber,
           orderAmount: params.orderAmount,
           paymentAmount: params.paymentAmount,
           orderStatus: params.orderStatus,
@@ -164,56 +188,50 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           statusDescription: params.statusDescription,
         };
 
-
         if (paymentData.orderStatus === 'PAID' && paymentData.statusCode === '200') {
-          const merchantRef = paymentData.merchantRefNumber;
+          const horsePayload = {
+            horses: type === "Photo session" ? [id] : horsesId,
+            date: watch('date').toISOString().split('T')[0],
+            startTime: watch('startTime').toTimeString().slice(0, 5),
+            endTime: watch('endTime').toTimeString().slice(0, 5),
+            totalPrice: type === "Photo session" ? Number(horseDetails?.horse?.price) : totalAmount,
+            service: type,
+            stable: type === "Photo session" ? stableId : cartItems[0].horse.stable,
+            payId: merchantRefNumber
+          };
+          
+          const eventPayload = {
+            event: id,
+            totalPrice: Number(eventDetails?.event?.price),
+            service: "event",
+            payId: merchantRefNumber
+          };
 
-          if (merchantRef) {
-            const horsePayload = {
-              horses: type === "Photo session" ? [id] : horsesId,
-              date: watch('date').toISOString().split('T')[0],
-              startTime: watch('startTime').toTimeString().slice(0, 5),
-              endTime: watch('endTime').toTimeString().slice(0, 5),
-              totalPrice: type === "Photo session" ? Number(horseDetails?.horse?.price) : totalAmount,
-              service: type,
-              stable: type === "Photo session" ? stableId : cartItems[0].horse.stable,
-              payId: merchantRef
-            };
-            const eventPayload = {
-              event: id,
-              totalPrice: Number(eventDetails?.event?.price),
-              service: "event",
-              payId: merchantRef
+          createBooking(type === "event" ? eventPayload : horsePayload, {
+            onSuccess: () => {
+              setShowPaymentWebView(false);
+              setIsProcessingPayment(false);
+              showGlobalToast({
+                type: 'success',
+                title: 'Booking Confirmed',
+              });
+              navigate(navigationEnums.EVENT_BOOKING_SUCCESS);
+            },
+            onError: (error) => {
+              setShowPaymentWebView(false);
+              setIsProcessingPayment(false);
+              // REMOVE FROM PROCESSED SET ON ERROR TO ALLOW RETRY
+              processedPayments.current.delete(merchantRefNumber);
+              showGlobalToast({
+                type: 'error',
+                title: 'Failed to create booking',
+              });
             }
-
-            createBooking(type === "event" ? eventPayload : horsePayload, {
-              onSuccess: () => {
-                setShowPaymentWebView(false);
-                showGlobalToast({
-                  type: 'success',
-                  title: 'Booking Confirmed',
-                });
-                navigate(navigationEnums.EVENT_BOOKING_SUCCESS);
-              },
-              onError: () => {
-                setShowPaymentWebView(false);
-                showGlobalToast({
-                  type: 'error',
-                  title: 'Failed to create booking',
-                });
-              }
-            });
-          } else {
-            console.error('No merchant reference number found');
-            setShowPaymentWebView(false);
-            showGlobalToast({
-              type: 'error',
-              title: 'Payment succeeded but no reference',
-            });
-          }
+          });
         }
         else if (paymentData.orderStatus === 'FAILED' || paymentData.orderStatus === 'CANCELLED') {
           setShowPaymentWebView(false);
+          setIsProcessingPayment(false);
           showGlobalToast({
             type: 'error',
             title: 'Payment Failed',
@@ -222,19 +240,21 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         }
       } catch (error) {
         console.error('Error parsing payment callback URL:', error);
+        setIsProcessingPayment(false);
       }
     }
   };
+  
   const handleCloseWebView = () => {
     setShowPaymentWebView(false);
+    setIsProcessingPayment(false);
+    // DON'T CLEAR processedPayments here to prevent accidental reprocessing
     showGlobalToast({ type: 'info', title: 'Payment process cancelled' });
   };
 
   return (
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
-
-
         <Input
           control={control}
           label={t('booking.customer_mobile')}
@@ -242,7 +262,6 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
           {...register('customerMobile')}
           error={errors.customerMobile?.message}
         />
-
 
         <AppButton
           title={`${t('booking.date')}: ${watch('date') ? watch('date').toISOString().split('T')[0] : t('booking.select_date')}`}
@@ -289,8 +308,6 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
               }
             }}
           />
-
-
         )}
 
         <AppButton
@@ -317,12 +334,11 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
               }
             }}
           />
-
         )}
 
         <AppButton
-          disabled={isPending}
-          loading={isPending}
+          disabled={isPending || createBookingPending || isProcessingPayment}
+          loading={isPending || createBookingPending || isProcessingPayment}
           title={t('booking.next')}
           //@ts-ignore
           onPress={handleSubmit(onSubmit)}
@@ -337,7 +353,12 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         style={styles.modal}
       >
         <SafeAreaView style={styles.modalContainer}>
-          <AppHeader title={t('booking.payment')} showBackButton onBack={handleCloseWebView} customCloseButton={handleCloseWebView} />
+          <AppHeader 
+            title={t('booking.payment')} 
+            showBackButton 
+            onBack={handleCloseWebView} 
+            customCloseButton={handleCloseWebView} 
+          />
 
           {paymentUrl ? (
             <WebView
@@ -348,7 +369,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
               domStorageEnabled={true}
               startInLoadingState={true}
               scalesPageToFit={true}
-              allowsInlineMediaPlayback={true}
+              allowsInlineMediaPlaybook={true}
               mediaPlaybackRequiresUserAction={false}
               mixedContentMode="compatibility"
               thirdPartyCookiesEnabled={true}
