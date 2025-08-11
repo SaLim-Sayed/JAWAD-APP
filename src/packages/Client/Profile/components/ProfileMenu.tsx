@@ -69,7 +69,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     <View
       className="flex-1 bg-transparent"
     >
-      <View className="bg-white rounded-3xl mx-2 mt-20 mb-4 pb-1">
+      <View className="bg-white rounded-3xl mx-2 mt-20  pb-1">
         {/* Profile Header */}
         <View className="items-end -mt-20 flex-row pt-6 ">
           <Image

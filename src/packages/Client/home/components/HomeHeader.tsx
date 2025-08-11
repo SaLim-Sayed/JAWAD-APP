@@ -25,7 +25,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
 
   return (
     <View style={styles.root}>
-      <Image source={images.onboard3} style={styles.bgImage} />
+      <Image source={images.homeHorse} style={styles.bgImage} resizeMode="stretch" />
       <View style={styles.overlay} />
       <View style={styles.content}>
         <AppText className="text-white tajawal-semibold-16 mb-1">
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
     paddingHorizontal: 16,
+    paddingTop: 106,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

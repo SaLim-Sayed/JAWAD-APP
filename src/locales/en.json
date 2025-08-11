@@ -22,6 +22,7 @@
     "my_stable": "My Stable",
     "rides": "Rides",
     "stables": "Stables",
+    "training": "Training",
     "horse_details": "Horse Details",
     "stored": "Stored",
     "add_to_cart": "Add to Cart",
@@ -67,6 +68,7 @@
     "feature": "Feature",
     "color": "Color",
     "service": "Service",
+    "training": "Training",
     "type": "Type",
     "options": {
       "saudi": "Saudi",

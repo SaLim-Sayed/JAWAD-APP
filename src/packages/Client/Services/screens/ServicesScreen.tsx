@@ -29,11 +29,19 @@ const ServicesScreen = () => {
         navigate(navigationEnums.PHOTOS)
       },
     },
+    {
+      id: 3,
+      title: t("Global.training"),
+      image: images.family,
+      onPress: () => {
+        navigate(navigationEnums.PHOTOS)
+      },
+    },
   ];
   return (
     <AppWrapper>
       <AppHeader title={t("Global.services")} showBackButton  />
-      <View className="bg-white flex-1 pt-4">
+      <View className="  flex-1 pt-4">
         <ScrollView
           contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between",gap: 8, paddingHorizontal: 8, paddingBottom: 32 }}
           showsVerticalScrollIndicator={false}

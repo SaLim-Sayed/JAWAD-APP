@@ -25,12 +25,6 @@ const StableServicesDetails = () => {
     key: ["stableDetails", id],
     url: apiKeys.stable.stableDetail(id),
   })
-  console.log(id)
-  // Header user info
-
-  const [search, setSearch] = useState("");
-  const title = data?.stable.name.en;
-  const { t } = useTranslation()
   console.log({ data })
   return (
     <AppLayout isScrollable={false} title={data?.stable?.name[language] || ""}>

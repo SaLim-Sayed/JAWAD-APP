@@ -17,18 +17,19 @@ import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
 import { t } from "i18next";
+import { showGlobalToast } from "@/hooks/useGlobalToast";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
   const { navigate } = useGlobalNavigation();
-  
+
   // Horse store hooks
-  const { 
-     setSelectedHorse, 
+  const {
+    setSelectedHorse,
     storeHorse,
-    isHorseInCart, 
+    isHorseInCart,
     isHorseStored,
-    getCartItemsCount 
+    getCartItemsCount
   } = useHorseStore();
 
   const { data, isLoading, refetch, isFetching } = useApiQuery<GetHorseDetailResponse>({
@@ -48,8 +49,8 @@ const HorseDetails = () => {
   const handleSelectHorse = () => {
     if (horse) {
       // Add to cart and set as selected
-       setSelectedHorse(horse);
-      
+      setSelectedHorse(horse);
+
       // Navigate to booking or cart
       navigate(navigationEnums.EVENT_BOOKING, { id, type: "Photo session" });
     }
@@ -60,16 +61,12 @@ const HorseDetails = () => {
       // Store horse in the store for later use
       storeHorse(horse);
       setSelectedHorse(horse);
-      Alert.alert('Success', 'Horse has been stored successfully!');
+      showGlobalToast({ type: "success", title: "Horse Added", body: "Horse added to cart successfully" })
     }
   };
 
-  // Check if horse is already in cart or stored
-  const isInCart = horse ? isHorseInCart(horse._id, "Photo_session") : false;
   const isStored = horse ? isHorseStored(horse._id) : false;
-  const cartCount = getCartItemsCount();
-  const {authData}=useAuthStore()
-  const isadmin=authData?.role==='stable'||authData?.role==='photographer'
+  const { authData } = useAuthStore()
 
   return (
     <AppLayout title={title} isScrollable={false} showBackButton>
@@ -90,16 +87,16 @@ const HorseDetails = () => {
             )}
           </ScrollView>
         </LoaderBoundary>
-        
+
         <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
-            title={ t("Global.select")}
+            title={t("Global.select")}
             onPress={handleSelectHorse}
             className="w-[80%]"
             variant="solid"
           />
           <AppButton
-            title={isStored ? t("Global.stored") : t("Global.add_to_cart") }
+            title={isStored ? t("Global.stored") : t("Global.add_to_cart")}
             variant={isStored ? "solid" : "outline"}
             onPress={handleStoreHorse}
             className="w-[80%]"
@@ -107,8 +104,8 @@ const HorseDetails = () => {
             disabled={isStored}
           />
         </Row>
-        
-       
+
+
       </View>
     </AppLayout>
   );

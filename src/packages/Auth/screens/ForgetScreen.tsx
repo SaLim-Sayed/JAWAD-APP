@@ -13,12 +13,12 @@ import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-
+ 
 
 const ForgetScreen = () => {
   const {t} = useTranslation()
   const loginSchema = z.object({
-    phone: z.string().min(6, t("auth.validation.phone_required")),
+    email: z.string().email(t("Login.email_error")),
   });
   
   type LoginSchema = z.infer<typeof loginSchema>;
@@ -33,7 +33,7 @@ const ForgetScreen = () => {
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      phone: '',
+      email: '',
     },
   });
 
@@ -52,18 +52,18 @@ const ForgetScreen = () => {
         </Col>
         <Controller
           control={control}
-          name="phone"
+          name="email"
           render={({ field: { onChange, value } }) => (
             <Input
-              name='phone'
+              name='email'
               control={control}
-              label={t("auth.phone_label")}
-              placeholder={t("auth.phone_placeholder")}
-              keyboardType="phone-pad"
+              label={t("Login.email_label")}
+              placeholder={t("Login.email_placeholder")}
+              keyboardType="email-address"
               className="bg-white p-3 rounded-xl border mt-1 mb-3"
               onChangeText={onChange}
               value={value}
-              error={errors.phone?.message}
+              error={errors.email?.message}
             />
           )}
         />

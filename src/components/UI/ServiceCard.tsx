@@ -14,10 +14,10 @@ interface ServiceCardProps {
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
-    const {t}=useTranslation()
+    const { t } = useTranslation()
     return (
         <TouchableOpacity
-            className="w-[180px] bg-white rounded-xl mb-3  shadow-sm"
+            className="w-full bg-white rounded-xl mb-3  shadow-sm"
             activeOpacity={0.85}
             onPress={onPress}
         >
@@ -33,16 +33,18 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
 
                             <AppText className="font-semibold text-brownColor-400 text-base ">{title}</AppText>
                         </View>
-                        <NavButton
-                            className="w-32 h-8"
-                            text={t("Global.start_now")}
-                            onPress={() => onPress()}
-                            iconLeft={
-                                <View className="flex items-center justify-center h-10 p-2 w-10 rounded-full bg-amber-950">
-                                    <Icons.arrowRight width={20} height={20}  style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],margin: 4,width: 20, height: 20 }} className="text-white w-4 h-4" />
-                                </View>
-                            }
-                        />
+                        <View className="flex-row items-center self-end   rounded-2xl px-3 py-1">
+                            <NavButton
+                                className="w-40 h-10"
+                                text={t("Global.start_now")}
+                                onPress={() => onPress()}
+                                iconLeft={
+                                    <View className="flex self-end items-center justify-center h-12 p-2 w-12 rounded-full bg-amber-950">
+                                        <Icons.arrowRight width={28} height={28} style={{ transform: [{ rotate: `${isRTL ? 180 : 0}deg` }], margin: 4, width: 28, height: 28 }} className="text-white w-4 h-4" />
+                                    </View>
+                                }
+                            />
+                        </View>
                     </View>
                 </Image>
             </View>
