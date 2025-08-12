@@ -34,7 +34,7 @@ const ServicesScreen = () => {
       title: t("Global.training"),
       image: images.family,
       onPress: () => {
-        navigate(navigationEnums.PHOTOS)
+        navigate(navigationEnums.SCHOOLS)
       },
     },
   ];

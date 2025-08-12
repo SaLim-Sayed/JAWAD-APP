@@ -55,6 +55,9 @@ import StableHorse from '@/packages/Client/My-stable/screens/StableHorse';
 import EditHorseForm from '@/packages/Client/My-stable/components/EditHorseForm';
 import EditHorse from '@/packages/Client/My-stable/screens/EditHorse';
 import Cart from '@/packages/Client/Profile/screens/Cart';
+import CompleteSchool from '@/components/UI/CompleteSchool';
+import SchoolScreen from '@/packages/Client/Services/screens/SchoolScreen';
+import SchoolDetails from '@/packages/Client/Services/screens/SchoolDetails';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -200,6 +203,7 @@ function OnboardingNavigator() {
       <Stack.Screen name={navigationEnums.SIGNUP_SCREEN} component={SignUpScreen} />
       <Stack.Screen name={navigationEnums.COMPLETE_STABLE} component={CompleteStable} />
       <Stack.Screen name={navigationEnums.COMPLETE_PHOTOGRAPHER} component={CompletePhotographer} />
+      <Stack.Screen name={navigationEnums.COMPLETE_SCHOOL} component={CompleteSchool} />
       <Stack.Screen name={navigationEnums.FORGET_PASSWORD_SCREEN} component={ForgetScreen} />
       <Stack.Screen name={navigationEnums.OTP_SCREEN} component={OtpScreen} />
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SCREEN} component={ChangePassword} />
@@ -220,6 +224,8 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.SERVICES} component={ServicesScreen} />
       <Stack.Screen name={navigationEnums.RIDES} component={RidesScreen} />
       <Stack.Screen name={navigationEnums.PHOTOS} component={PhotoSessionScreen} />
+      <Stack.Screen name={navigationEnums.SCHOOLS} component={SchoolScreen} />
+      <Stack.Screen name={navigationEnums.SCHOOL_DETAILS} component={SchoolDetails} />
       <Stack.Screen name={navigationEnums.PHOTO_SESSION_DETAILS} component={PhotoSessionDetails} />
       <Stack.Screen name={navigationEnums.PROFILE} component={Profile} />
       <Stack.Screen name={navigationEnums.EVENTS} component={Events} />

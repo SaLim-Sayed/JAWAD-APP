@@ -81,6 +81,8 @@ const LoginScreen = () => {
         if (error?.response?.status === 400) {
           if (authData.role === "photographer") {
             navigate(navigationEnums.COMPLETE_PHOTOGRAPHER, { id: error.response.data.id })
+          } else if (authData.role === "school") {
+            navigate(navigationEnums.COMPLETE_SCHOOL, { id: error.response.data.id })
           } else {
             navigate(navigationEnums.COMPLETE_STABLE, { id: error.response.data.id })
           }

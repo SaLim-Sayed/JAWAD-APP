@@ -27,6 +27,7 @@
   REGISTER_SUCCESS_SCREEN: "register-success",
   COMPLETE_STABLE: "complete-stable/:id",
   COMPLETE_PHOTOGRAPHER: "complete-photographer/:id",
+  COMPLETE_SCHOOL: "complete-school/:id",
 
 
 
@@ -40,6 +41,8 @@
   HORSE_DETAILS: "horse/details/:id",
   SERVICES: "services",
   PHOTO_SESSION_DETAILS: "photo/session/details/:id",
+  SCHOOLS: "schools",
+  SCHOOL_DETAILS: "school/details/:id",
   LOGOUT: "logout",
 
   // Stable
@@ -52,7 +55,7 @@
   //EVENTs
   EVENTS: "events",
   EVENT_DETAILS: "event/details/:id",
-  EVENT_BOOKING: "event/booking/:id?:type",
+  EVENT_BOOKING: "event/booking/:id?:type?:price",
   EVENT_BOOKING_SUCCESS: "event/booking-success",
 
 

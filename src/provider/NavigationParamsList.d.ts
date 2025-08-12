@@ -32,6 +32,7 @@ export type NavigationParamsList = {
   [navigationEnums.REGISTER_SUCCESS_SCREEN]: undefined;
   [navigationEnums.COMPLETE_STABLE]: { id: any };
   [navigationEnums.COMPLETE_PHOTOGRAPHER]: { id: any };
+  [navigationEnums.COMPLETE_SCHOOL]: { id: any };
 
   //SERVICE
   [navigationEnums.STABLE]: undefined;
@@ -43,6 +44,8 @@ export type NavigationParamsList = {
   [navigationEnums.RIDES]: undefined;
   [navigationEnums.PHOTOS]: undefined;
   [navigationEnums.PHOTO_SESSION_DETAILS]: { id: any };
+  [navigationEnums.SCHOOLS]: undefined;
+  [navigationEnums.SCHOOL_DETAILS]: { id: any };
   [navigationEnums.PROFILE]: undefined;
 
 
@@ -56,7 +59,7 @@ export type NavigationParamsList = {
   //EVENTs
   [navigationEnums.EVENTS]: undefined;
   [navigationEnums.EVENT_DETAILS]: { id: any };
-  [navigationEnums.EVENT_BOOKING]: { id: any , type?: "event" | "Photo session" | "Rids" };
+  [navigationEnums.EVENT_BOOKING]: { id: any , type?: "event" | "Photo session" | "Rids"|"Training" , price?: any };
   [navigationEnums.EVENT_BOOKING_SUCCESS]: undefined;
 
   //PROFILE

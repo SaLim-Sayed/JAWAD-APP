@@ -31,6 +31,7 @@ const PhotoSessionHeader = ({photographer}: {photographer:Photographer}) => {
                     <AppText className="text-brownColor-400 font-bold">{photographer.name}</AppText>
                 </Row>
             </Row>
+            
 
 
         </View>

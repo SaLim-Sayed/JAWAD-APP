@@ -34,9 +34,9 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
         <AppText className="text-white tajawal-semibold-16 capitalize mb-1">
           {userName}
         </AppText>
-        <View className="bg-brownColor-300 flex-row items-center w-48 rounded-full p-2 my-2 gap-2">
+        <View className="bg-brownColor-300 flex-row items-center w-48 rounded-full p-1 my-2 gap-2">
           <Image source={Icons.locationTick} tint="white" />
-          <AppText className="text-white tajawal-semibold-16 capitalize">
+          <AppText className="text-white ">
             {location}
           </AppText>
         </View>

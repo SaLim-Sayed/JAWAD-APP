@@ -1,10 +1,12 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import AppWrapper from '@/components/UI/AppWrapper'
 import AppHeader from '@/components/UI/AppHeader'
 import { UserProfile } from '../components/UserProfile'
 import SummaryItem from '../../Events/components/SummaryItem'
 import DescriptionItem from '@/components/UI/DescriptionItem'
+import { t } from '@/lib'
+import AppText from '@/components/UI/AppText'
 
 export default function AboutUs() {
     const aboutUsSections = [
@@ -40,24 +42,10 @@ export default function AboutUs() {
     ];
     return (
         <AppWrapper >
-            <AppHeader title="About Us" showBackButton />
-            <View className='bg-white'>
-                <FlatList
-
-                    data={aboutUsSections}
-                    keyExtractor={(item) => item.key}
-                    style={{ margin: 16, backgroundColor: "#fff" }}
-                    renderItem={({ item }) => (
-                        <DescriptionItem
-                            key={item.key}
-                            label={item.title}
-                            description={item.content}
-                        />
-
-                    )}
-                    ListFooterComponent={<View className="h-80" />}
-                />
-            </View>
+            <AppHeader title={t('About.title')} showBackButton />
+            <ScrollView className='bg-white p-3'>
+                <AppText className='text-brownColor-400 tajawal-semibold-16'>{t('About.description')}</AppText>
+            </ScrollView>
         </AppWrapper>
     )
 }

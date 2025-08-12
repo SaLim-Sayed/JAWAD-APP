@@ -43,6 +43,15 @@ export const apiKeys = {
       completed:(id:string) => `/api/v1/photographer/completed/${id}`,
       getPhotographerDetails:(id:string) => `/api/v1/photographer/get/detail/${id}`,
     },
+    school: {
+      addSchool: "/api/v1/school/addSchool",
+      login: "/api/v1/school/login",
+      getSchool:"/api/v1/school/get",
+      getSchoolDetail:(id:string) => `/api/v1/school/details/${id}`,
+      getStables:(id:string)=>`/api/v1/school/getStables/${id}`,
+      completed:(id:string) => `/api/v1/school/completed/${id}`,
+      getPhotographerDetails:(id:string) => `/api/v1/school/get/detail/${id}`,
+    },
 
     booking:{
       payment:"/api/v1/payment/pay",

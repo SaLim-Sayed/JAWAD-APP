@@ -22,6 +22,8 @@
     "my_stable": "My Stable",
     "rides": "Rides",
     "stables": "Stables",
+    "school": "School",
+    "events": "Events",
     "training": "Training",
     "horse_details": "Horse Details",
     "stored": "Stored",
@@ -32,11 +34,15 @@
     "signup": "Sign Up"
   },
   "horse": {
-    "name": "Horse Name",
-    "description": "Horse Description",
-    "gender": "Horse Gender",
-    "level": "Horse Level",
-    "feature": "Horse Feature",
+    "name": " Name",
+    "description": " Description",
+    "gender": " Gender",
+    "level": " Level",
+    "feature": " Feature",
+    "address": "Address",
+    "region": "Region",
+    "city": "City",
+    "please_select": "Please Select a package",
     "price": "Price"
   },
   "booking": {
@@ -189,6 +195,11 @@
   },
   "Profile": {
     "logout": "Logout"
+  },
+  
+  "About": {
+    "title": "About Us",
+    "description": "Jawad is Egypt’s first horse riding booking platform, founded in 2025 to bring the beauty, thrill, and tradition of horseback riding into the palm of your hand. Whether you’re a first-time rider, an experienced equestrian, or simply looking for a unique day out, Jawad makes it easy to discover and book unforgettable riding experiences across the country.\n\nOur journey began with a simple dream: to make horse riding in Egypt as easy as booking with one click. From galloping along sandy beaches and riding beside the Nile, to exploring the pyramids or lush farms, our app connects you with trusted stables, skilled trainers, and well-cared-for horses — instantly.\n\nWe believe riding is more than a sport; it’s a lifestyle, a connection with nature, and a window into Egypt’s heritage. That’s why Jawad offers:\n- Easy online booking for rides, training, and photo sessions\n- Verified stables and rider reviews\n- Secure payments and flexible cancellations\n- Custom experiences for families, groups, and events\n\nBy empowering local equestrian businesses with digital tools, we help them grow while giving riders more choices and confidence in their bookings.\n\nSaddle up with Jawad — your next horse riding adventure starts here."
   },
   "Error": {}
 }

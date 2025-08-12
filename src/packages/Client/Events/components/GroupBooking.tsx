@@ -21,14 +21,11 @@ import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
 import { t } from '@/lib';
 
-const serviceOptions = [
-  { label: 'Photo session', value: 'Photo session' },
-  { label: 'Event', value: 'event' },
-];
 
-export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
+export const GroupBooking = () => {
   const [payId, setPayId] = useState("")
-  const { id, type } = useAppRouteParams('EVENT_BOOKING');
+  const { id, type, price } = useAppRouteParams('EVENT_BOOKING');
+  console.log("price", price)
   const { data: horseDetails } = useApiQuery<GetHorseDetailResponse>({
     key: ["getHorseDetails", id],
     url: apiKeys.horse.horseDetails + id,
@@ -36,11 +33,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
 
   const {
     cartItems,
-    updateCartItemQuantity,
-    removeFromCart,
-    clearCart,
     getCartTotal,
-    getCartItemsCount
   } = useHorseStore();
   const totalAmount = getCartTotal();
 
@@ -70,7 +63,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
   // State for payment WebView
   const [showPaymentWebView, setShowPaymentWebView] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState('');
-  
+
   // ADD: Prevent duplicate booking processing
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const processedPayments = useRef(new Set<string>());
@@ -111,12 +104,12 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
     const paymentData = {
       customerProfileId: "1212",
       customerMobile: data.customerMobile,
-      totalPrice: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : totalAmount,
+      totalPrice: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price :type === "Training" ? price : totalAmount,
       chargeItems: [
         {
           itemId: '6b5fdea340e31b3b0339d4d4ae5',
           description: "Booking",
-          price: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : totalAmount,
+          price: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price :type === "Training" ? price : totalAmount,
           quantity: 1,
           imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
         }
@@ -162,7 +155,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
       try {
         const params = parseUrlParams(url);
         const merchantRefNumber = params.merchantRefNumber;
-        
+
         // PREVENT DUPLICATE PROCESSING BY REFERENCE NUMBER
         if (!merchantRefNumber || processedPayments.current.has(merchantRefNumber)) {
           console.log('Payment already processed for reference:', merchantRefNumber);
@@ -172,10 +165,10 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         // MARK AS PROCESSING
         setIsProcessingPayment(true);
         processedPayments.current.add(merchantRefNumber);
-        
+
         setPayId(merchantRefNumber);
         console.log("salim", merchantRefNumber);
-        
+
         const paymentData = {
           type: params.type,
           referenceNumber: params.referenceNumber,
@@ -199,15 +192,21 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
             stable: type === "Photo session" ? stableId : cartItems[0].horse.stable,
             payId: merchantRefNumber
           };
-          
+
           const eventPayload = {
             event: id,
             totalPrice: Number(eventDetails?.event?.price),
             service: "event",
             payId: merchantRefNumber
           };
+          const trainingPayload = {
+            school: id,
+            totalPrice: Number(price),
+            service: "Training",
+            payId: merchantRefNumber
+          };
 
-          createBooking(type === "event" ? eventPayload : horsePayload, {
+          createBooking(type === "event" ? eventPayload : type === "Training" ? trainingPayload : horsePayload, {
             onSuccess: () => {
               setShowPaymentWebView(false);
               setIsProcessingPayment(false);
@@ -244,7 +243,7 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
       }
     }
   };
-  
+
   const handleCloseWebView = () => {
     setShowPaymentWebView(false);
     setIsProcessingPayment(false);
@@ -353,11 +352,11 @@ export const GroupBooking = ({ onNext }: { onNext: () => void }) => {
         style={styles.modal}
       >
         <SafeAreaView style={styles.modalContainer}>
-          <AppHeader 
-            title={t('booking.payment')} 
-            showBackButton 
-            onBack={handleCloseWebView} 
-            customCloseButton={handleCloseWebView} 
+          <AppHeader
+            title={t('booking.payment')}
+            showBackButton
+            onBack={handleCloseWebView}
+            customCloseButton={handleCloseWebView}
           />
 
           {paymentUrl ? (
