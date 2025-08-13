@@ -9,7 +9,9 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
 import { z } from 'zod';
-const signUpSchema = z.object({
+import { useApiQuery } from '@/hooks/useApiQuery';
+import { apiKeys } from '@/hooks/apiKeys';
+ const signUpSchema = z.object({
     username: z.string().min(3, 'Username required'),
     email: z.string().email('Email required'),
     mobile: z.string().min(6, 'Mobile number required'),
@@ -20,13 +22,17 @@ type SignUpForm = z.infer<typeof signUpSchema>;
 export const UserProfile = () => {
     const { navigate } = useGlobalNavigation();
 
-
+ const { data: userDetails, isLoading: userDetailsLoading } = useApiQuery({
+      url: apiKeys.auth.getUserDetails,
+      key: ["getUserDetails"],
+    });
+    console.log({userDetails})
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
-            username: '',
-            email: '',
-            mobile: '',
+            username: userDetails?.details?.name,
+            email: userDetails?.details?.email,
+            mobile: userDetails?.details?.phone,
 
         },
     });
@@ -52,8 +58,8 @@ export const UserProfile = () => {
             >
                 <UserCard
                     role="User"
-                    name="John Doe"
-                    phone="1234567890"
+                    name={userDetails?.details?.name}
+                    phone={userDetails?.details?.email}
                     avatar={images.family}
                 />
                 <Controller

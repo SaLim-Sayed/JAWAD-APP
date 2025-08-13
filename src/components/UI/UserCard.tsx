@@ -13,12 +13,16 @@ interface UserCardProps {
 }
 
 const UserCard: React.FC<UserCardProps> = ({ role, name, phone, avatar }) => {
+  const user = {
+    avatar: 'https://images.icon-icons.com/1993/PNG/512/account_avatar_face_man_people_profile_user_icon_123197.png', // Replace with real avatar or local asset
+
+  };
   return (
     <View className="bg-[#FAFAFA] rounded-2xl p-4 w-full">
       <Row gap={12} items="center">
         <Image
-          source={avatar }
-          className="w-16 h-16 rounded-full border-[2px] border-brownColor-400"
+          source={user.avatar}
+          className="w-16 h-16 rounded-full"
         />
 
         <Col gap={2}>

@@ -42,7 +42,7 @@ const SchoolScreen = () => {
   return (
     <AppWrapper>
       <AppHeader title={t("Global.schools")} showBackButton />
-      <View className="bg-white pt-6  flex-1 pb-60">
+      <View className="bg-white pt-6  flex-1 pb-6">
 
         {/* Search */}
         <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">

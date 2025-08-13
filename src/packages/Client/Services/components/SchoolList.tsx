@@ -24,7 +24,7 @@ const SchoolList: React.FC<SchoolListProps> = ({ schools, onSeeAll }) => {
                 keyExtractor={(item) => item._id.toString()}
                 columnWrapperStyle={{ gap: 6 }}
                 contentContainerStyle={{
-                    alignItems: "center", gap: 20, paddingBottom: 220,
+                    alignItems: "center", gap: 20, paddingBottom: 40,
                 }}
                 renderItem={({ item }) => (
                     <SchoolCard

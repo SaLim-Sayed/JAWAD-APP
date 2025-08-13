@@ -1,8 +1,8 @@
 // src/store/useHorseStore.ts
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { Horse, HorseDetail } from '@/packages/Client/Services/@types/horse.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { HorseDetail, Horse } from '@/packages/Client/Services/@types/horse.types';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface CartItem {
   horse: Horse | HorseDetail;

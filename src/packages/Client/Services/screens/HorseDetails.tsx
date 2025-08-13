@@ -5,19 +5,18 @@ import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
+import { showGlobalToast } from "@/hooks/useGlobalToast";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useHorseStore } from "@/store/useHorseStore";
 import { useFocusEffect } from "@react-navigation/native";
+import { t } from "i18next";
 import React from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
-import { t } from "i18next";
-import { showGlobalToast } from "@/hooks/useGlobalToast";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
@@ -26,11 +25,9 @@ const HorseDetails = () => {
   // Horse store hooks
   const {
     setSelectedHorse,
-    storeHorse,
+    addToCart,
     isHorseInCart,
-    isHorseStored,
-    getCartItemsCount
-  } = useHorseStore();
+   } = useHorseStore();
 
   const { data, isLoading, refetch, isFetching } = useApiQuery<GetHorseDetailResponse>({
     key: ["getHorseDetails", id],
@@ -57,16 +54,19 @@ const HorseDetails = () => {
   };
 
   const handleStoreHorse = () => {
-    if (horse) {
-      // Store horse in the store for later use
-      storeHorse(horse);
-      setSelectedHorse(horse);
-      showGlobalToast({ type: "success", title: "Horse Added", body: "Horse added to cart successfully" })
-    }
+    if (!horse) return;
+  
+    addToCart(horse, "Ride"); // ✅ Actually add to cart
+    setSelectedHorse(horse);
+  
+    showGlobalToast({
+      type: "success",
+      title: "Horse Added",
+      body: "Horse added to cart successfully"
+    });
   };
-
-  const isStored = horse ? isHorseStored(horse._id) : false;
-  const { authData } = useAuthStore()
+  
+  const isStored = horse ? isHorseInCart(horse._id, "Ride") : false;
 
   return (
     <AppLayout title={title} isScrollable={false} showBackButton>

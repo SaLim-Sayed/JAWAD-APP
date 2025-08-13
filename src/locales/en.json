@@ -23,6 +23,8 @@
     "rides": "Rides",
     "stables": "Stables",
     "school": "School",
+    "schools": "Schools",
+
     "events": "Events",
     "training": "Training",
     "horse_details": "Horse Details",
@@ -181,7 +183,7 @@
     "history": "Booking History",
     "contact": "Contact Us",
     "about": "About Us",
-    "terms": "Terms & User",
+    "terms": "Terms & Conditions",
     "complaint": "Complaint or Suggestion",
     "invite": "Invite a Friend",
     "language": "Language Setting",
@@ -196,6 +198,22 @@
   "Profile": {
     "logout": "Logout"
   },
+  "terms": {
+    "title": "Terms & Conditions",
+      "1_user_eligibility": "User Eligibility\nTo use the Platform, you must be at least 16 years old or have the permission of a parent or legal guardian. You agree to provide accurate, complete, and current information when creating an account.",
+      "2_booking_and_payments": "Booking and Payments\nAll bookings made through our Platform are subject to availability and acceptance by the stables or service providers (“Partners”).\nThe stable has the right to downgrade the horse level in case of losing control.\nOnly one user can ride a horse; not allowed for two users to ride one horse.\nPayments are processed securely via our integrated payment gateway. Your payment information is not stored on our servers.\nWe are only using our integrated payment gateway and we don’t allow or accept any other payment methods.\nPrices listed are set by our Partners and may vary by location, type of ride, duration, and services offered.\nPrice vary upon nationality according to the Ministry of Tourism.\nYou should bring your ID during the ride.",
+      "3_cancellations_and_refunds": "Cancellations and Refunds\nCancellations made 24 hours before the scheduled ride are eligible for a full refund (100% refund).\n50% refund available on more than 3 hours before booking and up to 24 hours before booking.\nLate cancellations or no-shows may result in no refund.\nIn the case of bad weather or safety concerns, Partners reserve the right to reschedule or cancel rides with a full refund or rescheduling option.",
+      "4_assumption_of_risk": "Assumption of Risk\nHorse riding is an inherently risky activity. By booking through our Platform, you acknowledge and accept the risks involved. Neither we nor our Partners are responsible for injuries, accidents, or property damage that may occur during rides.\nWe highly recommend all riders wear appropriate safety gear, including helmets, and follow the instructions of the riding staff at all times.",
+      "5_partner_responsibility": "Partner Responsibility\nOur Partners are independent operators and are solely responsible for quality and delivery of their services. We do not directly own or operate any stables or horses.",
+      "6_user_conduct": "User Conduct\nYou agree to:\n- Use the Platform only for lawful purposes.\n- Not interfere with or disrupt the Platform or services.\n- Not provide false, misleading, or harmful content or reviews.\nWe reserve the right to suspend or terminate any account that violates these Terms.",
+      "7_intellectual_property": "Intellectual Property\nAll content on our Platform, including text, graphics, logos, and software, is the property of Jawad or its licensors and is protected by intellectual property laws.",
+      "8_limitation_of_liability": "Limitation of Liability\nTo the maximum extent permitted by law, Jawad is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the Platform or any booked services.",
+      "9_privacy_policy": "Privacy Policy\nYour use of our Platform is also governed by our Privacy Policy, which explains how we collect, use, and protect your personal data.",
+      "10_modifications_to_terms": "Modifications to Terms\nWe reserve the right to modify these Terms at any time. We will notify users of significant changes, and continued use of the Platform constitutes acceptance of the updated Terms.",
+      "11_governing_law": "Governing Law\nThese Terms are governed by and construed in accordance with the laws of Egypt. Any disputes arising from these Terms will be subject to the exclusive jurisdiction of the courts in Egypt.",
+      "12_contact_us": "Contact Us\nFor questions or concerns regarding these Terms, please contact us at:\n📧 [support@yourappname.com]\n📍 [Your Business Address]"
+    }
+,  
   
   "About": {
     "title": "About Us",

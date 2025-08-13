@@ -1,14 +1,13 @@
 import { images } from '@/assets/images'
+import AppButton from '@/components/UI/AppButton'
 import AppHeader from '@/components/UI/AppHeader'
 import AppWrapper from '@/components/UI/AppWrapper'
-import AppButton from '@/components/UI/AppButton'
-import React from 'react'
-import { FlatList, View, Text, Image, Alert } from 'react-native'
-import { useHorseStore } from '@/store/useHorseStore'
-import useGlobalNavigation from '@/provider/useGlobalNavigation'
-import { navigationEnums } from '@/provider/navigationEnums'
-import { TouchableOpacity } from 'react-native'
 import { Icons } from '@/constants'
+import { navigationEnums } from '@/provider/navigationEnums'
+import useGlobalNavigation from '@/provider/useGlobalNavigation'
+import { useHorseStore } from '@/store/useHorseStore'
+import React from 'react'
+import { Alert, FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 
 interface CartItemCardProps {
   item: any;
