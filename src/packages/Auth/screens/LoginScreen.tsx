@@ -174,13 +174,11 @@ const LoginScreen = () => {
             onPress={() => { }}
             startIcon={<Icons.google />}
           />
+         
           <AppButton
-            className="w-12 h-12 bg-brownColor-50 items-center justify-center"
-            onPress={() => { }}
-            startIcon={<Icons.facebook />}
-          />
-          <AppButton
-            className="w-12 h-12 bg-brownColor-50 items-center justify-center"
+            className="flex-1 bg-brownColor-50"
+            textClassName="text-brownColor-400"
+            title={t("apple")}
             onPress={() => { }}
             startIcon={<Icons.apple />}
           />

@@ -30,11 +30,11 @@ const StableCard: React.FC<StableCardProps> = ({
     const { t } = useTranslation()
     return (
         <TouchableOpacity onPress={onPressStart} style={styles.card}>
-            <Image className="rounded-t-2xl" source={image} style={styles.image} />
+            <Image className="rounded-t-2xl" source={image} resizeMode="stretch" style={styles.image} />
             <Col className="p-2" gap={4}>
                 <Row items="center" gap={12}>
                     <Image source={Icons.location} style={styles.icon} />
-                    <AppText className="font-bold tajawal-semibold-20 text-brownColor-400 mt-2">{name}</AppText>
+                    <AppText className="font-bold tajawal-semibold-20 text-brownColor-400">{name}</AppText>
                 </Row>
                 <Row items="center" gap={12}>
                     <Image source={Icons.stable} style={styles.icon} />
@@ -43,10 +43,10 @@ const StableCard: React.FC<StableCardProps> = ({
                 <Row gap={12} className="my-2">
                     <StarRatingDisplay
                         rating={rating}
-                        starStyle={{ width: 20, height: 14 }}
+                        starStyle={{ width: 15, height: 14 }}
                         color="#FEAF48"
+                        starSize={20}
                     />
-                    <AppText className="pt-4 text-brownColor-400 text-sm">{rating}</AppText>
                 </Row>
                 <Row gap={2} items="center" className="my-2 gap-2">
                     <NavButton
@@ -72,13 +72,15 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: "#E7E7E74D",
         borderRadius: 16,
-        maxWidth: 180,
+        maxWidth: 170,
+        marginHorizontal: 6,
         shadowColor: "#000",
         shadowOpacity: 0.06,
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
         alignItems: "flex-start",
         overflow: "hidden",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     },
     image: {
         width: "100%",

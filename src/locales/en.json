@@ -33,6 +33,8 @@
     "booking": "Booking",
     "get_ticket": "Get Ticket",
     "no_data": "No Data",
+    "egyptian":"Egyptian",
+    "others":"others",
     "signup": "Sign Up"
   },
   "horse": {

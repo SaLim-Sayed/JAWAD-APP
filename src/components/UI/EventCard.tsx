@@ -7,7 +7,7 @@ import { Icons } from "@/constants";
 import { Event } from "@/packages/Client/home/@types/event.type";
 import React from "react";
 import moment from "moment";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useLanguage } from "@/store";
 import { isRTL } from "@/provider/constant";
 import { useTranslation } from "react-i18next";
@@ -21,8 +21,8 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => {
   const { language } = useLanguage()
   const {t}=useTranslation()
-  return (
-  <View className="bg-white relative rounded-2xl flex-1 mx-4 gap-4 w-[90%] flex-row mb-4 shadow items-start">
+   return (
+  <View style={styles.card} className="bg-white relative rounded-2xl flex-1 mx-4 gap-4 w-[90%] flex-row mb-4 shadow items-start">
     <Image source={event.picUrl} className="rounded-l-2xl" style={{ width: 164, height: 147 }} />
     <Col gap={4} items="start" justify="start" className="flex-1 pt-2 pr-4 ">
       <Col gap={8}>
@@ -43,7 +43,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => {
     </Col>
     <AppButton
       title={t("Global.start_now")}
-      className="absolute bottom-0 right-2 py-1 w-[30%] border border-brownColor-50 rounded-2xl"
+      className="absolute bottom-0 right-2 py-1  h-10 w-[30%] border border-brownColor-50 rounded-2xl"
       textClassName="text-brownColor-400"
       variant="outline"
       endIcon={<Icons.arrowRightFill  style={{
@@ -54,4 +54,14 @@ const EventCard: React.FC<EventCardProps> = ({ event, onStart }) => {
   </View>
 );}
 
+const styles = StyleSheet.create({
+    card: {      
+        shadowColor: "#000",
+        shadowOpacity: 0.06,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 3 },
+        
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    },
+});
 export default EventCard;

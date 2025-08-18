@@ -59,4 +59,8 @@ export const apiKeys = {
       event:"/api/v1/event/booking",
       getBooking:"/api/v1/booking/get",
     },
+    refund:{  
+      check:(bookingId:string) => `/api/v1/refund/info/${bookingId}`,
+      refund:(bookingId:string) => `/api/v1/refund/request/${bookingId}`,
+    },
   };

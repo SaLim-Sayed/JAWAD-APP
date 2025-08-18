@@ -47,7 +47,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ onSeeAll }) => {
                 data={data?.stables}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item._id.toString()}
-                contentContainerStyle={{ paddingLeft: 16, paddingRight: 16, alignItems: "center", gap: 6 }}
+                contentContainerStyle={{ paddingLeft: 16, paddingRight: 16, alignItems: "center", gap: 6,paddingBottom:20 }}
                 renderItem={({ item }) => (
                     <StableCard
                         id={item._id}

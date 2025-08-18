@@ -33,6 +33,8 @@
     "booking": "الحجز",
     "get_ticket": "احصل على التذكرة",
     "no_data": "لا توجد بيانات",
+    "egyptian":"مصري",
+    "others":"أخرى",
     "signup": "الاشتراك"
   },
   "horse": {

@@ -46,8 +46,8 @@ export const SignUpScreen = () => {
     )
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
-        { value: 'American', label: 'American', icon: images.en },
-        { value: 'Egyptian', label: 'مصري', icon: images.ar },
+        { value:'others', label: t("Global.others") },
+        { value: 'Egyptian', label: t("Global.egyptian")  },
     ];
 
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
@@ -56,7 +56,7 @@ export const SignUpScreen = () => {
             name: '',
             // phone: '',
             email: '',
-            nationality: 'American',
+            nationality: 'Egyptian',
             password: '',
             gender: 'male',
         },
@@ -208,16 +208,11 @@ export const SignUpScreen = () => {
                     onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.google />}
                 />
-                <AppButton
-                    className='w-[10%]  bg-brownColor-50'
-                    textClassName='text-brownColor-400'
 
-                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
-                    startIcon={<Icons.facebook />}
-                />
                 <AppButton
-                    className='w-[10%] bg-brownColor-50 text-brownColor-400'
+                    className='w-[30%] bg-brownColor-50 text-brownColor-400'
                     textClassName='text-brownColor-400'
+                    title={t("apple")}
                     onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
                     startIcon={<Icons.apple />}
                 />
