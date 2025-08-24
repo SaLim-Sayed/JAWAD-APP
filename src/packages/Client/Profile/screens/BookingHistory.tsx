@@ -47,7 +47,8 @@ export default function BookingHistory() {
             ListFooterComponent={
               <View style={{height: 200 ,paddingBottom: 200}} />
             }
-          /></LoaderBoundary>
+          />
+          </LoaderBoundary>
        
      </AppWrapper>
   )

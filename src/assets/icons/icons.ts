@@ -57,6 +57,10 @@ import arrow from "@/assets/icons/arrow.svg"
 import edit from "@/assets/icons/edit.svg"
 import addtoStable from "@/assets/icons/addtoStable.svg"
 import trash from "@/assets/icons/trash.svg"
+import event from "@/assets/icons/event.svg"
+import eventOutline from "@/assets/icons/event-outline.svg"
+
+ 
 
 
 
@@ -124,4 +128,6 @@ export const Icons = {
     edit,
     addtoStable,
     trash,
+    event,
+    eventOutline,
 }

@@ -18,20 +18,20 @@ const HistoryDescription = ({item}: {item: any}) => {
             <Col justify="between" items="start" className="px-4 w-full gap-4">
                 <Row gap={6} items="center" className="w-full">
                     <Image source={Icons.location} className="w-6 h-6" />
-                    <AppText className="text-brownColor-400 font-bold">{item.stable.name[language]}</AppText>
+                    <AppText className="text-brownColor-400 font-bold">{item?.stable?.name[language]}</AppText>
                 </Row>
                 <Row gap={6} items="center" className="w-full">
                     <Image source={Icons.calendar} className="w-6 h-6" />
-                    <AppText className="text-brownColor-400 font-bold">{item.date}</AppText>
+                    <AppText className="text-brownColor-400 font-bold">{item?.date}</AppText>
                 </Row>
                 <Row gap={6} items="center" className="w-full">
                     <Image source={Icons.coin} className="w-6 h-6" />
-                    <AppText className="text-brownColor-400 font-bold">{item.totalPrice} EGP</AppText>
+                    <AppText className="text-brownColor-400 font-bold">{item?.totalPrice} EGP</AppText>
                 </Row>
 
                 <Row gap={6} items="center" className="w-full">
                     <Image source={Icons.coin} className="w-6 h-6" />
-                    <AppText className="text-brownColor-400 font-bold">{item.service} </AppText>
+                    <AppText className="text-brownColor-400 font-bold">{item?.service} </AppText>
                 </Row>
                 
             </Col>

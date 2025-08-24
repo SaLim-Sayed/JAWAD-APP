@@ -1,7 +1,7 @@
 // components/FilterModal.tsx
 import AppButton from "@/components/UI/AppButton";
 import { t } from "@/lib";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   Pressable,
@@ -12,6 +12,9 @@ import {
 } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 import Checkbox from "./Checkbox";
+import Image from "./Image";
+import { Icons } from "@/constants";
+import AppText from "./AppText";
 
 // ✅ updated categories
 type FilterCategory = "level" | "type" | "feature" | "color";
@@ -33,7 +36,7 @@ interface Filters {
 
 const options: FilterOptions = {
   level: ["beginner", "intermediate", "professional"],
-  type: ["arabic", "other"],
+  type: ["arabic", "other", "camel", "vehicles", "carets"],
   feature: ["running", "dancing"],
   color: ["white", "brown", "black"],
 };
@@ -65,6 +68,13 @@ const FilterModal: React.FC<{
     onClose();
   };
 
+  useEffect(() => {
+    if (visible) {
+      setLocalFilters(currentFilters);
+    }
+  }, [visible, currentFilters]);
+
+
   const resetFilters = () => {
     const emptyFilters: Filters = {
       level: [],
@@ -78,16 +88,27 @@ const FilterModal: React.FC<{
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet">
-      <View className="flex-1 bg-white px-4 pt-6">
+      <View className="flex-1  h-full  bg-white px-4 pt-6">
         {/* Header */}
         <View className="flex-row justify-between items-center mb-6">
-          <Text className="text-xl font-bold">{t("filters.title")}</Text>
-          <TouchableOpacity onPress={resetFilters}>
-            <Text className="text-blue-500 font-medium">{t("filters.resetAll")}</Text>
-          </TouchableOpacity>
+          <AppText className="text-xl text-brownColor-400 font-bold">{t("filters.title")}</AppText>
+          <View className="flex-row items-center gap-2">
+            <TouchableOpacity className="flex-row items-center gap-2" onPress={resetFilters}>
+              <AppText className="text-blue-500 font-medium">{t("filters.resetAll")}</AppText>
+            </TouchableOpacity>
+            <TouchableOpacity className="flex-row items-center gap-2" onPress={handleClose}>
+              <AppText className="text-red-800 font-medium">X</AppText>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 2,
+            marginHorizontal: 10,
+          }}
+          style={{ height: 400 }}
+        >
           {(Object.keys(options) as FilterCategory[]).map((category) => (
             <View key={category} className="mb-6">
               <Text className="text-lg font-semibold capitalize mb-3">
@@ -163,13 +184,13 @@ const FilterModal: React.FC<{
             {Object.values(localFilters).every((arr) =>
               Array.isArray(arr) ? arr.length === 0 : arr === 0
             ) && (
-              <Text className="text-gray-500 italic">{t("filters.noApplied")}</Text>
-            )}
+                <Text className="text-gray-500 italic">{t("filters.noApplied")}</Text>
+              )}
           </View>
         </ScrollView>
 
         {/* Action Buttons */}
-        <View className="pt-4 pb-6 border-t border-gray-200">
+        <View className="pt-4 pb-6   border-t border-gray-200">
           <AppButton title={t("filters.apply")} onPress={handleApply} className="mb-3" />
           <AppButton title={t("filters.cancel")} variant="outline" onPress={handleClose} />
         </View>

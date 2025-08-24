@@ -159,7 +159,7 @@ const LoginScreen = () => {
       {role === "auth" && <>
         <Text className="text-center text-brownColor-400 mt-4">
           {t("Login.no_account")}{' '}
-          <Text className="text-brownColor-300" onPress={() => navigate('signUp')}>
+          <Text className="text-blue-600" onPress={() => navigate('signUp')}>
             {t("Login.sign_up")}
           </Text>
         </Text>

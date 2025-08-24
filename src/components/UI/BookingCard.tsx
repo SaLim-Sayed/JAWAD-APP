@@ -1,4 +1,5 @@
 import { Icons } from "@/assets/icons/icons";
+import { images } from "@/assets/images";
 import AppText from "@/components/UI/AppText";
 import Image from "@/components/UI/Image";
 import { TBooking } from "@/packages/Client/Profile/@types/booking.";
@@ -46,7 +47,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
         }}
       >
         <Image
-          source={stable?.picUrl || ""}
+          source={stable?.picUrl || images.villarreal}
           style={{ width: 200, height: 200 }}
           resizeMode="stretch"
         />
@@ -89,7 +90,8 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
           />
           <AppText className="ml-auto text-base font-bold text-[#AAA8A8]">
             {time}
-          </AppText>        </View>
+          </AppText>     
+             </View>
 
         <View className="flex-row items-center">
           <Image

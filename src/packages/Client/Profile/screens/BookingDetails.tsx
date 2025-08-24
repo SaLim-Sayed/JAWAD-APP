@@ -16,6 +16,8 @@ import { apiKeys } from "@/hooks/apiKeys";
 import AppText from "@/components/UI/AppText";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
 import AppLayout from "@/components/UI/AppLayout";
+import { images } from "@/assets/images";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
  
 
 
@@ -54,6 +56,7 @@ const BookingDetails = () => {
     <AppLayout title={title} showBackButton isScrollable={false} >
       <AppHeader title="Booking Details" showBackButton />
        <View className="bg-white  flex-1 h-full ">
+        <LoaderBoundary isLoading={isLoading}>
         <ScrollView
           contentContainerStyle={{
             paddingBottom: 2,
@@ -64,19 +67,21 @@ const BookingDetails = () => {
         >
           <Row items="center" justify="center" className="w-full">
             <Image
-              source={item?.stable?.picUrl}
+              source={item?.stable?.picUrl||images.villarreal}
               className="w-[330px] h-[300px]  flex-1 rounded-2xl"
               resizeMode="stretch"
             />
           </Row>
 
-          <HistoryDescription item={item} />
 
+{       item &&   <HistoryDescription item={item} />
+}
           <AppText className="text-center text-brownColor-400 mt-4">
-            {/* @ts-ignore */}
             {data?.message || error?.response?.data?.message}
           </AppText>
-        </ScrollView>          <AppButton title="Refund" loading={isPending} onPress={handleRefund} />
+        </ScrollView>         
+        </LoaderBoundary> 
+         <AppButton title="Refund" loading={isPending} onPress={handleRefund} />
 
       </View>
 

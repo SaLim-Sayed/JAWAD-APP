@@ -88,8 +88,8 @@ const TabBarIcon = ({ route, focused }: { route: { name: string }, focused: bool
       FocusedIconComponent = Icons.home; // أيقونة مختلفة عند التركيز
       break;
     case 'event':
-      IconComponent = Icons.discountShapeOutline;
-      FocusedIconComponent = Icons.discountShape;
+      IconComponent = Icons.event;
+      FocusedIconComponent = Icons.eventOutline;
       break;
     case 'service':
       IconComponent = Icons.serviceOutline;
