@@ -1,6 +1,7 @@
 {
   "Global": {
     "welcome": "Welcome",
+    "Alexandria":"Alexandria",
     "login": "Login",
     "English": "English",
     "Arabic": "Arabic",
@@ -98,8 +99,8 @@
       "riding": "Riding",
       "training": "Training",
       "boarding": "Boarding",
-      "arabic": "Arabic",
-      "other": "Other"
+      "arabic": "Arabic horse",
+      "other": "Other horses"
     }
   },
   "Onboard": {

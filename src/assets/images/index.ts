@@ -16,6 +16,7 @@ import horseImg from "./horseImg.png";
 import maskMap from "./MaskMap.png";
 import maskMap2 from "./trajectory.png";
 import homeHorse from "./homeHorse.png";
+import heroImage from "./hero-image.png";    
 
 export const horse = {
     stable1: require("./stable/horse/1.png"),
@@ -32,6 +33,7 @@ export const photoSessions = {
     photo4: require("./photo-session/4.png"),
     photo5: require("./photo-session/5.png"),  
     photo6: require("./photo-session/6.png"),
+
 
 }
 
@@ -54,4 +56,5 @@ export const images = {
     maskMap,
     maskMap2,
     homeHorse,
+    heroImage,
                 }

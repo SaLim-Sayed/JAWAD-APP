@@ -24,25 +24,11 @@ const Horses = () => {
   return (
     <AppWrapper >
       <AppHeader title={t("Global.horses")} showBackButton />
-       <View className="bg-white pt-6  pb-60">
-       
-          {/* Search */}
-          <View className="flex-row px-3 w-full mb-3 justify-between items-center gap-4">
+       <View className="pt-6  pb-6">
+        
 
-            <SearchInput  value={search} onChange={setSearch} />
-
-            <AppButton
-              className="w-12 h-12 bg-brownColor-400 items-center justify-center"
-              onPress={() => { }}
-              startIcon={<Icons.filter />}
-            />
-
-          </View>
-
-          {/* The Best Stable Section */}
-          <HorseList horses={data?.horses!} />
-          {/* The Events Section */}
-       </View>
+           <HorseList horses={data?.horses!} />
+        </View>
     </AppWrapper>
   );
 };

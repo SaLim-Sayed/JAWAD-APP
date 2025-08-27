@@ -16,7 +16,8 @@ import { t } from "@/lib";
 import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { GetHorsesResponse } from "../@types/horse.types";
-const HorseSection = ({stableId}: {stableId: string}) => {
+import HorseCard from "@/components/UI/HorseCard";
+ const HorseSection = ({stableId}: {stableId: string}) => {
   const { navigate } = useGlobalNavigation();
   const screenWidth = Dimensions.get("window").width;
   const itemSize = screenWidth * 0.4;
@@ -61,30 +62,38 @@ const HorseSection = ({stableId}: {stableId: string}) => {
         contentContainerStyle={{ paddingHorizontal: 16 }}
         ItemSeparatorComponent={() => <View style={{ width: 12 }} />}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigate(navigationEnums.HORSE_DETAILS, { id: item._id })
-            }
-            style={{ width: itemSize }}
-            className="rounded-xl overflow-hidden"
-          >
-            <Image
-              source={item.picUrls[0]}
-              style={{
-                width: itemSize,
-                height: itemSize,
-                borderRadius: 12,
-              }}
-              resizeMode="cover"
-              background
-            >
-              <View className="absolute   top-0 left-0 right-0   bg-black/50 p-2">
-                <AppText className="text-white tajawal-semibold-16">
-                  {item?.name as any}
-                </AppText>
-              </View>
-            </Image>
-          </TouchableOpacity>
+          <HorseCard
+          image={item.picUrls[0]}
+          name={item?.name!}
+          type={item.type}
+          price={item.price}
+          category={item.type}
+          onPressStart={() => { navigate(navigationEnums.HORSE_DETAILS, { id: item._id }) }}
+        />
+          // <TouchableOpacity
+          //   onPress={() =>
+          //     navigate(navigationEnums.HORSE_DETAILS, { id: item._id })
+          //   }
+          //   style={{ width: itemSize }}
+          //   className="rounded-xl overflow-hidden"
+          // >
+          //   <Image
+          //     source={item.picUrls[0]}
+          //     style={{
+          //       width: itemSize,
+          //       height: itemSize,
+          //       borderRadius: 12,
+          //     }}
+          //     resizeMode="cover"
+          //     background
+          //   >
+          //     <View className="absolute   top-0 left-0 right-0   bg-black/50 p-2">
+          //       <AppText className="text-white tajawal-semibold-16">
+          //         {item?.name as any}
+          //       </AppText>
+          //     </View>
+          //   </Image>
+          // </TouchableOpacity>
         )}
       />
     </View>

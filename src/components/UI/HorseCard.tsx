@@ -23,7 +23,7 @@ const HorseCard: React.FC<HorseCardProps> = ({
     category,
     onPressStart,
 }) => (
-    <TouchableOpacity onPress={onPressStart} style={styles.card}>
+    <TouchableOpacity onPress={onPressStart} style={styles.card} className="rounded-xl border border-gray-600/30 overflow-hidden" >
         <Image className="rounded-t-2xl" source={image} style={styles.image} />
         <Col className="p-2" gap={4}>
             <Row items="center" gap={4}>
@@ -36,21 +36,20 @@ const HorseCard: React.FC<HorseCardProps> = ({
             </Row>
             <Row items="center" gap={4}>
                 <Image source={Icons.coin} style={styles.icon} />
-                <AppText className="text-brownColor-300">{price}</AppText>
+                <AppText className="text-brownColor-300">{price} EGP</AppText>
             </Row>
             <Row items="center" gap={4}>
                 <Image source={Icons.likeTag} style={styles.icon} />
                 <AppText className="text-brownColor-300">{category}</AppText>
             </Row>
              
-            
         </Col>
     </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: "#E7E7E74D",
+        backgroundColor: "#fff",
         borderRadius: 16,
          width: 182,
         shadowColor: "#000",
@@ -58,6 +57,9 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
         alignItems: "flex-start",
+        overflow: "hidden",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+
     },
     image: {
         width: "100%",

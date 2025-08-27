@@ -55,7 +55,7 @@ const HomeScreen = () => {
   const isSchool = authData.role === "school";
 
   const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : isSchool ? schoolData?.school.name : "Guest";
-  const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city || "Cairo" : isSchool ? schoolData?.school.city : "Cairo";
+  const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city || "Cairo" : isSchool ? schoolData?.school.city : t("Global.Alexandria");
 
   const showStableSection = ["auth", "photographer", "school"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
@@ -65,7 +65,7 @@ const HomeScreen = () => {
   return (
     <AppWrapper>
       <HomeHeader userName={userName || ""} location={location || ""} />
-      <View className="bg-white flex-1 rounded-t-3xl -mt-6 pt-6  ">
+      <View className="bg-white flex-1 rounded-t-3xl -mt-10 pt-6  ">
         <LoaderBoundary isLoading={loading}>
           <ScrollView
             contentContainerStyle={{
@@ -73,11 +73,8 @@ const HomeScreen = () => {
             }}
           >
 
-            {/* <View className="px-4">
-              <SearchInput value={search} onChange={setSearch} />
-              <QuoteCard />
-            </View> */}
-
+                <QuoteCard />
+ 
             {showStableSection && <BestStableSection onSeeAll={() => navigate(navigationEnums.RIDES)} />}
             {showHorseSection && <HorseSection stableId={authData.id} />}
             {showEventsSection && <EventsSection />}

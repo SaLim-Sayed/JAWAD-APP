@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.06,
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
-        
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     },
 });

@@ -1,6 +1,7 @@
 {
   "Global": {
     "welcome": "مرحبا",
+    "Alexandria":"أسكندرية",
     "login": "تسجيل الدخول",
     "English": "الإنجليزية",
     "Arabic": "العربية",
@@ -86,11 +87,11 @@
       "beginner": "مبتدئ",
       "intermediate": "متوسط",
       "professional": "محترف",
-      "arabic": "عربي",
-      "other": "أخرى",
-      "camel": "كمل",
+      "arabic": " حصان عربي",
+      "other": "احصنه  اخري",
+      "camel": "جمل",
       "vehicles": "مركبة",
-      "carets": "كروت",
+      "carets": "كاريته",
       "running": "جري",
       "dancing": "أدب و رقص",
       "white": "أبيض",

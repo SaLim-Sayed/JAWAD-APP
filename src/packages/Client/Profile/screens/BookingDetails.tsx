@@ -77,7 +77,7 @@ const BookingDetails = () => {
 {       item &&   <HistoryDescription item={item} />
 }
           <AppText className="text-center text-brownColor-400 mt-4">
-            {data?.message || error?.response?.data?.message}
+            {data?.message || (error as any)?.response?.data?.message}
           </AppText>
         </ScrollView>         
         </LoaderBoundary> 
