@@ -16,7 +16,11 @@ import horseImg from "./horseImg.png";
 import maskMap from "./MaskMap.png";
 import maskMap2 from "./trajectory.png";
 import homeHorse from "./homeHorse.png";
-import heroImage from "./hero-image.png";    
+import heroImage from "./hero-image.png";  
+import rides from "./services/rides.jpg";  
+import sessions from "./services/photosession.jpg";  
+import training from "./services/training.jpg";  
+
 
 export const horse = {
     stable1: require("./stable/horse/1.png"),
@@ -57,4 +61,7 @@ export const images = {
     maskMap2,
     homeHorse,
     heroImage,
+    rides,
+    sessions,
+    training,
                 }

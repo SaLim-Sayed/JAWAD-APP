@@ -16,7 +16,7 @@ const ServicesScreen = () => {
     {
       id: 1,
       title: t("Global.rides"),
-      image: images.horseRide,
+      image: images.rides,
       onPress: () => {
         navigate(navigationEnums.RIDES)
       },
@@ -24,7 +24,7 @@ const ServicesScreen = () => {
     {
       id: 2,
       title: t("Global.photo_sessions"),
-      image: images.photoSession,
+      image: images.sessions,
       onPress: () => {
         navigate(navigationEnums.PHOTOS)
       },
@@ -32,7 +32,7 @@ const ServicesScreen = () => {
     {
       id: 3,
       title: t("Global.training"),
-      image: images.family,
+      image: images.training,
       onPress: () => {
         navigate(navigationEnums.SCHOOLS)
       },

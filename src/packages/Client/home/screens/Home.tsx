@@ -55,7 +55,7 @@ const HomeScreen = () => {
   const isSchool = authData.role === "school";
 
   const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : isSchool ? schoolData?.school.name : "Guest";
-  const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city || "Cairo" : isSchool ? schoolData?.school.city : t("Global.Alexandria");
+  const location = isStable ? stableData?.stable.city[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.city : isAuth ? userDetails?.details?.city || t("Global.Egypt") : isSchool ? schoolData?.school.city : t("Global.Egypt");
 
   const showStableSection = ["auth", "photographer", "school"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);

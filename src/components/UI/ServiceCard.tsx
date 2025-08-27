@@ -29,9 +29,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, image, onPress }) => {
                     background
                 >
                     <View className="p-3 flex-col flex-1 items-start justify-between">
-                        <View className="flex-row items-center self-start bg-[#E9E5E1] rounded-2xl px-3 py-1">
+                        <View className="flex-row items-center self-start bg-white/80 rounded-2xl px-3 py-1">
 
-                            <AppText className="font-semibold text-brownColor-400 text-base ">{title}</AppText>
+                            <AppText className="font-semibold text-brownColor-400 text-xl shadow-xl ">{title}</AppText>
                         </View>
                         <View className="flex-row items-center self-end   rounded-2xl px-3 py-1">
                             <NavButton
