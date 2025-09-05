@@ -29,7 +29,7 @@ export const SignUpScreen = () => {
         // phone: z.string().min(6, 'Phone number required'),
         email: z.string().email(t("signup.email_error")),
         nationality: z.string().nonempty(t("signup.nationality_error")),
-        password: z.string().min(6, t("signup.password_error")),
+        password: z.string().min(8, t("signup.password_error")),
         gender: z.enum(['male', 'female']),
     });
     

@@ -102,9 +102,7 @@ const HorseList: React.FC<HorseListProps> = ({ horses, onSeeAll, refetch }) => {
             {/* Action Buttons */}
             <View className="absolute bottom-0 left-0 right-0 bg-white/80 p-2">
               <View className="flex-row items-end justify-between">
-                <TouchableOpacity onPress={() => {}}>
-                  <Icons.addtoStable />
-                </TouchableOpacity>
+                
 
                 <TouchableOpacity onPress={() => handleDelete(item._id)}>
                   {isPending && id === item._id ? (

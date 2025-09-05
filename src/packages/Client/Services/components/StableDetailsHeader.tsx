@@ -1,16 +1,13 @@
 import AppText from "@/components/UI/AppText";
+import Col from "@/components/UI/Col";
 import Image from "@/components/UI/Image";
 import Row from "@/components/UI/Row";
-import StableCard from "@/components/UI/StableCard";
-import { navigationEnums } from "@/provider/navigationEnums";
-import useGlobalNavigation from "@/provider/useGlobalNavigation";
-import React from "react";
-import { FlatList, View, Dimensions } from "react-native";
-import { bestStables, horseDate } from "../screens/mock";
-import Col from "@/components/UI/Col";
 import { Icons } from "@/constants";
-import { StableDetails } from "../@types/horse.types";
+import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { useLanguage } from "@/store";
+import React from "react";
+import { Dimensions, View } from "react-native";
+import { StableDetails } from "../@types/horse.types";
 
 const StableDetailsHeader = ({ StableDetails }: { StableDetails: StableDetails }) => {
     const { navigate } = useGlobalNavigation();

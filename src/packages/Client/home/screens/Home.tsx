@@ -72,9 +72,8 @@ const HomeScreen = () => {
               flexGrow: 1,
             }}
           >
-
                 <QuoteCard />
- 
+
             {showStableSection && <BestStableSection onSeeAll={() => navigate(navigationEnums.RIDES)} />}
             {showHorseSection && <HorseSection stableId={authData.id} />}
             {showEventsSection && <EventsSection />}

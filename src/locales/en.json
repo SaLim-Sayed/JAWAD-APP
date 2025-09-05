@@ -140,6 +140,7 @@
     "login_google": "Google",
     "continue_guest": "Continue as Guest",
     "login_success": "Login Success",
+    "to_sign_up":"To sign up please send us via:",
     "login_failed": "Login Failed"
   },
   "signup": {

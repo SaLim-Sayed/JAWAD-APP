@@ -37,12 +37,12 @@ const PhotoSessionCard: React.FC<PhotoSessionCardProps> = ({
                 <Row gap={2} className="my-2">
                     <StarRatingDisplay
                         rating={rating}
-                        starStyle={{ width: 20, height: 14 }}
+                        starStyle={{ width: 15, height: 14 }}
                         color="#FEAF48"
+                        starSize={20}
                     />
-                    <AppText className="pt-4 text-brownColor-400 text-sm">{rating}</AppText>
-                </Row>
-                <Row gap={2} items="center" className="my-2 gap-2">
+                 </Row>
+                <Row gap={2} items="end" className="my-2   gap-2">
                     <NavButton
                         className="w-32 h-8"
                         text={t("Global.start_now")}
@@ -53,7 +53,6 @@ const PhotoSessionCard: React.FC<PhotoSessionCardProps> = ({
                             </View>
                         }
                     />
-                    {/* <Image source={Icons.horse} style={styles.icon} /> */}
                 </Row>
             </Col>
         </TouchableOpacity>
@@ -63,12 +62,16 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: "#E7E7E74D",
         borderRadius: 16,
-        maxWidth: 182,
+        maxWidth: 170,
+        marginHorizontal: 6,
         shadowColor: "#000",
         shadowOpacity: 0.06,
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 3 },
         alignItems: "flex-start",
+        overflow: "hidden",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        
     },
     image: {
         width: "100%",

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Linking, Text, TouchableOpacity, View } from 'react-native';
 import { z } from 'zod';
 
 import { Input } from '@/components';
@@ -27,15 +27,15 @@ import { isRTL } from '@/provider/constant';
 
 const LoginScreen = () => {
 
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const loginSchema = z.object({
     email: z.string().min(6, t("Login.email_error")),
-    password: z.string().min(4, t("Login.password_error")),
+    password: z.string().min(3, t("Login.password_error")),
   });
 
   type LoginSchema = z.infer<typeof loginSchema>;
-  
+
   const { role } = useAppRouteParams("LOGIN_SCREEN")
   const url = `/api/v1/${role}/login`
   const { mutate, isPending, error, data, isSuccess } = useApiMutation(
@@ -144,12 +144,12 @@ const LoginScreen = () => {
         )}
       />
       <Row className="justify-between items-center">
-        <Radio
+        {/* <Radio
           label={t("Login.remember_me")}
           value="remember"
           selected={rememberMe}
           onPress={() => setRememberMe((prev) => !prev)}
-        />
+        /> */}
         {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')}>
           <AppText className="text-brownColor-300 text-sm">{t("Login.forgot_password")}</AppText>
 
@@ -174,7 +174,7 @@ const LoginScreen = () => {
             onPress={() => { }}
             startIcon={<Icons.google />}
           />
-         
+
           <AppButton
             className="flex-1 bg-brownColor-50"
             textClassName="text-brownColor-400"
@@ -189,6 +189,16 @@ const LoginScreen = () => {
         variant="outline"
         onPress={() => setActiveApp("Client")}
       />
+
+      {role !== "auth" && <View className="flex-col bg-orange-900/10 rounded-lg items-center mt-4">
+        <Text className="text-brownColor-400 tajawal-semibold-16">
+          {t("Login.to_sign_up")}
+        </Text>
+        <TouchableOpacity onPress={() => { Linking.openURL("mailto:Jawadmobapp@gmail.com") }}>
+          <Text className="text-blue-700 tajawal-semibold-18 underline">
+            Jawadmobapp@gmail.com</Text>
+        </TouchableOpacity>
+      </View>}
       <CompleteModal visible={visible} onClose={() => { setVisible(false) }} />
 
     </AuthWrapper>

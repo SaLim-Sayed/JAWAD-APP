@@ -12,6 +12,7 @@ import AppText from '@/components/UI/AppText';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { navigationEnums } from '@/provider/navigationEnums';
+import { View } from 'react-native';
 
 const loginSchema = z.object({
   otp: z.string().min(4, 'OTP is required'),
@@ -43,7 +44,7 @@ const OtpScreen = () => {
 
   return (
     <AuthWrapper>
-      <Col className="mt-12" gap={16}>
+      <View className="mt-12" >
         <Col gap={4}>
           <AppText className="text-brownColor-400 text-3xl font-bold mb-2">OTP Verification</AppText>
           <AppText className="text-brownColor-100 mb-4">Your new password must be unique from those previously used.</AppText>
@@ -58,7 +59,7 @@ const OtpScreen = () => {
               onVerify={onChange}
               onResend={() => {
                 // handle resend logic here
-                setValue('otp', ''); // optionally clear input
+                setValue('otp', '');  
               }}
               value={value}
               error={errors.otp?.message}
@@ -75,7 +76,7 @@ const OtpScreen = () => {
           variant="outline"
           onPress={() => setActiveApp("Client")}
         />
-      </Col>
+      </View>
     </AuthWrapper>
   );
 };

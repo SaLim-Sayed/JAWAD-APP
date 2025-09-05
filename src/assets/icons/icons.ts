@@ -32,6 +32,7 @@ import calendar from "@/assets/icons/calendar-2.svg"
 import coin from "@/assets/icons/usd-coin.svg"
 import arrowRightFill from "@/assets/icons/arrow-right-fill.svg"
 import shoppingCart from "@/assets/icons/shopping-cart.svg"
+import shoppingProfile from "@/assets/icons/shopping-profile.svg"
 import notification from "@/assets/icons/notification.svg"
 import horse from "@/assets/icons/horse.svg"
 import filter from "@/assets/icons/filter.svg"
@@ -130,4 +131,5 @@ export const Icons = {
     trash,
     event,
     eventOutline,
+    shoppingProfile
 }

@@ -25,18 +25,19 @@ export default function OTPInput({
     <View className={`w-full items-center justify-center ${containerClassName}`}>
       <View className={` relative p-6 rounded-xl w-full max-w-md ${className}`}>
         <OtpInputs
-          numberOfInputs={4}
+          numberOfInputs={6}
           autofillFromClipboard
           keyboardType="phone-pad"
           isRTL={false}
           inputStyles={{
             borderWidth: 1,
             borderColor: "#684735",
-            width: 58,
-            height: 64,
+            width: 40,
+            height: 40,
             textAlign: 'center',
             borderRadius: 8,
             fontSize: 18,
+            margin:2,
             color: "#000",
           }}
           focusStyles={{

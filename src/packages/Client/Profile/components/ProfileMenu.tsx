@@ -57,7 +57,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   };
   const menuItems = [
     { key: 'profile', label: t("ProfileMenu.profile"), icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
-    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.cartProfile, onPress: () => { navigate(navigationEnums.CART) } },
+    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.shoppingProfile, onPress: () => { navigate(navigationEnums.CART) } },
     { key: 'history', label: t("ProfileMenu.history"), icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
     { key: 'contact', label: t("ProfileMenu.contact"), icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
     { key: 'about', label: t("ProfileMenu.about"), icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },

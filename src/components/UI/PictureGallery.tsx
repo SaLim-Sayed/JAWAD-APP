@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, FlatList, Image, StyleSheet, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, FlatList, Image, StyleSheet, TouchableOpacity, NativeSyntheticEvent, NativeScrollEvent, Dimensions } from 'react-native';
 
 interface Picture {
   id: string | number;
@@ -10,7 +10,7 @@ interface PictureGalleryProps {
   pictures: Picture[];
 }
 
-const ITEM_WIDTH =300;
+const ITEM_WIDTH = Dimensions.get("window").width - 78;
 const MARGIN_HORIZONTAL = 5;
 
 const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures }) => {
@@ -57,8 +57,7 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures }) => {
             <Image
               style={styles.image}
               source={{ uri: item.url }}
-              resizeMode="stretch"
-            />
+             />
           </View>
         )}
         onScroll={handleScroll}
