@@ -5,6 +5,10 @@ export const apiKeys = {
       googleAuth: "/api/v1/auth/googleAuth",
       appleAuth: "/api/v1/auth/appleAuth",
       getUserDetails:"/api/v1/user/details",
+      changePassword:"/api/v1/user/changePassword",
+      sendCode:"/api/v1/user/sendCode",
+      checkCode:"/api/v1/user/checkCode",
+      resetPassword:"/api/v1/user/resetPassword",
     },
     stable: {
       addStable: "/api/v1/stable/add",

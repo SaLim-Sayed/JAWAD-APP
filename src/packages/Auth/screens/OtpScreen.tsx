@@ -13,6 +13,10 @@ import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { View } from 'react-native';
+import useAppRouteParams from '@/provider/useAppRouteParams';
+import { useApiMutation } from '@/hooks';
+import { apiKeys } from '@/hooks/apiKeys';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
 
 const loginSchema = z.object({
   otp: z.string().min(4, 'OTP is required'),
@@ -21,8 +25,14 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 const OtpScreen = () => {
+  const {email} = useAppRouteParams("OTP_SCREEN");
+  console.log(email)
   const { setActiveApp } = useAuthStore();
   const { navigate } = useGlobalNavigation();
+  const { mutate: checkCode, isPending } = useApiMutation({
+    url: apiKeys.auth.checkCode,
+    method:"put"
+  });
   const {
     control,
     handleSubmit,
@@ -38,7 +48,10 @@ const OtpScreen = () => {
 
   const onSubmit = (data: LoginSchema) => {
     console.log('✅ Login Data:', data);
-    navigate(navigationEnums.CHANGE_PASSWORD_SCREEN)
+    checkCode({email:email,code:data.otp}, {
+      onSuccess: (d) =>{showGlobalToast({type:"success",title:d?.message}); navigate(navigationEnums.CHANGE_PASSWORD_SCREEN, {email:email})},
+      onError: (error) => {showGlobalToast({type:"error",title:error?.response?.data?.message})},
+    })
     // You can call your verify function here
   };
 
@@ -66,7 +79,7 @@ const OtpScreen = () => {
           )}
         />
 
-        <AppButton title="Next" onPress={handleSubmit(onSubmit)} />
+        <AppButton loading={isPending} title="Next" onPress={handleSubmit(onSubmit)} />
 
         
       </View>

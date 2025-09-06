@@ -26,8 +26,8 @@ export type NavigationParamsList = {
   [navigationEnums.LOGIN_SCREEN]: { role: Role };
   [navigationEnums.SIGNUP_SCREEN]: undefined;
   [navigationEnums.FORGET_PASSWORD_SCREEN]: undefined;
-  [navigationEnums.OTP_SCREEN]: undefined;
-  [navigationEnums.CHANGE_PASSWORD_SCREEN]: undefined;
+  [navigationEnums.OTP_SCREEN]: {email:string};
+  [navigationEnums.CHANGE_PASSWORD_SCREEN]: {email:string};
   [navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN]: undefined;
   [navigationEnums.REGISTER_SUCCESS_SCREEN]: undefined;
   [navigationEnums.COMPLETE_STABLE]: { id: any };

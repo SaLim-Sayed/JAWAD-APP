@@ -340,10 +340,10 @@ export default function Root() {
     <QueryClientProvider client={queryClient}>
       <StatusBar barStyle="light-content" hidden={true} backgroundColor="#293442" />
       <NavigationContainer
-      // initialState={initialState}
-      // onStateChange={(state) =>
-      //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
-      // }
+      initialState={initialState}
+      onStateChange={(state) =>
+        AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
+      }
       >
         <I18nContext>
         <PaperProvider>

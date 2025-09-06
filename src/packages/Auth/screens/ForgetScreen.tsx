@@ -13,6 +13,10 @@ import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useApiMutation } from '@/hooks';
+import { apiKeys } from '@/hooks/apiKeys';
+import { navigationEnums } from '@/provider/navigationEnums';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
  
 
 const ForgetScreen = () => {
@@ -25,6 +29,9 @@ const ForgetScreen = () => {
   
   const { navigate } = useGlobalNavigation();
   const { setActiveApp } = useAuthStore()
+  const { mutate: sendCode, isPending } = useApiMutation({
+    url: apiKeys.auth.sendCode,
+  });
 
   const {
     control,
@@ -38,8 +45,11 @@ const ForgetScreen = () => {
   });
 
   const onSubmit = (data: LoginSchema) => {
-    console.log('✅ Login Data:', data);
-    navigate('otp')
+ 
+    sendCode({email:data.email}, {
+      onSuccess: (d) => {showGlobalToast({type:"success",title:d?.message}); navigate(navigationEnums.OTP_SCREEN, {email:data.email})},
+      onError: (error) => {showGlobalToast({type:"error",title:error?.response?.data?.message})},
+    })
   };
 
   return (
@@ -70,7 +80,7 @@ const ForgetScreen = () => {
 
 
 
-        <AppButton title={t("auth.next")} onPress={handleSubmit(onSubmit)} />
+        <AppButton loading={isPending} title={t("auth.next")} onPress={handleSubmit(onSubmit)} />
 
 
         <Or text={t("auth.or")} />

@@ -13,7 +13,7 @@ interface OTPInputProps {
 }
 
 export default function OTPInput({
- 
+
   onVerify,
   onResend,
   value = '',
@@ -23,30 +23,38 @@ export default function OTPInput({
 }: OTPInputProps) {
   return (
     <View className={`w-full items-center justify-center ${containerClassName}`}>
-      <View className={` relative p-6 rounded-xl w-full max-w-md ${className}`}>
+      <View className={` relative py-6 rounded-xl w-full max-w-md ${className}`}>
         <OtpInputs
           numberOfInputs={6}
           autofillFromClipboard
           keyboardType="phone-pad"
+          inputContainerStyles={{
+            borderColor:"#000",
+            borderWidth: 1,
+            borderRadius: 10,
+            marginHorizontal: 2,
+ 
+          }}
+          
           isRTL={false}
           inputStyles={{
-            borderWidth: 1,
-            borderColor: "#684735",
-            width: 40,
-            height: 40,
+            width: 50,
+            height: 50,
             textAlign: 'center',
             borderRadius: 8,
             fontSize: 18,
-            margin:2,
             color: "#000",
           }}
           focusStyles={{
-            borderColor: "#684735",
-            borderWidth: 1,
+            borderLeftColor: "#1C57D4",
+            borderRightColor: "#9C09CF",
+            borderTopColor: "#1C57D4",
+            borderBottomColor: "#9C09CF",
+            borderWidth: 2,
             borderRadius: 10,
           }}
           handleChange={(code) => {
-            onVerify(code); 
+            onVerify(code);
           }}
         />
 
@@ -55,12 +63,7 @@ export default function OTPInput({
         {error ? (
           <AppText className="text-red-500 text-start mt-2">{error}</AppText>
         ) : null}
-        <View className="flex-row items-center my-4 justify-center">
-          <AppText className='text-center text-gray-400'>Don’t Receive the Code? </AppText>
-          <TouchableOpacity onPress={onResend}>
-            <AppText className="text-mainColor font-bold"> Resend</AppText>
-          </TouchableOpacity>
-        </View>
+        
       </View>
     </View>
   );

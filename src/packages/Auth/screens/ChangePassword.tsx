@@ -17,6 +17,10 @@ import Image from '@/components/UI/Image';
 import Row from '@/components/UI/Row';
 import Col from '@/components/UI/Col';
 import { navigationEnums } from '@/provider/navigationEnums';
+import useAppRouteParams from '@/provider/useAppRouteParams';
+import { useApiMutation } from '@/hooks';
+import { apiKeys } from '@/hooks/apiKeys';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
 const Schema = z
   .object({
     password: z.string().min(6, 'Password too short'),
@@ -33,8 +37,13 @@ const ChangePassword = () => {
   const { navigate } = useGlobalNavigation();
   const { setActiveApp } = useAuthStore()
   const [showPassword, setShowPassword] = useState(false);
+  const {email} = useAppRouteParams("CHANGE_PASSWORD_SCREEN");
+  console.log({email})
+  const { mutate: changePassword, isPending } = useApiMutation({
+    url: apiKeys.auth.resetPassword,
+    method:"put"
+  });
 
-  const [rememberMe, setRememberMe] = useState(false);
   const {
     control,
     handleSubmit,
@@ -49,7 +58,10 @@ const ChangePassword = () => {
 
   const onSubmit = (data: Schema) => {
     console.log('✅ Login Data:', data);
-    navigate(navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN)
+    changePassword({email:email,password:data.password,cPassword:data.confirmPassword}, {
+      onSuccess: (d) => {showGlobalToast({type:"success",title:d?.message}); navigate(navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN)},
+      onError: (error) => {showGlobalToast({type:"error",title:error?.response?.data?.message})},
+    })
   };
 
   return (
@@ -94,7 +106,7 @@ const ChangePassword = () => {
           )}
         />
         
-        <AppButton title="Change Password" onPress={handleSubmit(onSubmit)} />
+        <AppButton loading={isPending} title="Change Password" onPress={handleSubmit(onSubmit)} />
 
  
       </View>
