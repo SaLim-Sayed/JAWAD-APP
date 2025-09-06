@@ -78,6 +78,7 @@ const LoginScreen = () => {
         // setActiveApp("Client")
       },
       onError: (error: any) => {
+        console.log({error})
         if (error?.response?.status === 400) {
           if (authData.role === "photographer") {
             navigate(navigationEnums.COMPLETE_PHOTOGRAPHER, { id: error.response.data.id })
@@ -92,7 +93,7 @@ const LoginScreen = () => {
         showGlobalToast({
           type: "error",
           title: "Login Failed",
-          body: error.message
+          body: error.response.data.message
         })
       }
     })
@@ -148,7 +149,7 @@ const LoginScreen = () => {
           onPress={() => setRememberMe((prev) => !prev)}
         /> */}
         {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')}>
-          <AppText className="text-brownColor-300 text-sm">{t("Login.forgot_password")}</AppText>
+          <AppText className="text-brownColor-300 text-end">{t("Login.forgot_password")}</AppText>
 
         </TouchableOpacity>}
       </Row>

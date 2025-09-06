@@ -17,11 +17,10 @@ import { Icons } from "@/constants";
 import AppText from "./AppText";
 
 // ✅ updated categories
-type FilterCategory = "level" | "type" | "feature" | "color" | "vehicles";
+type FilterCategory = "level" | "feature" | "color" | "vehicles";
 
 interface FilterOptions {
   level: string[];
-  type: string[];
   feature: string[];
   color: string[];
   vehicles: string[];
@@ -29,17 +28,14 @@ interface FilterOptions {
 
 interface Filters {
   level: string[];
-  type: string[];
   feature: string[];
   color: string[];
   rating: number;
   vehicles: string[];
 }
-
-const options: FilterOptions = {
+ const options: FilterOptions = {
   level: ["beginner", "intermediate", "professional"],
-  vehicles: ["camel", "horse"],
-  type: ["arabic", "other", "camel", "vehicles", "carets"],
+  vehicles: ["arabic", "other", "camel", "vehicle", "carets"],
   feature: ["running", "dancing"],
   color: ["white", "brown", "black"],
 };
@@ -82,7 +78,6 @@ const FilterModal: React.FC<{
     const emptyFilters: Filters = {
       level: [],
       vehicles: [],
-      type: [],
       feature: [],
       color: [],
       rating: 0,

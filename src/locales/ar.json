@@ -29,8 +29,8 @@
     "confirmDisableStable":"هل أنت متأكد من تعطيل إسطبلك؟",
     "ok":"نعم",
     "cancel":"لا",
-    "stableEnabled":"إسطبل مفعل",
-    "stableDisabled":"إسطبل معطل",
+    "stableEnabled":"إسطبل نشط",
+    "stableDisabled":"إسطبل غير نشط",
     "feature":"ميزة",
     "type":"نوع",
     
@@ -130,6 +130,7 @@
       "other": "احصنه  اخري",
       "camel": "جمل",
       "vehicles": "مركبة",
+      "vehicle": "مركبة",
       "horse": " حصان",
       "carets": "كاريته",
       "running": "جري",

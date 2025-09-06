@@ -22,7 +22,6 @@ interface BestStableSectionProps {
     search?: string;
     filters: {
         level: string[];
-        type: string[];
         feature: string[];
         color: string[];
         rating: number;
@@ -31,13 +30,12 @@ interface BestStableSectionProps {
 }
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filters }) => {
-    const { level, type, feature, color, rating , vehicles } = filters;
+    const { level, feature, color, rating , vehicles } = filters;
 
     const queryParams = new URLSearchParams({
         page: "1",
         search,
         ...(level.length && { level: level.join(",") }),
-        ...(type.length && { type: type.join(",") }),
         ...(feature.length && { feature: feature.join(",") }),
         ...(color.length && { color: color.join(",") }),
         ...(rating > 0 && { rating: rating.toString() }),

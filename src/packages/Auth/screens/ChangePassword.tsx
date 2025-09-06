@@ -54,7 +54,7 @@ const ChangePassword = () => {
 
   return (
     <AuthWrapper>
-      <Col className='mt-12' gap={8}>
+      <View className='mt-12' >
         <Col gap={4}>
           <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Login</AppText>
           <AppText className="text-brownColor-400 mb-4">Welcome back! Please login to continue</AppText>
@@ -93,32 +93,11 @@ const ChangePassword = () => {
             />
           )}
         />
-        <Row className="justify-between items-center">
-          <Radio
-            label="Remember me"
-            value="remember"
-            selected={rememberMe}
-            onPress={() => setRememberMe((prev) => !prev)}
-          />
-          <TouchableOpacity onPress={() => navigate(navigationEnums.CHANGE_PASSWORD_SCREEN)}>
-            <AppText className="text-brownColor-300 text-sm">Forgot Password?</AppText>
-
-          </TouchableOpacity>
-        </Row>
+        
         <AppButton title="Change Password" onPress={handleSubmit(onSubmit)} />
 
-        
-
-        <Or />
-
-      
-
-        <AppButton
-          title="Continue as Guest"
-          variant="outline"
-          onPress={() => setActiveApp("Client")}
-        />
-      </Col>
+ 
+      </View>
     </AuthWrapper>
   );
 };  

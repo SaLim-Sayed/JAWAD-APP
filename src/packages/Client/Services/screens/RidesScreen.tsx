@@ -18,7 +18,6 @@ const RidesScreen = () => {
   const [filters, setFilters] = useState({
     level: [],
     vehicles: [],
-    type: [],
     feature: [],
     color: [],
     rating: 0,

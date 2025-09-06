@@ -35,8 +35,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     isCompleted: false,
   },
   stableEnabled: true,
-  setStableEnabled: (enabled: boolean) => set({ stableEnabled: enabled }),
-  login: async () => {
+  setStableEnabled: async (enabled: boolean) => {
+    await AsyncStorage.setItem('stableEnabled', enabled.toString());
+    set({ stableEnabled: enabled });  
+  },  login: async () => {
     await AsyncStorage.setItem('isLoggedIn', 'true');
     set({ isLoggedIn: true });
   },
@@ -51,7 +53,9 @@ export const useAuthStore = create<AuthState>((set) => ({
         role: 'auth',
         id: '',
         isCompleted: false,
-      },
+      },    
+      stableEnabled: true,
+
     });
   },
 

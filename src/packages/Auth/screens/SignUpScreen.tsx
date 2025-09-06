@@ -78,7 +78,7 @@ export const SignUpScreen = () => {
                 showGlobalToast({
                     type: "error",
                     title: "Sign Up Failed",
-                    body: error.message
+                    body: error.response?.data?.message
                 })
             }
         })

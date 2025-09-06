@@ -23,8 +23,8 @@ interface HomeHeaderProps {
 const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
   const { t } = useTranslation();
   const { navigate } = useGlobalNavigation();
-  const { authData, stableEnabled } = useAuthStore();
-
+  const { authData ,stableEnabled,setStableEnabled} = useAuthStore();
+ console.log({stableEnabled})
   const { getCartItemsCount } = useHorseStore();
   const cartCount = getCartItemsCount();
 
@@ -46,11 +46,11 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
   const handleConfirm = () => {
     if (pendingValue === false) {
       disableStable({}, {
-        onSuccess: () => { useAuthStore.setState({ stableEnabled: false }); showGlobalToast({ type: "success", title: "Stable Disabled", body: "Stable disabled successfully" }) }
+        onSuccess: () => { setStableEnabled(false); showGlobalToast({ type: "success", title: "Stable Disabled", body: "Stable disabled successfully" }) }
       });
     } else {
       disableStable({}, {
-        onSuccess: () => { useAuthStore.setState({ stableEnabled: true }); showGlobalToast({ type: "success", title: "Stable Enabled", body: "Stable enabled successfully" }) }
+        onSuccess: () => { setStableEnabled(true); showGlobalToast({ type: "success", title: "Stable Enabled", body: "Stable enabled successfully" }) }
       });
     }
     setShowConfirm(false);
@@ -76,7 +76,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
       </View>
 
       <Portal>
-        <Dialog visible={showConfirm} onDismiss={() => setShowConfirm(false)}>
+        <Dialog style={{backgroundColor:"#fff"}} visible={showConfirm} onDismiss={() => setShowConfirm(false)}>
           <Dialog.Title>{t("Global.confirm")}</Dialog.Title>
           <Dialog.Content>
             <AppText className="text-brownColor-400 tajawal-semibold-16">
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   },
   content: {
     position: "absolute",
+    alignItems:"flex-start",
     left: 4,
     right: 4,
     bottom: 32,

@@ -10,6 +10,7 @@ import Row from '@/components/UI/Row';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { useAuthStore } from '@/store/useAuthStore';
+import { View } from 'react-native';
 const ChangeSuccessScreen = () => {
   const { navigate } = useGlobalNavigation();
   const { authData } = useAuthStore()
@@ -20,7 +21,7 @@ const ChangeSuccessScreen = () => {
 
   return (
     <AuthWrapper>
-      <Col className='mt-12' gap={8}>
+      <View  className='mt-12' >
         <Col gap={4}>
           <AppText className="text-brownColor-400 text-3xl font-bold mb-2">Password Changed!</AppText>
           <AppText className="text-brownColor-100 mb-4">Your password has been changed successfully.</AppText>
@@ -34,7 +35,7 @@ const ChangeSuccessScreen = () => {
         </Row>
 
         <AppButton className='mt-20' title="Back to Login" onPress={onSubmit} />
-      </Col>
+      </View>
     </AuthWrapper>
   );
 };

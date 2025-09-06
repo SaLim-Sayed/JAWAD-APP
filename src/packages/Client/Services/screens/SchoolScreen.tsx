@@ -19,7 +19,6 @@ const SchoolScreen = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filters, setFilters] = useState({
     level: [],
-    type: [],
     feature: [],
     color: [],
     rating: 0,
@@ -29,7 +28,6 @@ const SchoolScreen = () => {
   const queryParams = new URLSearchParams({
     search,
     ...(filters.level.length && { level: filters.level.join(",") }),
-    ...(filters.type.length && { type: filters.type.join(",") }),
     ...(filters.feature.length && { feature: filters.feature.join(",") }),
     ...(filters.color.length && { color: filters.color.join(",") }),
     ...(filters.rating > 0 && { rating: filters.rating.toString() }),

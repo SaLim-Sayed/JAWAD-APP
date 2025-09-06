@@ -50,8 +50,7 @@ const OtpScreen = () => {
           <AppText className="text-brownColor-100 mb-4">Your new password must be unique from those previously used.</AppText>
         </Col>
 
-        {/* Controlled OTPInput with react-hook-form */}
-        <Controller
+         <Controller
           control={control}
           name="otp"
           render={({ field: { value, onChange } }) => (
@@ -69,13 +68,7 @@ const OtpScreen = () => {
 
         <AppButton title="Next" onPress={handleSubmit(onSubmit)} />
 
-        <Or />
-
-        <AppButton
-          title="Continue as Guest"
-          variant="outline"
-          onPress={() => setActiveApp("Client")}
-        />
+        
       </View>
     </AuthWrapper>
   );

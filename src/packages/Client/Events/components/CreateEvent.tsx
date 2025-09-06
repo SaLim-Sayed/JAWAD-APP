@@ -22,6 +22,7 @@ import { showGlobalToast } from "@/hooks/useGlobalToast";
 import { usePostMutation } from "@/hooks/usePostMutation";
 import { t } from "@/lib";
 import { EventForm, eventSchema } from "./eventSchema";
+import { Input } from "@/components";
 
 const CreateEvent = () => {
   const [uploading, setUploading] = useState(false);
@@ -35,6 +36,9 @@ const CreateEvent = () => {
     formState: { errors },
   } = useForm<EventForm>({
     resolver: zodResolver(eventSchema),
+    defaultValues: {
+      image: [],
+    },
 
   });
 
@@ -106,19 +110,17 @@ const CreateEvent = () => {
             control={control}
             name={field as keyof EventForm}
             render={({ field: { onChange, value } }) => (
-              <View style={styles.inputContainer}>
-                <TextInput
-                  mode="outlined"
+              <View>
+                <Input
                   label={t(`Global.${field}`)}
+                  control={control}
+                  name={field}
                   // @ts-ignore
                   value={value}
                   onChangeText={onChange}
                   error={!!errors[field as keyof EventForm]}
-                  style={styles.input}
                 />
-                <HelperText type="error" visible={!!errors[field as keyof EventForm]}>
-                  {(errors[field as keyof EventForm] as any)?.message}
-                </HelperText>
+                
               </View>
             )}
           />
@@ -150,31 +152,29 @@ const CreateEvent = () => {
         />
         {errors.arCity && <Text style={styles.error}>{errors.arCity.message}</Text>}
 
-      {/* Date Picker */}
-<AppButton
-  title={`${t("booking.date")}: ${
-    watch("date") ? watch("date") : t("booking.select_date")
-  }`}
-  onPress={() => setShowDatePicker(true)}
-  variant="outline"
-  endIcon={<Icons.calendar />}
-/>
-{showDatePicker && (
-  <DateTimePicker
-  value={watch("date") ? new Date(watch("date")) : new Date()}
-  mode="date"
-  display="default"
-  onChange={(_, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      const formattedDate = selectedDate.toISOString().split("T")[0];
-      setValue("date", formattedDate, { shouldValidate: true });
-    }
-  }}
-/>
+        {/* Date Picker */}
+        <AppButton
+          title={`${t("booking.date")}: ${watch("date") ? watch("date") : t("booking.select_date")
+            }`}
+          onPress={() => setShowDatePicker(true)}
+          variant="outline"
+          endIcon={<Icons.calendar />}
+        />
+        {showDatePicker && (
+          <DateTimePicker
+            value={watch("date") ? new Date(watch("date")) : new Date()}
+            mode="date"
+            display="default"
+            onChange={(_, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                const formattedDate = selectedDate.toISOString().split("T")[0];
+                setValue("date", formattedDate, { shouldValidate: true });
+              }
+            }}
+          />
 
-)}
-
+        )}
 
         {/* Upload Image */}
         <View style={styles.section}>
@@ -208,8 +208,7 @@ const CreateEvent = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   scroll: { padding: 20, paddingBottom: 50 },
-  inputContainer: { marginBottom: 12 },
-  input: { backgroundColor: "#fff" },
+   input: { backgroundColor: "#fff" },
   section: { marginTop: 20 },
   label: { fontWeight: "600", marginBottom: 6 },
   uploadBtn: {
