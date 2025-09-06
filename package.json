@@ -44,6 +44,8 @@
     "react-native-navigation-bar-color": "^2.0.2",
     "react-native-orientation-locker": "^1.7.0",
     "react-native-otp-inputs": "^7.4.0",
+    "react-native-paper": "^5.14.5",
+    "react-native-paper-dropdown": "^2.3.1",
     "react-native-reanimated": "^3.17.5",
     "react-native-restart": "^0.0.27",
     "react-native-safe-area-context": "^5.4.0",

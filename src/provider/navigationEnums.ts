@@ -57,6 +57,8 @@
   EVENT_DETAILS: "event/details/:id",
   EVENT_BOOKING: "event/booking/:id?:type?:price",
   EVENT_BOOKING_SUCCESS: "event/booking-success",
+  EVENT_ADD: "event/add",
+
 
 
   //Profile

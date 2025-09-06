@@ -18,11 +18,12 @@ import AppButton from "@/components/UI/AppButton";
 import { GetSchoolDetailsResponse } from "../../home/@types/school.types";
 import { GetStablesResponse } from "../../home/@types/stable.type";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const SchoolDetails = () => {
   const { navigate } = useGlobalNavigation();
   const { id } = useAppRouteParams("SCHOOL_DETAILS");
-
+const {authData} = useAuthStore()
   const { data, isLoading } = useApiQuery<GetSchoolDetailsResponse>({
     url: apiKeys.school.getSchoolDetail(id),
     key: ["getSchool", id],
@@ -121,12 +122,12 @@ const SchoolDetails = () => {
             </View>
           </LoaderBoundary>
 
-          <AppButton
+         { authData?.role === "auth" && <AppButton
             title={t("Global.select")}
             onPress={handleSelectHorse}
             className="w-[98%]"
             variant="solid"
-          />
+          />}
         </ScrollView>
       </View>
     </AppWrapper>

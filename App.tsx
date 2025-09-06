@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { PaperProvider } from 'react-native-paper';
 
 import { Icons } from '@/constants';
 import { I18nContext } from '@/provider/Language/I18nContext';
@@ -58,6 +59,8 @@ import Cart from '@/packages/Client/Profile/screens/Cart';
 import CompleteSchool from '@/components/UI/CompleteSchool';
 import SchoolScreen from '@/packages/Client/Services/screens/SchoolScreen';
 import SchoolDetails from '@/packages/Client/Services/screens/SchoolDetails';
+import AddEvent from '@/packages/Client/Events/screens/AddEvent';
+import AddScreen from '@/packages/Client/home/screens/AddScreen';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -186,7 +189,7 @@ function ClientTabs() {
       {authData?.role === "stable" && <Tab.Screen name="myStable" component={MyStable} options={{ tabBarLabel: t('Global.My Stable') }} />}
       {authData?.role !== "stable" && <Tab.Screen name="service" component={ServicesScreen} options={{ tabBarLabel: t('Global.Services') }} />}
       {authData?.role !== "stable" && <Tab.Screen name="event" component={Events} options={{ tabBarLabel: t('Global.Events') }} />}
-      {authData?.role === "stable" && <Tab.Screen name="add" component={AddHorse} options={{ tabBarLabel: t('Global.Add') }} />}
+      {authData?.role === "stable" && <Tab.Screen name="add" component={AddScreen} options={{ tabBarLabel: t('Global.Add') }} />}
       <Tab.Screen name="profile" component={Profile} options={{ tabBarLabel: t('Global.Profile') }} />
     </Tab.Navigator>
   );
@@ -229,6 +232,8 @@ function ClientNavigator() {
       <Stack.Screen name={navigationEnums.PHOTO_SESSION_DETAILS} component={PhotoSessionDetails} />
       <Stack.Screen name={navigationEnums.PROFILE} component={Profile} />
       <Stack.Screen name={navigationEnums.EVENTS} component={Events} />
+      <Stack.Screen name={navigationEnums.EVENT_ADD} component={AddEvent} />
+
       <Stack.Screen name={navigationEnums.EVENT_DETAILS} component={EventDetails} />
       <Stack.Screen name={navigationEnums.EVENT_BOOKING} component={BookingScreen} />
       <Stack.Screen name={navigationEnums.EVENT_BOOKING_SUCCESS} component={BookingSuccessScreen} />
@@ -341,7 +346,10 @@ export default function Root() {
       // }
       >
         <I18nContext>
+        <PaperProvider>
+
           <App />
+        </PaperProvider>
         </I18nContext>
         <Toast visibilityTime={1000} />
       </NavigationContainer>

@@ -28,9 +28,9 @@ export const apiKeys = {
       deleteHorse:(id:string) => `/api/v1/horse/delete/${id}`,
     },
     event: {
-      addEvent: "/api/v1/event/addEvent",
-      updateEvent: "/api/v1/event/updateEvent",
-      deleteEvent: "/api/v1/event/deleteEvent",
+      addEvent: "/api/v1/event/add",
+      updateEvent: "/api/v1/event/update",
+      deleteEvent: "/api/v1/event/delete",
       booking: "/api/v1/event/booking",
       getEvent: "/api/v1/event/get?page=",
       eventDetails: "/api/v1/event/details/",

@@ -15,12 +15,13 @@ import EventDescription from "../components/EventDescription";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
 import { AxiosError } from "axios";
 import { t } from "@/lib";
-
+import { useAuthStore } from "@/store/useAuthStore";
 
 
 
 const EventDetails = () => {
   const { id } = useAppRouteParams("EVENT_DETAILS")
+  const {authData} = useAuthStore()
   console.log(id)
   const handleSelectEvent = () => {
 
@@ -79,13 +80,13 @@ const EventDetails = () => {
 
           </ScrollView>
         </LoaderBoundary>
-        <AppButton
+       {authData?.role === "auth" && <AppButton
           title={t("Global.get_ticket")}
           disabled={isPending}
           loading={isPending}
           className="w-[90%] mx-auto"
           onPress={handleSelectEvent}
-        />
+        />}
       </View>
     </AppWrapper>
   );

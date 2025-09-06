@@ -101,7 +101,7 @@ const AppSelect: React.FC<SelectProps> = ({
       <Modal transparent visible={isOpen} animationType="none">
         <Pressable
           onPress={toggleModal}
-          className="absolute top-10 left-0 w-full h-full"
+          className="absolute top-0 left-0 w-full h-full"
         >
           <View
             className="absolute bg-white border border-slate-300 rounded-xl p-2"
@@ -109,7 +109,7 @@ const AppSelect: React.FC<SelectProps> = ({
               width: dropdownWidth,
               top: offset.y - 40,
               [isRTL ? 'right' : 'left']: offset.x,
-              maxHeight: 300, // 👈 اجعل القائمة لا تتجاوز هذا الارتفاع
+              maxHeight: 200, 
             }}
           >
             {/* 🔍 Search Input */}

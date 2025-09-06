@@ -17,11 +17,12 @@ import { ScrollView, View } from "react-native";
 import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");
   const { navigate } = useGlobalNavigation();
-
+const {authData} = useAuthStore()
   // Horse store hooks
   const {
     setSelectedHorse,
@@ -88,7 +89,7 @@ const HorseDetails = () => {
           </ScrollView>
         </LoaderBoundary>
 
-        <Row gap={4} justify="between" className="mt-4 mb-10">
+        {authData?.role === "auth" && <Row gap={4} justify="between" className="mt-4 mb-10">
           <AppButton
             title={t("Global.select")}
             onPress={handleSelectHorse}
@@ -103,7 +104,7 @@ const HorseDetails = () => {
             endIcon={<Icons.cardTick />}
             disabled={isStored}
           />
-        </Row>
+        </Row>}
 
 
       </View>
