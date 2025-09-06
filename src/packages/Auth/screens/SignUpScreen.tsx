@@ -23,7 +23,7 @@ import Image from '@/components/UI/Image';
 import { isRTL } from '@/provider/constant';
 
 export const SignUpScreen = () => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const signUpSchema = z.object({
         name: z.string().min(3, t("signup.name_error")),
         // phone: z.string().min(6, 'Phone number required'),
@@ -32,11 +32,11 @@ export const SignUpScreen = () => {
         password: z.string().min(8, t("signup.password_error")),
         gender: z.enum(['male', 'female']),
     });
-    
+
     type SignUpForm = z.infer<typeof signUpSchema>;
-    
+
     const { navigate } = useGlobalNavigation();
-    const { setActiveApp ,authData} = useAuthStore()
+    const { setActiveApp, authData } = useAuthStore()
 
     const { mutate, isPending, error, data } = useApiMutation(
         {
@@ -46,8 +46,8 @@ export const SignUpScreen = () => {
     )
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
-        { value:'others', label: t("Global.others") },
-        { value: 'Egyptian', label: t("Global.egyptian")  },
+        { value: 'others', label: t("Global.others") },
+        { value: 'Egyptian', label: t("Global.egyptian") },
     ];
 
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
@@ -65,14 +65,14 @@ export const SignUpScreen = () => {
 
 
     const onSubmit = (formData: SignUpForm) => {
-         mutate(formData, {
+        mutate(formData, {
             onSuccess: (data) => {
                 showGlobalToast({
                     type: "success",
                     title: "Sign Up Success",
                     body: data.message
                 })
-                navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})
+                navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })
             },
             onError: (error) => {
                 showGlobalToast({
@@ -99,7 +99,6 @@ export const SignUpScreen = () => {
                         label={t("signup.name_label")}
                         name="name"
                         control={control}
-                        className="bg-white p-3 rounded-xl border mt-1 mb-3"
                         placeholder={t("signup.name_placeholder")}
                         onChangeText={onChange}
                         value={value}
@@ -115,7 +114,6 @@ export const SignUpScreen = () => {
                         label={t("signup.email_label")}
                         name="email"
                         control={control}
-                        className="bg-white p-3 rounded-xl border mt-1 mb-3"
                         placeholder={t("signup.email_placeholder")}
                         onChangeText={onChange}
                         value={value}
@@ -159,17 +157,15 @@ export const SignUpScreen = () => {
                 name="password"
                 render={({ field: { onChange, value } }) => (
                     <Input
-                        className="bg-white p-3 rounded-xl border mt-1 mb-3"
                         placeholder={t("signup.password_placeholder")}
                         secureTextEntry={!showPassword}
                         onChangeText={onChange}
                         value={value}
                         name="password"
                         control={control}
-                        dir={isRTL ? "rtl" : "ltr"}
                         label={t("signup.password_label")}
                         endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
-                        onEndIconPress={() => setShowPassword((prev) => !prev)}                      />
+                        onEndIconPress={() => setShowPassword((prev) => !prev)} />
                 )}
             />
 
@@ -184,16 +180,16 @@ export const SignUpScreen = () => {
             /> */}
 
             <AppButton
-            loading={isPending}
+                loading={isPending}
                 title={t("signup.submit")}
                 onPress={handleSubmit(onSubmit)}
             />
-            <Row>
-                <AppText className="text-center text-brownColor-400 mt-4">
+            <Row className="  gap-2 items-center mt-4">
+                <AppText className="text-center text-brownColor-400">
                     {t("signup.already_have_account")}
 
                 </AppText>
-                <AppText className="text-brownColor-400" onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}>
+                <AppText className="text-blue-400" onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}>
                     {t("signup.login")}
                 </AppText>
             </Row>
@@ -205,7 +201,7 @@ export const SignUpScreen = () => {
                     className='w-[50%] bg-brownColor-50'
                     textClassName='text-brownColor-400'
                     title={t("signup.google")}
-                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
+                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}
                     startIcon={<Icons.google />}
                 />
 
@@ -213,7 +209,7 @@ export const SignUpScreen = () => {
                     className='w-[30%] bg-brownColor-50 text-brownColor-400'
                     textClassName='text-brownColor-400'
                     title={t("apple")}
-                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN,{role:authData.role})}
+                    onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}
                     startIcon={<Icons.apple />}
                 />
             </View>

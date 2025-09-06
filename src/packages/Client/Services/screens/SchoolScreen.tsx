@@ -23,6 +23,7 @@ const SchoolScreen = () => {
     feature: [],
     color: [],
     rating: 0,
+    vehicles: [],
   });
 
   const queryParams = new URLSearchParams({
@@ -32,6 +33,7 @@ const SchoolScreen = () => {
     ...(filters.feature.length && { feature: filters.feature.join(",") }),
     ...(filters.color.length && { color: filters.color.join(",") }),
     ...(filters.rating > 0 && { rating: filters.rating.toString() }),
+    ...(filters.vehicles.length && { vehicles: filters.vehicles.join(",") }),
   });
 
   const { data, isLoading } = useApiQuery<SchoolsResponse>({

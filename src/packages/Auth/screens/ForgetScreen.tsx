@@ -60,11 +60,9 @@ const ForgetScreen = () => {
               label={t("Login.email_label")}
               placeholder={t("Login.email_placeholder")}
               keyboardType="email-address"
-              className="bg-white p-3 rounded-xl border mt-1 mb-3"
               onChangeText={onChange}
               value={value}
-              error={errors.email?.message}
-            />
+             />
           )}
         />
 

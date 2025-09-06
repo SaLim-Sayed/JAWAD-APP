@@ -54,7 +54,15 @@
     "stables": "Stables",
     "school": "School",
     "schools": "Schools",
-
+    "confirm":"Confirm",
+    "confirmEnableStable":"Are you sure you want to enable your stable?",
+    "confirmDisableStable":"Are you sure you want to disable your stable?",
+    "ok":"Ok",
+    "cancel":"Cancel",
+    "stableEnabled":"Stable Enabled",
+    "stableDisabled":"Stable Disabled",
+    "feature":"Feature",
+    "type":"Type",
     "events": "Events",
     "training": "Training",
     "horse_details": "Horse Details",
@@ -110,6 +118,7 @@
     "service": "Service",
     "training": "Training",
     "type": "Type",
+    "vehicles": "Vehicles",
     "options": {
       "saudi": "Saudi",
       "egyptian": "Egyptian",
@@ -129,7 +138,8 @@
       "training": "Training",
       "boarding": "Boarding",
       "arabic": "Arabic horse",
-      "other": "Other horses"
+      "other": "Other horses",
+      "horse": "Horse"
     }
   },
   "Onboard": {
@@ -186,6 +196,7 @@
     "nationality_error": "Select nationality",
     "password_label": "Password",
     "password_placeholder": "Enter Your Password",
+    "password_error": "Password is required",
     "gender_label": "Gender",
     "submit": "Sign up",
     "already_have_account": "Already have an account ?",

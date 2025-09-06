@@ -21,6 +21,7 @@ import AppSelect from "@/components/UI/AppSelect";
 import { useAuthStore } from "@/store/useAuthStore";
 import { t } from "@/lib";
 import { TextInput } from "react-native-paper";
+import { Input } from "@/components";
 
 export const genders = [
   { ar: "ذكر", en: "Male" },
@@ -34,6 +35,16 @@ export const levels = [
   { ar: "محترف", en: "Professional" },
 ];
 
+export const types=[
+  {ar:"جمل",en:"camel"},
+  {ar:"حصان",en:"horse"}
+  
+]
+export const features=[
+  {ar:"جري",en:"running"},
+  {ar:"رقص",en:"dancing"}
+  
+]
 
 
 const CreateHorse = () => {
@@ -106,8 +117,7 @@ const CreateHorse = () => {
         {[
           "enName", "arName", "enDescription", "arDescription",
           "enPrice", "arPrice",
-          "enType", "arType",
-          "enFeature", "arFeature", "color"
+           "color"
         ].map((field) => (
           <Controller
             key={field}
@@ -115,10 +125,10 @@ const CreateHorse = () => {
             name={field as keyof HorseForm}
             render={({ field: { onChange, value } }) => (
               <View style={styles.inputContainer}>
-                <TextInput
-                  mode="outlined"
+                <Input
                   label={t(`Global.${field}`)}
-                  
+                  name={field}
+                  control={control}
                   // @ts-ignore
                   value={value}
                   onChangeText={onChange}
@@ -132,6 +142,50 @@ const CreateHorse = () => {
           />
         ))}
 
+        <Controller
+          control={control}
+          name="arFeature"
+          render={({ field: { value, onChange } }) => (
+            <AppSelect
+              label={t("Global.feature")}
+              value={value}
+              onChange={(selected) => {
+                const selectedType = features.find((g) => g.ar === selected);
+                if (selectedType) {
+                  onChange(selectedType.ar);
+                  setValue("enFeature", selectedType.en);
+                }
+              }}
+              options={features.map((g) => ({
+                label: g.ar + " - " + g.en,
+                value: g.ar,
+              }))}
+              dropdownWidth="90%"
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="arType"
+          render={({ field: { value, onChange } }) => (
+            <AppSelect
+              label={t("Global.type")}
+              value={value}
+              onChange={(selected) => {
+                const selectedType = types.find((g) => g.ar === selected);
+                if (selectedType) {
+                  onChange(selectedType.ar);
+                  setValue("enType", selectedType.en);
+                }
+              }}
+              options={types.map((g) => ({
+                label: g.ar + " - " + g.en,
+                value: g.ar,
+              }))}
+              dropdownWidth="90%"
+            />
+          )}
+        />
         <Controller
           control={control}
           name="arGender"

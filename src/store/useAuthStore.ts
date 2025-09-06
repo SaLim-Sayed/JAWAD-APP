@@ -15,8 +15,10 @@ interface AuthState {
   isLoggedIn: boolean;
   activeApp: ActiveApp;
   authData: AuthData;
+  stableEnabled: boolean;
   setAuthData: (data: Partial<AuthData>) => void;
-  login: () => void;
+  setStableEnabled: (enabled: boolean) => void;
+    login: () => void;
   logout: () => void;
   setActiveApp: (app: ActiveApp) => void;
   loadAuthState: () => Promise<void>;
@@ -32,7 +34,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     id: '',
     isCompleted: false,
   },
-
+  stableEnabled: true,
+  setStableEnabled: (enabled: boolean) => set({ stableEnabled: enabled }),
   login: async () => {
     await AsyncStorage.setItem('isLoggedIn', 'true');
     set({ isLoggedIn: true });
@@ -73,13 +76,14 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   loadAuthState: async () => {
-    const [isLoggedIn, activeApp, token, role, id, isCompleted] = await Promise.all([
+    const [isLoggedIn, activeApp, token, role, id, isCompleted, stableEnabled] = await Promise.all([
       AsyncStorage.getItem('isLoggedIn'),
       AsyncStorage.getItem('activeApp'),
       AsyncStorage.getItem('token'),
       AsyncStorage.getItem('role'),
       AsyncStorage.getItem('id'),
       AsyncStorage.getItem('isCompleted'),
+      AsyncStorage.getItem('stableEnabled'),
     ]);
 
     set({
@@ -91,6 +95,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         id: id || '',
         isCompleted: isCompleted === 'true',
       },
+      stableEnabled: stableEnabled === 'true',
     });
   },
 }));

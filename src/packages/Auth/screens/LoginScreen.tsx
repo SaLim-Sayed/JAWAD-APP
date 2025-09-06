@@ -117,7 +117,6 @@ const LoginScreen = () => {
             label={t("Login.email_label")}
             placeholder={t("Login.email_placeholder")}
             keyboardType="email-address"
-            className="bg-white p-3 rounded-xl border mt-1 mb-3"
             onChangeText={onChange}
             value={value}
           />
@@ -129,15 +128,13 @@ const LoginScreen = () => {
         name="password"
         render={({ field: { onChange, value } }) => (
           <Input
-            className="bg-white p-3 rounded-xl border mt-1 mb-3"
-            placeholder={t("Login.password_placeholder")}
+             placeholder={t("Login.password_placeholder")}
             secureTextEntry={!showPassword}
             onChangeText={onChange}
             value={value}
             name="password"
             control={control}
-            dir={isRTL ? "rtl" : "ltr"}
-            label={t("Login.password_label")}
+             label={t("Login.password_label")}
             endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
             onEndIconPress={() => setShowPassword((prev) => !prev)}
           />

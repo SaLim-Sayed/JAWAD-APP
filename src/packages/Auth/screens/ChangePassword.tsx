@@ -70,7 +70,6 @@ const ChangePassword = () => {
               label="Password"
               placeholder="Enter your phone number"
               keyboardType="phone-pad"
-              className="bg-white p-3 rounded-xl border mt-1 mb-3"
               onChangeText={onChange}
               value={value}
             />
@@ -82,8 +81,7 @@ const ChangePassword = () => {
           name="confirmPassword"
           render={({ field: { onChange, value } }) => (
             <Input
-              className="bg-white p-3 rounded-xl border mt-1 mb-3"
-              placeholder="Enter Your Password"
+               placeholder="Enter Your Password"
               secureTextEntry={!showPassword}
               onChangeText={onChange}
               value={value}

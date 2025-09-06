@@ -17,6 +17,7 @@ const RidesScreen = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filters, setFilters] = useState({
     level: [],
+    vehicles: [],
     type: [],
     feature: [],
     color: [],

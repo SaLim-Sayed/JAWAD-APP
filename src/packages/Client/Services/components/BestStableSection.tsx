@@ -26,11 +26,12 @@ interface BestStableSectionProps {
         feature: string[];
         color: string[];
         rating: number;
+        vehicles: string[];
     };
 }
 
 const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filters }) => {
-    const { level, type, feature, color, rating } = filters;
+    const { level, type, feature, color, rating , vehicles } = filters;
 
     const queryParams = new URLSearchParams({
         page: "1",
@@ -40,6 +41,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filt
         ...(feature.length && { feature: feature.join(",") }),
         ...(color.length && { color: color.join(",") }),
         ...(rating > 0 && { rating: rating.toString() }),
+        ...(vehicles.length && { vehicles: vehicles.join(",") }),
     });
     const { data, isLoading } = useApiQuery<GetStablesResponse>({
         key: ["getStable", search, filters],
