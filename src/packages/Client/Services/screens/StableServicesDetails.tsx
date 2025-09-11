@@ -1,16 +1,12 @@
-import AppButton from "@/components/UI/AppButton";
 import AppLayout from "@/components/UI/AppLayout";
 import Divider from "@/components/UI/Divider";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import LocationCard from "@/components/UI/MapCard";
-import SearchInput from "@/components/UI/SearchInput";
-import { Icons } from "@/constants";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import { useLanguage } from "@/store";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React from "react";
 import { ScrollView, View } from "react-native";
 import { GetStableDetailsResponse } from "../@types/horse.types";
 import HorseSection from "../components/HorseSection";

@@ -18,6 +18,7 @@ import { GetHorseDetailResponse } from "../@types/horse.types";
 import HorseDescription from "../components/HorseDescription";
 import HorseDetailsHeader from "../components/HorseDetailsHeader";
 import { useAuthStore } from "@/store/useAuthStore";
+import YouTubeEmbed from "@/components/UI/YouTubePlayerComponent";
 
 const HorseDetails = () => {
   const { id } = useAppRouteParams("HORSE_DETAILS");

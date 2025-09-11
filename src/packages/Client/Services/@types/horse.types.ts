@@ -20,6 +20,7 @@ export interface Horse {
     picUrls: string[];
     __v: number;
     stable:string
+    videoUrl:string
   }
   
   export interface GetHorseDetailResponse {

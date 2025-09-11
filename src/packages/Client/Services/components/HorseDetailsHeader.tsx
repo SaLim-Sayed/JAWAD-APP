@@ -14,7 +14,7 @@ const HorseDetailsHeader = ({ horse }: { horse: HorseDetail }) => {
     const isadmin=authData?.role==='stable'||authData?.role==='photographer'
     return (
         <View className="mb-4 relative" >
-            <PictureGallery pictures={horse.picUrls.map((url, index) => ({ id: index, url }))} />
+            <PictureGallery pictures={horse.picUrls.map((url, index) => ({ id: index, url }))} videoUrl={horse.videoUrl} />
             {isadmin&&<TouchableOpacity className="absolute top-2 right-2" onPress={() => navigate(navigationEnums.HORSE_EDIT, { id: horse._id })}>
                 <Icons.edit />
             </TouchableOpacity>}
