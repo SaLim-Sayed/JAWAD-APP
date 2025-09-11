@@ -40,9 +40,7 @@ export const ContactUs = () => {
             <ScrollView
                 className="flex-1 h-full w-full"
                 contentContainerStyle={{
-                    flexGrow: 1,
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
+                   
                     paddingHorizontal: 16,
                     gap: 16,
                 }}

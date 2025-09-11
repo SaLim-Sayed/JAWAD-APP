@@ -53,7 +53,7 @@ export const Input: React.FC<InputProps> = ({
               
             }}
             placeholderTextColor={'#bbb'}
-            style={{ backgroundColor: "#fff", height: 50 }}
+            style={{ backgroundColor: "#fff", height: 40 }}
             {...rest} 
           />
 

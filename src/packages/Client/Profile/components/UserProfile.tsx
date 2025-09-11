@@ -40,7 +40,7 @@ export const UserProfile = () => {
 
     const onSubmit = (data: SignUpForm) => {
         console.log('✅ Form Data:', data);
-        navigate(navigationEnums.OTP_SCREEN)
+        navigate(navigationEnums.PROFILE_SCREEN)
     };
 
     return (
@@ -48,9 +48,6 @@ export const UserProfile = () => {
             <ScrollView
                 className="flex-1 h-full w-full"
                 contentContainerStyle={{
-                    flexGrow: 1,
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
                     paddingHorizontal: 16,
                     gap: 16,
                 }}

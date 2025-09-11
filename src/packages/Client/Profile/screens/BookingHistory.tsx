@@ -10,12 +10,14 @@ import { ActivityIndicator, FlatList, View } from 'react-native'
 import { GetBookingsResponse } from '../@types/booking.'
 import LoaderBoundary from '@/components/UI/LoaderBoundary'
 import { t } from '@/lib'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export default function BookingHistory() {
   const { navigate } = useGlobalNavigation()
+  const {authData} =useAuthStore()
 
   const { data: bookingData, isLoading } = useApiQuery<GetBookingsResponse>({
-    url: apiKeys.booking.getBooking,
+    url: authData?.role === "stable" ? apiKeys.stable.stableBooking : apiKeys.booking.getBooking,
     key: ["getBooking"],
   });
 
@@ -38,7 +40,10 @@ export default function BookingHistory() {
               <BookingCard
                 {...item}
                 onPress={() => {
-                  navigate(navigationEnums.BOOKING_DETAILS, { id: item._id,item:item });
+                  if(authData?.role === "stable"){
+                  }else{
+                    navigate(navigationEnums.BOOKING_DETAILS, { id: item._id,item:item });
+                  }
                 }}
               />
             )}

@@ -110,7 +110,7 @@ const FilterModal: React.FC<{
         >
           {(Object.keys(options) as FilterCategory[]).map((category) => (
             <View key={category} className="mb-6">
-              <Text className="text-lg font-semibold capitalize mb-3">
+              <Text className="text-lg font-semibold text-brownColor-400 capitalize mb-3">
                 {t(`filters.${category}`)}
               </Text>
               {options[category].map((option) => (
@@ -134,7 +134,7 @@ const FilterModal: React.FC<{
 
           {/* Rating Section */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold mb-3">{t("filters.minRating")}</Text>
+            <Text className="text-lg font-semibold  text-brownColor-400  mb-3">{t("filters.minRating")}</Text>
             <View className="flex-row items-center">
               <StarRating
                 rating={localFilters.rating}
@@ -152,7 +152,7 @@ const FilterModal: React.FC<{
 
           {/* Applied Filters Summary */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold mb-3">{t("filters.applied")}</Text>
+            <Text className="text-lg  text-brownColor-400  font-semibold mb-3">{t("filters.applied")}</Text>
             <View className="flex-row flex-wrap">
               {(Object.keys(localFilters) as (keyof Filters)[]).map((category) => {
                 if (category === "rating") {

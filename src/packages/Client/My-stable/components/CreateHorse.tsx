@@ -31,8 +31,7 @@ export const genders = [
 export const levels = [
   { ar: "مبتدئ", en: "Beginner" },
   { ar: "متوسط", en: "Intermediate" },
-  { ar: "متقدم", en: "Advanced" },
-  { ar: "محترف", en: "Professional" },
+   { ar: "محترف", en: "Professional" },
 ];
 
 export const types=[

@@ -16,6 +16,7 @@ export const apiKeys = {
       completed: (id:string) => `/api/v1/stable/completed/${id}`,
       getStable: "/api/v1/stable/get",
       stableDetails: "/api/v1/stable/details/",
+      stableBooking: "/api/v1/stable/stableBooking",
       stableDetail:(id:string) => `/api/v1/stable/details/${id}`,
       disableStable:(id:string) => `/api/v1/stable/disable/${id}`,
 

@@ -20,6 +20,7 @@ import { GetHorseDetailResponse } from '../../Services/@types/horse.types';
 import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
 import { t } from '@/lib';
+import { HelperText } from 'react-native-paper';
 
 
 export const GroupBooking = () => {
@@ -86,11 +87,11 @@ export const GroupBooking = () => {
     //@ts-ignore
     resolver: zodResolver(groupBookingSchema),
     defaultValues: {
+      service: type,
       date: new Date(),
       startTime: new Date(),
-      endTime: new Date(),
-      service: type,
-    },
+      endTime: new Date(new Date().getTime() + 60 * 60 * 1000),
+    }
   });
 
   // Helpers for date/time picker visibility states
@@ -104,12 +105,12 @@ export const GroupBooking = () => {
     const paymentData = {
       customerProfileId: "1212",
       customerMobile: data.customerMobile,
-      totalPrice: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price :type === "Training" ? price : totalAmount,
+      totalPrice: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : type === "Training" ? price : totalAmount,
       chargeItems: [
         {
           itemId: '6b5fdea340e31b3b0339d4d4ae5',
           description: "Booking",
-          price: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price :type === "Training" ? price : totalAmount,
+          price: type === "Photo session" ? horseDetails?.horse?.price : type === "event" ? eventDetails?.event?.price : type === "Training" ? price : totalAmount,
           quantity: 1,
           imageUrl: 'https://developer.fawrystaging.com/photos/45566.jpg',
         }
@@ -255,11 +256,11 @@ export const GroupBooking = () => {
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
         <Input
+          maxLength={11}
           control={control}
           label={t('booking.customer_mobile')}
           placeholder={t('booking.customer_mobile_placeholder')}
           {...register('customerMobile')}
-          error={errors.customerMobile?.message}
         />
 
         <AppButton
@@ -273,7 +274,8 @@ export const GroupBooking = () => {
             {...register('date')}
             value={watch('date') ?? new Date()}
             mode="date"
-            display="default"
+            display="spinner"
+            minimumDate={new Date()}
             onChange={(_, selectedDate) => {
               setShowDatePicker(false);
               if (selectedDate) {
@@ -284,7 +286,10 @@ export const GroupBooking = () => {
         )}
 
         <AppButton
-          title={`${t('booking.start_time')}: ${watch('startTime') ? watch('startTime').toTimeString().slice(0, 5) : t('booking.select_time')}`}
+          title={`${t('booking.start_time')}: ${watch('startTime')
+              ? watch('startTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+              : t('booking.select_time')
+            }`}
           onPress={() => setShowStartTimePicker(true)}
           variant='outline'
           endIcon={<Icons.calendar />}
@@ -292,10 +297,12 @@ export const GroupBooking = () => {
         {showStartTimePicker && (
           // @ts-ignore 
           <DateTimePicker
-            value={watch('startTime') ?? new Date()}
+            value={watch('startTime') ?? new Date().getHours()}
             mode="time"
             display="spinner"
             minuteInterval={60}
+
+            is24Hour={false}
             onChange={(_, selectedTime) => {
               setShowStartTimePicker(false);
               if (selectedTime) {
@@ -308,9 +315,13 @@ export const GroupBooking = () => {
             }}
           />
         )}
-
+        {errors.startTime && <HelperText type="error">{errors.startTime?.message}</HelperText>
+        }
         <AppButton
-          title={`${t('booking.end_time')}: ${watch('endTime') ? watch('endTime').toTimeString().slice(0, 5) : t('booking.select_time')}`}
+          title={`${t('booking.end_time')}: ${watch('endTime')
+              ? watch('endTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+              : t('booking.select_time')
+            }`}
           onPress={() => setShowEndTimePicker(true)}
           variant='outline'
           endIcon={<Icons.calendar />}
@@ -318,10 +329,11 @@ export const GroupBooking = () => {
         {showEndTimePicker && (
           // @ts-ignore 
           <DateTimePicker
-            value={watch('endTime') ?? new Date()}
+            value={watch('endTime') ?? new Date().getHours()}
             mode="time"
             display="spinner"
             minuteInterval={60}
+            is24Hour={false}
             onChange={(_, selectedTime) => {
               setShowEndTimePicker(false);
               if (selectedTime) {
@@ -334,6 +346,8 @@ export const GroupBooking = () => {
             }}
           />
         )}
+        {errors.endTime && <HelperText type="error">{errors.endTime?.message}</HelperText>
+        }
 
         <AppButton
           disabled={isPending || createBookingPending || isProcessingPayment}

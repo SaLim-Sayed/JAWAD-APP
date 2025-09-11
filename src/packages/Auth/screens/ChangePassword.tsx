@@ -81,7 +81,6 @@ const ChangePassword = () => {
               control={control}
               label="Password"
               placeholder="Enter your phone number"
-              keyboardType="phone-pad"
               onChangeText={onChange}
               value={value}
             />
