@@ -72,7 +72,7 @@ export const SignUpScreen = () => {
                     title: "Sign Up Success",
                     body: data.message
                 })
-                navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })
+                navigate(navigationEnums.OTP_VERIFY_SCREEN, { email: formData.email })
             },
             onError: (error) => {
                 showGlobalToast({

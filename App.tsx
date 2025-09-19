@@ -61,6 +61,7 @@ import SchoolScreen from '@/packages/Client/Services/screens/SchoolScreen';
 import SchoolDetails from '@/packages/Client/Services/screens/SchoolDetails';
 import AddEvent from '@/packages/Client/Events/screens/AddEvent';
 import AddScreen from '@/packages/Client/home/screens/AddScreen';
+import OtpVerifyScreen from '@/packages/Auth/screens/OtpVerifyScreen';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -212,6 +213,7 @@ function OnboardingNavigator() {
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SCREEN} component={ChangePassword} />
       <Stack.Screen name={navigationEnums.CHANGE_PASSWORD_SUCCESS_SCREEN} component={ChangeSuccessScreen} />
       <Stack.Screen name={navigationEnums.REGISTER_SUCCESS_SCREEN} component={RegisterSuccessScreen} />
+      <Stack.Screen name={navigationEnums.OTP_VERIFY_SCREEN} component={OtpVerifyScreen} />
     </Stack.Navigator>
   );
 }

@@ -28,6 +28,7 @@
   COMPLETE_STABLE: "complete-stable/:id",
   COMPLETE_PHOTOGRAPHER: "complete-photographer/:id",
   COMPLETE_SCHOOL: "complete-school/:id",
+  OTP_VERIFY_SCREEN: "otp-verify/:email",
 
 
 

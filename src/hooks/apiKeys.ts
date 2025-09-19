@@ -8,6 +8,7 @@ export const apiKeys = {
       changePassword:"/api/v1/user/changePassword",
       sendCode:"/api/v1/user/sendCode",
       checkCode:"/api/v1/user/checkCode",
+      verifyAccount:"/api/v1/user/verifyAccount",
       resetPassword:"/api/v1/user/resetPassword",
     },
     stable: {

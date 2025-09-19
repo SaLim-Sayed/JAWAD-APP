@@ -5,52 +5,84 @@ import UserCard from '@/components/UI/UserCard';
 import { navigationEnums } from '@/provider/navigationEnums';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
 import { z } from 'zod';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { apiKeys } from '@/hooks/apiKeys';
- const signUpSchema = z.object({
-    username: z.string().min(3, 'Username required'),
-    email: z.string().email('Email required'),
-    mobile: z.string().min(6, 'Mobile number required'),
-});
-
-type SignUpForm = z.infer<typeof signUpSchema>;
+import { useApiMutation } from '@/hooks';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
+import { t } from '@/lib';
+import AppSelect from '@/components/UI/AppSelect';
 
 export const UserProfile = () => {
+    const schema = z.object({
+        username: z.string().optional(),
+        nationality: z.string().nonempty(t("signup.nationality_error")),
+    });
+    type ProfileForm = z.infer<typeof schema>;
+
     const { navigate } = useGlobalNavigation();
 
- const { data: userDetails, isLoading: userDetailsLoading } = useApiQuery({
-      url: apiKeys.auth.getUserDetails,
-      key: ["getUserDetails"],
+    const { data: userDetails, isLoading } = useApiQuery({
+        url: apiKeys.auth.getUserDetails,
+        key: ["getUserDetails"],
     });
-    console.log({userDetails})
-    const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
-        resolver: zodResolver(signUpSchema),
-        defaultValues: {
-            username: userDetails?.details?.name,
-            email: userDetails?.details?.email,
-            mobile: userDetails?.details?.phone,
+    const nationalityOptions = [
+        { value: 'others', label: t("Global.others") },
+        { value: 'Egyptian', label: t("Global.egyptian") },
+    ];
+    const { mutate, isPending } = useApiMutation({
+        url: "/api/v1/user/update",
+        method: "put",
+    });
 
+    const { control, handleSubmit, reset, setValue, watch } = useForm<ProfileForm>({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            username: '',
+            nationality: '',
         },
     });
 
+    // لما يوصلك userDetails اعمل reset للقيم
+    useEffect(() => {
+        if (userDetails?.details) {
+            reset({
+                username: userDetails.details.name,
+                nationality: userDetails.details.nationality ?? '',
+            });
+        }
+    }, [userDetails, reset]);
 
-    const onSubmit = (data: SignUpForm) => {
-        console.log('✅ Form Data:', data);
-        navigate(navigationEnums.PROFILE_SCREEN)
+    const onSubmit = (formData: ProfileForm) => {
+        mutate(formData, {
+            onSuccess: (data) => {
+                console.log("✅ update response:", data);
+                showGlobalToast({
+                  type: "success",
+                  title: "",
+                  body: data?.message || JSON.stringify(data),
+                });
+                navigate(navigationEnums.PROFILE);
+              },
+              
+            onError: (error) => {
+                showGlobalToast({
+                    type: "error",
+                    title: t("profile.update_failed_title"),
+                    body: error.response?.data?.message,
+                });
+            },
+        });
     };
 
     return (
-        <View className="flex-1 h-[400px] mt-10 bg-transparent">
+        <View className="flex-1 mt-10 bg-transparent">
             <ScrollView
-                className="flex-1 h-full w-full"
-                contentContainerStyle={{
-                    paddingHorizontal: 16,
-                    gap: 16,
-                }}
+                className="flex-1 w-full"
+                contentContainerStyle={{ paddingHorizontal: 16, gap: 16 }}
                 keyboardShouldPersistTaps="handled"
             >
                 <UserCard
@@ -59,69 +91,45 @@ export const UserProfile = () => {
                     phone={userDetails?.details?.email}
                     avatar={images.family}
                 />
+
                 <Controller
                     control={control}
                     name="username"
                     render={({ field: { onChange, value } }) => (
                         <Input
-                            label="User Name"
+                            control={control}
                             name="username"
-                            control={control}
-                            className="flex-1 w-[100%] bg-white border p-3 rounded-xl"
-                            placeholder="Enter Your User Name"
+                            label={t("profile.username")}
+                            placeholder={t("profile.username_placeholder")}
                             onChangeText={onChange}
                             value={value}
                         />
                     )}
                 />
+
+
+
 
                 <Controller
                     control={control}
-                    name="email"
+                    name="nationality"
                     render={({ field: { onChange, value } }) => (
-                        <Input
-                            label="Email"
-                            name="email"
-                            control={control}
-                            className="flex-1 w-[100%] bg-white border p-3 rounded-xl"
-                            placeholder="Enter Your Email"
-                            keyboardType="email-address"
-                            onChangeText={onChange}
-                            value={value}
+                        <AppSelect
+                            label={t("signup.nationality_label")}
+                            options={nationalityOptions}
+                            value={watch('nationality')}
+                            dropdownWidth={"75%"}
+                            onChange={(val) => setValue('nationality', val)}
                         />
                     )}
                 />
-                <Controller
-                    control={control}
-                    name="mobile"
-                    render={({ field: { onChange, value } }) => (
-                        <Input
-                            label="Mobile Number"
-                            name="mobile"
-                            control={control}
-                            className="flex-1 w-[100%] bg-white border p-3 rounded-xl"
-                            placeholder="Enter Your Mobile Number"
-                            keyboardType="phone-pad"
-                            onChangeText={onChange}
-                            value={value}
-                        />
-                    )}
-                />
-
-
-
-
 
                 <AppButton
-                    title="Submit"
+                    loading={isPending}
+                    title={t("profile.submit")}
                     onPress={handleSubmit(onSubmit)}
                 />
-
-
-
-
             </ScrollView>
         </View>
-
     );
 };
