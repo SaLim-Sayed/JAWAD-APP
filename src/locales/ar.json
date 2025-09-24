@@ -118,7 +118,8 @@
     "color": "اللون",
     "service": "الخدمة",
     "type": "النوع",
-    "vehicles": "مركبة",
+    "vehicles": "الانواع",
+    "city": "المدن",
     "options": {
       "saudi": "سعودي",
       "egyptian": "مصري",

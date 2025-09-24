@@ -118,7 +118,8 @@
     "service": "Service",
     "training": "Training",
     "type": "Type",
-    "vehicles": "Vehicles",
+    "vehicles": "Types",
+    "city": "City",
     "options": {
       "saudi": "Saudi",
       "egyptian": "Egyptian",

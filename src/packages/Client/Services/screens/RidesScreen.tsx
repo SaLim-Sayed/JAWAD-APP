@@ -21,6 +21,7 @@ const RidesScreen = () => {
     feature: [],
     color: [],
     rating: 0,
+    city: [], 
   });
 
   return (

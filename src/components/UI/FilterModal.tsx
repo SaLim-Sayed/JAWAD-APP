@@ -15,15 +15,18 @@ import Checkbox from "./Checkbox";
 import Image from "./Image";
 import { Icons } from "@/constants";
 import AppText from "./AppText";
+import { cities } from "@/constants/data";
+import { useLanguage } from "@/store";
 
 // ✅ updated categories
-type FilterCategory = "level" | "feature" | "color" | "vehicles";
+type FilterCategory = "level" | "feature" | "color" | "vehicles"|"city";
 
 interface FilterOptions {
   level: string[];
   feature: string[];
   color: string[];
   vehicles: string[];
+  city: any[]
 }
 
 interface Filters {
@@ -32,13 +35,8 @@ interface Filters {
   color: string[];
   rating: number;
   vehicles: string[];
+  city: any[]
 }
- const options: FilterOptions = {
-  level: ["beginner", "intermediate", "professional"],
-  vehicles: ["arabic", "other", "camel", "vehicle", "carets"],
-  feature: ["running", "dancing"],
-  color: ["white", "brown", "black"],
-};
 
 const FilterModal: React.FC<{
   visible: boolean;
@@ -46,6 +44,15 @@ const FilterModal: React.FC<{
   onApply: (filters: Filters) => void;
   currentFilters: Filters;
 }> = ({ visible, onClose, onApply, currentFilters }) => {
+  const { language } = useLanguage()
+  const options: FilterOptions = {
+    level: ["beginner", "intermediate", "professional"],
+    vehicles: ["arabic", "other", "camel", "vehicle", "carets"],
+    feature: ["running", "dancing"],
+    color: ["white", "brown", "black"],
+    city: cities.map((city) => city[language]),
+  };
+
   const [localFilters, setLocalFilters] = useState<Filters>(currentFilters);
 
   const toggleOption = (category: FilterCategory, value: string) => {
@@ -81,6 +88,7 @@ const FilterModal: React.FC<{
       feature: [],
       color: [],
       rating: 0,
+      city: [],
     };
     setLocalFilters(emptyFilters);
   };
@@ -125,7 +133,10 @@ const FilterModal: React.FC<{
                     onPress={() => toggleOption(category, option)}
                   />
                   <Text className="text-base text-gray-800">
-                    {t(`filters.options.${option}`)}
+
+                    {category === 'city'
+                      ? option
+                      : t(`filters.options.${option}`)}
                   </Text>
                 </Pressable>
               ))}

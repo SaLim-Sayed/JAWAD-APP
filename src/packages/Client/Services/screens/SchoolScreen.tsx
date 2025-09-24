@@ -23,6 +23,7 @@ const SchoolScreen = () => {
     color: [],
     rating: 0,
     vehicles: [],
+    city: [],
   });
 
   const queryParams = new URLSearchParams({
@@ -32,7 +33,8 @@ const SchoolScreen = () => {
     ...(filters.color.length && { color: filters.color.join(",") }),
     ...(filters.rating > 0 && { rating: filters.rating.toString() }),
     ...(filters.vehicles.length && { vehicles: filters.vehicles.join(",") }),
-  });
+    ...(filters.city.length && { city: filters.city.join(",") }),
+    });
 
   const { data, isLoading } = useApiQuery<SchoolsResponse>({
     url: `${apiKeys.school.getSchool}?${queryParams.toString()}`,
