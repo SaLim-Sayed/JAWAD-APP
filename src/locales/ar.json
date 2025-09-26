@@ -32,6 +32,8 @@
     "stableEnabled":"إسطبل نشط",
     "stableDisabled":"إسطبل غير نشط",
     "feature":"ميزة",
+    "open":"مفتوح",
+    "closed":"مغلق",
     "type":"نوع",
     
     "add": "إضافة",

@@ -14,13 +14,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Modal, SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { GetHorseDetailResponse } from '../../Services/@types/horse.types';
 import { GetEventDetailsResponse } from '../../home/@types/event.type';
 import { GroupBookingForm, groupBookingSchema } from './userSchema';
 import { t } from '@/lib';
 import { HelperText } from 'react-native-paper';
+import AppText from '@/components/UI/AppText';
 
 
 export const GroupBooking = () => {
@@ -58,7 +59,7 @@ export const GroupBooking = () => {
     }
 
     applyCoupon(
-      { coupon: couponCode, id: stableId || id},
+      { coupon: couponCode, id: stableId || id },
       {
         onSuccess: (res: any) => {
           showGlobalToast({ type: 'success', title: t('booking.coupon_applied') });
@@ -283,7 +284,7 @@ export const GroupBooking = () => {
   return (
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
-        <View className="flex flex-row items-center bg-br gap-2">
+        <View className="flex flex-row w-[300px] items-center bg-br ">
           <Input
             name="coupon"
             control={control}
@@ -294,15 +295,11 @@ export const GroupBooking = () => {
             className='w-[250px] h-24'
           />
 
-          <AppButton
-            title={t('booking.apply_coupon')}
-            onPress={() => handleApplyCoupon(coupon)}
-             className='w-32 h-10 mt-4'
-             style={{
-                height: 10,
-             }}
-          />
-
+          <TouchableOpacity className='w-28 ltr:rounded-r-xl rtl:rounded-L-xl -mx-2 h-12 bg-brownColor-400 mt-4 flex items-center justify-center' onPress={() => handleApplyCoupon(coupon)}>
+            <AppText className='text-xs text-white'>
+              {t('booking.apply_coupon')}
+            </AppText>
+          </TouchableOpacity>
         </View>
         <Input
           maxLength={11}

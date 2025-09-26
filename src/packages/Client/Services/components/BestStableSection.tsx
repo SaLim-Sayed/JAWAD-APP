@@ -66,6 +66,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ search = "", filt
                                 name={item.name}
                                 type={item.region}
                                 rating={item.totalRating}
+                                status={item.status}
                                 onPressStart={() => { navigate(navigationEnums.STABLE_SERVICES_DETAILS, { id: item._id }) }}
                             />
                         )}

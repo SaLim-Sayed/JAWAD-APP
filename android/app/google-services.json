@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1043686674487",
+    "project_id": "jawad-notification",
+    "storage_bucket": "jawad-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043686674487:android:d6e17cdc83fc0471372fb2",
+        "android_client_info": {
+          "package_name": "com.JAWAD"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHoycg4bDfsL9vadwHaWGPnpxn_-lS540"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -73,6 +73,8 @@
     "no_data": "No Data",
     "egyptian":"Egyptian",
     "others":"others",
+    "open":"Open",
+    "closed":"Closed",
     "signup": "Sign Up"
   },
   "horse": {

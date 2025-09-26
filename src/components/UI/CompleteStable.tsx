@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { z } from "zod";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import AppButton from "@/components/UI/AppButton";
 import AppSelect from "@/components/UI/AppSelect";
@@ -37,7 +38,9 @@ export const horseSchema = z.object({
   enAddress: z.string().optional(),
   location: z.string().min(1, "Location is required"),
   sessionPercentage: z.string().min(1, "Session percentage is required"),
-  image: z.string().optional(),  
+  openTime: z.string().optional(), // "08:00"
+  closeTime: z.string().optional(), // "22:00"
+  image: z.string().optional(),
 });
 
 export type HorseForm = z.infer<typeof horseSchema>;
@@ -51,7 +54,7 @@ const genderOptions = [
 const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
   const { authData } = useAuthStore();
   const { navigate } = useGlobalNavigation()
-   const params = useAppRouteParams("COMPLETE_STABLE")
+  const params = useAppRouteParams("COMPLETE_STABLE")
   const { mutate, isPending } = usePutMutation({
     endpoint: apiKeys.stable.completeStable(params?.id),
     onSuccess: () => {
@@ -74,6 +77,8 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
     },
   });
 
+    const [showOpenPicker, setShowOpenPicker] = React.useState(false);
+    const [showClosePicker, setShowClosePicker] = React.useState(false);
 
   const {
     control,
@@ -93,6 +98,8 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
       enAddress: "",
       location: "",
       sessionPercentage: "",
+      openTime: "",
+      closeTime: "",
       image: undefined,
     },
   });
@@ -121,6 +128,7 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
+
 
     // إرفاق الصورة - تأكد من أنها بصيغة صحيحة
     if (image) {
@@ -196,6 +204,68 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
               )}
             />
           ))}
+          <Controller
+            name="openTime"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <View>
+                <Text style={styles.label}>Open Time</Text>
+                <TouchableOpacity
+                  style={styles.input}
+                  onPress={() => setShowOpenPicker(true)}
+                >
+                  <Text style={styles.inputText}>{value || "Select Open Time"}</Text>
+                </TouchableOpacity>
+                {showOpenPicker && (
+                  <DateTimePicker
+                    value={value ? new Date(`1970-01-01T${value}:00`) : new Date()}
+                    mode="time"
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={(_, selectedDate) => {
+                      setShowOpenPicker(false);
+                      if (selectedDate) {
+                        const formatted = selectedDate.toTimeString().slice(0, 5); // HH:mm
+                        onChange(formatted);
+                      }
+                    }}
+                  />
+                )}
+              </View>
+            )}
+          />
+
+
+          <Controller
+            name="closeTime"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <View>
+                <Text style={styles.label}>Close Time</Text>
+                <TouchableOpacity
+                  style={styles.input}
+                  onPress={() => setShowClosePicker(true)}
+                >
+                  <Text style={styles.inputText}>{value || "Select Close Time"}</Text>
+                </TouchableOpacity>
+                {showClosePicker && (
+                  <DateTimePicker
+                    value={value ? new Date(`1970-01-01T${value}:00`) : new Date()}
+                    mode="time"
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={(_, selectedDate) => {
+                      setShowClosePicker(false);
+                      if (selectedDate) {
+                        const formatted = selectedDate.toTimeString().slice(0, 5); // HH:mm
+                        onChange(formatted);
+                      }
+                    }}
+                  />
+                )}
+              </View>
+            )}
+          />
 
           {/* Gender Select */}
           <Controller
@@ -249,12 +319,14 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
+    color: "#603c2b",
     padding: 10,
     borderRadius: 8,
     marginBottom: 4,
   },
   imageBox: { position: "relative", alignSelf: "flex-start", marginVertical: 12 },
   image: { width: 100, height: 100, borderRadius: 8 },
+  inputText: { color: "#603c2b" },
   deleteIcon: {
     position: "absolute",
     top: -6,

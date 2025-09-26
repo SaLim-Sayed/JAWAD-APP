@@ -17,6 +17,7 @@ interface StableCardProps {
     type: string;
     rating: number;
     onPressStart?: () => void;
+    status?: "Open" | "Closed";
 }
 
 const StableCard: React.FC<StableCardProps> = ({
@@ -26,11 +27,41 @@ const StableCard: React.FC<StableCardProps> = ({
     type,
     rating,
     onPressStart,
+    status = "Open",
 }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
+
+    const isOpen = status === "Open";
+
     return (
-        <TouchableOpacity onPress={onPressStart} style={styles.card}>
-            <Image className="rounded-t-2xl" source={image} resizeMode="stretch" style={styles.image} />
+        <TouchableOpacity 
+            onPress={onPressStart} 
+            style={styles.card}
+            disabled={!isOpen}
+        >
+            <Image 
+                className="rounded-t-2xl" 
+                source={image} 
+                resizeMode="stretch" 
+                style={styles.image} 
+                background
+            >
+                {!isOpen && (
+                    <View style={styles.overlay}>
+                        <AppText className="text-white text-center">
+                            {t("Global.closed")}
+                        </AppText>
+                    </View>
+                )}
+                {isOpen && (
+                    <View style={styles.openLabel}>
+                        <AppText className="text-white text-xs font-bold">
+                            {t("Global.open")}
+                        </AppText>
+                    </View>
+                )}
+            </Image>
+            
             <Col className="p-2" gap={4}>
                 <Row items="center" gap={12}>
                     <Image source={Icons.location} style={styles.icon} />
@@ -53,21 +84,27 @@ const StableCard: React.FC<StableCardProps> = ({
                         className="w-32 h-8"
                         text={t("Global.start_now")}
                         onPress={() => onPressStart?.()}
+                        disabled={!isOpen}
                         iconLeft={
                             <View className="flex items-center justify-center h-8 p-2 w-8 rounded-full bg-amber-950">
-                                <Icons.arrowRight style={{
-                                    transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],
-                                }} className="text-white" width={20} height={20} />
+                                <Icons.arrowRight
+                                    style={{
+                                        transform: [{ rotate: `${isRTL ? 180 : 0}deg` }],
+                                    }}
+                                    className="text-white"
+                                    width={20}
+                                    height={20}
+                                />
                             </View>
                         }
                     />
                     <Image source={Icons.camera} style={styles.icon} />
-                    {/* <Image source={Icons.horse} style={styles.icon} /> */}
                 </Row>
             </Col>
         </TouchableOpacity>
     );
-}
+};
+
 const styles = StyleSheet.create({
     card: {
         backgroundColor: "#E7E7E74D",
@@ -80,7 +117,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 3 },
         alignItems: "flex-start",
         overflow: "hidden",
-        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        position: "relative",
     },
     image: {
         width: "100%",
@@ -88,8 +125,25 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
     },
-    icon: {
-
+    icon: {},
+    overlay: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    openLabel: {
+        position: "absolute",
+        top: 6,
+        right: 6,
+        backgroundColor: "green",
+        paddingHorizontal: 8,
+        paddingVertical: 2,
+        borderRadius: 8,
     },
 });
 

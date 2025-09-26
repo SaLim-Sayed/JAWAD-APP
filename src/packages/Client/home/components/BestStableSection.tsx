@@ -55,6 +55,7 @@ const BestStableSection: React.FC<BestStableSectionProps> = ({ onSeeAll }) => {
                         name={item.name.slice(0, 15)}
                         type={item.region}
                         rating={item.totalRating}
+                        status={item.status}
                         onPressStart={() => handleNavigation(item._id)}
                     />
                 )}

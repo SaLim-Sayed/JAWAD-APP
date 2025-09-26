@@ -7,6 +7,7 @@ export interface Stable {
     location: string; // URL to Google Maps
     picUrl: string;   // Image URL
     region: string;
+    status: "Open"|"Closed";
   }
   
 export interface GetStablesResponse {

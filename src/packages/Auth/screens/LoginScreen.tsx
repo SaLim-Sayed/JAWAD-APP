@@ -23,9 +23,41 @@ import CompleteModal from '@/components/UI/CompleteModal';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { useTranslation } from 'react-i18next';
 import { isRTL } from '@/provider/constant';
-
+import messaging from '@react-native-firebase/messaging';
+import { Platform } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 
 const LoginScreen = () => {
+  const requestUserPermission = async () => {
+    if (Platform.OS === "android") {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED;
+    }
+    return true;
+  };
+  const getFcmToken = async () => {
+    try {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  
+      if (enabled) {
+        const token = await messaging().getToken();
+        console.log("✅ FCM TOKEN:", token);
+        return token;
+      } else {
+        console.log("❌ Permission not granted for FCM");
+        return null;
+      }
+    } catch (error) {
+      console.log("🔥 Error fetching FCM token", error);
+      return null;
+    }
+  };
+  
 
   const { t } = useTranslation()
 
@@ -61,44 +93,52 @@ const LoginScreen = () => {
     },
   });
   const [visible, setVisible] = useState(false)
-  const onSubmit = (formData: LoginSchema) => {
-    mutate(formData, {
-      onSuccess: (data) => {
-        showGlobalToast({
-          type: "success",
-          title: "Login Success",
-          body: data.message
-        })
-        setAuthData({
-          token: data.token,
-          role: role,
-          id: data.id,
-          isCompleted: data.isCompleted,
-        })
-        // setActiveApp("Client")
+  const onSubmit = async (formData: LoginSchema) => {
+    const fcmToken = await getFcmToken();
+    console.log({ fcmToken })
+  
+    mutate(
+      { 
+        ...formData, 
+        fcmToken 
       },
-      onError: (error: any) => {
-        console.log({error})
-        if (error?.response?.status === 400) {
-          if (authData.role === "photographer") {
-            navigate(navigationEnums.COMPLETE_PHOTOGRAPHER, { id: error.response.data.id })
-          } else if (authData.role === "school") {
-            navigate(navigationEnums.COMPLETE_SCHOOL, { id: error.response.data.id })
-          } else {
-            navigate(navigationEnums.COMPLETE_STABLE, { id: error.response.data.id })
+      {
+        onSuccess: (data) => {
+          showGlobalToast({
+            type: "success",
+            title: "Login Success",
+            body: data.message
+          });
+  
+          setAuthData({
+            token: data.token,
+            role: role,
+            id: data.id,
+            isCompleted: data.isCompleted,
+          });
+        },
+        onError: (error: any) => {
+          console.log({ error });
+          if (error?.response?.status === 400) {
+            if (authData.role === "photographer") {
+              navigate(navigationEnums.COMPLETE_PHOTOGRAPHER, { id: error.response.data.id });
+            } else if (authData.role === "school") {
+              navigate(navigationEnums.COMPLETE_SCHOOL, { id: error.response.data.id });
+            } else {
+              navigate(navigationEnums.COMPLETE_STABLE, { id: error.response.data.id });
+            }
           }
-
+  
+          showGlobalToast({
+            type: "error",
+            title: "Login Failed",
+            body: error.response?.data?.message || "Something went wrong"
+          });
         }
-
-        showGlobalToast({
-          type: "error",
-          title: "Login Failed",
-          body: error.response.data.message
-        })
       }
-    })
-
+    );
   };
+  
 
   return (
     <AuthWrapper>
