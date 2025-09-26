@@ -51,6 +51,8 @@ export interface Horse {
     sessionPercentage: number;
     location: string;
     picUrl: string;
+    openTime?:string
+    closeTime?:string
   }
   
   export interface GetStableDetailsResponse {

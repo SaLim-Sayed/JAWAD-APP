@@ -44,6 +44,34 @@ export const GroupBooking = () => {
     key: ["getEventDetails", id],
     url: apiKeys.event.eventDetails + id,
   });
+  const { mutate: applyCoupon, isPending: applyingCoupon } = useApiMutation({
+    url: apiKeys.booking.applycoupon(type),
+    method: "post",
+  });
+
+  const [coupon, setCoupon] = useState("");
+
+  const handleApplyCoupon = (couponCode: string) => {
+    if (!couponCode) {
+      showGlobalToast({ type: 'error', title: t('booking.enter_coupon') });
+      return;
+    }
+
+    applyCoupon(
+      { coupon: couponCode, id: stableId || id},
+      {
+        onSuccess: (res: any) => {
+          showGlobalToast({ type: 'success', title: t('booking.coupon_applied') });
+          if (res?.discount) {
+
+          }
+        },
+        onError: (error: any) => {
+          showGlobalToast({ type: 'error', title: error?.response?.data?.message || 'Invalid coupon' });
+        },
+      }
+    );
+  };
 
   const parseUrlParams = (url: string) => {
     const params: { [key: string]: string } = {};
@@ -255,6 +283,27 @@ export const GroupBooking = () => {
   return (
     <>
       <View className="px-4 pt-6 flex-1 w-full bg-white rounded-xl gap-4">
+        <View className="flex flex-row items-center bg-br gap-2">
+          <Input
+            name="coupon"
+            control={control}
+            value={coupon}
+            onChangeText={setCoupon}
+            label={t('booking.coupon')}
+            placeholder={t('booking.coupon_placeholder')}
+            className='w-[250px] h-24'
+          />
+
+          <AppButton
+            title={t('booking.apply_coupon')}
+            onPress={() => handleApplyCoupon(coupon)}
+             className='w-32 h-10 mt-4'
+             style={{
+                height: 10,
+             }}
+          />
+
+        </View>
         <Input
           maxLength={11}
           control={control}
@@ -287,8 +336,8 @@ export const GroupBooking = () => {
 
         <AppButton
           title={`${t('booking.start_time')}: ${watch('startTime')
-              ? watch('startTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
-              : t('booking.select_time')
+            ? watch('startTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+            : t('booking.select_time')
             }`}
           onPress={() => setShowStartTimePicker(true)}
           variant='outline'
@@ -319,8 +368,8 @@ export const GroupBooking = () => {
         }
         <AppButton
           title={`${t('booking.end_time')}: ${watch('endTime')
-              ? watch('endTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
-              : t('booking.select_time')
+            ? watch('endTime').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+            : t('booking.select_time')
             }`}
           onPress={() => setShowEndTimePicker(true)}
           variant='outline'

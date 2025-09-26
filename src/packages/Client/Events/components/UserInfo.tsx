@@ -29,7 +29,7 @@ export default function UserInfo({ onNext,setPaymentUrl }: { onNext: () => void 
       className="px-4 pt-6  w-full h-[80%] bg-white rounded-xl gap-4"
     >
       <UserCard role="User" name={userName} phone={userDetails?.details?.phone} avatar={images.family} />
-      <GroupBooking onNext={onNext} />
+      <GroupBooking  />
     </ScrollView>
   )
 }

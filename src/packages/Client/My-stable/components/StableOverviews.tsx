@@ -23,6 +23,7 @@ import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
 import { useLanguage } from "@/store";
 import AppSelect from "@/components/UI/AppSelect";
 import { cities } from "@/constants/data";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 // ========== Schema ==========
 const stableSchema = z.object({
@@ -38,6 +39,8 @@ const stableSchema = z.object({
     description: z.string().optional(),
     phone: z.string().optional(),
     logo: z.string().optional(),
+    openTime: z.string().optional(), // "08:00"
+    closeTime: z.string().optional(), // "22:00"
 });
 
 type StableForm = z.infer<typeof stableSchema>;
@@ -45,24 +48,34 @@ type StableForm = z.infer<typeof stableSchema>;
 // ========== Main ==========
 const StableOverviews = () => {
     const [logo, setLogo] = useState<string | undefined>();
+    const [showOpenPicker, setShowOpenPicker] = useState(false);
+    const [showClosePicker, setShowClosePicker] = useState(false);
 
-     const { authData } = useAuthStore()
+    const { authData } = useAuthStore();
     const { data } = useApiQuery<GetStableDetailsResponse>({
         url: apiKeys.stable.stableDetail(authData?.id as string),
         key: [apiKeys.stable.stableDetail(authData?.id as string)],
-    })
+    });
 
     const { mutate, isPending } = usePutMutation({
         endpoint: apiKeys.stable.updateStable(authData?.id),
         onSuccess: () => {
-            showGlobalToast({ type: "success", title: "Saved", body: "Stable updated." });
+            showGlobalToast({
+                type: "success",
+                title: "Saved",
+                body: "Stable updated.",
+            });
         },
         onError: (error) => {
-            showGlobalToast({ type: "error", title: "Error", body: error.message });
+            showGlobalToast({
+                type: "error",
+                title: "Error",
+                body: error.message,
+            });
         },
     });
 
-    const { language } = useLanguage()
+    const { language } = useLanguage();
     const {
         control,
         handleSubmit,
@@ -84,8 +97,11 @@ const StableOverviews = () => {
             arAddress: data?.stable.address["ar"],
             enAddress: data?.stable.address["en"],
             sessionPercentage: data?.stable.sessionPercentage.toString(),
+            openTime: data?.stable.openTime,
+            closeTime: data?.stable.closeTime,
         },
     });
+
     useEffect(() => {
         if (data?.stable) {
             const stable = data.stable;
@@ -101,6 +117,8 @@ const StableOverviews = () => {
             setValue("arAddress", stable.address["ar"] || "");
             setValue("enAddress", stable.address["en"] || "");
             setValue("sessionPercentage", stable.sessionPercentage.toString());
+            setValue("openTime", stable.openTime || "");
+            setValue("closeTime", stable.closeTime || "");
 
             if (stable.picUrl) setLogo(stable.picUrl);
         }
@@ -116,20 +134,21 @@ const StableOverviews = () => {
         });
     };
 
-
-
     const onSubmit = (data: StableForm) => {
         const formData = new FormData();
 
-         formData.append("phone", data.phone);
-        formData.append("location", data.location);
-        formData.append("arCity", data.arCity);
-        formData.append("enCity", data.enCity);
-        formData.append("arRegion", data.arRegion);
-        formData.append("enRegion", data.enRegion);
-        formData.append("arAddress", data.arAddress);
-        formData.append("enAddress", data.enAddress);
-        formData.append("sessionPercentage", data.sessionPercentage?.toString());
+        formData.append("phone", data.phone || "");
+        formData.append("location", data.location || "");
+        formData.append("arCity", data.arCity || "");
+        formData.append("enCity", data.enCity || "");
+        formData.append("arRegion", data.arRegion || "");
+        formData.append("enRegion", data.enRegion || "");
+        formData.append("arAddress", data.arAddress || "");
+        formData.append("enAddress", data.enAddress || "");
+        formData.append("sessionPercentage", data.sessionPercentage?.toString() || "");
+        formData.append("openTime", data.openTime || "");
+        formData.append("closeTime", data.closeTime || "");
+
         if (logo) {
             formData.append("image", {
                 uri: logo,
@@ -138,13 +157,12 @@ const StableOverviews = () => {
             } as any);
         }
 
-
         mutate(formData);
     };
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={{ padding: 20 }}>
+            <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 200 }}>
                 {/* Logo Upload */}
                 <Text style={styles.label}>Add Logo</Text>
                 <TouchableOpacity onPress={pickLogo} style={styles.logoContainer}>
@@ -160,8 +178,6 @@ const StableOverviews = () => {
                     </View>
                 </TouchableOpacity>
 
-
-
                 {/* Text Inputs */}
                 <Controller
                     name="stableName"
@@ -172,10 +188,12 @@ const StableOverviews = () => {
                             <TextInput
                                 value={value}
                                 onChangeText={onChange}
-                                placeholder="Enter Your User Name"
+                                placeholder="Enter Your Stable Name"
                                 style={styles.input}
                             />
-                            {errors.stableName && <Text style={styles.errorText}>{errors.stableName.message}</Text>}
+                            {errors.stableName && (
+                                <Text style={styles.errorText}>{errors.stableName.message}</Text>
+                            )}
                         </>
                     )}
                 />
@@ -192,7 +210,9 @@ const StableOverviews = () => {
                                 placeholder="Enter Your Stable Description"
                                 style={styles.input}
                             />
-                            {errors.description && <Text style={styles.errorText}>{errors.description.message}</Text>}
+                            {errors.description && (
+                                <Text style={styles.errorText}>{errors.description.message}</Text>
+                            )}
                         </>
                     )}
                 />
@@ -210,10 +230,14 @@ const StableOverviews = () => {
                                 placeholder="Enter Your Mobile Number"
                                 style={styles.input}
                             />
-                            {errors.phone && <Text style={styles.errorText}>{errors.phone.message}</Text>}
+                            {errors.phone && (
+                                <Text style={styles.errorText}>{errors.phone.message}</Text>
+                            )}
                         </>
                     )}
                 />
+
+                {/* City Select */}
                 <Controller
                     name={language === "ar" ? "arCity" : "enCity"}
                     control={control}
@@ -223,26 +247,38 @@ const StableOverviews = () => {
                             //@ts-ignore
                             value={value}
                             onChange={(selectedAr) => {
-                                const selectedCity = cities.find((c) => c[language] === selectedAr);
+                                const selectedCity = cities.find(
+                                    (c) => c[language] === selectedAr
+                                );
                                 if (selectedCity) {
                                     onChange(selectedCity[language]);
-                                    setValue(language === "ar" ? "enCity" : "arCity", selectedCity[language]);
+                                    setValue(
+                                        language === "ar" ? "enCity" : "arCity",
+                                        selectedCity[language === "ar" ? "en" : "ar"]
+                                    );
                                 }
                             }}
-                            options={cities.map((city) => ({ label: city[language] + " - " + city[language === "ar" ? "en" : "ar"], value: city[language] }))}
+                            options={cities.map((city) => ({
+                                label:
+                                    city[language] +
+                                    " - " +
+                                    city[language === "ar" ? "en" : "ar"],
+                                value: city[language],
+                            }))}
                             dropdownWidth="80%"
                         />
-                    )
-                    }
+                    )}
                 />
-                {[
 
+                {/* Other text fields */}
+                {[
                     "arRegion",
                     "enRegion",
                     "arAddress",
                     "enAddress",
                     "location",
                     "sessionPercentage",
+
                 ].map((field) => (
                     <Controller
                         key={field}
@@ -267,7 +303,68 @@ const StableOverviews = () => {
                         )}
                     />
                 ))}
-           
+                <Controller
+                    name="openTime"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                        <View>
+                            <Text style={styles.label}>Open Time</Text>
+                            <TouchableOpacity
+                                style={styles.input}
+                                onPress={() => setShowOpenPicker(true)}
+                            >
+                                <Text style={styles.inputText}>{value || "Select Open Time"}</Text>
+                            </TouchableOpacity>
+                            {showOpenPicker && (
+                                <DateTimePicker
+                                    value={value ? new Date(`1970-01-01T${value}:00`) : new Date()}
+                                    mode="time"
+                                    is24Hour={true}
+                                    display="spinner"
+                                    onChange={(_, selectedDate) => {
+                                        setShowOpenPicker(false);
+                                        if (selectedDate) {
+                                            const formatted = selectedDate.toTimeString().slice(0, 5); // HH:mm
+                                            onChange(formatted);
+                                        }
+                                    }}
+                                />
+                            )}
+                        </View>
+                    )}
+                />
+
+
+                <Controller
+                    name="closeTime"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                        <View>
+                            <Text style={styles.label}>Close Time</Text>
+                            <TouchableOpacity
+                                style={styles.input}
+                                onPress={() => setShowClosePicker(true)}
+                            >
+                                <Text style={styles.inputText}>{value || "Select Close Time"}</Text>
+                            </TouchableOpacity>
+                            {showClosePicker && (
+                                <DateTimePicker
+                                    value={value ? new Date(`1970-01-01T${value}:00`) : new Date()}
+                                    mode="time"
+                                    is24Hour={true}
+                                    display="spinner"
+                                    onChange={(_, selectedDate) => {
+                                        setShowClosePicker(false);
+                                        if (selectedDate) {
+                                            const formatted = selectedDate.toTimeString().slice(0, 5); // HH:mm
+                                            onChange(formatted);
+                                        }
+                                    }}
+                                />
+                            )}
+                        </View>
+                    )}
+                />
             </ScrollView>
 
             <AppButton
@@ -289,6 +386,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingBottom: 40,
     },
+    inputText: {
+        color: "#603c2b",
+    },
     label: {
         fontWeight: "bold",
         marginTop: 12,
@@ -301,6 +401,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 8,
+        color: "#603c2b",
     },
     errorText: {
         color: "red",
@@ -333,30 +434,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 12,
         padding: 4,
-    },
-    galleryContainer: {
-        flexDirection: "row",
-        gap: 10,
-        marginBottom: 10,
-    },
-    galleryItem: {
-        position: "relative",
-    },
-    galleryImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 8,
-    },
-    deleteIcon: {
-        position: "absolute",
-        bottom: -10,
-        alignSelf: "center",
-    },
-    uploadButton: {
-        backgroundColor: "#603c2b",
-        padding: 12,
-        borderRadius: 10,
-        alignItems: "center",
-        marginBottom: 30,
     },
 });

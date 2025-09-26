@@ -100,6 +100,11 @@
     "payment": "الدفع",
     "payment_success": "تم تأكيد الحجز بنجاح",
     "payment_failed": "فشل الدفع",
+    "apply_coupon": "تطبيق الكوبون",
+    "coupon": "كوبون",
+    "coupon_placeholder": "أدخل الكوبون",
+    "coupon_applied": "تم تطبيق الكوبون",
+    
     "payment_cancelled": "تم إلغاء عملية الدفع"
   },
   "filters": {

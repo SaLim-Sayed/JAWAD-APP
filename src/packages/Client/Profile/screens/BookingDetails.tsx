@@ -1,23 +1,20 @@
+import { images } from "@/assets/images";
 import AppButton from "@/components/UI/AppButton";
 import AppHeader from "@/components/UI/AppHeader";
-import AppWrapper from "@/components/UI/AppWrapper";
-import Divider from "@/components/UI/Divider";
-import { navigationEnums } from "@/provider/navigationEnums";
+import AppLayout from "@/components/UI/AppLayout";
+import AppText from "@/components/UI/AppText";
+import Image from "@/components/UI/Image";
+import LoaderBoundary from "@/components/UI/LoaderBoundary";
+import Row from "@/components/UI/Row";
+import { useApiMutation, useApiQuery } from "@/hooks";
+import { apiKeys } from "@/hooks/apiKeys";
+import { showGlobalToast } from "@/hooks/useGlobalToast";
 import useAppRouteParams from "@/provider/useAppRouteParams";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import React from "react";
 import { ScrollView, View } from "react-native";
 import HistoryDescription from "../components/HistoryDescription";
 import { bookingData } from "./history";
-import Image from "@/components/UI/Image";
-import Row from "@/components/UI/Row";
-import { useApiMutation, useApiQuery } from "@/hooks";
-import { apiKeys } from "@/hooks/apiKeys";
-import AppText from "@/components/UI/AppText";
-import { showGlobalToast } from "@/hooks/useGlobalToast";
-import AppLayout from "@/components/UI/AppLayout";
-import { images } from "@/assets/images";
-import LoaderBoundary from "@/components/UI/LoaderBoundary";
  
 
 

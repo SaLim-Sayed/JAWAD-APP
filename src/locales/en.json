@@ -99,6 +99,10 @@
     "payment": "Payment",
     "payment_success": "Payment Success",
     "payment_failed": "Payment Failed",
+    "apply_coupon": "Apply Coupon",
+    "coupon": "Coupon",
+    "coupon_placeholder": "Enter Coupon",
+    "coupon_applied": "Coupon Applied",
     "payment_cancelled": "Payment Cancelled"
   },
   "filters": {
