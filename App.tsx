@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { PaperProvider } from 'react-native-paper';
+import messaging from '@react-native-firebase/messaging';
 
 import { Icons } from '@/constants';
 import { I18nContext } from '@/provider/Language/I18nContext';
@@ -62,6 +63,8 @@ import SchoolDetails from '@/packages/Client/Services/screens/SchoolDetails';
 import AddEvent from '@/packages/Client/Events/screens/AddEvent';
 import AddScreen from '@/packages/Client/home/screens/AddScreen';
 import OtpVerifyScreen from '@/packages/Auth/screens/OtpVerifyScreen';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
+import { notificationService } from '@/provider/NotificationService';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -282,7 +285,53 @@ function MainNavigator() {
 function App() {
   const { showSplash, setShowSplash } = useSplashStore();
   const { isLoggedIn, activeApp, loadAuthState, authData, setActiveApp } = useAuthStore();
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log("📩 Notification received:", remoteMessage);
+      showGlobalToast({
+        type: 'info',
+        title: remoteMessage.notification?.title!,
+        body: remoteMessage.notification?.body,
+      });
+    });
+    
+  
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('📦 Notification handled in background!', remoteMessage);
+    });
+  
+    return unsubscribe;
+  }, []);
 
+  useEffect(() => {
+     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log("📩 Foreground Notification:", remoteMessage);
+      showGlobalToast({
+        type: 'info',
+        title: remoteMessage.notification?.title!,
+        body: remoteMessage.notification?.body,
+      });
+    });
+
+     messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('📦 Background Notification:', remoteMessage);
+    });
+
+     messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log('🚀 App opened from quit state:', remoteMessage);
+        }
+      });
+
+ 
+    return unsubscribe;
+  }, []);
+  
+  useEffect(() => {
+    notificationService.init();  
+  }, []);
   useEffect(() => {
     if (authData.token) {
       setActiveApp("Client")

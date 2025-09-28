@@ -26,6 +26,7 @@ import { isRTL } from '@/provider/constant';
 import messaging from '@react-native-firebase/messaging';
 import { Platform } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = () => {
   const requestUserPermission = async () => {
@@ -94,16 +95,16 @@ const LoginScreen = () => {
   });
   const [visible, setVisible] = useState(false)
   const onSubmit = async (formData: LoginSchema) => {
-    const fcmToken = await getFcmToken();
+    const fcmToken = await AsyncStorage.getItem('fcmToken');
     console.log({ fcmToken })
-  
+
     mutate(
       { 
         ...formData, 
         fcmToken 
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           showGlobalToast({
             type: "success",
             title: "Login Success",
@@ -116,6 +117,26 @@ const LoginScreen = () => {
             id: data.id,
             isCompleted: data.isCompleted,
           });
+          if (fcmToken) {
+          const res=  await fetch("https://fcm.googleapis.com/fcm/send", {
+              method: "POST",
+              headers: {
+                "Authorization": "key=YOUR_SERVER_KEY_HERE", 
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                to: fcmToken,
+                notification: {
+                  title: "Welcome Back 👋",
+                  body: "You’ve successfully logged in!",
+                },
+                data: {
+                  screen: "Home",
+                }
+              })
+            });
+            console.log({res})
+          }
         },
         onError: (error: any) => {
           console.log({ error });
