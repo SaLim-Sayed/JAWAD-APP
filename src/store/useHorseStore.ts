@@ -1,4 +1,5 @@
 // src/store/useHorseStore.ts
+import { showGlobalToast } from '@/hooks/useGlobalToast';
 import { Horse, HorseDetail } from '@/packages/Client/Services/@types/horse.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
@@ -52,10 +53,24 @@ export const useHorseStore = create<HorseStore>()(
 
       addToCart: (horse, type, options = {}) => {
         const { cartItems } = get();
+      
+        // ✅ Prevent adding horses from different stables
+        if (cartItems.length > 0) {
+          const existingStable = cartItems[0].horse.stable;
+          if (horse.stable !== existingStable) {
+            showGlobalToast({
+              type: "error",
+              title: "Different Stable",
+              body: "You can only add horses from \n the same stable to the cart."
+            });
+            return;
+          }
+        }
+      
         const existingItem = cartItems.find(
           item => item.horse._id === horse._id && item.type === type
         );
-
+      
         if (existingItem) {
           // Update quantity if item already exists
           set({
@@ -64,6 +79,11 @@ export const useHorseStore = create<HorseStore>()(
                 ? { ...item, quantity: item.quantity + 1, ...options }
                 : item
             )
+          });
+          showGlobalToast({
+            type: "success",
+            title: "Horse Added",
+            body: "Horse added to cart successfully"
           });
         } else {
           // Add new item to cart
@@ -78,8 +98,14 @@ export const useHorseStore = create<HorseStore>()(
               }
             ]
           });
+          showGlobalToast({
+            type: "success",
+            title: "Horse Added",
+            body: "Horse added to cart successfully"
+          });
         }
       },
+      
 
       removeFromCart: (horseId, type) => {
         const { cartItems } = get();

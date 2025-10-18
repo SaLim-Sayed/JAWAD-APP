@@ -14,23 +14,30 @@ export function showGlobalToast({
   }: ShowGlobalToastParams) {
     Toast.show({
       type,
-      visibilityTime: 1000,
+      visibilityTime: 2000,
       text1: title,
       text2: body,
+
       position: 'top',
       autoHide: true,
       topOffset: 50,
+      swipeable: true,
+      
       
       ...rest,  
       text1Style: {
         color: '#000',
         fontSize: 16,
         fontWeight: 'bold',
+        flexWrap: 'wrap',      
+
       },
       
       text2Style: {
         color: '#000',
         fontSize: 16,
+        flexWrap: 'wrap',   
+
       },
     });
   }

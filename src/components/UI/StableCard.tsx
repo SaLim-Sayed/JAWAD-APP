@@ -37,8 +37,7 @@ const StableCard: React.FC<StableCardProps> = ({
         <TouchableOpacity 
             onPress={onPressStart} 
             style={styles.card}
-            disabled={!isOpen}
-        >
+         >
             <Image 
                 className="rounded-t-2xl" 
                 source={image} 
@@ -84,8 +83,7 @@ const StableCard: React.FC<StableCardProps> = ({
                         className="w-32 h-8"
                         text={t("Global.start_now")}
                         onPress={() => onPressStart?.()}
-                        disabled={!isOpen}
-                        iconLeft={
+                         iconLeft={
                             <View className="flex items-center justify-center h-8 p-2 w-8 rounded-full bg-amber-950">
                                 <Icons.arrowRight
                                     style={{
