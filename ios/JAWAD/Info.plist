@@ -31,6 +31,12 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app requires access to your location to provide better services.</string>
+
+	<!-- 🟢 أضف هذا السطر لحل مشكلة Missing purpose string -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to allow you to select and upload images.</string>
+	<!-- 🔚 نهاية الإضافة -->
+
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
