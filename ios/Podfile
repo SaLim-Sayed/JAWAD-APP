@@ -17,6 +17,15 @@ end
 target 'JAWAD' do
   config = use_native_modules!
 
+  # Ensure Swift pods used by Firebase generate module maps when linking statically
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCoreInternal', '12.3.0', :modular_headers => true
+  pod 'PromisesObjC', :modular_headers => true
+  pod 'FirebaseCore', '12.3.0', :modular_headers => true
+  # Pin Firebase Messaging to the version required by @react-native-firebase/messaging (23.4.0)
+  # This resolves CocoaPods conflict between locked 12.4.0 and RNFBMessaging's 12.3.0 requirement
+  pod 'Firebase/Messaging', '12.3.0'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
@@ -33,3 +42,4 @@ target 'JAWAD' do
     )
   end
 end
+
