@@ -11,6 +11,7 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		87E6F721B8BE9AAD58EA967D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		C42BC3A72DDAA72900602B5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C42BC3A62DDAA72900602B5B /* GoogleService-Info.plist */; };
 		C442CED1BA95E3BAE6843C22 /* libPods-JAWAD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3975E6E16C903CE23215188E /* libPods-JAWAD.a */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,7 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = JAWAD/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = JAWAD/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9F4364D6348DB35B46BB61D /* Pods-JAWAD.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JAWAD.release.xcconfig"; path = "Target Support Files/Pods-JAWAD/Pods-JAWAD.release.xcconfig"; sourceTree = "<group>"; };
+		C42BC3A62DDAA72900602B5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "JAWAD/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -47,6 +49,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				C42BC3A62DDAA72900602B5B /* GoogleService-Info.plist */,
 			);
 			name = JAWAD;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				87E6F721B8BE9AAD58EA967D /* PrivacyInfo.xcprivacy in Resources */,
+				C42BC3A72DDAA72900602B5B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

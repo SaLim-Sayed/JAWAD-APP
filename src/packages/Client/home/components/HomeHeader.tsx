@@ -12,7 +12,7 @@ import { usePutMutation } from "@/hooks/usePutMutation";
 import { apiKeys } from "@/hooks/apiKeys";
 import { useAuthStore } from "@/store/useAuthStore";
 import { Switch, Portal, Dialog, Button } from "react-native-paper"; // ✅
-import { useApiMutation } from "@/hooks";
+import { isIOS, useApiMutation } from "@/hooks";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
 
 interface HomeHeaderProps {
@@ -58,7 +58,7 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
 
   return (
     <View style={styles.root}>
-      <Image source={images.homeHorse} style={styles.bgImage} resizeMode="stretch" />
+      <Image source={images.homeHorse} style={isIOS ? undefined :styles.bgImage} resizeMode="stretch" />
       <View style={styles.overlay} />
       <View style={styles.content}>
         <AppText className="text-white tajawal-semibold-16 mb-1">

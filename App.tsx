@@ -435,58 +435,58 @@ function App() {
     useAuthStore();
 
   // ✅ Handle foreground & background messages
-  useEffect(() => {
-    // Foreground notification
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('📩 Notification received:', remoteMessage);
-      showGlobalToast({
-        type: 'info',
-        title: remoteMessage.notification?.title!,
-        body: remoteMessage.notification?.body,
-        visibilityTime: 10000,
-      });
-    });
+  // useEffect(() => {
+  //   // Foreground notification
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     console.log('📩 Notification received:', remoteMessage);
+  //     showGlobalToast({
+  //       type: 'info',
+  //       title: remoteMessage.notification?.title!,
+  //       body: remoteMessage.notification?.body,
+  //       visibilityTime: 10000,
+  //     });
+  //   });
 
-    // Background handler
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('📦 Notification handled in background!', remoteMessage);
-    });
+  //   // Background handler
+  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+  //     console.log('📦 Notification handled in background!', remoteMessage);
+  //   });
 
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
 
-  // ✅ Handle notification clicks (deep linking)
-  useEffect(() => {
-    // When app is in background and user taps the notification
-    const unsubscribeOpened = messaging().onNotificationOpenedApp(
-      remoteMessage => {
-        console.log('🔔 Notification opened from background:', remoteMessage);
+  // // ✅ Handle notification clicks (deep linking)
+  // useEffect(() => {
+  //   // When app is in background and user taps the notification
+  //   const unsubscribeOpened = messaging().onNotificationOpenedApp(
+  //     remoteMessage => {
+  //       console.log('🔔 Notification opened from background:', remoteMessage);
 
-        // Open Booking History screen
-        const link =
-          remoteMessage?.data?.link ?? 'jawad://profile/booking_history';
-        //@ts-ignore
-        Linking.openURL(link);
-      },
-    );
+  //       // Open Booking History screen
+  //       const link =
+  //         remoteMessage?.data?.link ?? 'jawad://profile/booking_history';
+  //       //@ts-ignore
+  //       Linking.openURL(link);
+  //     },
+  //   );
 
-    // When app is opened from quit (terminated) state
-    messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log('🚀 App opened from quit state:', remoteMessage);
+  //   // When app is opened from quit (terminated) state
+  //   messaging()
+  //     .getInitialNotification()
+  //     .then(remoteMessage => {
+  //       if (remoteMessage) {
+  //         console.log('🚀 App opened from quit state:', remoteMessage);
 
-          // Open Booking History screen
-          const link =
-            remoteMessage?.data?.link ?? 'jawad://profile/booking_history';
-          //@ts-ignore
-          Linking.openURL(link);
-        }
-      });
+  //         // Open Booking History screen
+  //         const link =
+  //           remoteMessage?.data?.link ?? 'jawad://profile/booking_history';
+  //         //@ts-ignore
+  //         Linking.openURL(link);
+  //       }
+  //     });
 
-    return unsubscribeOpened;
-  }, []);
+  //   return unsubscribeOpened;
+  // }, []);
 
   // ✅ Initialize notification service
   useEffect(() => {
