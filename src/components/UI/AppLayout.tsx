@@ -22,31 +22,23 @@ export default function AppLayout({ children,title,showBackButton=true,isScrolla
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 style={{ flex: 1 }}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 40}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
             >
                 <View style={{ flex: 1 }}>
                 { title&&<AppHeader title={title} showBackButton={showBackButton} />}
 
-                    {isScrollable?<KeyboardAwareScrollView
+                    <KeyboardAwareScrollView
                         contentContainerStyle={{ flexGrow: 1 }}
                         enableOnAndroid
                         keyboardShouldPersistTaps="handled"
                         extraScrollHeight={30}
+                        scrollEnabled={isScrollable}
+                        showsVerticalScrollIndicator={isScrollable}
                     >
-                        
-                        <View className="flex-[0.9] p-6">
-
+                        <View className={isScrollable ? "flex-[0.9] p-6" : "flex-[0.96] px-6"}>
                             {children}
                         </View>
-                      
-                    </KeyboardAwareScrollView>:
-                    <View className="flex-[0.96] px-6">
-
-                        {children}
-
-
-                    </View>
-}
+                    </KeyboardAwareScrollView>
 
                 </View>
             </KeyboardAvoidingView>

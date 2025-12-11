@@ -11,6 +11,7 @@ import Image from '@/components/UI/Image';
 import { CardPaymentForm, cardPaymentSchema } from './cardSchema';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
 import { navigationEnums } from '@/provider/navigationEnums';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const BookingPayment = ({ onNext, onBack }: { onNext: () => void; onBack: () => void }) => {
     const {
@@ -47,7 +48,7 @@ export const BookingPayment = ({ onNext, onBack }: { onNext: () => void; onBack:
 
     return (
         <View className="px-4 pt-6 w-full bg-white rounded-xl gap-4">       
-        <ScrollView style={{ height: '75%' }}>
+        <KeyboardAwareScrollView enableOnAndroid keyboardShouldPersistTaps="handled" extraScrollHeight={30} showsVerticalScrollIndicator={false} style={{ height: '75%' }}>
             {/* Card Preview */}
             <View className="bg-white rounded-xl border border-[#EDEDED] px-5 py-6 mb-4">
                 <AppText className="text-black font-bold text-lg mb-2">Universal Bank</AppText>
@@ -72,7 +73,7 @@ export const BookingPayment = ({ onNext, onBack }: { onNext: () => void; onBack:
                         value={value}
                         onChangeText={onChange}
                         className="bg-white border p-3 rounded-xl mb-3"
-                        error={errors.cardHolder?.message}
+                        error={errors.cardHolder?.message?true:false}
                     />
                 )}
             />
@@ -91,7 +92,7 @@ export const BookingPayment = ({ onNext, onBack }: { onNext: () => void; onBack:
                         onChangeText={onChange}
                         keyboardType="number-pad"
                         className="bg-white border p-3 rounded-xl mb-3"
-                        error={errors.cardNumber?.message}
+                        error={errors.cardNumber?.message?true:false}
                     />
                 )}
             />
@@ -134,7 +135,7 @@ export const BookingPayment = ({ onNext, onBack }: { onNext: () => void; onBack:
  
             {/* Buttons */}
             
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <Row justify="between" className="gap-6 mt-8 w-full">
                 <AppButton
                     title="Back"

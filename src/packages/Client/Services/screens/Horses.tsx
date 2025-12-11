@@ -11,12 +11,14 @@ import { View } from "react-native";
 import { GetHorsesResponse } from "../@types/horse.types";
 import HorseList from "../components/HorseList";
 import { t } from "@/lib";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Horses = () => {
   const {id} = useAppRouteParams('HORSES')
+  const { authData } = useAuthStore();
   const { data, isLoading } = useApiQuery<GetHorsesResponse>({
     key: ["getHorse"],
-    url: apiKeys.horse.getHorse(id),
+    url: apiKeys.horse.getHorse(id, authData?.nationality as string),
   });
   // Header user info
   const userName = "George Mikhaiel";

@@ -89,7 +89,7 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures, videoUrl }) =
           }
           return (
             <View style={styles.itemContainer}>
-              <Image style={styles.image} source={{ uri: item.url }} />
+              <Image style={styles.image} source={{ uri: item.url }} resizeMode="contain" />
             </View>
           );
         }}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   image: {
-    height: 184,
+    height: '100%',
     width: ITEM_WIDTH,
     borderRadius: 8,
   },

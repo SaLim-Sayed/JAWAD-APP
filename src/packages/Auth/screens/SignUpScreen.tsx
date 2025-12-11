@@ -30,8 +30,7 @@ export const SignUpScreen = () => {
         email: z.string().email(t("signup.email_error")),
         nationality: z.string().nonempty(t("signup.nationality_error")),
         password: z.string().min(8, t("signup.password_error")),
-        gender: z.enum(['male', 'female']),
-    });
+     });
 
     type SignUpForm = z.infer<typeof signUpSchema>;
 
@@ -46,8 +45,8 @@ export const SignUpScreen = () => {
     )
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
-        { value: 'others', label: t("Global.others") },
-        { value: 'Egyptian', label: t("Global.egyptian") },
+      {value: 'Foreign', label: t('Global.foreigner')},
+      {value: 'Egyptian', label: t('Global.egyptian')},
     ];
 
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
@@ -58,11 +57,9 @@ export const SignUpScreen = () => {
             email: '',
             nationality: 'Egyptian',
             password: '',
-            gender: 'male',
-        },
+         },
     });
-    const gender = watch("gender");
-
+ 
 
     const onSubmit = (formData: SignUpForm) => {
         mutate(formData, {

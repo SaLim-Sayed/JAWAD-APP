@@ -25,6 +25,7 @@ const HomeScreen = () => {
   const { navigate } = useGlobalNavigation();
   const { language } = useLanguage()
   const { authData } = useAuthStore();
+  console.log({ authData })
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useApiQuery<GetPhotographersResponse>({
@@ -65,7 +66,7 @@ const HomeScreen = () => {
   return (
     <AppWrapper>
       <HomeHeader userName={userName || ""} location={location || ""} />
-      <View className="bg-white flex-1 rounded-t-3xl -mt-10 pt-6  ">
+      <View className="bg-white flex-1 rounded-t-3xl -mt-10  ">
         <LoaderBoundary isLoading={loading}>
           <ScrollView
             contentContainerStyle={{

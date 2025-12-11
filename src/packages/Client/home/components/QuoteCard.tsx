@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 16,
-    alignSelf: "center", // Center horizontally
+     alignSelf: "center", // Center horizontally
   },
   card: {
     borderRadius: 18,
@@ -48,8 +47,7 @@ const styles = StyleSheet.create({
     
     alignItems: "center",
     justifyContent: "center",
-    padding: 16,
-  },
+   },
   bgImage: {
     borderRadius: 12,
   },
@@ -59,8 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 12,
-    padding: 16,
-  },
+   },
   quoteText: {
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: 1, height: 1 },

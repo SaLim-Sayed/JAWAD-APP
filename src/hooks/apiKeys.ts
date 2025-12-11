@@ -26,7 +26,7 @@ export const apiKeys = {
   },
   horse: {
     addHorse: (stableId: string) => `/api/v1/horse/add/${stableId}`,
-    getHorse: (stableId: string) => `/api/v1/horse/get/${stableId}?page=1&nationality=Foreign&service=Ride`,
+    getHorse: (stableId: string, nationality: string) => `/api/v1/horse/get/${stableId}?page=1&nationality=${nationality}&service=Ride`,
     horseDetails: "/api/v1/horse/details/",
     horseDetail: (id: string) => `/api/v1/horse/details/${id}`,
     updateHorse: (id: string) => `/api/v1/horse/update/${id}`,
@@ -70,5 +70,8 @@ export const apiKeys = {
   refund: {
     check: (bookingId: string) => `/api/v1/refund/info/${bookingId}`,
     refund: (bookingId: string) => `/api/v1/refund/request/${bookingId}`,
+  },
+  contact: {
+    send: "/api/v1/contact/send",
   },
 };

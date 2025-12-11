@@ -15,6 +15,7 @@ import { useApiMutation } from '@/hooks';
 import { showGlobalToast } from '@/hooks/useGlobalToast';
 import { t } from '@/lib';
 import AppSelect from '@/components/UI/AppSelect';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const UserProfile = () => {
     const schema = z.object({
@@ -24,14 +25,14 @@ export const UserProfile = () => {
     type ProfileForm = z.infer<typeof schema>;
 
     const { navigate } = useGlobalNavigation();
-
+    const { setAuthData } = useAuthStore();
     const { data: userDetails, isLoading } = useApiQuery({
         url: apiKeys.auth.getUserDetails,
         key: ["getUserDetails"],
     });
     const nationalityOptions = [
-        { value: 'others', label: t("Global.others") },
-        { value: 'Egyptian', label: t("Global.egyptian") },
+      {value: 'Foreign', label: t('Global.foreigner')},
+      {value: 'Egyptian', label: t('Global.egyptian')},
     ];
     const { mutate, isPending } = useApiMutation({
         url: "/api/v1/user/update",
@@ -64,6 +65,9 @@ export const UserProfile = () => {
                   type: "success",
                   title: "",
                   body: data?.message || JSON.stringify(data),
+                });
+                setAuthData({
+                    nationality: formData.nationality,
                 });
                 navigate(navigationEnums.PROFILE);
               },

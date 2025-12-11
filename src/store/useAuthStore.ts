@@ -9,6 +9,8 @@ interface AuthData {
   role: Role;
   id: string;
   isCompleted: boolean;
+  message?: string;
+  nationality?: string;
 }
 
 interface AuthState {
@@ -70,7 +72,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (data.role !== undefined) await AsyncStorage.setItem('role', data.role);
     if (data.id !== undefined) await AsyncStorage.setItem('id', data.id);
     if (data.isCompleted !== undefined) await AsyncStorage.setItem('isCompleted', data.isCompleted.toString());
-
+    if (data.message !== undefined) await AsyncStorage.setItem('message', data.message);
+    if (data.nationality !== undefined) await AsyncStorage.setItem('nationality', data.nationality);
     set((state) => ({
       authData: {
         ...state.authData,

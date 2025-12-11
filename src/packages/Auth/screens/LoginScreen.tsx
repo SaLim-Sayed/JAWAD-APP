@@ -116,6 +116,8 @@ const LoginScreen = () => {
             role: role,
             id: data.id,
             isCompleted: data.isCompleted,
+            message: data.message,
+            nationality: data.nationality,
           });
           if (fcmToken) {
           const res=  await fetch("https://fcm.googleapis.com/fcm/send", {

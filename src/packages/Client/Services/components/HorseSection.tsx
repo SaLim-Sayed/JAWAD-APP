@@ -17,14 +17,16 @@ import { navigationEnums } from "@/provider/navigationEnums";
 import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { GetHorsesResponse } from "../@types/horse.types";
 import HorseCard from "@/components/UI/HorseCard";
+import { useAuthStore } from "@/store/useAuthStore";
  const HorseSection = ({stableId}: {stableId: string}) => {
   const { navigate } = useGlobalNavigation();
   const screenWidth = Dimensions.get("window").width;
   const itemSize = screenWidth * 0.4;
 
+  const { authData } = useAuthStore();
   const { data, isLoading } = useApiQuery<GetHorsesResponse>({
     key: ["getHorse",stableId],
-    url: apiKeys.horse.getHorse(stableId),
+    url: apiKeys.horse.getHorse(stableId, authData?.nationality as string),
   });
 
   if (isLoading) {

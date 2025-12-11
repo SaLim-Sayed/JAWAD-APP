@@ -73,7 +73,8 @@
     "get_ticket": "Get Ticket",
     "no_data": "No Data",
     "egyptian":"Egyptian",
-    "others":"others",
+    "foreigner":"Foreigner",
+    "others":"Others",
     "open":"Open",
     "closed":"Closed",
     "signup": "Sign Up"

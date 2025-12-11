@@ -36,7 +36,7 @@ const HorseCard: React.FC<HorseCardProps> = ({
             </Row>
             <Row items="center" gap={4}>
                 <Image source={Icons.coin} style={styles.icon} />
-                <AppText className="text-brownColor-300">{price} EGP</AppText>
+                <AppText className="text-brownColor-300">{price}</AppText>
             </Row>
             <Row items="center" gap={4}>
                 <Image source={Icons.likeTag} style={styles.icon} />

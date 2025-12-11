@@ -7,7 +7,7 @@ interface WrapperProps {
 }
 
 const Wrapper: React.FC<WrapperProps> = ({children}) => {
-  return isAndroid ? <SafeAreaLayout>{children}</SafeAreaLayout> : <>{children}</>;
+  return isAndroid ? <SafeAreaLayout>{children}</SafeAreaLayout> : <SafeAreaLayout>{children}</SafeAreaLayout>;
 };
 
 export default Wrapper;

@@ -61,7 +61,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     { key: 'history', label: t("ProfileMenu.history"), icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
     { key: 'contact', label: t("ProfileMenu.contact"), icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
     { key: 'about', label: t("ProfileMenu.about"), icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },
-    { key: 'terms', label: t("ProfileMenu.terms"), icon: Icons.addUser, onPress: () => { navigate(navigationEnums.TERMS) } },
+    { key: 'terms', label: t("ProfileMenu.terms"), icon: Icons.clipboardTick, onPress: () => { navigate(navigationEnums.TERMS) } },
     { key: 'language', label: t("ProfileMenu.language"), icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
     { key: 'logout', label: t("ProfileMenu.logout"), icon: Icons.logout2, onPress: () => { setVisible(true) } },
   ];

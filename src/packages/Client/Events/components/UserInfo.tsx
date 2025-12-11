@@ -5,7 +5,7 @@ import { apiKeys } from '@/hooks/apiKeys'
 import { useLanguage } from '@/store'
 import { useAuthStore } from '@/store/useAuthStore'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { GroupBooking } from './GroupBooking'
 
 export default function UserInfo({ onNext,setPaymentUrl }: { onNext: () => void ,setPaymentUrl:(url:string)=>void}) {
@@ -25,11 +25,11 @@ export default function UserInfo({ onNext,setPaymentUrl }: { onNext: () => void 
 
   const userName = isAuth ? userDetails?.details?.name : "Guest";
   return (
-    <ScrollView
+    <View
       className="px-4 pt-6  w-full h-[80%] bg-white rounded-xl gap-4"
     >
       <UserCard role="User" name={userName} phone={userDetails?.details?.phone} avatar={images.family} />
       <GroupBooking  />
-    </ScrollView>
+    </View>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { images } from '@/assets/images';
@@ -7,9 +8,6 @@ import Wrapper from '@/provider/Wrapper';
 import Image from './Image';
 import Navbar from '@/packages/Onboarding/components/Navbar';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
-import { Dimensions } from 'react-native';
-
-const screenHeight = Dimensions.get("window").height;
 
 interface AppWrapperProps {
    children: React.ReactNode;
@@ -38,23 +36,32 @@ const AuthWrapper: React.FC<AppWrapperProps> = ({
 
         <Navbar handleBack={goBack} />
 
-        <View className="flex-1 bg-transparent">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        >
+          <View className="flex-1 bg-transparent">
             <View className="flex-[0.95] w-[95%] flex-row justify-center items-center bg-white/80 rounded-3xl mt-[100px] mx-auto">
-            <ScrollView
-              className="flex-1  w-full"
-              contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <View className="w-[95%]  flex-1    p-4">
-                 {children}
-              </View>
-            </ScrollView>
+              <KeyboardAwareScrollView
+                className="flex-1 w-full"
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                enableOnAndroid
+                keyboardShouldPersistTaps="handled"
+                extraScrollHeight={30}
+                showsVerticalScrollIndicator={false}
+              >
+                <View className="w-[95%] flex-1 p-4">
+                  {children}
+                </View>
+              </KeyboardAwareScrollView>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Image>
     </Wrapper>
   );

@@ -15,7 +15,7 @@ import { Icons } from '@/constants'
 export default function StableHorse() {
   const { authData } = useAuthStore()
   const { data  ,isLoading,refetch} = useApiQuery<GetHorsesResponse>({
-    url: apiKeys.horse.getHorse(authData?.id as string),
+    url: apiKeys.horse.getHorse(authData?.id as string, authData?.nationality as string),
     key: [apiKeys.stable.stableDetail(authData?.id as string)],
   })
   const{navigate} = useGlobalNavigation()
