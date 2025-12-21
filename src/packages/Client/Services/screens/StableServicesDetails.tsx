@@ -37,7 +37,7 @@ const StableServicesDetails = () => {
           <LoaderBoundary isLoading={isLoading}>
             <StableDetailsHeader StableDetails={data?.stable!} />
             <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
-            <LocationCard mapUrl={data?.stable.location} city={data?.stable.city[language]!} region={data?.stable.region[language]!} address={data?.stable.address[language]!} />
+            {/* <LocationCard mapUrl={data?.stable.location} city={data?.stable.city[language]!} region={data?.stable.region[language]!} address={data?.stable.address[language]!} /> */}
 
              <Divider containerStyle={{ height: 2 }} className="h-[3px]" />
             <HorseSection stableId={id} />

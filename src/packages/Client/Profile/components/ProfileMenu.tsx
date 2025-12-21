@@ -56,14 +56,69 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     onLogout();
   };
   const menuItems = [
-    { key: 'profile', label: t("ProfileMenu.profile"), icon: Icons.profileOutline, onPress: () => { navigate(navigationEnums.PROFILE_USER) } },
-    { key: 'cart', label: t("ProfileMenu.cart"), icon: Icons.shoppingProfile, onPress: () => { navigate(navigationEnums.CART) } },
-    { key: 'history', label: t("ProfileMenu.history"), icon: Icons.card8Profile, onPress: () => { navigate(navigationEnums.BOOKING_HISTORY) } },
-    { key: 'contact', label: t("ProfileMenu.contact"), icon: Icons.telephon, onPress: () => { navigate(navigationEnums.CONTACT_US) } },
-    { key: 'about', label: t("ProfileMenu.about"), icon: Icons.building2, onPress: () => { navigate(navigationEnums.ABOUT_US) } },
-    { key: 'terms', label: t("ProfileMenu.terms"), icon: Icons.clipboardTick, onPress: () => { navigate(navigationEnums.TERMS) } },
-    { key: 'language', label: t("ProfileMenu.language"), icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
-    { key: 'logout', label: t("ProfileMenu.logout"), icon: Icons.logout2, onPress: () => { setVisible(true) } },
+    {
+      key: 'profile',
+      label: t('ProfileMenu.profile'),
+      icon: Icons.profileOutline,
+      onPress: () => {
+        if (isPhotographer) {
+          navigate(navigationEnums.UPDATE_PHOTOGRAPHER, {id: authData.id});
+        } else {
+          navigate(navigationEnums.PROFILE_USER);
+        }
+      },
+    },
+
+    {
+      key: 'cart',
+      label: t('ProfileMenu.cart'),
+      icon: Icons.shoppingProfile,
+      onPress: () => {
+        navigate(navigationEnums.CART);
+      },
+    },
+    {
+      key: 'history',
+      label: t('ProfileMenu.history'),
+      icon: Icons.card8Profile,
+      onPress: () => {
+        navigate(navigationEnums.BOOKING_HISTORY);
+      },
+    },
+
+    {
+      key: 'contact',
+      label: t('ProfileMenu.contact'),
+      icon: Icons.telephon,
+      onPress: () => {
+        navigate(navigationEnums.CONTACT_US);
+      },
+    },
+    {
+      key: 'about',
+      label: t('ProfileMenu.about'),
+      icon: Icons.building2,
+      onPress: () => {
+        navigate(navigationEnums.ABOUT_US);
+      },
+    },
+    {
+      key: 'terms',
+      label: t('ProfileMenu.terms'),
+      icon: Icons.clipboardTick,
+      onPress: () => {
+        navigate(navigationEnums.TERMS);
+      },
+    },
+    // { key: 'language', label: t("ProfileMenu.language"), icon: Icons.lang, onPress: () => { navigate(navigationEnums.LANGUAGE) } },
+    {
+      key: 'logout',
+      label: t('ProfileMenu.logout'),
+      icon: Icons.logout2,
+      onPress: () => {
+        setVisible(true);
+      },
+    },
   ];
   return (
     <View
@@ -71,12 +126,12 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     >
       <View className="bg-white rounded-3xl mx-2 mt-20  pb-1">
         {/* Profile Header */}
-        <View className="items-end -mt-20 flex-row pt-6 ">
+        <View className="items-end gap-2 border-b border-gray-200 pb-4 -mt-20 flex-row pt-6 ">
           <Image
             source={isStable ? stableData?.stable.picUrl : isPhotographer ? data?.photographers[0].picUrls[0] : isAuth ? userDetails?.details?.picUrl ||user.avatar : user.avatar}
             className="w-12 h-12 rounded-full"
           />
-          <AppText className="px-4 text-lg">
+          <AppText className=" text-lg">
              <AppText className="text-black text-2xl font-bold">   {userName||t("ProfileMenu.guest")}</AppText>
           </AppText>
         </View>

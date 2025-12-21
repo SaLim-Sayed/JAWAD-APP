@@ -32,6 +32,7 @@ export type NavigationParamsList = {
   [navigationEnums.REGISTER_SUCCESS_SCREEN]: undefined;
   [navigationEnums.COMPLETE_STABLE]: { id: any };
   [navigationEnums.COMPLETE_PHOTOGRAPHER]: { id: any };
+  [navigationEnums.UPDATE_PHOTOGRAPHER]: { id: any };
   [navigationEnums.COMPLETE_SCHOOL]: { id: any };
   [navigationEnums.OTP_VERIFY_SCREEN]: {email:string};
 
@@ -75,6 +76,6 @@ export type NavigationParamsList = {
   [navigationEnums.BOOKING_DETAILS]: { id: any ,item: TBooking };
   [navigationEnums.COMPLAINT]: undefined;
   [navigationEnums.LANGUAGE]: undefined;
-
-
+  [navigationEnums.PHOTOGRAPHER_STABLES]: undefined;
+  [navigationEnums.STABLE_PHOTOGRAPHERS]: undefined;
 };

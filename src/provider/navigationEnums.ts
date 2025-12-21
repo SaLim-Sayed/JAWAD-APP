@@ -27,6 +27,7 @@
   REGISTER_SUCCESS_SCREEN: "register-success",
   COMPLETE_STABLE: "complete-stable/:id",
   COMPLETE_PHOTOGRAPHER: "complete-photographer/:id",
+  UPDATE_PHOTOGRAPHER: "update-photographer/:id",
   COMPLETE_SCHOOL: "complete-school/:id",
   OTP_VERIFY_SCREEN: "otp-verify/:email",
 
@@ -73,4 +74,10 @@
    BOOKING_DETAILS:"profile/booking_details/:id/:item",
    COMPLAINT:"profile/complaint",
    LANGUAGE:"profile/language",
+  
+  // Photographer
+  PHOTOGRAPHER_STABLES: "photographer/stables",
+  
+  // Stable
+  STABLE_PHOTOGRAPHERS: "stable/photographers",
 } as const;

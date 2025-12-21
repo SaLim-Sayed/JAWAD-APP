@@ -8,22 +8,25 @@ import { useLanguage } from "@/store";
 import React from "react";
 import { Dimensions, View } from "react-native";
 import { StableDetails } from "../@types/horse.types";
+import { MapPinIcon, ReceiptPercentIcon} from 'react-native-heroicons/outline';
 
 const StableDetailsHeader = ({ StableDetails }: { StableDetails: StableDetails }) => {
-    const { navigate } = useGlobalNavigation();
-    const screenWidth = Dimensions.get("window").width;
+
     const { language } = useLanguage();
+    const infoRows = [
+      [
+        {icon: Icons.horse, text: StableDetails.name[language]},
 
-    // هنا نخزن البيانات عشان نعرضها كسطرين (كل سطر عمودين)
-    const infoRows = [[{ icon: Icons.horse, text: StableDetails.name[language] },
-
-    { icon: Icons.camera, text: StableDetails.sessionPercentage },
-    ],
-    [
-        { icon: Icons.location, text: StableDetails.city[language] },
-        { icon: Icons.coin, text: StableDetails.region[language] },
-    ],
-
+        {
+          icon: ReceiptPercentIcon,
+          text: StableDetails.sessionPercentage,
+        },
+      ],
+      
+      [
+        {icon: MapPinIcon, text: StableDetails.city[language]},
+        {icon: MapPinIcon, text: StableDetails.region[language]},
+      ],
     ];
 
     return (

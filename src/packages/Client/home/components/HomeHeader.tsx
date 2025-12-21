@@ -14,6 +14,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Switch, Portal, Dialog, Button } from "react-native-paper"; // ✅
 import { isIOS, useApiMutation } from "@/hooks";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
+import { useLanguage } from "@/store";
 
 interface HomeHeaderProps {
   userName: string;
@@ -24,9 +25,16 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
   const { t } = useTranslation();
   const { navigate } = useGlobalNavigation();
   const { authData ,stableEnabled,setStableEnabled} = useAuthStore();
- console.log({stableEnabled})
+  const { language, setLanguage } = useLanguage();
+  console.log({stableEnabled})
   const { getCartItemsCount } = useHorseStore();
   const cartCount = getCartItemsCount();
+  
+  const isEnglish = language === 'en';
+  
+  const handleLanguageToggle = (value: boolean) => {
+    setLanguage(value ? 'en' : 'ar');
+  };
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [pendingValue, setPendingValue] = useState<boolean | null>(null);
@@ -101,6 +109,16 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
             </View>
           )}
         </TouchableOpacity>
+        <View style={styles.switchRow}>
+          <AppText className="text-white tajawal-semibold-14">
+            {isEnglish ? 'English' : 'العربية'}
+          </AppText>
+          <Switch
+            value={isEnglish}
+            onValueChange={handleLanguageToggle}
+            color="#f3f3f3"
+          />
+        </View>
         {authData.role === "stable" && <View style={styles.switchRow}>
           <AppText className="text-white tajawal-semibold-14">
             {stableEnabled ? t("Global.stableEnabled") : t("Global.stableDisabled")}
@@ -120,55 +138,58 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({ userName, location }) => {
 const styles = StyleSheet.create({
   root: {
     height: 220,
-    position: "relative",
-    justifyContent: "center",
+    position: 'relative',
+    justifyContent: 'center',
   },
   bgImage: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
     paddingHorizontal: 16,
     paddingTop: 106,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(30,22,16,0.4)",
+    backgroundColor: 'rgba(30,22,16,0.4)',
   },
   content: {
-    position: "absolute",
-    alignItems:"flex-start",
+    position: 'absolute',
+    alignItems: 'flex-start',
     left: 4,
     right: 4,
     bottom: 32,
     padding: 16,
   },
   switchRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
     gap: 12,
+    padding: 4,
+    borderRadius: 12,
+    backgroundColor: '#684735',
   },
   icons: {
-    position: "absolute",
+    position: 'absolute',
     right: 24,
     top: 44,
-    flexDirection: "column",
-    alignItems: "flex-end",
+    flexDirection: 'column',
+    alignItems: 'flex-end',
     gap: 16,
   },
   cartButton: {
-    position: "relative",
+    position: 'relative',
   },
   badge: {
-    position: "absolute",
+    position: 'absolute',
     top: -4,
     right: -4,
-    backgroundColor: "#FF3B30",
+    backgroundColor: '#FF3B30',
     borderRadius: 10,
     minWidth: 18,
     height: 18,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 4,
   },
 });

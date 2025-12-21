@@ -48,7 +48,10 @@ export const apiKeys = {
     getPhotograoher: "/api/v1/photographer/get",
     getStables: (id: string) => `/api/v1/photographer/getStables/${id}`,
     completed: (id: string) => `/api/v1/photographer/completed/${id}`,
+    update: (id: string) => `/api/v1/photographer/update/${id}`,
     getPhotographerDetails: (id: string) => `/api/v1/photographer/get/detail/${id}`,
+    addToStable: (photographerId: string) => `/api/v1/photographer/addToStable/${photographerId}`,
+    removeFromStable: (photographerId: string) => `/api/v1/photographer/removeFromStable/${photographerId}`,
   },
   school: {
     addSchool: "/api/v1/school/addSchool",

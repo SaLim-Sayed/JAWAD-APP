@@ -21,21 +21,21 @@ export default function AppLayout({ children,title,showBackButton=true,isScrolla
              <StatusBar backgroundColor="white" barStyle="dark-content" />
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                style={{ flex: 1 }}
+                style={{ flex: 1}}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
             >
                 <View style={{ flex: 1 }}>
                 { title&&<AppHeader title={title} showBackButton={showBackButton} />}
 
                     <KeyboardAwareScrollView
-                        contentContainerStyle={{ flexGrow: 1 }}
+                        contentContainerStyle={{ flexGrow: 1 ,paddingBottom: 100}}
                         enableOnAndroid
                         keyboardShouldPersistTaps="handled"
-                        extraScrollHeight={30}
+                        extraScrollHeight={150}
                         scrollEnabled={isScrollable}
                         showsVerticalScrollIndicator={isScrollable}
                     >
-                        <View className={isScrollable ? "flex-[0.9] p-6" : "flex-[0.96] px-6"}>
+                        <View className={isScrollable ? "flex-[0.8] p-6" : "flex-[0.8] px-6"}>
                             {children}
                         </View>
                     </KeyboardAwareScrollView>

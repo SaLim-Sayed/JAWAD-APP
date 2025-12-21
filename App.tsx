@@ -25,7 +25,9 @@ import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
 
 import CompletePhotographer from '@/components/UI/CompletePhotographer';
+import UpdatePhotographer from '@/components/UI/UpdatePhotographer';
 import CompleteStable from '@/components/UI/CompleteStable';
+import PhotographerStablesManagement from '@/packages/Client/Photographer/screens/PhotographerStablesManagement';
 import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
 import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
 import EventDetails from '@/packages/Client/Events/screens/EventDetails';
@@ -57,6 +59,7 @@ import AddHorse from '@/packages/Client/My-stable/screens/AddHorse';
 import MyStable from '@/packages/Client/My-stable/screens/MyStable';
 import StableOverview from '@/packages/Client/My-stable/screens/StableOverview';
 import StableHorse from '@/packages/Client/My-stable/screens/StableHorse';
+import StablePhotographersManagement from '@/packages/Client/My-stable/screens/StablePhotographersManagement';
 import EditHorseForm from '@/packages/Client/My-stable/components/EditHorseForm';
 import EditHorse from '@/packages/Client/My-stable/screens/EditHorse';
 import Cart from '@/packages/Client/Profile/screens/Cart';
@@ -120,6 +123,10 @@ const TabBarIcon = ({
       FocusedIconComponent = Icons.add;
       break;
     case 'myStable':
+      IconComponent = Icons.stableOutline;
+      FocusedIconComponent = Icons.stable;
+      break;
+    case 'photographer/stables':
       IconComponent = Icons.stableOutline;
       FocusedIconComponent = Icons.stable;
       break;
@@ -230,18 +237,25 @@ function ClientTabs() {
           options={{tabBarLabel: t('Global.My Stable')}}
         />
       )}
-      {authData?.role !== 'stable' && (
+      {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
         <Tab.Screen
           name="service"
           component={ServicesScreen}
           options={{tabBarLabel: t('Global.Services')}}
         />
       )}
-      {authData?.role !== 'stable' && (
+      {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
         <Tab.Screen
           name="event"
           component={Events}
           options={{tabBarLabel: t('Global.Events')}}
+        />
+      )}
+      {authData?.role === 'photographer' && (
+        <Tab.Screen
+          name={navigationEnums.PHOTOGRAPHER_STABLES}
+          component={PhotographerStablesManagement}
+          options={{tabBarLabel: t('Global.Stables') || 'Stables'}}
         />
       )}
       {authData?.role === 'stable' && (
@@ -285,6 +299,10 @@ function OnboardingNavigator() {
       <Stack.Screen
         name={navigationEnums.COMPLETE_PHOTOGRAPHER}
         component={CompletePhotographer}
+      />
+      <Stack.Screen
+        name={navigationEnums.UPDATE_PHOTOGRAPHER}
+        component={UpdatePhotographer}
       />
       <Stack.Screen
         name={navigationEnums.COMPLETE_SCHOOL}
@@ -398,6 +416,18 @@ function ClientNavigator() {
       />
       <Stack.Screen name={navigationEnums.HORSE_EDIT} component={EditHorse} />
       <Stack.Screen name={navigationEnums.HORSE_CREATE} component={AddHorse} />
+      <Stack.Screen
+        name={navigationEnums.UPDATE_PHOTOGRAPHER}
+        component={UpdatePhotographer}
+      />
+      <Stack.Screen
+        name={navigationEnums.PHOTOGRAPHER_STABLES}
+        component={PhotographerStablesManagement}
+      />
+      <Stack.Screen
+        name={navigationEnums.STABLE_PHOTOGRAPHERS}
+        component={StablePhotographersManagement}
+      />
     </Stack.Navigator>
   );
 }

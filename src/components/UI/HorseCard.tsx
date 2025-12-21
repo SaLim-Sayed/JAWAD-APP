@@ -5,6 +5,7 @@ import Row from "@/components/UI/Row";
 import { Icons } from "@/constants";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { CurrencyDollarIcon, HashtagIcon, HeartIcon, TagIcon } from "react-native-heroicons/outline";
 
 interface HorseCardProps {
     image: any;
@@ -31,15 +32,15 @@ const HorseCard: React.FC<HorseCardProps> = ({
                 <AppText className="font-bold tajawal-semibold-20 text-brownColor-400 mt-2">{name}</AppText>
             </Row>
             <Row items="center" gap={4}>
-                <Image source={Icons.hashtag1} style={styles.icon} />
+                <HashtagIcon color="#5E3E2C" width={20} height={20} />
                 <AppText className="text-brownColor-300">{type}</AppText>
             </Row>
             <Row items="center" gap={4}>
-                <Image source={Icons.coin} style={styles.icon} />
+                <CurrencyDollarIcon color="#5E3E2C" width={20} height={20} />
                 <AppText className="text-brownColor-300">{price}</AppText>
             </Row>
             <Row items="center" gap={4}>
-                <Image source={Icons.likeTag} style={styles.icon} />
+                <TagIcon color="#5E3E2C" width={20} height={20} />
                 <AppText className="text-brownColor-300">{category}</AppText>
             </Row>
              

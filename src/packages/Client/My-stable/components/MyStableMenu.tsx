@@ -13,6 +13,7 @@ const MyStableMenu = () => {
   const menuItems = [
     { key: 'stableOverview', label: 'Stable Overview', icon: Icons.homeOutline, onPress: () => { navigate(navigationEnums.STABLE_OVERVIEW) } },
     { key: 'horseDetails', label: 'Horse Details', icon: Icons.horse, onPress: () => { navigate(navigationEnums.HORSE_DETAIL) } },
+    { key: 'photographers', label: 'Photographers', icon: Icons.camera, onPress: () => { navigate(navigationEnums.STABLE_PHOTOGRAPHERS) } },
     { key: 'myWallet', label: 'My Wallet', icon: Icons.coin, onPress: () => { navigate(navigationEnums.MY_WALLET) } },
 
   ];
