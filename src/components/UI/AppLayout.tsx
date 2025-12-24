@@ -35,7 +35,7 @@ export default function AppLayout({ children,title,showBackButton=true,isScrolla
                         scrollEnabled={isScrollable}
                         showsVerticalScrollIndicator={isScrollable}
                     >
-                        <View className={isScrollable ? "flex-[0.8] p-6" : "flex-[0.8] px-6"}>
+                        <View className={isScrollable ? "flex-[0.8] p-6" : "flex-[0.96] px-6"}>
                             {children}
                         </View>
                     </KeyboardAwareScrollView>

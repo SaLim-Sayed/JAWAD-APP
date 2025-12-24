@@ -394,7 +394,7 @@ const PhotographerStablesManagement = () => {
                               style={{
                                 transform: [{rotate: `${isRTL ? 180 : 0}deg`}],
                               }}
-                              resizeMode="contain"
+                              resizeMode="cover"
                             />
                           </View>
                         </View>

@@ -49,7 +49,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
         <Image
           source={stable?.picUrl || images.villarreal}
           style={{ width: 200, height: 200 }}
-          resizeMode="stretch"
+          resizeMode="cover"
         />
       </View>
 
@@ -67,7 +67,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
           <Image
             source={Icons.location}
             style={{ width: 22, height: 22, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-brownColor-400 text-base font-semibold">
             {bookingId}
@@ -78,7 +78,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
           <Image
             source={Icons.calendar}
             style={{ width: 20, height: 20, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-[#AAA8A8] text-base">{formattedDate}</AppText>
         </View>
@@ -86,7 +86,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
           <Image
             source={Icons.calendar}
             style={{ width: 20, height: 20, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="ml-auto text-base font-bold text-[#AAA8A8]">
             {time}
@@ -97,7 +97,7 @@ const BookingCard: React.FC<TBooking & { onPress: () => void }> = ({
           <Image
             source={Icons.coin}
             style={{ width: 20, height: 20, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-[#AAA8A8] text-base mr-2">
             {totalPrice} EGP

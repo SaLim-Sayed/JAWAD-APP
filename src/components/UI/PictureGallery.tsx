@@ -131,7 +131,7 @@ const ZoomableImage: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
           <Image
             source={{ uri: imageUrl }}
             style={styles.zoomImage}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </Animated.View>
       </GestureDetector>
@@ -276,7 +276,7 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures, videoUrl }) =
               <Image
                 style={styles.image}
                 source={{uri: item.url}}
-                resizeMode="stretch"
+                resizeMode="cover"
               />
             </TouchableOpacity>
           );

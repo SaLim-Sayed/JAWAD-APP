@@ -66,7 +66,7 @@ const BookingDetails = () => {
             <Image
               source={item?.stable?.picUrl||images.villarreal}
               className="w-[330px] h-[300px]  flex-1 rounded-2xl"
-              resizeMode="stretch"
+              resizeMode="cover"
             />
           </Row>
 

@@ -58,7 +58,7 @@ const StoredHorseCard: React.FC<StoredHorseCardProps> = ({
               <Image
                 source={Icons.add}
                 style={{ width: 14, height: 14, tintColor: 'white' }}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             )}
           </TouchableOpacity>
