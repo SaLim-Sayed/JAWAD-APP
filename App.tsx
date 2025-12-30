@@ -238,14 +238,14 @@ function ClientTabs() {
           options={{ tabBarLabel: t('Global.My Stable') }}
         />
       )}
-      {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
+      {authData?.role !== 'stable' && authData?.role !== 'photographer' && authData?.role !== 'school' && (
         <Tab.Screen
           name="service"
           component={ServicesScreen}
           options={{ tabBarLabel: t('Global.Services') }}
         />
       )}
-      {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
+      {authData?.role !== 'stable' && authData?.role !== 'photographer' && authData?.role !== 'school' && (
         <Tab.Screen
           name="event"
           component={Events}
