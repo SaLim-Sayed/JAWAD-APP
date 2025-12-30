@@ -1,18 +1,18 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import React, {useEffect, useState} from 'react';
-import {Linking, Pressable, StatusBar, View} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import { Linking, Pressable, StatusBar, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {PaperProvider} from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import messaging from '@react-native-firebase/messaging';
 
-import {Icons} from '@/constants';
-import {I18nContext} from '@/provider/Language/I18nContext';
-import {navigationEnums} from '@/provider/navigationEnums';
-import {NavigationParamsList} from '@/provider/NavigationParamsList';
-import {useAuthStore} from '@/store/useAuthStore';
+import { Icons } from '@/constants';
+import { I18nContext } from '@/provider/Language/I18nContext';
+import { navigationEnums } from '@/provider/navigationEnums';
+import { NavigationParamsList } from '@/provider/NavigationParamsList';
+import { useAuthStore } from '@/store/useAuthStore';
 
 import ChangePassword from '@/packages/Auth/screens/ChangePassword';
 import ChangeSuccessScreen from '@/packages/Auth/screens/ChangeSuccessScreen';
@@ -20,13 +20,14 @@ import ForgetScreen from '@/packages/Auth/screens/ForgetScreen';
 import LoginScreen from '@/packages/Auth/screens/LoginScreen';
 import OtpScreen from '@/packages/Auth/screens/OtpScreen';
 import RegisterSuccessScreen from '@/packages/Auth/screens/RegisterSuccessScreen';
-import {SignUpScreen} from '@/packages/Auth/screens/SignUpScreen';
+import { SignUpScreen } from '@/packages/Auth/screens/SignUpScreen';
 import OnboardingScreen from '@/packages/Onboarding/OnboardingScreen';
 import SplashScreen from '@/packages/Splash/SplashScreen';
 
 import CompletePhotographer from '@/components/UI/CompletePhotographer';
 import UpdatePhotographer from '@/components/UI/UpdatePhotographer';
 import CompleteStable from '@/components/UI/CompleteStable';
+import UpdateSchool from '@/components/UI/UpdateSchool';
 import PhotographerStablesManagement from '@/packages/Client/Photographer/screens/PhotographerStablesManagement';
 import BookingScreen from '@/packages/Client/Events/screens/BookingScreen';
 import BookingSuccessScreen from '@/packages/Client/Events/screens/BookingSuccessScreen';
@@ -52,9 +53,9 @@ import {
 } from '@/packages/Client/Services/screens/RidesScreen';
 import ServicesScreen from '@/packages/Client/Services/screens/ServicesScreen';
 import StableServicesDetails from '@/packages/Client/Services/screens/StableServicesDetails';
-import {useSplashStore} from '@/store/useSplashStore';
+import { useSplashStore } from '@/store/useSplashStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import AddHorse from '@/packages/Client/My-stable/screens/AddHorse';
 import MyStable from '@/packages/Client/My-stable/screens/MyStable';
 import StableOverview from '@/packages/Client/My-stable/screens/StableOverview';
@@ -69,8 +70,8 @@ import SchoolDetails from '@/packages/Client/Services/screens/SchoolDetails';
 import AddEvent from '@/packages/Client/Events/screens/AddEvent';
 import AddScreen from '@/packages/Client/home/screens/AddScreen';
 import OtpVerifyScreen from '@/packages/Auth/screens/OtpVerifyScreen';
-import {showGlobalToast} from '@/hooks/useGlobalToast';
-import {notificationService} from '@/provider/NotificationService';
+import { showGlobalToast } from '@/hooks/useGlobalToast';
+import { notificationService } from '@/provider/NotificationService';
 
 // React Query client
 const queryClient = new QueryClient();
@@ -93,7 +94,7 @@ const TabBarIcon = ({
   route,
   focused,
 }: {
-  route: {name: string};
+  route: { name: string };
   focused: boolean;
 }) => {
   const iconSize = 24;
@@ -168,15 +169,15 @@ const TabBarIcon = ({
   );
 };
 
-const tabScreenOptions = ({route}: any) => ({
+const tabScreenOptions = ({ route }: any) => ({
   headerShown: false,
   tabBarShowLabel: true,
   tabBarButton: (props: any) => (
     // @ts-ignore
-    <Pressable android_ripple={{color: 'transparent'}} {...props} />
+    <Pressable android_ripple={{ color: 'transparent' }} {...props} />
   ),
-  tabBarLabelStyle: {fontSize: 14},
-  tabBarIcon: ({focused}: {focused: boolean}) => TabBarIcon({route, focused}),
+  tabBarLabelStyle: { fontSize: 14 },
+  tabBarIcon: ({ focused }: { focused: boolean }) => TabBarIcon({ route, focused }),
   tabBarActiveTintColor: '#5E3E2C',
   tabBarPressColor: 'transparent',
   headerPressColor: 'transparent',
@@ -197,22 +198,22 @@ function AdminTabs() {
       <Tab.Screen
         name={navigationEnums.HOME}
         component={HomeScreen}
-        options={{tabBarLabel: 'Home'}}
+        options={{ tabBarLabel: 'Home' }}
       />
       <Tab.Screen
         name="service"
         component={Services}
-        options={{tabBarLabel: 'Service'}}
+        options={{ tabBarLabel: 'Service' }}
       />
       <Tab.Screen
         name="event"
         component={Events}
-        options={{tabBarLabel: 'Events'}}
+        options={{ tabBarLabel: 'Events' }}
       />
       <Tab.Screen
         name="profile"
         component={Profile}
-        options={{tabBarLabel: 'Profile'}}
+        options={{ tabBarLabel: 'Profile' }}
       />
     </Tab.Navigator>
   );
@@ -220,55 +221,55 @@ function AdminTabs() {
 
 // Main Bottom Tabs for Client (if you want to differentiate)
 function ClientTabs() {
-  const {t} = useTranslation();
-  const {authData} = useAuthStore();
+  const { t } = useTranslation();
+  const { authData } = useAuthStore();
   return (
     // @ts-ignore
     <Tab.Navigator screenOptions={tabScreenOptions}>
       <Tab.Screen
         name={navigationEnums.HOME}
         component={HomeScreen}
-        options={{tabBarLabel: t('Global.Home')}}
+        options={{ tabBarLabel: t('Global.Home') }}
       />
       {authData?.role === 'stable' && (
         <Tab.Screen
           name="myStable"
           component={MyStable}
-          options={{tabBarLabel: t('Global.My Stable')}}
+          options={{ tabBarLabel: t('Global.My Stable') }}
         />
       )}
       {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
         <Tab.Screen
           name="service"
           component={ServicesScreen}
-          options={{tabBarLabel: t('Global.Services')}}
+          options={{ tabBarLabel: t('Global.Services') }}
         />
       )}
       {authData?.role !== 'stable' && authData?.role !== 'photographer' && (
         <Tab.Screen
           name="event"
           component={Events}
-          options={{tabBarLabel: t('Global.Events')}}
+          options={{ tabBarLabel: t('Global.Events') }}
         />
       )}
       {authData?.role === 'photographer' && (
         <Tab.Screen
           name={navigationEnums.PHOTOGRAPHER_STABLES}
           component={PhotographerStablesManagement}
-          options={{tabBarLabel: t('Global.Stables') || 'Stables'}}
+          options={{ tabBarLabel: t('Global.Stables') || 'Stables' }}
         />
       )}
       {authData?.role === 'stable' && (
         <Tab.Screen
           name="add"
           component={AddScreen}
-          options={{tabBarLabel: t('Global.Add')}}
+          options={{ tabBarLabel: t('Global.Add') }}
         />
       )}
       <Tab.Screen
         name="profile"
         component={Profile}
-        options={{tabBarLabel: t('Global.Profile')}}
+        options={{ tabBarLabel: t('Global.Profile') }}
       />
     </Tab.Navigator>
   );
@@ -277,7 +278,7 @@ function ClientTabs() {
 // Auth flow if not logged in
 function OnboardingNavigator() {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name={navigationEnums.ONBOARD1}
         component={OnboardingScreen}
@@ -309,6 +310,10 @@ function OnboardingNavigator() {
         component={CompleteSchool}
       />
       <Stack.Screen
+        name={navigationEnums.UPDATE_SCHOOL}
+        component={UpdateSchool}
+      />
+      <Stack.Screen
         name={navigationEnums.FORGET_PASSWORD_SCREEN}
         component={ForgetScreen}
       />
@@ -336,7 +341,7 @@ function OnboardingNavigator() {
 function ClientNavigator() {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false, fullScreenGestureEnabled: true}}>
+      screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
       <Stack.Screen name={navigationEnums.HOME} component={ClientTabs} />
       <Stack.Screen name="stable" component={Profile} />
       <Stack.Screen
@@ -421,6 +426,10 @@ function ClientNavigator() {
         component={UpdatePhotographer}
       />
       <Stack.Screen
+        name={navigationEnums.UPDATE_SCHOOL}
+        component={UpdateSchool}
+      />
+      <Stack.Screen
         name={navigationEnums.PHOTOGRAPHER_STABLES}
         component={PhotographerStablesManagement}
       />
@@ -436,7 +445,7 @@ function ClientNavigator() {
 function MainNavigator() {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false, fullScreenGestureEnabled: true}}>
+      screenOptions={{ headerShown: false, fullScreenGestureEnabled: true }}>
       <Stack.Screen name="home" component={AdminTabs} />
       <Stack.Screen name={navigationEnums.HOME} component={HomeScreen} />
 
@@ -460,8 +469,8 @@ function MainNavigator() {
 
 // Root App
 function App() {
-  const {showSplash, setShowSplash} = useSplashStore();
-  const {isLoggedIn, activeApp, loadAuthState, authData, setActiveApp} =
+  const { showSplash, setShowSplash } = useSplashStore();
+  const { isLoggedIn, activeApp, loadAuthState, authData, setActiveApp } =
     useAuthStore();
 
   // ✅ Handle foreground & background messages
@@ -540,7 +549,7 @@ function App() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      useAuthStore.setState({activeApp: 'Onboarding'});
+      useAuthStore.setState({ activeApp: 'Onboarding' });
     }
   }, [isLoggedIn]);
 
@@ -603,10 +612,10 @@ export default function Root() {
       />
       <NavigationContainer
         linking={linking}
-        // initialState={initialState}
-        // onStateChange={(state) =>
-        //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
-        // }
+      // initialState={initialState}
+      // onStateChange={(state) =>
+      //   AsyncStorage.setItem("PERSISTENCE_KEY", JSON.stringify(state))
+      // }
       >
         <I18nContext>
           <PaperProvider>

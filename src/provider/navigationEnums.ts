@@ -29,6 +29,7 @@
   COMPLETE_PHOTOGRAPHER: "complete-photographer/:id",
   UPDATE_PHOTOGRAPHER: "update-photographer/:id",
   COMPLETE_SCHOOL: "complete-school/:id",
+  UPDATE_SCHOOL: "update-school/:id",
   OTP_VERIFY_SCREEN: "otp-verify/:email",
 
 

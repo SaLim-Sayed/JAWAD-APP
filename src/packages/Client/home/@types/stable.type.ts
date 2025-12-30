@@ -18,21 +18,33 @@ export interface GetStablesResponse {
     totalItems: number;
   }
 
+  export interface SchoolPrice {
+    name: string;
+    cost: number;
+    _id: string;
+    picUrl?: string;
+    image?: string; // Alternative field name for image
+  }
+
   export interface GetSchoolDetailsResponse {
-    "message": "تم الحصول علي بيانات المدرسه بنجاح",
+    "message": string,
     "school": {
         "_id": string,
         "name": string,
         "email": string,
         "password": string,
         "phone": string,
+        "profitPercentage": number,
         "totalRating": number,
-        "__v": 1,
+        "__v": number,
         "address": string,
         "city": string,
         "description": string,
         "location": string,
         "picUrl": string,
-        "region": string
+        "picUrls"?: string[],
+        "region": string,
+        "price": SchoolPrice[],
+        "deviceToken"?: string
     }
 }

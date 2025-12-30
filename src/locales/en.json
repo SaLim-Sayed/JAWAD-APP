@@ -98,7 +98,15 @@
     "closed":"Closed",
     "update_profile": "Update Profile",
     "photos": "Photos",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "school_info": "School Information",
+    "rating": "Rating",
+    "name": "Name",
+    "description": "Description",
+    "prices": "Prices",
+    "currency": "EGP",
+    "address": "Address",
+    "region": "Region"
   },
   "horse": {
     "name": " Name",

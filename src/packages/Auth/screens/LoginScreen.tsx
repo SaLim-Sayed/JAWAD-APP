@@ -44,7 +44,7 @@ const LoginScreen = () => {
       const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  
+
       if (enabled) {
         const token = await messaging().getToken();
         console.log("✅ FCM TOKEN:", token);
@@ -58,7 +58,7 @@ const LoginScreen = () => {
       return null;
     }
   };
-  
+
 
   const { t } = useTranslation()
 
@@ -99,9 +99,9 @@ const LoginScreen = () => {
     console.log({ fcmToken })
 
     mutate(
-      { 
-        ...formData, 
-        fcmToken 
+      {
+        ...formData,
+        fcmToken
       },
       {
         onSuccess: async (data) => {
@@ -110,7 +110,7 @@ const LoginScreen = () => {
             title: "Login Success",
             body: data.message
           });
-  
+
           setAuthData({
             token: data.token,
             role: role,
@@ -120,10 +120,10 @@ const LoginScreen = () => {
             nationality: data.nationality,
           });
           if (fcmToken) {
-          const res=  await fetch("https://fcm.googleapis.com/fcm/send", {
+            const res = await fetch("https://fcm.googleapis.com/fcm/send", {
               method: "POST",
               headers: {
-                "Authorization": "key=YOUR_SERVER_KEY_HERE", 
+                "Authorization": "key=YOUR_SERVER_KEY_HERE",
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
@@ -137,7 +137,7 @@ const LoginScreen = () => {
                 }
               })
             });
-            console.log({res})
+            console.log({ res })
           }
         },
         onError: (error: any) => {
@@ -151,7 +151,7 @@ const LoginScreen = () => {
               navigate(navigationEnums.COMPLETE_STABLE, { id: error.response.data.id });
             }
           }
-  
+
           showGlobalToast({
             type: "error",
             title: "Login Failed",
@@ -161,15 +161,15 @@ const LoginScreen = () => {
       }
     );
   };
-  
+
 
   return (
     <AuthWrapper>
 
       <Col gap={4}>
         <AppText className="text-brownColor-400 text-3xl font-bold mb-2">{t("Login.title")}</AppText>
-        <AppText className="text-brownColor-400 mb-4">{t("Login.welcome")}</AppText>
-        <AppText className="text-brownColor-100 mb-4">{t("Login.subtitle")}</AppText>
+        <AppText className="text-brownColor-400 mb-6 text-base tracking-wide">{t("Login.welcome")}</AppText>
+        <AppText className="text-gray-500 mb-8">{t("Login.subtitle")}</AppText>
       </Col>
       <Controller
         control={control}
@@ -192,56 +192,57 @@ const LoginScreen = () => {
         name="password"
         render={({ field: { onChange, value } }) => (
           <Input
-             placeholder={t("Login.password_placeholder")}
+            placeholder={t("Login.password_placeholder")}
             secureTextEntry={!showPassword}
             onChangeText={onChange}
             value={value}
             name="password"
             control={control}
-             label={t("Login.password_label")}
-            endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
+            label={t("Login.password_label")}
+            endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 20, height: 20 }} tint={"#684735"} />}
             onEndIconPress={() => setShowPassword((prev) => !prev)}
           />
         )}
       />
-      <Row className="justify-between items-center">
-        {/* <Radio
-          label={t("Login.remember_me")}
-          value="remember"
-          selected={rememberMe}
-          onPress={() => setRememberMe((prev) => !prev)}
-        /> */}
-        {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')}>
-          <AppText className="text-brownColor-300 text-end">{t("Login.forgot_password")}</AppText>
-
+      <Row className="justify-end items-center mb-6 w-full">
+        {role === "auth" && <TouchableOpacity onPress={() => navigate('forget-password')} className="py-2 px-1">
+          <AppText className="text-brownColor-300 text-sm font-semibold">{t("Login.forgot_password")}</AppText>
         </TouchableOpacity>}
       </Row>
-      <AppButton loading={isPending} title={t("Login.login_button")} onPress={handleSubmit(onSubmit)} />
+
+      <AppButton loading={isPending} title={t("Login.login_button")} onPress={handleSubmit(onSubmit)} className="mt-2" />
+
       {role === "auth" && <>
-        <Text className="text-center text-brownColor-400 mt-4">
-          {t("Login.no_account")}{' '}
-          <Text className="text-blue-600" onPress={() => navigate('signUp')}>
-            {t("Login.sign_up")}
+        <View className="flex-row justify-center mt-6">
+          <Text className="text-center text-gray-500 text-base">
+            {t("Login.no_account")}{' '}
           </Text>
-        </Text>
+          <TouchableOpacity onPress={() => navigate('signUp')}>
+            <Text className="text-brownColor-400 font-bold text-base underline">
+              {t("Login.sign_up")}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         <Or text={t("Login.or")} />
 
-        <View className="flex-row w-full mb-3 justify-between items-center gap-4">
+        <View className="flex-row w-full mb-6 justify-between items-center gap-4">
           <AppButton
-            className="flex-1 bg-brownColor-50"
-            textClassName="text-brownColor-400"
+            className="flex-1 bg-white border border-gray-200"
+            textClassName="text-gray-700"
             title={t("Login.login_google")}
             onPress={() => { }}
             startIcon={<Icons.google />}
+            variant="outline"
           />
 
           <AppButton
-            className="flex-1 bg-brownColor-50"
-            textClassName="text-brownColor-400"
+            className="flex-1 bg-white border border-gray-200"
+            textClassName="text-gray-700"
             title={t("apple")}
             onPress={() => { }}
             startIcon={<Icons.apple />}
+            variant="outline"
           />
         </View>
       </>}
@@ -249,14 +250,16 @@ const LoginScreen = () => {
         title={t("Login.continue_guest")}
         variant="outline"
         onPress={() => setActiveApp("Client")}
+        className="mt-2"
+        textClassName="text-brownColor-400"
       />
 
-      {role !== "auth" && <View className="flex-col bg-orange-900/10 rounded-lg items-center mt-4">
-        <Text className="text-brownColor-400 tajawal-semibold-16">
+      {role !== "auth" && <View className="flex-col bg-orange-50 rounded-xl p-4 items-center mt-8 w-full border border-orange-100">
+        <Text className="text-brownColor-400 font-semibold text-center mb-1">
           {t("Login.to_sign_up")}
         </Text>
         <TouchableOpacity onPress={() => { Linking.openURL("mailto:Jawadmobapp@gmail.com") }}>
-          <Text className="text-blue-700 tajawal-semibold-18 underline">
+          <Text className="text-blue-600 font-bold underline text-lg">
             Jawadmobapp@gmail.com</Text>
         </TouchableOpacity>
       </View>}

@@ -18,6 +18,7 @@ import EventsSection from "../components/EventsSection";
 import HomeHeader from "../components/HomeHeader";
 import QuoteCard from "../components/QuoteCard";
 import PhotographerDashboard from "../components/PhotographerDashboard";
+import SchoolDashboard from "../components/SchoolDashboard";
 import { GetSchoolDetailsResponse } from "../@types/stable.type";
 import AppText from "@/components/UI/AppText";
 import { t } from "i18next";
@@ -36,7 +37,7 @@ const HomeScreen = () => {
   const isSchool = authData.role === "school";
 
   // Fetch photographer list (for non-photographer users or when photographer views others)
-  const { data, isLoading ,refetch} = useApiQuery<GetPhotographersResponse>({
+  const { data, isLoading, refetch } = useApiQuery<GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotograoher"],
     enabled: !isPhotographer, // Only fetch when not a photographer
@@ -44,19 +45,19 @@ const HomeScreen = () => {
 
 
   // Fetch photographer's own data when logged in as photographer
-  const { data: photographerOwnData, isLoading: photographerOwnLoading ,refetch: photographerOwnRefetch} = useApiQuery<GetPhotographerOwnDataResponse | GetPhotographersResponse>({
+  const { data: photographerOwnData, isLoading: photographerOwnLoading, refetch: photographerOwnRefetch } = useApiQuery<GetPhotographerOwnDataResponse | GetPhotographersResponse>({
     url: apiKeys.photographer.getPhotograoher,
     key: ["getPhotographerOwnData", authData.id],
     enabled: isPhotographer && !!authData.id,
   });
-    useFocusEffect(
-      React.useCallback(() => {
-        refetch();
-        photographerOwnRefetch();
-      }, []),
-    );
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+      photographerOwnRefetch();
+    }, []),
+  );
 
-    console.log('photographerOwnData', data);
+  console.log('photographerOwnData', data);
 
 
   const { data: userDetails, isLoading: userDetailsLoading } = useApiQuery({
@@ -81,7 +82,7 @@ const HomeScreen = () => {
   // Get photographer name and location from own data
   let photographerName: string | undefined;
   let photographerCity: string | undefined;
-  
+
   if (isPhotographer && photographerOwnData) {
     if ('photographer' in photographerOwnData) {
       photographerName = photographerOwnData.photographer?.name;
@@ -97,31 +98,31 @@ const HomeScreen = () => {
   }
 
   // Get user name and location based on role
-  const userName = isStable 
-    ? stableData?.stable.name[language] 
-    : isPhotographer 
+  const userName = isStable
+    ? stableData?.stable.name[language]
+    : isPhotographer
       ? photographerName || data?.photographers.find((photographer) => photographer._id === authData.id)?.name || "Guest"
-      : isAuth 
-        ? userDetails?.details?.name 
-        : isSchool 
-          ? schoolData?.school.name 
+      : isAuth
+        ? userDetails?.details?.name
+        : isSchool
+          ? schoolData?.school.name
           : "Guest";
-  
-  const location = isStable 
-    ? stableData?.stable.city[language] 
-    : isPhotographer 
+
+  const location = isStable
+    ? stableData?.stable.city[language]
+    : isPhotographer
       ? photographerCity || data?.photographers.find((photographer) => photographer._id === authData.id)?.city || t("Global.Egypt")
-      : isAuth 
-        ? userDetails?.details?.city || t("Global.Egypt") 
-        : isSchool 
-          ? schoolData?.school.city 
+      : isAuth
+        ? userDetails?.details?.city || t("Global.Egypt")
+        : isSchool
+          ? schoolData?.school.city
           : t("Global.Egypt");
 
   const showStableSection = ["auth", "photographer", "school"].includes(authData.role);
   const showHorseSection = ["stable"].includes(authData.role);
   const showEventsSection = ["auth", "photographer", "stable", "school"].includes(authData.role);
 
-  const loading = stableLoading || userDetailsLoading || isLoading || (isPhotographer && photographerOwnLoading);
+  const loading = stableLoading || userDetailsLoading || isLoading || (isPhotographer && photographerOwnLoading) || (isSchool && schoolLoading);
   // If photographer, show their dashboard
   if (isPhotographer) {
     return (
@@ -135,7 +136,7 @@ const HomeScreen = () => {
               }}
             >
               <QuoteCard />
-              
+
               <PhotographerDashboard photographerId={authData.id} />
             </ScrollView>
           </LoaderBoundary>
@@ -144,7 +145,29 @@ const HomeScreen = () => {
     );
   }
 
-   return (
+  // If school, show their dashboard
+  if (isSchool) {
+    return (
+      <AppWrapper>
+        <HomeHeader userName={userName || ""} location={location || ""} />
+        <View className="bg-white flex-1 rounded-t-3xl -mt-10  ">
+          <LoaderBoundary isLoading={loading}>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+              }}
+            >
+              <QuoteCard />
+
+              <SchoolDashboard schoolId={authData.id} />
+            </ScrollView>
+          </LoaderBoundary>
+        </View>
+      </AppWrapper>
+    );
+  }
+
+  return (
     <AppWrapper>
       <HomeHeader userName={userName || ""} location={location || ""} />
       <View className="bg-white flex-1 rounded-t-3xl -mt-10  ">
@@ -154,7 +177,7 @@ const HomeScreen = () => {
               flexGrow: 1,
             }}
           >
-                <QuoteCard />
+            <QuoteCard />
 
             {showStableSection && <BestStableSection onSeeAll={() => navigate(navigationEnums.RIDES)} />}
             {showHorseSection && <HorseSection stableId={authData.id} />}
@@ -163,7 +186,7 @@ const HomeScreen = () => {
             <FlatList
               ListHeaderComponent={<View className="px-4 flex-row justify-between items-center">
                 <AppText className="text-brownColor-400 p-2 font-bold tajawal-semibold-20">{t("Global.photographer")}</AppText>
-                <TouchableOpacity onPress={()=>navigate(navigationEnums.PHOTOS)}>
+                <TouchableOpacity onPress={() => navigate(navigationEnums.PHOTOS)}>
                   <AppText className="text-brownColor-300 text-sm">{t("Global.see_all")}</AppText>
                 </TouchableOpacity>
               </View>}

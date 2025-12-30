@@ -8,8 +8,6 @@ import { t } from '@/lib'
 
 export default function AddHorse() {
   return (
-    <AppLayout isScrollable={false}   title={t("Global.add_horse")} showBackButton >
        <CreateHorse/>
-    </AppLayout>
-  )
+   )
 }

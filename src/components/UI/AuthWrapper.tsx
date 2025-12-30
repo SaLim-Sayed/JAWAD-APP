@@ -38,11 +38,11 @@ const AuthWrapper: React.FC<AppWrapperProps> = ({
 
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={{ flex: 1 }}
+          style={{ flex: 1 }} 
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
         >
           <View className="flex-1 bg-transparent">
-            <View className="flex-[0.95] w-[95%] flex-row justify-center items-center bg-white/80 rounded-3xl mt-[100px] mx-auto">
+            <View className="flex-[0.95] w-[95%] flex-row justify-center items-center bg-white/80 rounded-3xl mt-[150px] mx-auto">
               <KeyboardAwareScrollView
                 className="flex-1 w-full"
                 contentContainerStyle={{

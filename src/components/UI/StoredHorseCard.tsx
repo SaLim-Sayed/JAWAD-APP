@@ -79,7 +79,7 @@ const StoredHorseCard: React.FC<StoredHorseCardProps> = ({
         <Image
           source={horseImage}
           style={{ width: 90, height: 90 }}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
       
@@ -100,7 +100,7 @@ const StoredHorseCard: React.FC<StoredHorseCardProps> = ({
           <Image
             source={Icons.horse}
             style={{ width: 22, height: 22, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-brownColor-400 text-base font-semibold">
             {horseName}
@@ -112,7 +112,7 @@ const StoredHorseCard: React.FC<StoredHorseCardProps> = ({
           <Image
             source={Icons.cartProfile}
             style={{ width: 20, height: 20, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-[#AAA8A8] text-base">
             {horse.type} • {horse.level}
@@ -124,7 +124,7 @@ const StoredHorseCard: React.FC<StoredHorseCardProps> = ({
           <Image
             source={Icons.coin}
             style={{ width: 20, height: 20, marginRight: 7 }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-[#AAA8A8] text-base mr-2">
             ${horse.price}
@@ -241,7 +241,7 @@ export default function Cart() {
           <Image
             source={Icons.cardTick}
             style={{ width: 96, height: 96, tintColor: '#D1D5DB' }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <AppText className="text-xl font-semibold text-gray-600 mb-2 mt-4">
             No stored horses

@@ -34,6 +34,7 @@ export type NavigationParamsList = {
   [navigationEnums.COMPLETE_PHOTOGRAPHER]: { id: any };
   [navigationEnums.UPDATE_PHOTOGRAPHER]: { id: any };
   [navigationEnums.COMPLETE_SCHOOL]: { id: any };
+  [navigationEnums.UPDATE_SCHOOL]: { id: any };
   [navigationEnums.OTP_VERIFY_SCREEN]: {email:string};
 
   //SERVICE

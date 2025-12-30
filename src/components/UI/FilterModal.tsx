@@ -42,8 +42,9 @@ const FilterModal: React.FC<{
   visible: boolean;
   onClose: () => void;
   onApply: (filters: Filters) => void;
-  currentFilters: Filters;
-}> = ({ visible, onClose, onApply, currentFilters }) => {
+  currentFilters: Partial<Filters>;
+  allowedFilters?: FilterCategory[];
+}> = ({ visible, onClose, onApply, currentFilters, allowedFilters }) => {
   const { language } = useLanguage()
   const options: FilterOptions = {
     level: ["beginner", "intermediate", "professional"],
@@ -53,7 +54,17 @@ const FilterModal: React.FC<{
     city: cities.map((city) => city[language]),
   };
 
-  const [localFilters, setLocalFilters] = useState<Filters>(currentFilters);
+  // Normalize currentFilters to include all fields with defaults
+  const getNormalizedFilters = (filters: Partial<Filters>): Filters => ({
+    level: filters?.level || [],
+    feature: filters?.feature || [],
+    color: filters?.color || [],
+    rating: filters?.rating || 0,
+    vehicles: filters?.vehicles || [],
+    city: filters?.city || [],
+  });
+
+  const [localFilters, setLocalFilters] = useState<Filters>(getNormalizedFilters(currentFilters));
 
   const toggleOption = (category: FilterCategory, value: string) => {
     const updated = localFilters[category].includes(value)
@@ -76,7 +87,7 @@ const FilterModal: React.FC<{
 
   useEffect(() => {
     if (visible) {
-      setLocalFilters(currentFilters);
+      setLocalFilters(getNormalizedFilters(currentFilters));
     }
   }, [visible, currentFilters]);
 
@@ -116,14 +127,16 @@ const FilterModal: React.FC<{
           }}
           style={{ height: 400 }}
         >
-          {(Object.keys(options) as FilterCategory[]).map((category) => (
-            <View key={category} className="mb-6">
+          {(Object.keys(options) as FilterCategory[])
+            .filter((category) => !allowedFilters || allowedFilters.includes(category))
+            .map((category,index) => (
+            <View key={category+index} className="mb-6">
               <Text className="text-lg font-semibold text-brownColor-400 capitalize mb-3">
                 {t(`filters.${category}`)}
               </Text>
-              {options[category].map((option) => (
+              {options[category].map((option,index) => (
                 <Pressable
-                  key={option}
+                  key={option+index}
                   onPress={() => toggleOption(category, option)}
                   className="flex-row items-center py-2"
                   android_ripple={{ color: "rgba(0, 0, 0, 0.1)" }}
@@ -143,59 +156,85 @@ const FilterModal: React.FC<{
             </View>
           ))}
 
-          {/* Rating Section */}
-          <View className="mb-6">
-            <Text className="text-lg font-semibold  text-brownColor-400  mb-3">{t("filters.minRating")}</Text>
-            <View className="flex-row items-center">
-              <StarRating
-                rating={localFilters.rating}
-                onChange={handleRatingChange}
-                starSize={30}
-                starStyle={{ marginHorizontal: 2 }}
-              />
-              <Text className="ml-3 text-base text-gray-600">
-                {localFilters.rating > 0
-                  ? t("filters.starCount", { count: localFilters.rating })
-                  : t("filters.anyRating")}
-              </Text>
+          {/* Rating Section - only show if no allowedFilters specified (i.e., show all filters) */}
+          {!allowedFilters && (
+            <View className="mb-6">
+              <Text className="text-lg font-semibold  text-brownColor-400  mb-3">{t("filters.minRating")}</Text>
+              <View className="flex-row items-center">
+                <StarRating
+                  rating={localFilters.rating}
+                  onChange={handleRatingChange}
+                  starSize={30}
+                  starStyle={{ marginHorizontal: 2 }}
+                />
+                <Text className="ml-3 text-base text-gray-600">
+                  {localFilters.rating > 0
+                    ? t("filters.starCount", { count: localFilters.rating })
+                    : t("filters.anyRating")}
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
 
           {/* Applied Filters Summary */}
           <View className="mb-6">
             <Text className="text-lg  text-brownColor-400  font-semibold mb-3">{t("filters.applied")}</Text>
             <View className="flex-row flex-wrap">
-              {(Object.keys(localFilters) as (keyof Filters)[]).map((category) => {
-                if (category === "rating") {
-                  return localFilters.rating > 0 ? (
+              {(Object.keys(localFilters) as (keyof Filters)[])
+                .filter((category) => {
+                  if (allowedFilters) {
+                    if (category === "rating") return false;
+                    return allowedFilters.includes(category as FilterCategory);
+                  }
+                  return true;
+                })
+                .map((category) => {
+                  if (category === "rating") {
+                    return localFilters.rating > 0 ? (
+                      <View
+                        key="rating"
+                        className="bg-blue-100 px-3 py-1 rounded-full mr-2 mb-2"
+                      >
+                        <Text className="text-brownColor-400 text-sm">
+                          {t("filters.starCount", { count: localFilters.rating })}
+                        </Text>
+                      </View>
+                    ) : null;
+                  }
+
+                  return localFilters[category as FilterCategory].map((item) => (
                     <View
-                      key="rating"
+                      key={`${category}-${item}`}
                       className="bg-blue-100 px-3 py-1 rounded-full mr-2 mb-2"
                     >
                       <Text className="text-brownColor-400 text-sm">
-                        {t("filters.starCount", { count: localFilters.rating })}
+                        {category === 'city' ? item : t(`filters.options.${item}`)}
                       </Text>
                     </View>
-                  ) : null;
-                }
-
-                return localFilters[category as FilterCategory].map((item) => (
-                  <View
-                    key={`${category}-${item}`}
-                    className="bg-blue-100 px-3 py-1 rounded-full mr-2 mb-2"
-                  >
-                    <Text className="text-brownColor-400 text-sm">
-                      {t(`filters.options.${item}`)}
-                    </Text>
-                  </View>
-                ));
-              })}
+                  ));
+                })}
             </View>
-            {Object.values(localFilters).every((arr) =>
-              Array.isArray(arr) ? arr.length === 0 : arr === 0
-            ) && (
-                <Text className="text-gray-500 italic">{t("filters.noApplied")}</Text>
-              )}
+            {(() => {
+              const hasAppliedFilters = (Object.keys(localFilters) as (keyof Filters)[])
+                .filter((category) => {
+                  if (allowedFilters) {
+                    if (category === "rating") return false;
+                    return allowedFilters.includes(category as FilterCategory);
+                  }
+                  return true;
+                })
+                .some((category) => {
+                  if (category === "rating") {
+                    return localFilters.rating > 0;
+                  }
+                  return (localFilters[category] as any[]).length > 0;
+                });
+              
+              if (!hasAppliedFilters) {
+                return <Text className="text-gray-500 italic">{t("filters.noApplied")}</Text>;
+              }
+              return null;
+            })()}
           </View>
         </ScrollView>
 

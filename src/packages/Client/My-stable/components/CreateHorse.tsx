@@ -22,6 +22,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { t } from "@/lib";
 import { TextInput } from "react-native-paper";
 import { Input } from "@/components";
+import AppLayout from "@/components/UI/AppLayout";
 
 export const genders = [
   { ar: "ذكر", en: "Male" },
@@ -111,9 +112,13 @@ const CreateHorse = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll}>
-        {[
+    <AppLayout footer={
+    <AppButton
+      title="Add Horse" 
+      onPress={handleSubmit(onSubmit)}
+      loading={uploading || isPending}
+    />  } title={t("Global.add_horse")} showBackButton >
+         {[
           "enName", "arName", "enDescription", "arDescription",
           "enPrice", "arPrice",
            "color"
@@ -133,9 +138,7 @@ const CreateHorse = () => {
                   onChangeText={onChange}
                   style={styles.input}
                 />
-                {errors[field as keyof HorseForm] && (
-                  <Text style={styles.error}>{(errors[field as keyof HorseForm] as any)?.message}</Text>
-                )}
+                
               </View>
             )}
           />
@@ -248,15 +251,7 @@ const CreateHorse = () => {
           </View>
           {errors.images && <Text style={styles.error}>{errors.images.message}</Text>}
         </View>
-      </ScrollView>
-
-      <AppButton
-        title="Add Horse"
-        loading={uploading || isPending}
-        onPress={handleSubmit(onSubmit)}
-        style={styles.submit}
-      />
-    </View>
+      </AppLayout>
   );
 };
 

@@ -13,6 +13,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { apiKeys } from '@/hooks/apiKeys';
 import { GetPhotographersResponse } from '../../Photo-session/@types/photography.types';
 import { GetStableDetailsResponse } from '../../Services/@types/horse.types';
+import { GetSchoolDetailsResponse } from '../../home/@types/stable.type';
 import { t } from '@/lib';
 
 const user = {
@@ -42,11 +43,26 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
       key: ["getPhotograoherDetails"],
     });
   
+    const { data: schoolData, isLoading: schoolLoading } = useApiQuery<GetSchoolDetailsResponse>({
+      url: apiKeys.school.getSchoolDetail(authData.id),
+      key: ["getSchoolDetails", authData.id],
+      enabled: authData.role === "school" && !!authData.id,
+    });
+  
     const isStable = authData.role === "stable";
     const isPhotographer = authData.role === "photographer";
     const isAuth = authData.role === "auth";
+    const isSchool = authData.role === "school";
   
-    const userName = isStable ? stableData?.stable.name[language] : isPhotographer ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name : isAuth ? userDetails?.details?.name : "Guest";
+    const userName = isStable 
+      ? stableData?.stable.name[language] 
+      : isPhotographer 
+        ? data?.photographers.find((photographer) => photographer._id === authData.id)?.name 
+        : isAuth 
+          ? userDetails?.details?.name 
+          : isSchool
+            ? schoolData?.school.name
+            : "Guest";
    
    
   const [visible, setVisible] = React.useState(false);
@@ -63,6 +79,8 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
       onPress: () => {
         if (isPhotographer) {
           navigate(navigationEnums.UPDATE_PHOTOGRAPHER, {id: authData.id});
+        } else if (isSchool) {
+          navigate(navigationEnums.PROFILE_USER);
         } else {
           navigate(navigationEnums.PROFILE_USER);
         }
@@ -128,7 +146,17 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         {/* Profile Header */}
         <View className="items-end gap-2 border-b border-gray-200 pb-4 -mt-20 flex-row pt-6 ">
           <Image
-            source={isStable ? stableData?.stable.picUrl : isPhotographer ? data?.photographers[0].picUrls[0] : isAuth ? userDetails?.details?.picUrl ||user.avatar : user.avatar}
+            source={
+              isStable 
+                ? stableData?.stable.picUrl 
+                : isPhotographer 
+                  ? data?.photographers[0]?.picUrls[0] 
+                  : isAuth 
+                    ? userDetails?.details?.picUrl || user.avatar 
+                    : isSchool
+                      ? schoolData?.school.picUrl || user.avatar
+                      : user.avatar
+            }
             className="w-12 h-12 rounded-full"
           />
           <AppText className=" text-lg">

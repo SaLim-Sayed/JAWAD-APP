@@ -18,21 +18,13 @@ const SchoolScreen = () => {
   const [search, setSearch] = useState("");
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filters, setFilters] = useState({
-    level: [],
-    feature: [],
-    color: [],
-    rating: 0,
-    vehicles: [],
+
     city: [],
   });
 
   const queryParams = new URLSearchParams({
     search,
-    ...(filters.level.length && { level: filters.level.join(",") }),
-    ...(filters.feature.length && { feature: filters.feature.join(",") }),
-    ...(filters.color.length && { color: filters.color.join(",") }),
-    ...(filters.rating > 0 && { rating: filters.rating.toString() }),
-    ...(filters.vehicles.length && { vehicles: filters.vehicles.join(",") }),
+
     ...(filters.city.length && { city: filters.city.join(",") }),
     });
 
@@ -73,10 +65,11 @@ const SchoolScreen = () => {
           visible={showFilterModal}
           onClose={() => setShowFilterModal(false)}
           onApply={(selectedFilters: any) => {
-            setFilters(selectedFilters);
+            setFilters({ city: selectedFilters.city || [] });
             setShowFilterModal(false);
           }}
           currentFilters={filters}
+          allowedFilters={["city"]}
         />
       </View>
     </AppWrapper>

@@ -60,6 +60,7 @@ export const apiKeys = {
     getSchoolDetail: (id: string) => `/api/v1/school/details/${id}`,
     getStables: (id: string) => `/api/v1/school/getStables/${id}`,
     completed: (id: string) => `/api/v1/school/completed/${id}`,
+    updateSchool: (id: string) => `/api/v1/school/update/${id}`,
     getPhotographerDetails: (id: string) => `/api/v1/school/get/detail/${id}`,
   },
 

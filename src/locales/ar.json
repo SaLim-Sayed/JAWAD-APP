@@ -99,7 +99,16 @@
     "phone": "رقم الهاتف",
     "name_placeholder": "أدخل الاسم",
     "name_error": "الاسم مطلوب",
-     "signup": "الاشتراك"
+    "signup": "الاشتراك",
+    "school_info": "معلومات المدرسة",
+    "rating": "التقييم",
+    "name": "الاسم",
+    "description": "الوصف",
+    "prices": "الأسعار",
+    "currency": "ج.م",
+    "address": "العنوان",
+    "region": "المنطقة",
+    "city": "المدينة"
   },
   "horse": {
     "name": "الاسم ",

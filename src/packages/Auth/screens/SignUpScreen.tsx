@@ -30,7 +30,7 @@ export const SignUpScreen = () => {
         email: z.string().email(t("signup.email_error")),
         nationality: z.string().nonempty(t("signup.nationality_error")),
         password: z.string().min(8, t("signup.password_error")),
-     });
+    });
 
     type SignUpForm = z.infer<typeof signUpSchema>;
 
@@ -45,8 +45,8 @@ export const SignUpScreen = () => {
     )
     const [showPassword, setShowPassword] = useState(false);
     const nationalityOptions = [
-      {value: 'Foreign', label: t('Global.foreigner')},
-      {value: 'Egyptian', label: t('Global.egyptian')},
+        { value: 'Foreign', label: t('Global.foreigner') },
+        { value: 'Egyptian', label: t('Global.egyptian') },
     ];
 
     const { control, handleSubmit, setValue, watch } = useForm<SignUpForm>({
@@ -57,9 +57,9 @@ export const SignUpScreen = () => {
             email: '',
             nationality: 'Egyptian',
             password: '',
-         },
+        },
     });
- 
+
 
     const onSubmit = (formData: SignUpForm) => {
         mutate(formData, {
@@ -85,8 +85,8 @@ export const SignUpScreen = () => {
         <AuthWrapper>
 
             <AppText className="text-brownColor-400 text-3xl font-bold mb-2">{t("signup.title")}</AppText>
-            <AppText className="text-brownColor-300 mb-4">{t("signup.welcome")}</AppText>
-            <AppText className="text-brownColor-40 mb-4">{t("signup.description")}</AppText>
+            <AppText className="text-brownColor-300 mb-2">{t("signup.welcome")}</AppText>
+            <AppText className="text-gray-500 mb-6">{t("signup.description")}</AppText>
 
             <Controller
                 control={control}
@@ -118,23 +118,6 @@ export const SignUpScreen = () => {
                 )}
             />
 
-            {/* <Controller
-                control={control}
-                name="phone"
-                render={({ field: { onChange, value } }) => (
-                    <Input
-                        label="Mobile Number"
-                        name="phone"
-                        control={control}
-                        className="bg-white p-3 rounded-xl border mt-1 mb-3"
-                        placeholder="Enter Your Mobile Number"
-                        keyboardType="phone-pad"
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                )}
-            /> */}
-
             <Controller
                 control={control}
                 name="nationality"
@@ -161,59 +144,52 @@ export const SignUpScreen = () => {
                         name="password"
                         control={control}
                         label={t("signup.password_label")}
-                        endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 12, height: 12 }} tint={"#684735"} />}
+                        endIcon={<Image source={showPassword ? Icons.eye : Icons.eyeOff} style={{ width: 20, height: 20 }} tint={"#684735"} />}
                         onEndIconPress={() => setShowPassword((prev) => !prev)} />
                 )}
             />
-
-
-            {/* <RadioGroup
-                options={[
-                    { label: "Male", value: "male" },
-                    { label: "Female", value: "female" },
-                ]}
-                value={gender}
-                onChange={(val: any) => setValue("gender", val)}
-            /> */}
 
             <AppButton
                 loading={isPending}
                 title={t("signup.submit")}
                 onPress={handleSubmit(onSubmit)}
+                className="mt-2"
             />
-            <Row className="  gap-2 items-center mt-4">
-                <AppText className="text-center text-brownColor-400">
+            <Row className="justify-center gap-1 items-center mt-4">
+                <AppText className="text-center text-gray-500">
                     {t("signup.already_have_account")}
-
                 </AppText>
-                <AppText className="text-blue-400" onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}>
+                <AppText className="text-brownColor-400 font-bold underline" onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}>
                     {t("signup.login")}
                 </AppText>
             </Row>
 
             <Or />
 
-            <View className='flex-row w-full mb-3 justify-between items-center gap-4'>
+            <View className='flex-row w-full mb-4 justify-between items-center gap-4'>
                 <AppButton
-                    className='w-[50%] bg-brownColor-50'
-                    textClassName='text-brownColor-400'
+                    className='flex-1 bg-white border border-gray-200'
+                    textClassName='text-gray-700'
                     title={t("signup.google")}
                     onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}
                     startIcon={<Icons.google />}
+                    variant="outline"
                 />
 
                 <AppButton
-                    className='w-[30%] bg-brownColor-50 text-brownColor-400'
-                    textClassName='text-brownColor-400'
+                    className='flex-1 bg-white border border-gray-200'
+                    textClassName='text-gray-700'
                     title={t("apple")}
                     onPress={() => navigate(navigationEnums.LOGIN_SCREEN, { role: authData.role })}
                     startIcon={<Icons.apple />}
+                    variant="outline"
                 />
             </View>
             <AppButton
                 title={t("signup.continue_guest")}
                 variant="outline"
                 onPress={() => setActiveApp("Client")}
+                textClassName="text-brownColor-400"
             />
         </AuthWrapper>
     );

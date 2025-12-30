@@ -23,8 +23,13 @@ import { usePostMutation } from "@/hooks/usePostMutation";
 import { t } from "@/lib";
 import { EventForm, eventSchema } from "./eventSchema";
 import { Input } from "@/components";
+import AppLayout from "@/components/UI/AppLayout";
 
-const CreateEvent = () => {
+interface CreateEventProps {
+  footer?: React.ReactNode;
+}
+
+const CreateEvent = ({ footer }: CreateEventProps) => {
   const [uploading, setUploading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -90,125 +95,127 @@ const CreateEvent = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scroll}>
-        {/* نصوص إنجليزية وعربية */}
-        {[
-          "enName",
-          "arName",
-          "enDescription",
-          "arDescription",
-          "enRegion",
-          "arRegion",
-          "enAddress",
-          "arAddress",
-          "location",
-          "price",
-        ].map((field) => (
-          <Controller
-            key={field}
-            control={control}
-            name={field as keyof EventForm}
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <Input
-                  label={t(`Global.${field}`)}
-                  control={control}
-                  name={field}
-                  // @ts-ignore
-                  value={value}
-                  onChangeText={onChange}
-                  error={!!errors[field as keyof EventForm]}
-                />
-                
-              </View>
-            )}
-          />
-        ))}
-
-        {/* City Select */}
-        <Controller
-          name="arCity"
-          control={control}
-          render={({ field: { value, onChange } }) => (
-            <AppSelect
-              label="City"
-              // @ts-ignore
-              value={value}
-              onChange={(selectedAr) => {
-                const selectedCity = cities.find((c) => c.ar === selectedAr);
-                if (selectedCity) {
-                  onChange(selectedCity.ar);
-                  setValue("enCity", selectedCity.en);
-                }
-              }}
-              options={cities.map((city) => ({
-                label: city.ar + " - " + city.en,
-                value: city.ar,
-              }))}
-              dropdownWidth="80%"
-            />
-          )}
-        />
-        {errors.arCity && <Text style={styles.error}>{errors.arCity.message}</Text>}
-
-        {/* Date Picker */}
+    <AppLayout
+      footer={
         <AppButton
-          title={`${t("booking.date")}: ${watch("date") ? watch("date") : t("booking.select_date")
-            }`}
-          onPress={() => setShowDatePicker(true)}
-          variant="outline"
-          endIcon={<Icons.calendar />}
+          title="Add Event"
+          loading={uploading || isPending}
+          onPress={handleSubmit(onSubmit)}
         />
-        {showDatePicker && (
-          <DateTimePicker
-            value={watch("date") ? new Date(watch("date")) : new Date()}
-            mode="date"
-            display="default"
-            onChange={(_, selectedDate) => {
-              setShowDatePicker(false);
-              if (selectedDate) {
-                const formattedDate = selectedDate.toISOString().split("T")[0];
-                setValue("date", formattedDate, { shouldValidate: true });
-              }
-            }}
-          />
-
-        )}
-
-        {/* Upload Image */}
-        <View style={styles.section}>
-          <Text style={styles.label}>Image</Text>
-          {watch("image").length === 0 ? (
-            <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
-              <Text>Select Image</Text>
-            </TouchableOpacity>
-          ) : (
-            <View style={styles.imageWrapper}>
-              <Image source={{ uri: watch("image")[0].uri }} style={styles.image} />
-              <TouchableOpacity onPress={removeImage} style={styles.removeBtn}>
-                <Text style={styles.removeText}>X</Text>
-              </TouchableOpacity>
+      }
+      title={t('Global.add_event')}
+      showBackButton>
+      {[
+        'enName',
+        'arName',
+        'enDescription',
+        'arDescription',
+        'enRegion',
+        'arRegion',
+        'enAddress',
+        'arAddress',
+        'location',
+        'price',
+      ].map(field => (
+        <Controller
+          key={field}
+          control={control}
+          name={field as keyof EventForm}
+          render={({field: {onChange, value}}) => (
+            <View>
+              <Input
+                label={t(`Global.${field}`)}
+                control={control}
+                name={field}
+                // @ts-ignore
+                value={value}
+                onChangeText={onChange}
+                error={!!errors[field as keyof EventForm]}
+              />
             </View>
           )}
-          {errors.image && <Text style={styles.error}>{errors.image.message}</Text>}
-        </View>
-      </ScrollView>
+        />
+      ))}
 
-      <AppButton
-        title="Add Event"
-        loading={uploading || isPending}
-        onPress={handleSubmit(onSubmit)}
-        style={styles.submit}
+      {/* City Select */}
+      <Controller
+        name="arCity"
+        control={control}
+        render={({field: {value, onChange}}) => (
+          <AppSelect
+            label="City"
+            // @ts-ignore
+            value={value}
+            onChange={selectedAr => {
+              const selectedCity = cities.find(c => c.ar === selectedAr);
+              if (selectedCity) {
+                onChange(selectedCity.ar);
+                setValue('enCity', selectedCity.en);
+              }
+            }}
+            options={cities.map(city => ({
+              label: city.ar + ' - ' + city.en,
+              value: city.ar,
+            }))}
+            dropdownWidth="80%"
+          />
+        )}
       />
-    </View>
+      {errors.arCity && (
+        <Text style={styles.error}>{errors.arCity.message}</Text>
+      )}
+
+      {/* Date Picker */}
+      <AppButton
+        title={`${t('booking.date')}: ${
+          watch('date') ? watch('date') : t('booking.select_date')
+        }`}
+        onPress={() => setShowDatePicker(true)}
+        variant="outline"
+        endIcon={<Icons.calendar />}
+      />
+      {showDatePicker && (
+        <DateTimePicker
+          value={watch('date') ? new Date(watch('date')) : new Date()}
+          mode="date"
+          display="default"
+          onChange={(_, selectedDate) => {
+            setShowDatePicker(false);
+            if (selectedDate) {
+              const formattedDate = selectedDate.toISOString().split('T')[0];
+              setValue('date', formattedDate, {shouldValidate: true});
+            }
+          }}
+        />
+      )}
+
+      {/* Upload Image */}
+      <View style={styles.section}>
+        <Text style={styles.label}>Image</Text>
+        {watch('image').length === 0 ? (
+          <TouchableOpacity style={styles.uploadBtn} onPress={pickImage}>
+            <Text>Select Image</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.imageWrapper}>
+            <Image source={{uri: watch('image')[0].uri}} style={styles.image} />
+            <TouchableOpacity onPress={removeImage} style={styles.removeBtn}>
+              <Text style={styles.removeText}>X</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {errors.image && (
+          <Text style={styles.error}>{errors.image.message}</Text>
+        )}
+      </View>
+    </AppLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
-  scroll: { padding: 20, paddingBottom: 50 },
-   input: { backgroundColor: "#fff" },
+  scroll: { padding: 20, paddingBottom: 50, flex: 0.8, height: "60%" },
+  input: { backgroundColor: "#fff" },
   section: { marginTop: 20 },
   label: { fontWeight: "600", marginBottom: 6 },
   uploadBtn: {
@@ -236,6 +243,7 @@ const styles = StyleSheet.create({
   removeText: { color: "#fff", fontSize: 12, fontWeight: "bold" },
   error: { color: "red", fontSize: 12 },
   submit: { width: "90%", alignSelf: "center", marginVertical: 20 },
+  footerContainer: { width: "100%" },
 });
 
 export default CreateEvent;

@@ -13,9 +13,10 @@ interface AppLayoutProps {
     title?: string;
     showBackButton?: boolean;
     isScrollable?: boolean;
+    footer?: React.ReactNode;
 }
 
-export default function AppLayout({ children,title,showBackButton=true,isScrollable=true }: AppLayoutProps) {
+export default function AppLayout({ children,title,showBackButton=true,isScrollable=true,footer }: AppLayoutProps) {
      return (
         <SafeAreaView className="flex-1 bg-white">
              <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -28,17 +29,24 @@ export default function AppLayout({ children,title,showBackButton=true,isScrolla
                 { title&&<AppHeader title={title} showBackButton={showBackButton} />}
 
                     <KeyboardAwareScrollView
-                        contentContainerStyle={{ flexGrow: 1 ,paddingBottom: 100}}
+                        contentContainerStyle={{ flexGrow: 1 ,paddingBottom: footer ? 120 : 100}}
                         enableOnAndroid
                         keyboardShouldPersistTaps="handled"
                         extraScrollHeight={150}
                         scrollEnabled={isScrollable}
                         showsVerticalScrollIndicator={isScrollable}
+                        style={{ flex: 1 }}
                     >
                         <View className={isScrollable ? "flex-[0.8] p-6" : "flex-[0.96] px-6"}>
                             {children}
                         </View>
                     </KeyboardAwareScrollView>
+
+                    {footer && (
+                        <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-4" style={{ paddingBottom: Platform.OS === 'ios' ? 20 : 10 }}>
+                            {footer}
+                        </View>
+                    )}
 
                 </View>
             </KeyboardAvoidingView>
