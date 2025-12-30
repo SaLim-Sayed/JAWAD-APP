@@ -1,6 +1,9 @@
 import AppButton from "@/components/UI/AppButton";
 import LoaderBoundary from "@/components/UI/LoaderBoundary";
 import PictureGallery from "@/components/UI/PictureGallery";
+import AppText from "@/components/UI/AppText";
+import Col from "@/components/UI/Col";
+import Divider from "@/components/UI/Divider";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { navigationEnums } from "@/provider/navigationEnums";
@@ -63,83 +66,86 @@ const SchoolDashboard: React.FC<SchoolDashboardProps> = ({ schoolId }) => {
 
           {/* School Info Card */}
           <View style={styles.section}>
-            <View style={styles.infoCard}>
-              {/* Rating Section */}
-
-              {/* School Info */}
-              <View style={styles.infoContainer}>
-                {school?.name && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.name') || 'Name'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.name}</Text>
-                  </View>
-                )}
-                {school?.email && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.email') || 'Email'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.email}</Text>
-                  </View>
-                )}
-                {school?.phone && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.phone') || 'Phone'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.phone}</Text>
-                  </View>
-                )}
-                {school?.city && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.city') || 'City'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.city}</Text>
-                  </View>
-                )}
-                {school?.region && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.region') || 'Region'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.region}</Text>
-                  </View>
-                )}
-                {school?.address && (
-                  <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>
-                      {t('Global.address') || 'Address'}:
-                    </Text>
-                    <Text style={styles.infoValue}>{school.address}</Text>
-                  </View>
-                )}
-              </View>
-              {school?.totalRating !== undefined && (
-                <View style={styles.ratingSection}>
-                  <Text style={styles.ratingLabel}>
-                    {t('Global.rating') || 'Rating'}
-                  </Text>
-                  <View style={styles.ratingContainer}>
-                    <Text style={styles.ratingText}>
-                      {school.totalRating.toFixed(1)}
-                    </Text>
-                    <Text style={styles.ratingStar}>⭐</Text>
-                  </View>
-                </View>
+            <View className="mx-1 p-3 bg-[#FAF7F5] rounded-xl">
+              {/* Name */}
+              {school?.name && (
+                <>
+                  <Col>
+                    <AppText className="text-brownColor-300 tajawal-semibold-16">
+                      {t('Global.name') || 'Name'}
+                    </AppText>
+                    <AppText className="text-brownColor-100 tajawal-light-16">
+                      {school.name}
+                    </AppText>
+                  </Col>
+                  <Divider />
+                </>
               )}
-              {/* Description Section */}
+
+              {/* Description */}
               {school?.description && (
-                <View style={styles.descriptionSection}>
-                  <Text style={styles.descriptionTitle}>
-                    {t('Global.description') || 'Description'}
-                  </Text>
-                  <Text style={styles.descriptionText}>
-                    {school.description}
-                  </Text>
-                </View>
+                <>
+                  <Col>
+                    <AppText className="text-brownColor-300 tajawal-semibold-16">
+                      {t('Global.description') || 'Description'}
+                    </AppText>
+                    <AppText className="text-brownColor-100 tajawal-light-16">
+                      {school.description}
+                    </AppText>
+                  </Col>
+                  <View style={styles.dividerWithIcon}>
+                    <Divider />
+                    <View style={styles.circularIcon}>
+                      <View style={styles.circularIconInner}>
+                        <View style={styles.circularIconCenter} />
+                      </View>
+                    </View>
+                  </View>
+                </>
+              )}
+
+              {/* Address */}
+              {school?.address && (
+                <>
+                  <Col>
+                    <AppText className="text-brownColor-300 tajawal-semibold-16">
+                      {t('Global.address') || 'Address'}
+                    </AppText>
+                    <AppText className="text-brownColor-100 tajawal-light-16">
+                      {school.address}
+                    </AppText>
+                  </Col>
+                  <Divider />
+                </>
+              )}
+
+              {/* Region */}
+              {school?.region && (
+                <>
+                  <Col>
+                    <AppText className="text-brownColor-300 tajawal-semibold-16">
+                      {t('Global.region') || 'Region'}
+                    </AppText>
+                    <AppText className="text-brownColor-100 tajawal-light-16">
+                      {school.region}
+                    </AppText>
+                  </Col>
+                  <Divider />
+                </>
+              )}
+
+              {/* City */}
+              {school?.city && (
+                <>
+                  <Col>
+                    <AppText className="text-brownColor-300 tajawal-semibold-16">
+                      {t('Global.city') || 'City'}
+                    </AppText>
+                    <AppText className="text-brownColor-100 tajawal-light-16">
+                      {school.city}
+                    </AppText>
+                  </Col>
+                </>
               )}
             </View>
           </View>
@@ -227,83 +233,39 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 10
   },
-  infoCard: {
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  ratingSection: {
-     borderBottomWidth: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+  dividerWithIcon: {
+    position: "relative",
     alignItems: "center",
-    borderBottomColor: "#e0e0e0"
+    justifyContent: "center",
+    marginVertical: 8
   },
-  ratingLabel: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#666",
-    marginBottom: 8
-  },
-  ratingContainer: {
-    flexDirection: "row",
+  circularIcon: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "#0D9488",
+    borderWidth: 3,
+    borderColor: "#FAF7F5",
+    zIndex: 1,
     alignItems: "center",
-    gap: 8
+    justifyContent: "center"
   },
-  ratingText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#FFA500"
+  circularIconInner: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: "#14B8A6",
+    borderWidth: 2,
+    borderColor: "#FAF7F5",
+    alignItems: "center",
+    justifyContent: "center"
   },
-  ratingStar: {
-    fontSize: 24
-  },
-  infoContainer: {
-    marginBottom: 20
-  },
-  infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0"
-  },
-  infoLabel: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#666",
-    flex: 1
-  },
-  infoValue: {
-    fontSize: 14,
-    color: "#333",
-    flex: 2,
-    textAlign: "right"
-  },
-  descriptionSection: {
-    marginTop: 10,
-    paddingTop: 20,
-    },
-  descriptionTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#444",
-    marginBottom: 12
-  },
-  descriptionText: {
-    fontSize: 15,
-    color: "#555",
-    lineHeight: 24
+  circularIconCenter: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#0D9488"
   },
   priceSliderContainer: {
     paddingVertical: 10,
