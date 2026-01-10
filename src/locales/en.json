@@ -205,7 +205,9 @@
     "english_name_required": "English name is required",
     "email_required": "Email is required",
     "invalid_email_address": "Invalid email address",
-    "price_required": "Price is required"
+    "price_required": "Price is required",
+    "login_required": "Login Required",
+    "please_login": "You should login to continue"
   },
   "horse": {
     "name": " Name",

@@ -1,29 +1,26 @@
 import AppButton from '@/components/UI/AppButton';
 import AppLayout from '@/components/UI/AppLayout';
 import LoaderBoundary from '@/components/UI/LoaderBoundary';
-import Row from '@/components/UI/Row';
-import {Icons} from '@/constants';
-import {useApiQuery} from '@/hooks';
-import {apiKeys} from '@/hooks/apiKeys';
-import {showGlobalToast} from '@/hooks/useGlobalToast';
-import {navigationEnums} from '@/provider/navigationEnums';
+import { Icons } from '@/constants';
+import { useApiQuery } from '@/hooks';
+import { apiKeys } from '@/hooks/apiKeys';
+import { navigationEnums } from '@/provider/navigationEnums';
 import useAppRouteParams from '@/provider/useAppRouteParams';
 import useGlobalNavigation from '@/provider/useGlobalNavigation';
-import {useHorseStore} from '@/store/useHorseStore';
-import {useFocusEffect} from '@react-navigation/native';
-import {t} from 'i18next';
+import { useAuthStore } from '@/store/useAuthStore';
+import { useHorseStore } from '@/store/useHorseStore';
+import { useFocusEffect } from '@react-navigation/native';
+import { t } from 'i18next';
 import React from 'react';
-import {ScrollView, View, Share, TouchableOpacity, Dimensions} from 'react-native';
-import {GetHorseDetailResponse} from '../@types/horse.types';
+import { Alert, Dimensions, ScrollView, Share, View } from 'react-native';
+import { GetHorseDetailResponse } from '../@types/horse.types';
 import HorseDescription from '../components/HorseDescription';
 import HorseDetailsHeader from '../components/HorseDetailsHeader';
-import {useAuthStore} from '@/store/useAuthStore';
-import YouTubeEmbed from '@/components/UI/YouTubePlayerComponent';
 
 const HorseDetails = () => {
   const {id} = useAppRouteParams('HORSE_DETAILS');
   const {navigate} = useGlobalNavigation();
-  const {authData} = useAuthStore();
+  const {authData,logout} = useAuthStore();
 
   const {setSelectedHorse, addToCart, isHorseInCart} = useHorseStore();
 
@@ -43,6 +40,38 @@ const HorseDetails = () => {
   const horse = data?.horse;
 
   const handleSelectHorse = () => {
+    // Check if user is authenticated
+    const isAuthenticated = 
+      authData?.role === 'auth' && 
+      authData?.token !== 'undefined' && 
+      authData?.token !== '';
+
+    if (!isAuthenticated) {
+      Alert.alert(
+        t('Global.login_required'),
+        t('Global.please_login'),
+        
+        [
+          {
+            text: t('Global.cancel'),
+            style: 'cancel',
+          },
+          {
+            text: t('Global.login'),
+            onPress: () => {
+              logout();
+              setTimeout(() => {
+                navigate(navigationEnums.LOGIN_SCREEN, {
+                  role: 'auth',
+                });
+              }, 500);
+            },
+          },
+        ],
+      );
+      return;
+    }
+
     if (horse) {
       setSelectedHorse(horse);
       navigate(navigationEnums.EVENT_BOOKING, {id, type: 'Photo session'});
@@ -76,10 +105,10 @@ const HorseDetails = () => {
         <LoaderBoundary isLoading={isLoading || isFetching}>
           <View className="flex-1">
             <ScrollView
-            style={{
-              flex:0.8,
-              height: Dimensions.get('window').height * 0.7,
-            }}
+              style={{
+                flex: 0.9,
+                height: Dimensions.get('window').height * 0.8,
+              }}
               contentContainerStyle={{
                 paddingBottom: 60,
                 paddingHorizontal: 10,
@@ -93,7 +122,7 @@ const HorseDetails = () => {
               )}
             </ScrollView>
 
-            {authData?.role === 'auth' && (
+            {authData?.role === 'auth'&& authData?.token!=='undefined'   && (
               <View className="px-4 py-3 flex-row items-center justify-between w-full bg-white">
                 <AppButton
                   title={t('Global.select')}
@@ -102,7 +131,9 @@ const HorseDetails = () => {
                   variant="solid"
                 />
                 <AppButton
-                  title={isStored ? t('Global.stored') : t('Global.add_to_cart')}
+                  title={
+                    isStored ? t('Global.stored') : t('Global.add_to_cart')
+                  }
                   variant={isStored ? 'solid' : 'outline'}
                   onPress={handleStoreHorse}
                   className="w-[40%]"

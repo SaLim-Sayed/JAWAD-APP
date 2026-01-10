@@ -209,7 +209,9 @@
     "invalid_email_address": "عنوان البريد الإلكتروني غير صالح",
     "price_required": "السعر مطلوب",
     "arabic_city_required_validation": "المدينة بالعربية مطلوبة",
-    "english_city_required_validation": "المدينة بالإنجليزية مطلوبة"
+    "english_city_required_validation": "المدينة بالإنجليزية مطلوبة",
+    "login_required": "تسجيل الدخول مطلوب",
+    "please_login": "يجب عليك تسجيل الدخول للمتابعة"
   },
   "horse": {
     "name": "الاسم ",
