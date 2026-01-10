@@ -85,8 +85,7 @@ export const GroupBooking = () => {
       service: type,
       date: new Date(),
       startTime: new Date(),
-      endTime: new Date(new Date().getTime() + 60 * 60 * 1000),
-    },
+     },
   });
 
   // API mutations
@@ -268,8 +267,7 @@ export const GroupBooking = () => {
             horses: type === 'Photo session' ? [id] : horsesId,
             date: watch('date').toISOString().split('T')[0],
             startTime: watch('startTime').toTimeString().slice(0, 5),
-            endTime: watch('endTime').toTimeString().slice(0, 5),
-            totalPrice:
+             totalPrice:
               type === 'Photo session'
                 ? Number(horseDetails?.horse?.price)
                 : totalAmount,
@@ -586,46 +584,7 @@ export const GroupBooking = () => {
           )}
         </View>
 
-        {/* End Time Picker */}
-        <View className="flex flex-col gap-2">
-          <TouchableOpacity
-            onPress={() => setShowEndTimePicker(true)}
-            className="flex flex-row items-center justify-between border border-brownColor-400 rounded-lg p-3 gap-2">
-            <AppText className="text-brownColor-400">
-              {t('booking.end_time')}
-            </AppText>
-            <View className="flex flex-row items-center justify-end gap-2">
-              <AppText className="text-brownColor-400 font-semibold">
-                {watch('endTime')?.toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                }) ??
-                  new Date(
-                    new Date().getTime() + 60 * 60 * 1000,
-                  ).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-              </AppText>
-              <Icons.calendar />
-            </View>
-          </TouchableOpacity>
-
-          {showEndTimePicker && (
-            <HourPicker
-              visible={showEndTimePicker}
-              value={watch('endTime') ?? new Date()}
-              onChange={date => setValue('endTime', date)}
-              onClose={() => setShowEndTimePicker(false)}
-              title={t('booking.end_time')}
-            />
-          )}
-
-          {errors.endTime && (
-            <HelperText type="error">{errors.endTime?.message}</HelperText>
-          )}
-        </View>
-
+       
         {/* Submit Button */}
         <AppButton
           disabled={isPending || createBookingPending || isProcessingPayment}
