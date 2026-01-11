@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import AppText from '@/components/UI/AppText';
 import { z } from 'zod';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Row from '@/components/UI/Row';
 import { navigationEnums } from '@/provider/navigationEnums';
 import { useApiMutation } from '@/hooks';
@@ -21,6 +21,7 @@ import { showGlobalToast } from '@/hooks/useGlobalToast';
 import { useTranslation } from 'react-i18next';
 import Image from '@/components/UI/Image';
 import { isRTL } from '@/provider/constant';
+import Checkbox from '@/components/UI/Checkbox';
 
 export const SignUpScreen = () => {
     const { t } = useTranslation()
@@ -30,6 +31,9 @@ export const SignUpScreen = () => {
         email: z.string().email(t("signup.email_error")),
         nationality: z.string().nonempty(t("signup.nationality_error")),
         password: z.string().min(8, t("signup.password_error")),
+        acceptTerms: z.boolean().refine((val) => val === true, {
+            message: t("signup.accept_terms_error"),
+        }),
     });
 
     type SignUpForm = z.infer<typeof signUpSchema>;
@@ -57,12 +61,14 @@ export const SignUpScreen = () => {
             email: '',
             nationality: 'Egyptian',
             password: '',
+            acceptTerms: false,
         },
     });
 
 
     const onSubmit = (formData: SignUpForm) => {
-        mutate(formData, {
+        const { acceptTerms, ...submitData } = formData;
+        mutate(submitData, {
             onSuccess: (data) => {
                 showGlobalToast({
                     type: "success",
@@ -149,11 +155,47 @@ export const SignUpScreen = () => {
                 )}
             />
 
+            <Controller
+                control={control}
+                name="acceptTerms"
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <View className="mt-4 mb-2">
+                        <TouchableOpacity
+                            className="flex-row items-start"
+                            onPress={() => onChange(!value)}
+                            activeOpacity={0.7}
+                        >
+                            <Checkbox
+                                checked={value}
+                                onPress={() => onChange(!value)}
+                            />
+                            <View className="flex-1">
+                                <Text className="text-gray-700 text-sm">
+                                    {t("signup.accept_terms_text")}{' '}
+                                    <Text
+                                        className="text-brownColor-400 font-bold underline"
+                                        onPress={() => navigate(navigationEnums.TERMS)}
+                                    >
+                                        {t("signup.terms_and_conditions")}
+                                    </Text>
+                                </Text>
+                                {error && (
+                                    <Text className="text-red-500 text-xs mt-1">
+                                        {error.message}
+                                    </Text>
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
+            />
+
             <AppButton
                 loading={isPending}
                 title={t("signup.submit")}
                 onPress={handleSubmit(onSubmit)}
                 className="mt-2"
+                disabled={!watch('acceptTerms')}
             />
             <Row className="justify-center gap-1 items-center mt-4">
                 <AppText className="text-center text-gray-500">

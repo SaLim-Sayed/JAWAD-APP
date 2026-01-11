@@ -139,51 +139,55 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     },
   ];
   return (
-    <View
-      className="flex-1 bg-transparent"
-    >
+    <View className="flex-1 bg-transparent">
       <View className="bg-white rounded-3xl mx-2 mt-20  pb-1">
         {/* Profile Header */}
         <View className="items-end gap-2 border-b border-gray-200 pb-4 -mt-20 flex-row pt-6 ">
           <Image
             source={
-              isStable 
-                ? stableData?.stable.picUrl 
-                : isPhotographer 
-                  ? data?.photographers[0]?.picUrls[0] 
-                  : isAuth 
-                    ? userDetails?.details?.picUrl || user.avatar 
-                    : isSchool
-                      ? schoolData?.school.picUrl || user.avatar
-                      : user.avatar
+              isStable
+                ? stableData?.stable.picUrl
+                : isPhotographer
+                ? data?.photographers[0]?.picUrls[0]
+                : isAuth
+                ? userDetails?.details?.picUrl || user.avatar
+                : isSchool
+                ? schoolData?.school.picUrl || user.avatar
+                : user.avatar
             }
             className="w-12 h-12 rounded-full"
           />
           <AppText className=" text-lg">
-             <AppText className="text-black text-2xl font-bold">   {userName||t("ProfileMenu.guest")}</AppText>
+            <AppText className="text-black text-2xl font-bold">
+              {' '}
+              {userName || t('ProfileMenu.guest')}
+            </AppText>
           </AppText>
         </View>
         <View className="gap-0">
           <FlatList
             data={menuItems}
-            keyExtractor={(item) => item.key}
-            style={{ margin: 16 }}
-            renderItem={({ item }) => (
+            keyExtractor={item => item.key}
+            style={{margin: 16}}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
               <SettingsListItem
                 key={item.key}
                 label={item.label}
                 icon={item.icon}
                 onPress={item.onPress}
-                style={{ marginBottom: 16 }}
+                style={{marginBottom: 16}}
               />
-
             )}
             ListFooterComponent={<View className="h-20" />}
           />
-          
         </View>
       </View>
-      <LogoutConfirmModal visible={visible} onCancel={onCancel} onConfirm={onConfirm} />
+      <LogoutConfirmModal
+        visible={visible}
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+      />
     </View>
   );
 }

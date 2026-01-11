@@ -31,6 +31,7 @@ export default function Terms() {
           data={termsData}
           keyExtractor={(item) => item.key}
           style={{ margin: 16, backgroundColor: "#fff" }}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <DescriptionItem
               key={item.key}

@@ -10,12 +10,13 @@ import { t } from "@/lib";
 const HorseDescription = ({ horse }: { horse: HorseDetail }) => {
  
   const fields = [
-    { label: t("horse.name"), valueKey: "name" },
-    { label: t("horse.description"), valueKey: "description" },
-    { label: t("horse.gender"), valueKey: "gender" },
-    { label: t("horse.level"), valueKey: "level" },
-    { label: t("horse.feature"), valueKey: "feature" },
-    { label: t("horse.price"), valueKey: "price" },
+    {label: t('horse.name'), valueKey: 'name'},
+    {label: t('horse.description'), valueKey: 'description'},
+    {label: t('horse.gender'), valueKey: 'gender'},
+    {label: t('horse.level'), valueKey: 'level'},
+    {label: t('horse.type'), valueKey: 'type'},
+    {label: t('horse.feature'), valueKey: 'feature'},
+    {label: t('horse.price'), valueKey: 'price'},
   ];
 
   return (

@@ -222,6 +222,7 @@
     "address": "العنوان",
     "region": "المنطقة",
     "city": "المدينة",
+    "type": "النوع",
     "please_select": "اختر حزمة",
     "price": "السعر"
   },
@@ -350,6 +351,9 @@
     "login": "تسجيل الدخول",
     "google": "جوجل",
     "continue_guest": "الدخول كزائر",
+    "accept_terms_text": "أوافق على",
+    "terms_and_conditions": "الشروط والأحكام",
+    "accept_terms_error": "يجب عليك الموافقة على الشروط والأحكام",
     "validation": {
       "name_required": "اسم المستخدم مطلوب",
       "email_invalid": "البريد الإلكتروني غير صالح",

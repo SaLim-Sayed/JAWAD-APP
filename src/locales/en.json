@@ -218,6 +218,7 @@
     "address": "Address",
     "region": "Region",
     "city": "City",
+    "type": "Type",
     "please_select": "Please Select a package",
     "price": "Price"
   },
@@ -344,6 +345,9 @@
     "login": "Login",
     "google": "Google",
     "continue_guest": "Continue as Guest",
+    "accept_terms_text": "I agree to the",
+    "terms_and_conditions": "Terms and Conditions",
+    "accept_terms_error": "You must accept the terms and conditions",
     "validation": {
       "name_required": "Username required",
       "email_invalid": "Invalid email",

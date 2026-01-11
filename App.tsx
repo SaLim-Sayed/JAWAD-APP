@@ -334,6 +334,10 @@ function OnboardingNavigator() {
         name={navigationEnums.OTP_VERIFY_SCREEN}
         component={OtpVerifyScreen}
       />
+      <Stack.Screen
+        name={navigationEnums.TERMS}
+        component={Terms}
+      />
     </Stack.Navigator>
   );
 }
