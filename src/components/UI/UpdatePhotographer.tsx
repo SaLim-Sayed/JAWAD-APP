@@ -25,9 +25,11 @@ import { z } from "zod";
 import AppHeader from "./AppHeader";
 import AppWrapper from "./AppWrapper";
 import LoaderBoundary from "./LoaderBoundary";
+import { Input } from "./Input";
 
 // ========== Validation Schema ==========
 export const photographerUpdateSchema = z.object({
+  description: z.string().optional(),
   email: z.string().email("Invalid email address").min(1, "Email is required"),
   arName: z.string().min(1, "Arabic name is required"),
   enName: z.string().min(1, "English name is required"),
@@ -103,6 +105,7 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
       enName: "",
       arCity: "",
       enCity: "",
+      description: "",
       images: [],
       packages: [{ number: "", price: "" }]
     },
@@ -225,26 +228,28 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
   return (
     <AppWrapper>
       <View style={styles.container}>
-        <AppHeader title="Update Photographer Profile" showBackButton onBack={onClose} />
+        <AppHeader
+          title="Update Photographer Profile"
+          showBackButton
+          onBack={onClose}
+        />
         <LoaderBoundary isLoading={isLoadingData}>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             {/* Email Field */}
             <Controller
               name="email"
               control={control}
-              render={({ field: { value, onChange } }) => (
-                <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Email</Text>
-                  <TextInput
-                    value={value}
-                    onChangeText={onChange}
-                    placeholder="example@email.com"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    style={styles.input}
-                  />
-                  {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
-                </View>
+              render={({field: {value, onChange}}) => (
+                <Input
+                  name="email"
+                  control={control}
+                  label="Email"
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="example@email.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
               )}
             />
 
@@ -252,17 +257,15 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
             <Controller
               name="arName"
               control={control}
-              render={({ field: { value, onChange } }) => (
-                <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Arabic Name</Text>
-                  <TextInput
-                    value={value}
-                    onChangeText={onChange}
-                    placeholder="الاسم بالعربية"
-                    style={styles.input}
-                  />
-                  {errors.arName && <Text style={styles.errorText}>{errors.arName.message}</Text>}
-                </View>
+              render={({field: {value, onChange}}) => (
+                <Input
+                  name="arName"
+                  control={control}
+                  label="Arabic Name"
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="الاسم بالعربية"
+                />
               )}
             />
 
@@ -270,17 +273,29 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
             <Controller
               name="enName"
               control={control}
-              render={({ field: { value, onChange } }) => (
-                <View style={styles.inputContainer}>
-                  <Text style={styles.label}>English Name</Text>
-                  <TextInput
-                    value={value}
-                    onChangeText={onChange}
-                    placeholder="Name in English"
-                    style={styles.input}
-                  />
-                  {errors.enName && <Text style={styles.errorText}>{errors.enName.message}</Text>}
-                </View>
+              render={({field: {value, onChange}}) => (
+                <Input
+                  name="enName"
+                  control={control}
+                  label="English Name"
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="Name in English"
+                />
+              )}
+            />
+            <Controller
+              name="description"
+              control={control}
+              render={({field: {value, onChange}}) => (
+                <Input
+                  name="description"
+                  control={control}
+                  label="Description"
+                  value={value}
+                  onChangeText={onChange}
+                  placeholder="Description"
+                />
               )}
             />
 
@@ -288,22 +303,31 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
             <Controller
               name="arCity"
               control={control}
-              render={({ field: { value, onChange } }) => (
+              render={({field: {value, onChange}}) => (
                 <View style={styles.inputContainer}>
                   <AppSelect
                     label="City"
                     value={value}
-                    onChange={(selectedAr) => {
-                      const selectedCity = cities.find((c) => c.ar === selectedAr);
+                    onChange={selectedAr => {
+                      const selectedCity = cities.find(
+                        c => c.ar === selectedAr,
+                      );
                       if (selectedCity) {
                         onChange(selectedCity.ar);
-                        setValue("enCity", selectedCity.en);
+                        setValue('enCity', selectedCity.en);
                       }
                     }}
-                    options={cities.map((city) => ({ label: city.ar + " - " + city.en, value: city.ar }))}
+                    options={cities.map(city => ({
+                      label: city.ar + ' - ' + city.en,
+                      value: city.ar,
+                    }))}
                     dropdownWidth="90%"
                   />
-                  {errors.arCity && <Text style={styles.errorText}>{errors.arCity.message}</Text>}
+                  {errors.arCity && (
+                    <Text style={styles.errorText}>
+                      {errors.arCity.message}
+                    </Text>
+                  )}
                 </View>
               )}
             />
@@ -311,24 +335,27 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
             {/* Images Section */}
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Upload Photos</Text>
-              <TouchableOpacity style={styles.uploadButton} onPress={pickImages}>
+              <TouchableOpacity
+                style={styles.uploadButton}
+                onPress={pickImages}>
                 <Text>Select Images</Text>
               </TouchableOpacity>
 
               <View style={styles.imageGrid}>
                 {imageFields.map((image, index) => (
                   <View key={image.id} style={styles.imageItem}>
-                    <Image source={{ uri: image.uri }} style={styles.thumbnail} />
+                    <Image source={{uri: image.uri}} style={styles.thumbnail} />
                     <TouchableOpacity
                       style={styles.deleteImageButton}
-                      onPress={() => removeImage(index)}
-                    >
+                      onPress={() => removeImage(index)}>
                       <Text style={styles.deleteText}>×</Text>
                     </TouchableOpacity>
                   </View>
                 ))}
               </View>
-              {errors.images && <Text style={styles.errorText}>{errors.images.message}</Text>}
+              {errors.images && (
+                <Text style={styles.errorText}>{errors.images.message}</Text>
+              )}
             </View>
 
             {/* Packages Section */}
@@ -337,7 +364,9 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
               {fields.map((field, index) => (
                 <View key={field.id} style={styles.packageContainer}>
                   <View style={styles.packageHeader}>
-                    <Text style={styles.packageNumber}>Package {index + 1}</Text>
+                    <Text style={styles.packageNumber}>
+                      Package {index + 1}
+                    </Text>
                     {index > 0 && (
                       <TouchableOpacity onPress={() => remove(index)}>
                         <Text style={styles.removePackage}>Remove</Text>
@@ -348,19 +377,18 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
                   <Controller
                     name={`packages.${index}.number`}
                     control={control}
-                    render={({ field: { value, onChange } }) => (
+                    render={({field: {value, onChange}}) => (
                       <View style={styles.inputContainer}>
                         <Text style={styles.label}>Number of Photos</Text>
-                        <TextInput
+                        <Input
+                          name={`packages.${index}.number`}
+                          control={control}
+                          label="Number of Photos"
                           value={value}
                           onChangeText={onChange}
                           placeholder="20"
                           keyboardType="numeric"
-                          style={styles.input}
                         />
-                        {errors.packages?.[index]?.number && (
-                          <Text style={styles.errorText}>{errors.packages[index]?.number?.message}</Text>
-                        )}
                       </View>
                     )}
                   />
@@ -368,18 +396,22 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
                   <Controller
                     name={`packages.${index}.price`}
                     control={control}
-                    render={({ field: { value, onChange } }) => (
+                    render={({field: {value, onChange}}) => (
                       <View style={styles.inputContainer}>
                         <Text style={styles.label}>Price</Text>
-                        <TextInput
+                        <Input
+                          name={`packages.${index}.price`}
+                          control={control}
+                          label="Price"
                           value={value}
                           onChangeText={onChange}
                           placeholder="1000"
                           keyboardType="numeric"
-                          style={styles.input}
                         />
                         {errors.packages?.[index]?.price && (
-                          <Text style={styles.errorText}>{errors.packages[index]?.price?.message}</Text>
+                          <Text style={styles.errorText}>
+                            {errors.packages[index]?.price?.message}
+                          </Text>
                         )}
                       </View>
                     )}
@@ -389,14 +421,14 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
 
               <TouchableOpacity
                 style={styles.addButton}
-                onPress={() => append({ number: "", price: "" })}
-              >
+                onPress={() => append({number: '', price: ''})}>
                 <Text style={styles.addButtonText}>+ Add Another Package</Text>
               </TouchableOpacity>
-              {errors.packages && <Text style={styles.errorText}>{errors.packages.message}</Text>}
+              {errors.packages && (
+                <Text style={styles.errorText}>{errors.packages.message}</Text>
+              )}
             </View>
           </ScrollView>
-
           <AppButton
             loading={isPending || uploading}
             disabled={isPending || uploading}
