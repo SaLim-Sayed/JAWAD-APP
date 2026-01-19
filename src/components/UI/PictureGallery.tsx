@@ -131,8 +131,8 @@ const ZoomableImage: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
           <Image
             source={{ uri: imageUrl }}
             style={styles.zoomImage}
-            resizeMode="cover"
-          />
+            resizeMode="contain"
+           />
         </Animated.View>
       </GestureDetector>
     </GestureHandlerRootView>
@@ -276,8 +276,8 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures, videoUrl }) =
               <Image
                 style={styles.image}
                 source={{uri: item.url}}
-                resizeMode="cover"
-              />
+                resizeMode="contain"
+               />
             </TouchableOpacity>
           );
         }}
@@ -309,11 +309,12 @@ const PictureGallery: React.FC<PictureGalleryProps> = ({ pictures, videoUrl }) =
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: ITEM_WIDTH + MARGIN_HORIZONTAL * 2 + 10,
+    width: ITEM_WIDTH + MARGIN_HORIZONTAL * 2 + 20,
     height: 190,
     marginHorizontal: MARGIN_HORIZONTAL,
     borderRadius: 8,
-    overflow: "hidden",
+    overflow: 'hidden',
+    backgroundColor: '#493225',
   },
   image: {
     height: '100%',
@@ -327,84 +328,84 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#ccc",
+    backgroundColor: '#ccc',
     marginHorizontal: 5,
   },
   activeBullet: {
-    backgroundColor: "#000",
+    backgroundColor: '#000',
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.95)",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'rgba(0, 0, 0, 0.95)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gestureContainer: {
     flex: 1,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   zoomContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   zoomImage: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
   },
   closeButton: {
-    position: "absolute",
+    position: 'absolute',
     top: 50,
     right: 20,
     zIndex: 1000,
     width: 40,
     height: 40,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   closeButtonInner: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.3)",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   closeIconRow: {
     width: 20,
     height: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   closeIcon: {
     width: 20,
     height: 2,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   modalPagination: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 40,
     left: 0,
     right: 0,
-    alignItems: "center",
+    alignItems: 'center',
     zIndex: 1000,
   },
   paginationInfo: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
   paginationTextContainer: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   paginationText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 14,
-    fontWeight: "600" as const,
+    fontWeight: '600' as const,
   },
 });
 
