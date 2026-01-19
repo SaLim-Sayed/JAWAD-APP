@@ -168,7 +168,7 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           <FlatList
             data={menuItems}
             keyExtractor={item => item.key}
-            style={{margin: 16}}
+            style={{marginBottom: 1200,marginTop: 16}}
             showsVerticalScrollIndicator={false}
             renderItem={({item}) => (
               <SettingsListItem
@@ -179,7 +179,8 @@ const ProfileMenu: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                 style={{marginBottom: 16}}
               />
             )}
-            ListFooterComponent={<View className="h-20" />}
+            contentContainerStyle={{ paddingBottom: 120 }}
+            ListFooterComponent={<View className="h-[200px]" />}
           />
         </View>
       </View>
