@@ -16,14 +16,14 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { z } from "zod";
 import AppHeader from "./AppHeader";
 import AppWrapper from "./AppWrapper";
+import { Input } from "./Input";
 
 // ========== Validation Schema ==========
 export const photographerSchema = z.object({
@@ -208,17 +208,16 @@ export type PhotographerForm = z.infer<typeof photographerSchema>;
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <View style={styles.inputContainer}>
-                      <Text style={styles.label}>Number of Photos</Text>
-                      <TextInput
-                        value={value}
-                        onChangeText={onChange}
+                       <Input
+                        control={control}
+                        name={`packages.${index}.number`}
+                        label="Number of Photos"
                         placeholder="20"
                         keyboardType="numeric"
-                        style={styles.input}
+                        value={value}
+                        onChangeText={onChange}
                       />
-                      {errors.packages?.[index]?.number && (
-                        <Text style={styles.errorText}>{errors.packages[index]?.number?.message}</Text>
-                      )}
+                      
                     </View>
                   )}
                 />
@@ -228,17 +227,15 @@ export type PhotographerForm = z.infer<typeof photographerSchema>;
                   control={control}
                   render={({ field: { value, onChange } }) => (
                     <View style={styles.inputContainer}>
-                      <Text style={styles.label}>Price</Text>
-                      <TextInput
-                        value={value}
-                        onChangeText={onChange}
+                      <Input
+                        control={control}
+                        name={`packages.${index}.price`}
+                        label="Price"
                         placeholder="1000"
                         keyboardType="numeric"
-                        style={styles.input}
+                        value={value}
+                        onChangeText={onChange}
                       />
-                      {errors.packages?.[index]?.price && (
-                        <Text style={styles.errorText}>{errors.packages[index]?.price?.message}</Text>
-                      )}
                     </View>
                   )}
                 />

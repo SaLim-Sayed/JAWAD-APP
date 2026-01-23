@@ -29,6 +29,7 @@ import { GetHorseDetailResponse } from "../../Services/@types/horse.types";
 import { navigationEnums } from "@/provider/navigationEnums";
 import { Icons } from "@/constants";
 import { useLanguage } from "@/store";
+import { Input } from "@/components";
 
 export const genders = [
   { ar: "ذكر", en: "Male" },
@@ -159,17 +160,14 @@ const {language}=useLanguage()
             name={field as keyof HorseForm}
             render={({ field: { onChange, value } }) => (
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>{field}</Text>
-                <TextInput
-                  // @ts-ignore
-                  value={value}
-                  onChangeText={onChange}
-                  style={styles.input}
-                  placeholder={field}
-                />
-                {errors[field as keyof HorseForm] && (
-                  <Text style={styles.error}>{(errors[field as keyof HorseForm] as any)?.message}</Text>
-                )}
+                 <Input
+                                name={field as keyof HorseForm}
+                                control={control}
+                                label={field}
+                                value={value as string}
+                                onChangeText={onChange}
+                                placeholder={`Enter ${field}`}
+                            />  
               </View>
             )}
           />

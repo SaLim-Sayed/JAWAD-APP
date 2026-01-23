@@ -55,11 +55,9 @@ export const schoolUpdateSchema = z.object({
 
 export type SchoolUpdateForm = z.infer<typeof schoolUpdateSchema>;
 
-const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: string }) => {
+const UpdateSchool = ({ onClose }: { onClose?: () => void }) => {
   const { goBack } = useGlobalNavigation();
-  const routeParams = useAppRouteParams("UPDATE_SCHOOL");
-  const routeId = routeParams?.id;
-  const id = schoolId || routeId;
+  const { id } = useAppRouteParams("UPDATE_SCHOOL");
   const [uploading, setUploading] = useState(false);
 
   const { data: schoolData, isLoading: isLoadingData, refetch } = useApiQuery<GetSchoolDetailsResponse>({
@@ -79,13 +77,7 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
         body: "School updated successfully"
       });
       refetch();
-      if (onClose) {
-        // If used inline (home screen), just close callback
-        onClose();
-      } else {
-        // If used as navigation screen, go back
-        goBack();
-      }
+      goBack();
     },
     onError: (error) => {
       console.error("Update failed:", error);
@@ -255,10 +247,11 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
     setUploading(false);
   };
 
-  const FormContent = () => (
-    <LoaderBoundary isLoading={isLoadingData}>
-      <View style={styles.container}>
-        {!schoolId && <AppHeader title="Update School Profile" showBackButton onBack={onClose} />}
+  return (
+    <AppWrapper>
+      <LoaderBoundary isLoading={isLoadingData}>
+        <View style={styles.container}>
+          <AppHeader title="Update School Profile" showBackButton onBack={onClose} />
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             {/* Images Section */}
             <View style={styles.section}>
@@ -460,14 +453,13 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
               control={control}
               render={({ field: { onChange, value } }) => (
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Arabic Description</Text>
-                  <TextInput
-                    value={value}
-                    onChangeText={onChange}
+                   <Input
+                    control={control}
+                    name="arDescription"
+                    label="Arabic Description"
                     placeholder="Enter Arabic description"
-                    style={styles.textArea}
-                    multiline
-                    numberOfLines={4}
+                    onChangeText={onChange}
+                    value={value}
                   />
                 </View>
               )}
@@ -478,14 +470,13 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
               control={control}
               render={({ field: { onChange, value } }) => (
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>English Description</Text>
-                  <TextInput
-                    value={value}
-                    onChangeText={onChange}
+                   <Input
+                    control={control}
+                    name="enDescription"
+                    label="English Description"
                     placeholder="Enter English description"
-                    style={styles.textArea}
-                    multiline
-                    numberOfLines={4}
+                    onChangeText={onChange}
+                    value={value}
                   />
                 </View>
               )}
@@ -510,16 +501,14 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
                     control={control}
                     render={({ field: { value, onChange } }) => (
                       <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Price Name</Text>
-                        <TextInput
-                          value={value}
-                          onChangeText={onChange}
+                         <Input
+                          control={control}
+                          name={`price.${index}.name`}
+                          label="Name"
                           placeholder="e.g., ركوب خيل"
-                          style={styles.input}
+                          onChangeText={onChange}
+                          value={value}
                         />
-                        {errors.price?.[index]?.name && (
-                          <Text style={styles.errorText}>{errors.price[index]?.name?.message}</Text>
-                        )}
                       </View>
                     )}
                   />
@@ -530,16 +519,16 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
                     render={({ field: { value, onChange } }) => (
                       <View style={styles.inputContainer}>
                         <Text style={styles.label}>Cost</Text>
-                        <TextInput
-                          value={value}
-                          onChangeText={onChange}
+                        <Input
+                          control={control}
+                          name={`price.${index}.cost`}
+                          label="Cost"
                           placeholder="1000"
                           keyboardType="numeric"
-                          style={styles.input}
+                          value={value}
+                          onChangeText={onChange}
                         />
-                        {errors.price?.[index]?.cost && (
-                          <Text style={styles.errorText}>{errors.price[index]?.cost?.message}</Text>
-                        )}
+                       
                       </View>
                     )}
                   />
@@ -565,17 +554,6 @@ const UpdateSchool = ({ onClose, schoolId }: { onClose?: () => void; schoolId?: 
           />
         </View>
       </LoaderBoundary>
-    );
-
-  // If used inline (with schoolId prop), return form without wrapper
-  if (schoolId) {
-    return <FormContent />;
-  }
-
-  // If used as navigation screen, return with AppWrapper
-  return (
-    <AppWrapper>
-      <FormContent />
     </AppWrapper>
   );
 };

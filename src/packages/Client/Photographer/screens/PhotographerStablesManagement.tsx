@@ -27,6 +27,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { Input } from "@/components";
 
 // Form schema for adding to stable
 const addToStableSchema = z.object({
@@ -451,25 +452,17 @@ const PhotographerStablesManagement = () => {
                 name="email"
                 render={({field: {onChange, value}}) => (
                   <View style={styles.inputWrapper}>
-                    <AppText className="text-brownColor-400 mb-2">
-                      {t('Global.email') || 'Email'}
-                    </AppText>
-                    <TextInput
-                      style={styles.input}
-                      value={value}
-                      onChangeText={onChange}
-                      placeholder={
-                        t('Global.email_placeholder') || 'Enter your email'
-                      }
+                    <Input
+                      name="email"
+                      control={control}
+                      label={t('Global.email') || 'Email'}
+                      placeholder={t('Global.email_placeholder') || 'Enter your email'}
                       keyboardType="email-address"
                       autoCapitalize="none"
                       editable={false}
+                      value={value}
+                      onChangeText={onChange}
                     />
-                    {errors.email && (
-                      <AppText className="text-red-500 text-sm mt-1">
-                        {errors.email.message}
-                      </AppText>
-                    )}
                   </View>
                 )}
               />
@@ -479,25 +472,17 @@ const PhotographerStablesManagement = () => {
                 name="password"
                 render={({field: {onChange, value}}) => (
                   <View style={styles.inputWrapper}>
-                    <AppText className="text-brownColor-400 mb-2">
-                      {t('Global.password') || 'Password'}
-                    </AppText>
-                    <TextInput
-                      style={styles.input}
+                    <Input
+                      name="password"
+                      control={control}
+                      label={t('Global.password') || 'Password'}
+                      placeholder={t('Global.password_placeholder') || 'Enter your password'}
+                      keyboardType="default"
+                      autoCapitalize="none"
+                      secureTextEntry
                       value={value}
                       onChangeText={onChange}
-                      placeholder={
-                        t('Global.password_placeholder') ||
-                        'Enter your password'
-                      }
-                      secureTextEntry
-                      autoCapitalize="none"
                     />
-                    {errors.password && (
-                      <AppText className="text-red-500 text-sm mt-1">
-                        {errors.password.message}
-                      </AppText>
-                    )}
                   </View>
                 )}
               />

@@ -26,6 +26,7 @@ import useGlobalNavigation from "@/provider/useGlobalNavigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import AppHeader from "./AppHeader";
 import AppWrapper from "./AppWrapper";
+import { Input } from "./Input";
 
 // ========== Validation Schema ==========
 export const horseSchema = z.object({
@@ -188,18 +189,14 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
               control={control}
               render={({ field: { value, onChange } }) => (
                 <View>
-                  <Text style={styles.label}>{field}</Text>
-                  <TextInput
+                  <Input
+                    name={field as keyof HorseForm}
+                    control={control}
+                    label={field}
                     value={value}
                     onChangeText={onChange}
                     placeholder={`Enter ${field}`}
-                    style={styles.input}
-                  />
-                  {errors[field as keyof HorseForm] && (
-                    <Text style={styles.errorText}>
-                      {errors[field as keyof HorseForm]?.message?.toString()}
-                    </Text>
-                  )}
+                  />  
                 </View>
               )}
             />
@@ -247,7 +244,7 @@ const CompleteStable = ({ onClose }: { onClose?: () => void }) => {
                   onPress={() => setShowClosePicker(true)}
                 >
                   <Text style={styles.inputText}>{value || "Select Close Time"}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> 
                 {showClosePicker && (
                   <DateTimePicker
                     value={value ? new Date(`1970-01-01T${value}:00`) : new Date()}

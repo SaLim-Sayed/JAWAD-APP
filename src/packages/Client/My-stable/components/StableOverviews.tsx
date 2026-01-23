@@ -6,24 +6,24 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
-    View,
+    View
 } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { z } from "zod";
 
+import { Input } from "@/components";
 import AppButton from "@/components/UI/AppButton";
+import AppSelect from "@/components/UI/AppSelect";
+import { cities } from "@/constants/data";
 import { useApiQuery } from "@/hooks";
 import { apiKeys } from "@/hooks/apiKeys";
 import { showGlobalToast } from "@/hooks/useGlobalToast";
 import { usePutMutation } from "@/hooks/usePutMutation";
-import { useAuthStore } from "@/store/useAuthStore";
-import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
 import { useLanguage } from "@/store";
-import AppSelect from "@/components/UI/AppSelect";
-import { cities } from "@/constants/data";
+import { useAuthStore } from "@/store/useAuthStore";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
 
 // ========== Schema ==========
 const stableSchema = z.object({
@@ -184,16 +184,14 @@ const StableOverviews = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                         <>
-                            <Text style={styles.label}>Stable Name</Text>
-                            <TextInput
+                             <Input
+                                name="stableName"
+                                control={control}
+                                label="Stable Name"
+                                placeholder="Enter Your Stable Name"
                                 value={value}
                                 onChangeText={onChange}
-                                placeholder="Enter Your Stable Name"
-                                style={styles.input}
                             />
-                            {errors.stableName && (
-                                <Text style={styles.errorText}>{errors.stableName.message}</Text>
-                            )}
                         </>
                     )}
                 />
@@ -203,16 +201,16 @@ const StableOverviews = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                         <>
-                            <Text style={styles.label}>Description</Text>
-                            <TextInput
+                             <Input
+                                name="description"
+                                control={control}
+                                label="Description"
                                 value={value}
                                 onChangeText={onChange}
                                 placeholder="Enter Your Stable Description"
                                 style={styles.input}
                             />
-                            {errors.description && (
-                                <Text style={styles.errorText}>{errors.description.message}</Text>
-                            )}
+           
                         </>
                     )}
                 />
@@ -222,17 +220,16 @@ const StableOverviews = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                         <>
-                            <Text style={styles.label}>Mobile Number</Text>
-                            <TextInput
+                             <Input
+                                name="phone"
+                                control={control}
+                                label="Mobile Number"
+                                placeholder="Enter Your Mobile Number"
                                 keyboardType="phone-pad"
                                 value={value}
                                 onChangeText={onChange}
-                                placeholder="Enter Your Mobile Number"
-                                style={styles.input}
                             />
-                            {errors.phone && (
-                                <Text style={styles.errorText}>{errors.phone.message}</Text>
-                            )}
+                            
                         </>
                     )}
                 />
@@ -286,19 +283,16 @@ const StableOverviews = () => {
                         control={control}
                         render={({ field: { value, onChange } }) => (
                             <View>
-                                <Text style={styles.label}>{field}</Text>
-                                <TextInput
-                                    //@ts-ignore
+                                 <Input
+                                    name={field as keyof StableForm}
+                                    control={control}
+                                    label={field}
                                     value={value}
                                     onChangeText={onChange}
                                     placeholder={`Enter ${field}`}
                                     style={styles.input}
                                 />
-                                {errors[field as keyof StableForm] && (
-                                    <Text style={styles.errorText}>
-                                        {errors[field as keyof StableForm]?.message?.toString()}
-                                    </Text>
-                                )}
+                                 
                             </View>
                         )}
                     />
