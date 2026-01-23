@@ -26,6 +26,7 @@ import AppHeader from "./AppHeader";
 import AppWrapper from "./AppWrapper";
 import LoaderBoundary from "./LoaderBoundary";
 import { Input } from "./Input";
+import AppText from "./AppText";
 
 // ========== Validation Schema ==========
 export const photographerUpdateSchema = z.object({
@@ -335,11 +336,10 @@ const UpdatePhotographer = ({ onClose }: { onClose?: () => void }) => {
             {/* Images Section */}
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Upload Photos</Text>
-              <TouchableOpacity
-                style={styles.uploadButton}
-                onPress={pickImages}>
-                <Text>Select Images</Text>
-              </TouchableOpacity>
+              <AppButton
+                title="Select Images"
+                onPress={pickImages}
+              />
 
               <View style={styles.imageGrid}>
                 {imageFields.map((image, index) => (
