@@ -37,7 +37,8 @@ export const levels = [
 
 export const types=[
   {ar:"جمل",en:"camel"},
-  {ar:"حصان",en:"horse"}
+  {ar:"حصان",en:"horse"},
+  {ar:"حصان عربي",en:"arabian horse"}
   
 ]
 export const features=[
@@ -60,7 +61,8 @@ const CreateHorse = () => {
       enLevel: "", arLevel: "",
       enType: "", arType: "",
       enFeature: "", arFeature: "",
-      color: ""
+      color: "",
+      video: ""
     },
   });
 
@@ -233,6 +235,20 @@ const CreateHorse = () => {
             />
           )}
         />
+        
+        <Controller
+          control={control}
+          name="video"
+          render={({ field: { value, onChange } }) => (
+            <Input
+              label="Video"
+              name="video"
+              control={control}
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
 
         <View style={styles.section}>
           <Text style={styles.label}>Images</Text>
@@ -265,6 +281,7 @@ const styles = StyleSheet.create({
   section: { marginTop: 20 },
   uploadBtn: {
     borderWidth: 1,
+    backgroundColor:"#999",
     borderStyle: "dashed",
     padding: 10,
     alignItems: "center",

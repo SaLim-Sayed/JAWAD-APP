@@ -35,7 +35,7 @@ interface PictureGalleryProps {
 }
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
-const ITEM_WIDTH = SCREEN_WIDTH - 78;
+const ITEM_WIDTH = SCREEN_WIDTH - 85;
 const MARGIN_HORIZONTAL = 5;
 
 const getYouTubeId = (url: string) => {

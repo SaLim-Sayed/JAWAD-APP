@@ -24,6 +24,7 @@ import { useLanguage } from "@/store";
 import { useAuthStore } from "@/store/useAuthStore";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { GetStableDetailsResponse } from "../../Services/@types/horse.types";
+import AppLayout from "@/components/UI/AppLayout";
 
 // ========== Schema ==========
 const stableSchema = z.object({
@@ -161,9 +162,8 @@ const StableOverviews = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 200 }}>
-                {/* Logo Upload */}
+        <AppLayout title="Stable Overview" isScrollable={true} showBackButton footer={<AppButton title="Save changes" onPress={handleSubmit(onSubmit)} loading={isPending} disabled={isPending} />}>
+                 {/* Logo Upload */}
                 <Text style={styles.label}>Add Logo</Text>
                 <TouchableOpacity onPress={pickLogo} style={styles.logoContainer}>
                     {logo ? (
@@ -208,8 +208,7 @@ const StableOverviews = () => {
                                 value={value}
                                 onChangeText={onChange}
                                 placeholder="Enter Your Stable Description"
-                                style={styles.input}
-                            />
+                             />
            
                         </>
                     )}
@@ -290,8 +289,7 @@ const StableOverviews = () => {
                                     value={value}
                                     onChangeText={onChange}
                                     placeholder={`Enter ${field}`}
-                                    style={styles.input}
-                                />
+                                 />
                                  
                             </View>
                         )}
@@ -359,15 +357,8 @@ const StableOverviews = () => {
                         </View>
                     )}
                 />
-            </ScrollView>
-
-            <AppButton
-                title="Save changes"
-                onPress={handleSubmit(onSubmit)}
-                loading={isPending}
-                disabled={isPending}
-            />
-        </View>
+            
+        </AppLayout>
     );
 };
 

@@ -11,7 +11,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useHorseStore } from '@/store/useHorseStore';
 import { useFocusEffect } from '@react-navigation/native';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Alert, Dimensions, ScrollView, Share, View } from 'react-native';
 import { GetHorseDetailResponse } from '../@types/horse.types';
 import HorseDescription from '../components/HorseDescription';
@@ -99,61 +99,52 @@ const HorseDetails = () => {
 
   const isStored = horse ? isHorseInCart(horse._id, 'Ride') : false;
 
+  const footer = useMemo(() => {
+    return (
+      authData?.role === 'auth' && authData?.token !== 'undefined' && (
+        <View className="px-4 py-3 flex-row items-center justify-between w-full bg-white">
+          <AppButton
+            title={t('Global.select')}
+            onPress={handleSelectHorse}
+            className="w-[25%]"
+            variant="solid"
+          />
+          <AppButton
+            title={
+              isStored ? t('Global.stored') : t('Global.add_to_cart')
+            }
+            variant={isStored ? 'solid' : 'outline'}
+            onPress={handleStoreHorse}
+            className="w-[40%]"
+            style={{
+              margin: 0,
+            }}
+            endIcon={<Icons.cardTick />}
+            disabled={isStored}
+          />
+          <AppButton
+            variant={'outline'}
+            onPress={handleShareHorse}
+            className="w-[20%] "
+
+            endIcon={<Icons.share />}
+          />
+        </View>
+      ) 
+    )
+  }, [handleSelectHorse, handleStoreHorse, isStored, authData?.role, authData?.token]);
+  
   return (
-    <AppLayout title={title} isScrollable={false} showBackButton>
+    <AppLayout title={title} isScrollable={true} showBackButton footer={footer}>
       <View className="bg-white flex-1 h-full">
         <LoaderBoundary isLoading={isLoading || isFetching}>
           <View className="flex-1">
-            <ScrollView
-              style={{
-                flex: 0.9,
-                height: Dimensions.get('window').height * 0.8,
-              }}
-              contentContainerStyle={{
-                paddingBottom: 60,
-                paddingHorizontal: 10,
-              }}
-              showsVerticalScrollIndicator={false}>
               {!isLoading && data && (
                 <>
                   <HorseDetailsHeader horse={data?.horse!} />
                   <HorseDescription horse={data?.horse!} />
                 </>
               )}
-            </ScrollView>
-
-            {authData?.role === 'auth'&& authData?.token!=='undefined'   && (
-              <View className="px-4 py-3 flex-row items-center justify-between w-full bg-white">
-                <AppButton
-                  title={t('Global.select')}
-                  onPress={handleSelectHorse}
-                  className="w-[25%]"
-                  variant="solid"
-                />
-                <AppButton
-                  title={
-                    isStored ? t('Global.stored') : t('Global.add_to_cart')
-                  }
-                  variant={isStored ? 'solid' : 'outline'}
-                  onPress={handleStoreHorse}
-                  className="w-[40%]"
-                  style={{
-                    margin: 0,
-                  }}
-                  endIcon={<Icons.cardTick />}
-                  disabled={isStored}
-                />
-                <AppButton
-                  variant={'outline'}
-                  onPress={handleShareHorse}
-                  className="w-[20%]"
-                  style={{
-                    margin: 0,
-                  }}
-                  endIcon={<Icons.share />}
-                />
-              </View>
-            )}
           </View>
         </LoaderBoundary>
       </View>

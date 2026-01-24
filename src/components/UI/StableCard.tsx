@@ -41,7 +41,7 @@ const StableCard: React.FC<StableCardProps> = ({
             <Image 
                 className="rounded-t-2xl" 
                 source={image} 
-                resizeMode="cover" 
+                resizeMode="contain" 
                 style={styles.image} 
                 background
             >

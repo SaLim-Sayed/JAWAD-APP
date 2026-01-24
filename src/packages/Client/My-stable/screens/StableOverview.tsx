@@ -4,8 +4,6 @@ import StableOverviews from '../components/StableOverviews'
 
 export default function StableOverview() {
   return (
-    <AppLayout title="Stable Overview" isScrollable={false} showBackButton>
-         <StableOverviews/>
-     </AppLayout>
-  )
+       <StableOverviews/>
+   )
 }

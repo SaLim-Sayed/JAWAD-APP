@@ -47,7 +47,7 @@ export default function AppButton({
         'shadow-sm', // Add shadow for depth
         isPressed && 'scale-[0.98]', // Scale effect
         isOutline
-          ? 'bg-transparent border border-brownColor-400'
+          ? 'bg-brownColor-50 border border-brownColor-400'
           : isDisabled
             ? 'bg-brownColor-50'
             : 'bg-brownColor-400',

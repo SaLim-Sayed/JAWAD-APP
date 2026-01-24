@@ -25,7 +25,7 @@ const HorseCard: React.FC<HorseCardProps> = ({
     onPressStart,
 }) => (
     <TouchableOpacity onPress={onPressStart} style={styles.card} className="rounded-xl border border-gray-600/30 overflow-hidden" >
-        <Image className="rounded-t-2xl" source={image} style={styles.image} />
+        <Image className="rounded-t-2xl" source={image} style={styles.image} resizeMode="contain" />
         <Col className="p-2" gap={4}>
             <Row items="center" gap={4}>
                 <Image source={Icons.stable} style={styles.icon} />

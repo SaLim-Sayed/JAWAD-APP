@@ -26,6 +26,7 @@ export const horseSchema = z.object({
   enFeature: z.string().min(1, "English feature is required"),
   arFeature: z.string().min(1, "Arabic feature is required"),
   color: z.string().min(1, "Color is required"),
+  video: z.string().optional(),
 });
 
 export type HorseForm = z.infer<typeof horseSchema>;
