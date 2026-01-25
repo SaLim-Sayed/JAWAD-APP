@@ -6,9 +6,11 @@ import Col from "@/components/UI/Col";
 import Divider from "@/components/UI/Divider";
 import { HorseDetail } from "../@types/horse.types";
 import { t } from "@/lib";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const HorseDescription = ({ horse }: { horse: HorseDetail }) => {
  
+  const {authData}=useAuthStore()
   const fields = [
     {label: t('horse.name'), valueKey: 'name'},
     {label: t('horse.description'), valueKey: 'description'},
@@ -16,9 +18,10 @@ const HorseDescription = ({ horse }: { horse: HorseDetail }) => {
     {label: t('horse.level'), valueKey: 'level'},
     {label: t('horse.type'), valueKey: 'type'},
     {label: t('horse.feature'), valueKey: 'feature'},
-    {label: t('horse.price'), valueKey: 'price'},
+    {label: t('horse.price'), valueKey: 'price',currency:authData?.nationality==='Foreign'?'USD':'EGP'},
   ];
 
+  console.log(authData?.nationality);
   return (
     <View className="mx-1 p-3 bg-[#FAF7F5] rounded-xl">
       {fields.map((field, idx) => (
@@ -28,7 +31,10 @@ const HorseDescription = ({ horse }: { horse: HorseDetail }) => {
               {field.label}
             </AppText>
             <AppText className="text-brownColor-100 tajawal-light-16">
-              {horse[field.valueKey as keyof typeof horse]}
+              {horse[field.valueKey as keyof typeof horse]} - 
+              {field.currency &&  
+                 field.currency
+               }
             </AppText>
           </Col>
           {idx < fields.length - 1 && <Divider />}
